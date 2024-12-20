@@ -12,7 +12,10 @@
 						</li>
 					</ul>
 				</nav>
-				<div class="auths__btn">
+				<div class="auths__wrapper">
+					<div class="login__icon-wrapper">
+						<img class="auths__login" :src="LoginIcon" alt="">
+					</div>
 					<button class="auths__btn-item"> {{ data.btn.text}}</button>
 				</div>
 			</div>
@@ -23,6 +26,8 @@
 
 	import Logo from '/assets/images/logo-type.png'
 	import {ref} from 'vue'
+
+	import LoginIcon from '/assets/images/login.png'
 
 	const data = ref({
 		logo: {
@@ -53,7 +58,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		background: linear-gradient(135deg, #FFFFFF, #F0F4F8);
+		background: rgb(255, 245, 225);
 	}
 
 	.nav {
@@ -81,13 +86,28 @@
 
 	.auths__btn-item {
 		margin-right: 30px;
-		padding: 10px 55px;
+		padding: 1px;
 		border: none;
-		border-radius: 20px;
 		cursor: pointer;
-		font-size: 18px;
-		background: rgba(145, 118, 239, 0.84);
-		color: white;
+		font-size: 22px;
+        background: none;
+		color: black;
+	}
+
+	.login__icon-wrapper {
+		width: 25px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+	}
+
+	.auths__login {
+		width: 100%;
+	}
+
+	.auths__wrapper {
+		display: flex;
 	}
 
 </style>
