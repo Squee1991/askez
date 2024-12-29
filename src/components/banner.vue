@@ -3,7 +3,7 @@
 		<div class="banner">
 			<div class="banner__content">
 				<div class="banner__content-left">
-					<div v-html="data.article.text" class="banner__article"></div>
+					<div class="banner__article"> {{ data.article.text }}</div>
 					<div class="banner__title">{{ data.title }}</div>
 					<div class="banner__btns">
 						<button class="banner__btn btn">{{ data.btn.text }}</button>
@@ -43,7 +43,7 @@
 		},
 		title: 'Take steps towards becoming the best version of yourself every day.',
 		btn: {
-			text: 'Начать аскезу'
+			text: 'Get started'
 		},
 		bannerbackground: {
 			src: '',
@@ -65,6 +65,7 @@
 		justify-content: center;
 		font-size: 54px;
 		font-family: "Open Sans", serif;
+			color: #FFF4E6;
 	}
 
 	.banner__title {
@@ -88,13 +89,13 @@
 
 	.banner__btn {
 		margin: 40px 0;
-		padding: 20px 55px;
+		padding: 15px 55px;
 		border: none;
-		border-radius: 20px;
+		border-radius: 10px;
 		cursor: pointer;
 		font-size: 20px;
 		color: white;
-		background: rgb(0, 51, 102)
+		background: #F9B24E;
 	}
 
 	.banner__btns {
@@ -104,6 +105,6 @@
 	}
 
 	.banner {
-		background: rgb(255, 245, 225);
+		background: #DDDCE6;
 	}
 </style>

@@ -6,7 +6,7 @@
 				<li v-for="item in data.progress" class="progress__list-item"> {{ item.text}}</li>
 			</ul>
 		</div>
-		<div ref="progressContainer" class="progress-block__img"></div>
+		<div class="progress-block__img"></div>
 	</section>
 
 </template>
@@ -14,8 +14,6 @@
 <script setup>
 
 	import {ref, onMounted} from 'vue'
-	import Progress from '/assets/animations/deskHuman.json'
-	import Lottie from 'lottie-web'
 
 	const data = ref({
 		title: 'Трекер прогресса',
@@ -25,19 +23,6 @@
 
 		]
 
-	})
-
-	const progressContainer = ref(null)
-
-	onMounted(() => {
-		if (progressContainer.value) {
-			Lottie.loadAnimation({
-				container: progressContainer.value,
-				loop: false,
-				autoplay: true,
-				animationData: Progress
-			})
-		}
 	})
 
 </script>
@@ -70,7 +55,6 @@
 
 	.progress__list-item {
 		font-size: 24px;
-
 	}
 
 </style>

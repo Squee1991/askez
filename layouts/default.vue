@@ -1,7 +1,6 @@
 <template>
 	<div class="layout">
 		<div class="container">
-			<Header></Header>
 			<slot></slot>
 		</div>
 	</div>
@@ -36,7 +35,7 @@
 	}
 
 	.container {
-		max-width: 1400px;
+		width: 100%;
 		margin: 0 auto;
 
 	}

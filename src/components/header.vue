@@ -58,7 +58,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		background: rgb(255, 245, 225);
+		background:#FFF4E6;
 	}
 
 	.nav {
