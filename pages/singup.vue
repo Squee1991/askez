@@ -80,12 +80,6 @@
 		background-repeat: no-repeat;
 		background-size: cover;
 		background-position: center;
-
-	}
-	input {
-		border: 2px solid red;
-		padding: 10px;
-		font-size: 16px;
 	}
 
 	.form__title {
@@ -103,7 +97,6 @@
 		margin-bottom: 50px;
 	}
 
-
 	.form__btn {
 		margin-top: 30px;
 		width: 100%;
@@ -120,7 +113,4 @@
     .form__label {
 	    font-weight: 600;
     }
-
-
-
 </style>
