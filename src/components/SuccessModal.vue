@@ -1,15 +1,23 @@
 <template>
 	<div class="success-modal">
 		<div class="wrapper">
-			<div class="success__title">has been added!</div>
-			<button class="success__btn" @click="$emit('close')">OK</button>
+				<div class="img__wrrapper">
+					<img class="img__panda" :src="SuccessPanda" alt="">
+				</div>
+				<div class="success__title">Done!!</div>
+				<div class="success__text">Let’s do the best to achieve your goal!</div>
+				<button class="success__btn" @click="$emit('close')">OK</button>
+			</div>
 		</div>
-	</div>
 </template>
 
-<script setup></script>
+<script setup>
+	import SuccessPanda from '/assets/images/successPanda.png'
+
+</script>
 
 <style scoped>
+
 	.success-modal {
 		position: relative;
 		width: 100vw;
@@ -19,8 +27,16 @@
 		justify-content: center;
 		align-items: center;
 		color: white;
+		z-index: 1000;
 	}
 
+	.img__panda {
+		width: 100%;
+	}
+
+	.img__wrrapper {
+		max-width: 300px;
+	}
 
 	.wrapper {
 		display: flex;
@@ -36,10 +52,10 @@
 	.success__btn {
 		margin-top: 10px;
 		padding: 10px 20px;
-		background: rebeccapurple;
-		color: black;
-		font-size: 30px ;
-		width: 100%;
+		background: #FFB74D;
+		color: white;
+		font-size:20px ;
+		width: 50%;
 		border: none;
 		border-radius: 15px;
 		cursor: pointer;
@@ -54,6 +70,14 @@
 	.success__title {
 		font-size: 40px;
 		font-weight: bold;
+		color: #5D4037;
+	}
+
+	.success__text {
+		text-align: center;
+		padding: 10px;
+		color: #757575;
+		font-size: 16px;
 	}
 
 </style>

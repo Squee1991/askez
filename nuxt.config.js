@@ -7,5 +7,6 @@ export default defineNuxtConfig({
 		families: {
 			Nunito: true
 		}
-	}
+	},
+	css: ['@/assets/styles/global.scss'],
 })

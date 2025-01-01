@@ -30,6 +30,7 @@
 </script>
 
 <style scoped>
+
 	.container {
 		width: 100%;
 		position: absolute;
