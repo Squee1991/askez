@@ -1,5 +1,5 @@
 <template>
-	<div class="wrapper" >
+	<div class="wrapper">
 		<div class="container">
 			<div ref="animationContainer"></div>
 		</div>

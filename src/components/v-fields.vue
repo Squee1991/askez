@@ -73,7 +73,7 @@
 <style>
 	.wrapper {
 		position: relative;
-		padding: 5px 0;
+
 	}
 
 	.form__input {

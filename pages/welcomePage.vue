@@ -1,14 +1,14 @@
 <template>
 	<div class="welcome">
 		<div class="overlay">
-			<div v-if="showHabitGoal" class="habbit__goal">
+			<div v-if="isHabitGoalVisible" class="habbit__goal">
 				<div class="habit-goal-wrapper">
 					<HabbitGoal
 						@add="addTask"
-						@close="closeHabitGoal"
-					/>
+						@close="closeHabitGoal"/>
 				</div>
 			</div>
+
 		</div>
 		<div class="progress__inner">
 			<div class="user__greetings">
@@ -19,8 +19,7 @@
 					:progress="progress"
 					:radius="radius"
 					:offset="offset"
-					:circumference="circumference"
-				/>
+					:circumference="circumference"/>
 			</div>
 			<div class="goals__inner">
 				<div class="goals__content">
@@ -37,7 +36,9 @@
 				</div>
 			</div>
 			<div class="button__add-goal">
-				<button @click="toggleHabitGoal" class="goal__btn">add</button>
+				<button @click="toggleHabitGoal" class="goal__btn">
+					<img class="goal__btn-icon" :src="AddIcon" alt="">
+				</button>
 			</div>
 		</div>
 	</div>
@@ -47,22 +48,23 @@
 	import {ref, onMounted, computed, watch} from 'vue';
 	import ProgressCircle from '../src/components/progressBar'
 	import HabbitGoal from '../src/components/newHabitGoal.vue'
+	import SuccessModal from '../src/components/SuccessModal.vue'
+	import AddIcon from '../assets/images/addIcon.svg'
+
 
 	const route = useRoute();
 	const username = route.query.username;
 	const tasks = ref([]);
 	const progress = ref(11);
 	const radius = 45;
-	const showHabitGoal = ref(false);
+	const isHabitGoalVisible = ref(false);
 	const circumference = 2 * Math.PI * radius;
 	const offset = computed(() => {
 		return circumference - (progress.value / 100) * circumference;
 	})
-
 	const toggleHabitGoal = () => {
-		showHabitGoal.value = true
+		isHabitGoalVisible.value = true
 	}
-
 	const addTask = (goal, name) => {
 		const newTask = {
 			id: Date.now(),
@@ -73,21 +75,21 @@
 	};
 
 	const closeHabitGoal = () => {
-		showHabitGoal.value = false
+		isHabitGoalVisible.value = false
 	}
 
 </script>
 
-<style>
-
-	.habit-goal-wrapper {
-		padding-top: 100px;
+<style scoped>
+	* {
+		padding: 0;
+		margin: 0;
+		box-sizing: border-box;
 	}
 
 	.habbit__goal {
 		background: rgba(255, 255, 255, 0.3);
 		height: 100vh;
-		padding: 20px;
 		width: 100%;
 		position: absolute;
 		left: 50%;
@@ -95,14 +97,20 @@
 		transform: translateX(-50%);
 	}
 
+	.goal__btn-icon {
+		width: 100%;
+	}
+
 	.goal__btn {
-		padding: 10px 15px;
-		border-radius: 10px;
+		width: 50px;
+		height: 50px;
+		padding: 10px;
+		border-radius: 50%;
 		border: none;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background: #367650;
+		background: #84dea8;
 		color: white;
 		font-size: 16px;
 		font-family: "Nunito", serif;
@@ -174,5 +182,11 @@
 		width: 100%;
 		padding: 10px;
 		border-radius: 10px;
+	}
+
+	.button__add-goal {
+		display: flex;
+		justify-content: end;
+		margin-top: 20px;
 	}
 </style>

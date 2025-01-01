@@ -19,23 +19,8 @@
 	import { ref } from 'vue'
 	import { useRouter } from 'vue-router'
 	import VFields from '../src/components/v-fields.vue'
-
+	const router = useRouter()
 	const datafromFields = ref([])
-
-	const submitForm = () => {
-		const allFieldsFilled = data.value.fields.every((field) => field.value.trim() !== "");
-		if (!allFieldsFilled) {
-			alert('empty')
-			return
-		}
-
-		const nameField = data.value.fields.find((field) => field.name === "name");
-		if (nameField) {
-			router.push(`/welcomePage?username=${encodeURIComponent(nameField.value)}`);
-		}
-	};
-
-    const router = useRouter()
 	const data = ref({
 		fields: [
 			{
@@ -70,13 +55,35 @@
 			}
 		],
 	})
+
+	const formData = async () => {
+
+	}
+
+	const submitForm = () => {
+		const allFieldsFilled = data.value.fields.every((field) => field.value.trim() !== "");
+		if (!allFieldsFilled) {
+			alert('empty')
+			return
+		}
+
+		const nameField = data.value.fields.find((field) => field.name === "name");
+		if (nameField) {
+			router.push(`/welcomePage?username=${encodeURIComponent(nameField.value)}`);
+		}
+	};
+
+
+
+
 </script>
 
 <style >
 	.form {
 		width: 100%;
 		height: 100vh;
-		background-image: url("/assets/images/formbg.jpg");
+		background: #9ed79e;
+		background-image: url("/assets/images/formbg.webp");
 		background-repeat: no-repeat;
 		background-size: cover;
 		background-position: center;
