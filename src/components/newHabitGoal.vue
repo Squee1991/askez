@@ -24,7 +24,7 @@
 					<SelectComponent
 						:options="options.periodOptions"
 						v-model="selectedPeriod"
-						name="period"
+
 					/>
 				</div>
 				<div class="habbit__wrapper select">
@@ -32,7 +32,7 @@
 					<SelectComponent
 						:options="options.habitTypeOptions"
 						v-model="selectedHabitType"
-						name="habitType"
+
 					/>
 				</div>
 				<button class="create__btn" @click="addValue">Create New</button>
@@ -119,7 +119,6 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-
 	}
 
 	.input__fields-wrapper {
@@ -184,5 +183,6 @@
 		background: #48e37e;
 		border-radius: 5px;
 		color: white;
+		margin-top: 10px;
 	}
 </style>

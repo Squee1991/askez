@@ -28,13 +28,18 @@
 					</div>
 					<div class="habbits__wrapper">
 						<div class="add__habbits">
-							<ul :class="{'checked': task.checked}" class="task__habbit-list" v-for="task in tasks" :key="task.id">
-								<li  class="task__goal-item name goal__name" > {{ task.habbit}}</li>
-								<CustomCheckbox
-									v-model="task.checked"
-									@input="inputClick(task)"
-								/>
-							</ul>
+							<div :class="{'checked': task.checked}" class="task__habbit-list" v-for="task in tasks"
+							     :key="task.id">
+								<li class="task__goal-item name goal__name"> {{ task.habbit}}</li>
+								<div class="checkbox__editor">
+									<CustomCheckbox
+										v-model="task.checked"
+										@input="inputClick(task)"
+									/>
+									<PunktEditor
+									/>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -64,12 +69,14 @@
 </template>
 <script setup>
 	import {useRoute} from "vue-router";
-	import {ref, computed } from 'vue';
+	import {ref, computed} from 'vue';
 	import ProgressCircle from '../src/components/progressBar'
 	import HabbitGoal from '../src/components/newHabitGoal.vue'
 	import SuccessModal from '../src/components/SuccessModal.vue'
 	import AddIcon from '../assets/images/addIcon.svg'
 	import CustomCheckbox from '../src/components/customCheckbox.vue'
+	import PunktEditor from '../src/components/punkEditor.vue'
+
 	const route = useRoute();
 	const username = route.query.username;
 	const tasks = ref([]);
@@ -80,6 +87,11 @@
 	const offset = computed(() => {
 		return circumference - (progress.value / 100) * circumference;
 	})
+
+	const editBtns = ref([
+		{id: 1, value: 'Egit'},
+		{id: 2, value: 'Delete'},
+	])
 
 	const inputClick = (task) => {
 		task.checked = !task.checked;
@@ -113,6 +125,12 @@
 	/*	box-sizing: border-box;*/
 	/*}*/
 
+	.checkbox__editor {
+		display: flex;
+		align-items: center;
+		position: relative;
+	}
+
 	.goal__type {
 		color: #FF5C00;
 	}
@@ -123,7 +141,7 @@
 		font-family: "Nunito", serif;
 	}
 
-	.task__habbit-list{
+	.task__habbit-list {
 		display: flex;
 		justify-content: space-between;
 		color: #37C871;
