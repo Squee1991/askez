@@ -15,6 +15,7 @@
     "lottie-web": "^5.12.2",
     "nuxt": "^3.14.1592",
     "vue": "latest",
+    "vue-cal": "^4.10.0",
     "vue-router": "latest"
   }
 }
