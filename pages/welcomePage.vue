@@ -71,6 +71,7 @@
 	</div>
 </template>
 <script setup>
+
 	import VueCal from '../src/components/v-cal.vue'
 	import {useRoute} from "vue-router";
 	import {ref, computed} from 'vue';
@@ -120,11 +121,13 @@
 </script>
 
 <style>
+
 	/** {*/
 	/*	padding: 0;*/
 	/*	margin: 0;*/
 	/*	box-sizing: border-box;*/
 	/*}*/
+
 
 	.checkbox__editor {
 		display: flex;

@@ -36,7 +36,7 @@
 		left: 50%;
 		top: 50%;
 		transform: translate(-50%, -50%);
-		background-image: url('/assets/images/checkbox.svg');
+		background-image: url('../../assets/images/checkbox.svg');
 		background-size: cover;
 		background-repeat: no-repeat;
 		opacity: 0;
