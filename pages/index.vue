@@ -14,7 +14,7 @@
 <script setup>
 	import Lottie from 'lottie-web'
 	import {ref, onMounted} from 'vue'
-	import Panda from '/assets/animations/panda.json'
+	import Panda from 'assets/animations/panda.json'
 	const animationContainer = ref(null)
 
 	onMounted(() => {
