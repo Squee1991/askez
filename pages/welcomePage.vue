@@ -51,7 +51,7 @@
 					<div class="goals__wrapper">
 						<div class="add__goals">
 							<ul class="task__goal-list" v-for="task in tasks" :key="task.id">
-								<li class="task__goal-item goal__name"> {{ task.habbit}}</li>
+								<li class="task__goal-item goal__name"> {{ task.goal}}</li>
 								<li class="task__goal-item goal__weeks"> {{ task.period}}</li>
 								<li class="task__goal-item goal__type"> {{ task.habitType}}</li>
 							</ul>
@@ -66,8 +66,12 @@
 			</div>
 		</div>
 	</div>
+	<div>
+		<VueCal/>
+	</div>
 </template>
 <script setup>
+	import VueCal from '../src/components/v-cal.vue'
 	import {useRoute} from "vue-router";
 	import {ref, computed} from 'vue';
 	import ProgressCircle from '../src/components/progressBar'
@@ -88,10 +92,7 @@
 		return circumference - (progress.value / 100) * circumference;
 	})
 
-	const editBtns = ref([
-		{id: 1, value: 'Egit'},
-		{id: 2, value: 'Delete'},
-	])
+
 
 	const inputClick = (task) => {
 		task.checked = !task.checked;
