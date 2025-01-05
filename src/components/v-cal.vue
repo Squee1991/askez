@@ -4,7 +4,6 @@
 		:time="false"
 		hide-view-selector
 		active-view="month"
-		:disable-views="['years', 'year', 'week', 'day']"
 		@cell-focus="selectedDate = $event"
 		class="vuecal--blue-theme vuecal--rounded-theme"
 		style="max-width: 270px;height: 290px"
@@ -18,9 +17,7 @@
 	import 'vue-cal/dist/vuecal.css'
 	import {ref} from "vue";
 
-
 	let selectedDate = ref(null)
-
 
 </script>
 
