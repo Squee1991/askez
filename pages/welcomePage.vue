@@ -51,9 +51,11 @@
 					<div class="goals__wrapper">
 						<div class="add__goals">
 							<ul class="task__goal-list" v-for="task in tasks" :key="task.id">
-								<li class="task__goal-item goal__name"> {{ task.goal}}</li>
-								<li class="task__goal-item goal__weeks"> {{ task.period}}</li>
-								<li class="task__goal-item goal__type"> {{ task.habitType}}</li>
+								<li class="task__goal-item goal__name">{{ task.goal }}</li>
+								<li class="task__goal-item goal__type">
+									{{ formatDate(task.dateRange.start)}}
+									- {{ formatDate(task.dateRange.end) }}
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -66,11 +68,9 @@
 			</div>
 		</div>
 	</div>
-	<div>
-		<VueCal/>
-	</div>
 </template>
 <script setup>
+
 	import VueCal from '../src/components/v-cal.vue'
 	import {useRoute} from "vue-router";
 	import {ref, computed} from 'vue';
@@ -92,8 +92,6 @@
 		return circumference - (progress.value / 100) * circumference;
 	})
 
-
-
 	const inputClick = (task) => {
 		task.checked = !task.checked;
 	};
@@ -101,13 +99,12 @@
 	const toggleHabitGoal = () => {
 		isHabitGoalVisible.value = true
 	}
-	const addTask = (goal, habbit, period, habitType) => {
+	const addTask = (goal, habbit, period, habitType, dateRange) => {
 		const newTask = {
 			id: Date.now(),
 			goal: goal,
 			habbit: habbit,
-			period: period,
-			habitType: habitType,
+			dateRange: dateRange,
 			checked: false
 		};
 		tasks.value.push(newTask);
@@ -120,6 +117,7 @@
 </script>
 
 <style>
+
 	/** {*/
 	/*	padding: 0;*/
 	/*	margin: 0;*/
