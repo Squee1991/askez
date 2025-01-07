@@ -13,27 +13,30 @@
 				</div>
 				<div class="input__fields-inner">
 					<div class="input__fields">
-						<span class="input__label">Your Goal</span>
+						<span class="input__label label">Your Goal</span>
 						<input class="input__goal" v-model="inputValueGoal" type="text"/>
-						<span class="input__label">Habit Name</span>
+						<span class="input__label label">Habit Name</span>
 						<input class="input__goal" v-model="inputValueName" type="text"/>
 					</div>
 				</div>
-				<div class="period__wrapper select">
-					<span class="select_label label">Period</span>
-					<SelectComponent
-						:options="options.periodOptions"
-						v-model="selectedPeriod"
+				<!--				<div class="period__wrapper select">-->
+				<!--					<span class="select_label label">Period</span>-->
+				<!--					<SelectComponent-->
+				<!--						:options="options.periodOptions"-->
+				<!--						v-model="selectedPeriod"-->
 
-					/>
-				</div>
-				<div class="habbit__wrapper select">
-					<span class="select_label label">Habit Type</span>
-					<SelectComponent
-						:options="options.habitTypeOptions"
-						v-model="selectedHabitType"
-
-					/>
+				<!--					/>-->
+				<!--				</div>-->
+				<!--				<div class="habbit__wrapper select">-->
+				<!--					<span class="select_label label">Habit Type</span>-->
+				<!--					<SelectComponent-->
+				<!--						:options="options.habitTypeOptions"-->
+				<!--						v-model="selectedHabitType"-->
+				<!--					/>-->
+				<!--				</div>-->
+				<div class="date__picker-inenr">
+					<span class="date__picke-label label">Select date period</span>
+					<VDatePicker v-model.range="dateRange" mode="range"/>
 				</div>
 				<button class="create__btn" @click="addValue">Create New</button>
 			</div>
@@ -41,18 +44,6 @@
 	</div>
 </template>
 <script setup>
-	import {ref, defineEmits} from "vue";
-	import CloseIcon from "/assets/images/close.svg";
-	import SuccessModal from "./SuccessModal.vue";
-	import SelectComponent from '/src/components/selectComponent.vue'
-
-	const isSuccessVisible = ref(false);
-	const inputValueGoal = ref("");
-	const inputValueName = ref("");
-	const selectedPeriod = ref("");
-	const selectedHabitType = ref("")
-	const emit = defineEmits(["close", "add"]);
-
 	const options = ref({
 		periodOptions: [
 			{label: "1 Month", value: "1_month"},
@@ -65,16 +56,37 @@
 			{label: "Custom", value: "custom"},
 		],
 	});
+	import {ref, defineEmits} from "vue";
+	import CloseIcon from "/assets/images/close.svg";
+	import SuccessModal from "./SuccessModal.vue";
+	import SelectComponent from '/src/components/selectComponent.vue'
+	const isSuccessVisible = ref(false);
+	const inputValueGoal = ref("");
+	const inputValueName = ref("");
+	const selectedPeriod = ref("");
+	const selectedHabitType = ref("")
+	const emit = defineEmits(["close", "add"]);
+
+	const dateRange = ref({
+		start: new Date(),
+		end: new Date()
+	});
 
 	const clearFields = (fields) => fields.forEach(field => field.value = "")
-
 	const addValue = () => {
-		const isInputValid = [inputValueGoal.value, inputValueName.value, selectedPeriod.value, selectedHabitType.value]
-		.every(value => value.trim?.());
-		if (!isInputValid) return;
-		emit("add", inputValueGoal.value, inputValueName.value, selectedPeriod.value, selectedHabitType.value);
+		const isInputValid = [inputValueGoal.value, inputValueName.value,].every(value => value.trim?.());
+		const isDateRangeValid = dateRange.value.start && dateRange.value.end;
+		if (!isInputValid || !isDateRangeValid) return;
+		emit("add",
+			inputValueGoal.value,
+			inputValueName.value,
+			selectedPeriod.value,
+			selectedHabitType.value,
+			dateRange.value
+		);
 		clearFields([inputValueGoal, inputValueName, selectedPeriod, selectedHabitType])
 		isSuccessVisible.value = true;
+		console.log(dateRange.value)
 	};
 
 	const handleSuccessClose = () => {
@@ -88,7 +100,12 @@
 
 </script>
 
-<style scoped>
+<style>
+
+	.vc-container {
+		width: 100%;
+		border: none;
+	}
 
 	.label {
 		font-family: "Nunito", serif;
@@ -128,7 +145,6 @@
 	}
 
 	.habit-goal-modal {
-		margin-top: 90px;  /* 90 это временно! надо подругому отпозиционировать  */
 		position: absolute;
 		width: 100%;
 		border-radius: 10px;
@@ -158,10 +174,11 @@
 		margin-bottom: 20px;
 	}
 
-	.input__label {
+	.label {
 		font-size: 14px;
 		font-family: "Nunito", serif;
 		font-weight: 700;
+		padding-bottom: 5px;
 	}
 
 	.input__goal {
@@ -173,7 +190,7 @@
 	}
 
 	.input__goal:focus {
-		border: 1px solid #c14747;
+		border: 1px solid #47b7c1;
 	}
 
 	.create__btn {
