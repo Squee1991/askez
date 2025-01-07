@@ -1,7 +1,4 @@
 <template>
-	<div v-if="isSuccessVisible" class="success__modal-window">
-		<SuccessModal @close="handleSuccessClose"/>
-	</div>
 	<div class="wrapper">
 		<div class="habit-goal-modal">
 			<div class="input__fields-wrapper">
@@ -36,9 +33,11 @@
 				<!--				</div>-->
 				<div class="date__picker-inenr">
 					<span class="date__picke-label label">Select date period</span>
-					<VDatePicker v-model.range="dateRange" mode="range"/>
+					<VDatePicker v-model.range="localDateRange" mode="range"/>
 				</div>
-				<button class="create__btn" @click="addValue">Create New</button>
+				<button class="create__btn" @click="addValue">
+					<NuxtLink to="/SuccessModal">Create new</NuxtLink>
+				</button>
 			</div>
 		</div>
 	</div>
@@ -58,35 +57,42 @@
 	});
 	import {ref, defineEmits} from "vue";
 	import CloseIcon from "/assets/images/close.svg";
-	import SuccessModal from "./SuccessModal.vue";
+	import SuccessModal from "../../pages/SuccessModal.vue";
 	import SelectComponent from '/src/components/selectComponent.vue'
+	import {useHabitStore} from '/stores/habitStore.js'
+
+	const habitStore = useHabitStore()
 	const isSuccessVisible = ref(false);
 	const inputValueGoal = ref("");
 	const inputValueName = ref("");
 	const selectedPeriod = ref("");
 	const selectedHabitType = ref("")
 	const emit = defineEmits(["close", "add"]);
-
-	const dateRange = ref({
+	const localDateRange = ref({
 		start: new Date(),
 		end: new Date()
 	});
 
 	const clearFields = (fields) => fields.forEach(field => field.value = "")
 	const addValue = () => {
-		const isInputValid = [inputValueGoal.value, inputValueName.value,].every(value => value.trim?.());
-		const isDateRangeValid = dateRange.value.start && dateRange.value.end;
-		if (!isInputValid || !isDateRangeValid) return;
-		emit("add",
+		const isInputValid = [
 			inputValueGoal.value,
-			inputValueName.value,
-			selectedPeriod.value,
-			selectedHabitType.value,
-			dateRange.value
-		);
-		clearFields([inputValueGoal, inputValueName, selectedPeriod, selectedHabitType])
+			inputValueName.value].every((value) => value.trim?.());
+		const isDateRangeValid = localDateRange.value.start && localDateRange.value.end;
+
+		if (!isInputValid || !isDateRangeValid) {
+			return;
+		}
+		const newTask = {
+			goal: inputValueGoal.value,
+			habbit: inputValueName.value,
+			dateRange: localDateRange.value,
+			checked: false,
+		};
+		habitStore.addTask(newTask);
+		emit("add", newTask);
+		clearFields([inputValueGoal, inputValueName]);
 		isSuccessVisible.value = true;
-		console.log(dateRange.value)
 	};
 
 	const handleSuccessClose = () => {
@@ -101,7 +107,6 @@
 </script>
 
 <style>
-
 	.vc-container {
 		width: 100%;
 		border: none;
