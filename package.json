@@ -12,10 +12,11 @@
   "dependencies": {
     "@nuxtjs/google-fonts": "^3.2.0",
     "@pinia/nuxt": "^0.9.0",
+    "@popperjs/core": "^2.11.8",
     "lottie-web": "^5.12.2",
     "nuxt": "^3.14.1592",
+    "v-calendar": "^3.1.2",
     "vue": "latest",
-    "vue-cal": "^4.10.0",
     "vue-router": "latest"
   }
 }
