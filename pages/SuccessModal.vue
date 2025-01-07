@@ -1,14 +1,17 @@
 <template>
 	<div class="success-modal">
 		<div class="wrapper">
-				<div class="img__wrrapper">
-					<img class="img__panda" :src="SuccessPanda" alt="">
-				</div>
-				<div class="success__title">Done!!</div>
-				<div class="success__text">Let’s do the best to achieve your goal!</div>
-				<button class="success__btn" @click="$emit('close')">OK</button>
+			<div class="img__wrrapper">
+				<img class="img__panda" :src="SuccessPanda" alt="">
 			</div>
+			<div class="success__title">Done!!</div>
+			<div class="success__text">Let’s do the best to achieve your goal!</div>
+			<!--				<button class="success__btn" @click="$emit('close')">OK</button>-->
+			<NuxtLink to="/welcomePage">
+					<button class="success__btn">OK</button>
+			</NuxtLink>
 		</div>
+	</div>
 </template>
 
 <script setup>
@@ -43,19 +46,18 @@
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
-		padding: 20px ;
-		width: 100%;
+		padding: 20px;
 		color: #333;
 		text-align: center;
 	}
 
 	.success__btn {
+		width: 100%;
 		margin-top: 10px;
-		padding: 10px 20px;
+		padding: 10px 50px;
 		background: #FFB74D;
 		color: white;
-		font-size:20px ;
-		width: 50%;
+		font-size: 20px;
 		border: none;
 		border-radius: 15px;
 		cursor: pointer;
