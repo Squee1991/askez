@@ -3,9 +3,7 @@
 		<div class="overlay">
 			<div v-if="isHabitGoalVisible" class="habbit__goal">
 				<div class="habit-goal-wrapper">
-					<HabbitGoal
-						@add="addTask"
-						@close="closeHabitGoal"/>
+					<HabbitGoal @add="addTask" @close="closeHabitGoal" />
 				</div>
 			</div>
 		</div>
@@ -28,7 +26,7 @@
 					</div>
 					<div class="habbits__wrapper">
 						<div class="add__habbits">
-							<div :class="{'checked': task.checked}" class="task__habbit-list" v-for="task in tasks"
+							<div :class="{'checked': task.checked}" class="task__habbit-list" v-for="task in habitStore.tasks"
 							     :key="task.id">
 								<li class="task__goal-item name goal__name"> {{ task.habbit}}</li>
 								<div class="checkbox__editor">
@@ -36,8 +34,7 @@
 										v-model="task.checked"
 										@input="inputClick(task)"
 									/>
-									<PunktEditor
-									/>
+									<PunktEditor :value="punktValue"/>
 								</div>
 							</div>
 						</div>
@@ -50,7 +47,7 @@
 					</div>
 					<div class="goals__wrapper">
 						<div class="add__goals">
-							<ul class="task__goal-list" v-for="task in tasks" :key="task.id">
+							<ul class="task__goal-list" v-for="task in habitStore.tasks" :key="task.id">
 								<li class="task__goal-item goal__name">{{ task.goal }}</li>
 								<li class="task__goal-item goal__type">
 									{{ formatDate(task.dateRange.start)}}
@@ -70,17 +67,16 @@
 	</div>
 </template>
 <script setup>
-
-	import VueCal from '../src/components/v-cal.vue'
 	import {useRoute} from "vue-router";
 	import {ref, computed} from 'vue';
 	import ProgressCircle from '../src/components/progressBar'
 	import HabbitGoal from '../src/components/newHabitGoal.vue'
-	import SuccessModal from '../src/components/SuccessModal.vue'
 	import AddIcon from '../assets/images/addIcon.svg'
 	import CustomCheckbox from '../src/components/customCheckbox.vue'
 	import PunktEditor from '../src/components/punkEditor.vue'
-
+	import { useHabitStore } from '/stores/habitStore.js';
+	const punktValue = ref("");
+	const habitStore = useHabitStore();
 	const route = useRoute();
 	const username = route.query.username;
 	const tasks = ref([]);
@@ -99,20 +95,20 @@
 	const toggleHabitGoal = () => {
 		isHabitGoalVisible.value = true
 	}
-	const addTask = (goal, habbit, period, habitType, dateRange) => {
-		const newTask = {
-			id: Date.now(),
-			goal: goal,
-			habbit: habbit,
-			dateRange: dateRange,
-			checked: false
-		};
-		tasks.value.push(newTask);
+	const addTask = (task) => {
+		habitStore.addTask(task);
 	};
 
 	const closeHabitGoal = () => {
 		isHabitGoalVisible.value = false
 	}
+
+	const formatDate = (date) => {
+		return date.toLocaleDateString('en-US', {
+			day: '2-digit',
+			month: 'long'
+		});
+	};
 
 </script>
 
