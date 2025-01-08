@@ -36,7 +36,7 @@
 					<VDatePicker v-model.range="localDateRange" mode="range"/>
 				</div>
 				<button class="create__btn" @click="addValue">
-					<NuxtLink to="/SuccessModal">Create new</NuxtLink>
+					<NuxtLink class="full-link" to="/SuccessModal">Create new</NuxtLink>
 				</button>
 			</div>
 		</div>
@@ -107,9 +107,38 @@
 </script>
 
 <style>
+
+	.create__btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+
+		border: none;
+		background-color: #48e37e;
+		color: white;
+		font-size: 16px;
+		font-weight: bold;
+		cursor: pointer;
+		border-radius: 8px;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.full-link {
+		padding: 18px;
+		display: block;
+		width: 100%;
+		height: 100%;
+		color: inherit;
+		text-decoration: none;
+		text-align: center;
+	}
+
 	.vc-container {
 		width: 100%;
 		border: none;
+		margin-bottom: 15px;
 	}
 
 	.label {
@@ -196,15 +225,5 @@
 
 	.input__goal:focus {
 		border: 1px solid #47b7c1;
-	}
-
-	.create__btn {
-		width: 100%;
-		padding: 17px;
-		border: none;
-		background: #48e37e;
-		border-radius: 5px;
-		color: white;
-		margin-top: 10px;
 	}
 </style>

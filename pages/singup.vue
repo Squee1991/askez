@@ -16,16 +16,18 @@
 </template>
 
 <script setup>
+	import VFields from '../src/components/v-fields.vue'
 	import { ref } from 'vue'
 	import { useRouter } from 'vue-router'
-	import VFields from '../src/components/v-fields.vue'
+	import { useHabitStore  } from '../stores/habitStore.js'
+	const habitStore = useHabitStore()
+
 	const router = useRouter()
 	const datafromFields = ref([])
 	const data = ref({
 		fields: [
 			{
 				id: 1,
-				text: '',
 				name: "name",
 				type: "text",
 				label: "Name",
@@ -34,8 +36,7 @@
 				error: null
 			},
 			{
-				id: 1,
-				text: '',
+				id: 2,
 				email: "Email",
 				type: "Email",
 				label: "Email",
@@ -44,8 +45,7 @@
 				error: null
 			},
 			{
-				id: 1,
-				text: '',
+				id: 3,
 				name: "password",
 				type: "password",
 				label: "Password",
@@ -56,10 +56,6 @@
 		],
 	})
 
-	const formData = async () => {
-
-	}
-
 	const submitForm = () => {
 		const allFieldsFilled = data.value.fields.every((field) => field.value.trim() !== "");
 		if (!allFieldsFilled) {
@@ -69,12 +65,10 @@
 
 		const nameField = data.value.fields.find((field) => field.name === "name");
 		if (nameField) {
-			router.push(`/welcomePage?username=${encodeURIComponent(nameField.value)}`);
+			habitStore.setUsername(nameField.value);
+			router.push('/welcomePage');
 		}
 	};
-
-
-
 
 </script>
 

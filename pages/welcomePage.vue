@@ -3,7 +3,7 @@
 		<div class="overlay">
 			<div v-if="isHabitGoalVisible" class="habbit__goal">
 				<div class="habit-goal-wrapper">
-					<HabbitGoal @add="addTask" @close="closeHabitGoal" />
+					<HabbitGoal @add="addTask" @close="closeHabitGoal"/>
 				</div>
 			</div>
 		</div>
@@ -21,13 +21,16 @@
 			<div class="goals__inner">
 				<div class="habbit__content">
 					<div class="habbit__header">
-						<div class="goals__title goals__text">Your Habbit</div>
+						<div class="goals__title goals__text">Your Habits</div>
 						<button class="goals__list goals__text">Show all</button>
 					</div>
 					<div class="habbits__wrapper">
 						<div class="add__habbits">
-							<div :class="{'checked': task.checked}" class="task__habbit-list" v-for="task in habitStore.tasks"
-							     :key="task.id">
+							<div
+								:class="{'checked':task.checked}"
+								class="task__habbit-list"
+								v-for="task in tasks"
+								:key="task.id">
 								<li class="task__goal-item name goal__name"> {{ task.habbit}}</li>
 								<div class="checkbox__editor">
 									<CustomCheckbox
@@ -47,7 +50,7 @@
 					</div>
 					<div class="goals__wrapper">
 						<div class="add__goals">
-							<ul class="task__goal-list" v-for="task in habitStore.tasks" :key="task.id">
+							<ul class="task__goal-list" v-for="task in tasks" :key="task.id">
 								<li class="task__goal-item goal__name">{{ task.goal }}</li>
 								<li class="task__goal-item goal__type">
 									{{ formatDate(task.dateRange.start)}}
@@ -74,29 +77,43 @@
 	import AddIcon from '../assets/images/addIcon.svg'
 	import CustomCheckbox from '../src/components/customCheckbox.vue'
 	import PunktEditor from '../src/components/punkEditor.vue'
-	import { useHabitStore } from '/stores/habitStore.js';
+	import {useHabitStore} from '/stores/habitStore.js';
+
 	const punktValue = ref("");
 	const habitStore = useHabitStore();
-	const route = useRoute();
-	const username = route.query.username;
-	const tasks = ref([]);
 	const progress = ref(11);
 	const radius = 45;
 	const isHabitGoalVisible = ref(false);
 	const circumference = 2 * Math.PI * radius;
+
+	const username = computed(() => {
+		return habitStore.username
+	});
+
+	const tasks = computed(() => {
+		return habitStore.tasks
+	});
+
 	const offset = computed(() => {
 		return circumference - (progress.value / 100) * circumference;
 	})
 
 	const inputClick = (task) => {
-		task.checked = !task.checked;
+		habitStore.updateTask(task.id, !task.checked);
 	};
 
 	const toggleHabitGoal = () => {
 		isHabitGoalVisible.value = true
 	}
 	const addTask = (task) => {
-		habitStore.addTask(task);
+		const newTask = {
+			id: Date.now(),
+			habbit: task.habbit,
+			goal: task.goal,
+			dateRange: task.dateRange,
+			checked: false
+		};
+		habitStore.addTask(newTask);
 	};
 
 	const closeHabitGoal = () => {
