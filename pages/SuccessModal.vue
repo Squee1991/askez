@@ -8,15 +8,18 @@
 			<div class="success__text">Let’s do the best to achieve your goal!</div>
 			<!--				<button class="success__btn" @click="$emit('close')">OK</button>-->
 			<NuxtLink to="/welcomePage">
-					<button class="success__btn">OK</button>
+				<button class="success__btn">OK</button>
 			</NuxtLink>
 		</div>
 	</div>
 </template>
 
 <script setup>
-	import SuccessPanda from '/assets/images/successPanda.png'
 
+	import SuccessPanda from '/assets/images/successPanda.png';
+	import { useRoute } from 'vue-router';
+	const route = useRoute();
+	const username = route.query.username
 </script>
 
 <style scoped>
@@ -54,7 +57,7 @@
 	.success__btn {
 		width: 100%;
 		margin-top: 10px;
-		padding: 10px 50px;
+		padding: 10px 40px;
 		background: #FFB74D;
 		color: white;
 		font-size: 20px;

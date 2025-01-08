@@ -1,18 +1,29 @@
 <template>
 	<label class="label">
-		<input type="checkbox" class="checkbox">
+		<input
+			type="checkbox"
+			class="checkbox"
+			:checked="modelValue"
+			@change="$emit('update:modelValue', $event.target.checked)"
+		/>
 		<span class="fake"></span>
 	</label>
 </template>
 
 <script setup>
+	import { defineProps, defineEmits } from "vue";
+	defineProps({
+		modelValue: {
+			type: Boolean,
+			required: true
+		}
+	})
 
-	import CheckboxIcon from 'assets/images/checkbox.svg'
+	defineEmits(["update:modelValue"])
 
 </script>
 
 <style scoped>
-
 	.checkbox {
 		display: none;
 	}
@@ -50,50 +61,8 @@
 		border: none;
 	}
 
-	.punkt {
-		width: 4px;
-		height: 4px;
-		font-weight: bold;
-		background: black;
-		position: relative;
-		margin: 10px 0;
-		border-radius: 50%;
-	}
-
-	.punkt__wrapper {
-		width: 20px;
-		height: 20px;
-		padding: 15px 6px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
 	.label {
 		display: flex;
 		align-items: center;
 	}
-
-	.punkt:before {
-		top: 150%;
-		left: 0;
-		content: "";
-		position: absolute;
-		width:4px;
-		height: 4px;
-		background: black;
-		border-radius: 50%;
-	}
-
-	.punkt:after {
-		content: "";
-		bottom:150%;
-		left: 0;
-		position: absolute;
-		width: 4px;
-		height: 4px;
-		background: black;
-		border-radius: 50%;
-	}
-
 </style>
