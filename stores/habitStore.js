@@ -2,10 +2,14 @@ import { defineStore } from 'pinia';
 
 export const useHabitStore = defineStore('askezaStore', {
 	state: () => ({
-		tasks: [],
+		username: null,
+		tasks: []
 	}),
 
 	actions: {
+		setUsername(name) {
+			this.username = name;
+		},
 		addTask(task) {
 			const isDuplicate = this.tasks.some((item) =>
 				item.goal === task.goal &&
@@ -14,15 +18,25 @@ export const useHabitStore = defineStore('askezaStore', {
 				item.dateRange.end === task.dateRange.end
 			);
 			if (!isDuplicate) {
-				this.tasks.push(task);
-				console.log(task);
-			} else  {
-				console.log('уже есть')
+				const newTask = {
+					...task,
+					id: Date.now(),
+					checked: false,
+				};
+				this.tasks.push(newTask);
+				console.log("Добавил", newTask);
 			}
-
 		},
 
+		updateTask(taskId, checked) {
+			const task = this.tasks.find((task) => task.id === taskId);
+			if (task) {
+				task.checked = checked;
+				console.log("Обновил", task);
+			}
+		},
 		clearTasks() {
+			this.username = null;
 			this.tasks = [];
 		},
 	},
