@@ -11,12 +11,10 @@
 			<div class="user__greetings">
 				<div class="title">Hello,<span class="username">{{ username }}</span></div>
 			</div>
-			<div class="progress__circle-wrapper">
-				<ProgressCircle
-					:progress="progress"
-					:radius="radius"
-					:offset="offset"
-					:circumference="circumference"/>
+			<div class="banner__wrapper">
+				<div class="panda__icon-wrapper">
+					<img class="panda__icon" :src="PandaHello" alt="">
+				</div>
 			</div>
 			<div class="goals__inner">
 				<div class="habbit__content">
@@ -26,17 +24,11 @@
 					</div>
 					<div class="habbits__wrapper">
 						<div class="add__habbits">
-							<div
-								:class="{'checked':task.checked}"
-								class="task__habbit-list"
-								v-for="task in tasks"
-								:key="task.id">
-								<li class="task__goal-item name goal__name"> {{ task.habbit}}</li>
+							<div :class="{'checked': task.checked}" class="task__habbit-list" v-for="task in tasks"
+							     :key="task.id">
+								<div class="task__goal-item habit goal__name">{{ task.habbit }}</div>
 								<div class="checkbox__editor">
-									<CustomCheckbox
-										v-model="task.checked"
-										@input="inputClick(task)"
-									/>
+									<CustomCheckbox v-model="task.checked" @input="inputClick(task)"/>
 									<PunktEditor :value="punktValue"/>
 								</div>
 							</div>
@@ -50,93 +42,120 @@
 					</div>
 					<div class="goals__wrapper">
 						<div class="add__goals">
-							<ul class="task__goal-list" v-for="task in tasks" :key="task.id">
-								<li class="task__goal-item goal__name">{{ task.goal }}</li>
-								<li class="task__goal-item goal__type">
-									{{ formatDate(task.dateRange.start)}}
-									- {{ formatDate(task.dateRange.end) }}
-								</li>
-							</ul>
+							<div class="task__goal-list" v-for="task in tasks" :key="task.id">
+								<div class="task__goal-list-inner">
+									<div class="task__goal-item goals goal__name">{{ task.goal }}</div>
+									<div class="task__goal-item goal__type">
+										{{ formatDate(task.dateRange.start) }} - {{ formatDate(task.dateRange.end) }}
+									</div>
+								</div>
+								<ProgressCircle
+									v-model:progress="progress[task.id]"
+									:radius="radius"
+									:offset="offsetForTask(task.id)"
+									:circumference="circumference"
+								/>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="button__add-goal">
 				<button @click="toggleHabitGoal" class="goal__btn">
-					<img class="goal__btn-icon" :src="AddIcon" alt="">
+					<img class="goal__btn-icon" :src="AddIcon" alt=""/>
 				</button>
 			</div>
 		</div>
 	</div>
 </template>
+
 <script setup>
-	import {useRoute} from "vue-router";
-	import {ref, computed} from 'vue';
-	import ProgressCircle from '../src/components/progressBar'
-	import HabbitGoal from '../src/components/newHabitGoal.vue'
-	import AddIcon from '../assets/images/addIcon.svg'
-	import CustomCheckbox from '../src/components/customCheckbox.vue'
-	import PunktEditor from '../src/components/punkEditor.vue'
-	import {useHabitStore} from '/stores/habitStore.js';
+	import {ref, computed, onMounted, onUnmounted} from "vue";
+	import {useHabitStore} from "/stores/habitStore.js";
+	import ProgressCircle from "../src/components/progressBar";
+	import HabbitGoal from "../src/components/newHabitGoal.vue";
+	import AddIcon from "../assets/images/add.png";
+	import CustomCheckbox from "../src/components/customCheckbox.vue";
+	import PunktEditor from "../src/components/punkEditor.vue";
+	import PandaHello from "../assets/images/greetings.webp";
 
 	const punktValue = ref("");
 	const habitStore = useHabitStore();
-	const progress = ref(11);
-	const radius = 45;
+	const tasks = computed(() => habitStore.tasks);
+	const username = computed(() => habitStore.username);
+	const progress = ref({});
+	const radius = ref(45);
 	const isHabitGoalVisible = ref(false);
-	const circumference = 2 * Math.PI * radius;
+	const circumference = computed(() => 2 * Math.PI * radius.value);
+	let lastCheckedDate = new Date();
 
-	const username = computed(() => {
-		return habitStore.username
-	});
-
-	const tasks = computed(() => {
-		return habitStore.tasks
-	});
-
-	const offset = computed(() => {
-		return circumference - (progress.value / 100) * circumference;
-	})
-
-	const inputClick = (task) => {
-		habitStore.updateTask(task.id, !task.checked);
+	const calculateProgressForTask = (task) => {
+		const startDate = new Date(task.dateRange.start);
+		const endDate = new Date(task.dateRange.end);
+		const totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+		const daysMissed = Math.max(0, Math.min(totalDays, Math.ceil((new Date() - startDate) / (1000 * 60 * 60 * 24))));
+		const progressProcentDays = Math.floor((daysMissed / totalDays) * 100);
+		return { totalDays, daysMissed, progressProcentDays };
 	};
 
-	const toggleHabitGoal = () => {
-		isHabitGoalVisible.value = true
-	}
-	const addTask = (task) => {
-		const newTask = {
-			id: Date.now(),
-			habbit: task.habbit,
-			goal: task.goal,
-			dateRange: task.dateRange,
-			checked: false
-		};
-		habitStore.addTask(newTask);
+	const offsetForTask = (taskId) => {
+		if (!progress.value[taskId]) return circumference.value;
+		const taskProgress = progress.value[taskId];
+		return circumference.value - (taskProgress / 100) * circumference.value;
 	};
 
-	const closeHabitGoal = () => {
-		isHabitGoalVisible.value = false
-	}
-
-	const formatDate = (date) => {
-		return date.toLocaleDateString('en-US', {
-			day: '2-digit',
-			month: 'long'
+	const updateProgress = () => {
+		tasks.value.forEach((task) => {
+			const progressData = calculateProgressForTask(task);
+			progress.value[task.id] = progressData.progressProcentDays;
 		});
 	};
 
+	const addTask = (task) => {
+		habitStore.addTask(task);
+	};
+
+	const inputClick = (task) => {
+		habitStore.updateTask(task.id, task.checked);
+	};
+
+	const toggleHabitGoal = () => {
+		isHabitGoalVisible.value = true;
+	};
+
+	const closeHabitGoal = () => {
+		isHabitGoalVisible.value = false;
+	};
+
+	onMounted(() => {
+		updateProgress();
+		const interval = setInterval(() => {
+			const currentDate = new Date();
+			if (currentDate.getDate() !== lastCheckedDate.getDate()) {
+				lastCheckedDate = currentDate;
+				updateProgress();
+				console.log("Новый день: прогресс обновлен");
+			}
+		}, 60000);
+
+		onUnmounted(() => {
+			clearInterval(interval);
+		});
+	});
+
+	const formatDate = (date) => {
+		return new Date(date).toLocaleDateString("en-US", {
+			day: "2-digit",
+			month: "long",
+		});
+	};
 </script>
 
 <style>
-
-	/** {*/
-	/*	padding: 0;*/
-	/*	margin: 0;*/
-	/*	box-sizing: border-box;*/
-	/*}*/
-
+	.panda__icon {
+		width: 100%;
+		height: 100%;
+	}
 
 	.checkbox__editor {
 		display: flex;
@@ -145,13 +164,16 @@
 	}
 
 	.goal__type {
-		color: #FF5C00;
+		color: #a1a1c9;
+		font-weight: 600;
 	}
 
-	.name {
-		font-size: 16px;
+	.goals {
+		font-size: 18px;
 		font-weight: 600;
 		font-family: "Nunito", serif;
+		color: green;
+
 	}
 
 	.task__habbit-list {
@@ -170,10 +192,20 @@
 	}
 
 	.task__goal-list {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		background: #FBFBFB;
 		margin: 7px 0;
 		border-radius: 10px;
 		padding: 5px 10px;
+	}
+
+	.habit {
+		font-size: 18px;
+		font-weight: 600;
+		font-family: "Nunito", serif;
+		color: #FF5722;
 	}
 
 	.habbit__goal {
@@ -188,7 +220,8 @@
 	}
 
 	.goal__btn-icon {
-		width: 100%;
+		width: 70px;
+		height: 70px;
 	}
 
 	.add__habbits,
@@ -275,14 +308,13 @@
 	.user__greetings {
 		display: flex;
 		align-items: center;
-		padding: 20px 0;
+		padding: 8px 20px;
 	}
 
-	.progress__circle-wrapper {
-		background: #7ACB7A;
+	.banner__wrapper {
 		width: 100%;
-		padding: 10px;
-		border-radius: 10px;
+		border-radius: 15px;
+		padding: 0 20px;
 	}
 
 	.button__add-goal {

@@ -1,49 +1,52 @@
 <template>
 	<div class="progress-container">
 		<svg class="progress-circle" viewBox="0 0 100 100">
-			<circle class="background-circle" cx="50" cy="50" r="45" />
+			<circle class="background-circle" cx="50" cy="50" r="45"/>
 			<circle
 				class="progress"
 				cx="50"
 				cy="50"
-				r="45"
-				:stroke-dasharray="props.circumference"
-				:stroke-dashoffset="props.offset"
+				:r="radius"
+				:stroke-dasharray="circumference"
+				:stroke-dashoffset="offset"
 			/>
 			<text x="50" y="55" text-anchor="middle" class="progress-text">
-				{{ props.progress }}%
+				{{ progress }}%
 			</text>
 		</svg>
 	</div>
 </template>
 
 <script setup>
-	import { computed, defineProps , ref , watch } from "vue";
+	import {defineProps, defineEmits, watch} from "vue";
 
+	const emit = defineEmits(["update:progress"]);
 	const props = defineProps({
 		progress: {
 			type: Number,
 			required: true,
+			default: 0,
 		},
 		radius: {
 			type: Number,
-			default: 45,
+			required: true,
 		},
-
 		offset: {
-			type: Number
+			type: Number,
+			required: true,
 		},
-
 		circumference: {
-			type: Number
-		}
+			type: Number,
+			required: true,
+		},
 	});
 
-
+	watch(() => props.progress, (newVal) => {
+		emit("update:progress", newVal)
+	});
 </script>
 
 <style scoped>
-
 	.progress-container {
 		padding: 10px;
 		width: 100px;
@@ -73,7 +76,7 @@
 
 	.progress-text {
 		font-family: "Nunito", serif;
-		font-size: 20px;
-		fill: #ffffff;
+		font-size: 24px;
+		color: black;
 	}
 </style>
