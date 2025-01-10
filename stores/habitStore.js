@@ -1,11 +1,8 @@
-import { defineStore } from 'pinia';
-
 export const useHabitStore = defineStore('askezaStore', {
 	state: () => ({
 		username: null,
-		tasks: []
+		tasks: [],
 	}),
-
 	actions: {
 		setUsername(name) {
 			this.username = name;
@@ -22,22 +19,27 @@ export const useHabitStore = defineStore('askezaStore', {
 					...task,
 					id: Date.now(),
 					checked: false,
+					progress: 0,
 				};
 				this.tasks.push(newTask);
-				console.log("Добавил", newTask);
+				this.saveToLocalStorage();
 			}
 		},
-
 		updateTask(taskId, checked) {
 			const task = this.tasks.find((task) => task.id === taskId);
 			if (task) {
 				task.checked = checked;
-				console.log("Обновил", task);
+				this.saveToLocalStorage();
 			}
 		},
 		clearTasks() {
 			this.username = null;
 			this.tasks = [];
+			this.saveToLocalStorage();
+		},
+
+		saveToLocalStorage() {
+			localStorage.setItem('tasks', JSON.stringify(this.tasks));
 		},
 	},
 });
