@@ -68,6 +68,7 @@
 	const selectedPeriod = ref("");
 	const selectedHabitType = ref("")
 	const emit = defineEmits(["close", "add"]);
+
 	const localDateRange = ref({
 		start: new Date(),
 		end: new Date()
@@ -94,6 +95,10 @@
 		clearFields([inputValueGoal, inputValueName]);
 		isSuccessVisible.value = true;
 	};
+
+	watch(localDateRange, (newVal) => {
+		console.log("Выбраны даты:", newVal);
+	});
 
 	const handleSuccessClose = () => {
 		isSuccessVisible.value = false;
