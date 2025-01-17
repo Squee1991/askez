@@ -50,6 +50,7 @@
 									</div>
 								</div>
 								<ProgressCircle
+									:key="progress[task.id]"
 									v-model:progress="progress[task.id]"
 									:radius="radius"
 									:offset="offsetForTask(task.id)"
@@ -79,7 +80,7 @@
 	import PunktEditor from "../src/components/punkEditor.vue";
 	import PandaHello from "../assets/images/greetings.webp";
 
-	const punktValue = ref("");
+	const punktValue = ref(null);
 	const habitStore = useHabitStore();
 	const tasks = computed(() => habitStore.tasks);
 	const username = computed(() => habitStore.username);
@@ -134,7 +135,7 @@
 			if (currentDate.getDate() !== lastCheckedDate.getDate()) {
 				lastCheckedDate = currentDate;
 				updateProgress();
-				console.log("Новый день: прогресс обновлен");
+				console.log("Следующий день: прогресс обновлен");
 			}
 		}, 60000);
 

@@ -25,6 +25,7 @@ export const useHabitStore = defineStore('askezaStore', {
 				this.saveToLocalStorage();
 			}
 		},
+
 		updateTask(taskId, checked) {
 			const task = this.tasks.find((task) => task.id === taskId);
 			if (task) {
@@ -37,7 +38,6 @@ export const useHabitStore = defineStore('askezaStore', {
 			this.tasks = [];
 			this.saveToLocalStorage();
 		},
-
 		saveToLocalStorage() {
 			localStorage.setItem('tasks', JSON.stringify(this.tasks));
 		},
