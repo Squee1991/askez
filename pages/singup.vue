@@ -37,28 +37,28 @@ const data = ref({
             id: 1,
             name: "name",
             type: "text",
-            label: "Name",
+            label: "",
             placeholder: "Enter you name",
             value: "",
-            error: null
+            error: false
         },
         {
             id: 2,
             name: "email",
             type: "email",
-            label: "Email",
+            label: "",
             placeholder: "Enter you email",
             value: "",
-            error: null
+            error: false
         },
         {
             id: 3,
             name: "password",
             type: "password",
-            label: "Password",
+            label: "",
             placeholder: "Enter you password",
             value: "",
-            error: null
+            error: false
         }
     ],
 })
