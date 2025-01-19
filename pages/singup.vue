@@ -10,20 +10,21 @@
 					:placeholder="field.placeholder"
 				/>
 			</div>
-			<button @click="submitForm" class="form__btn"> sing up </button>
+			<button @click="submitForm" class="form__btn"> sing up</button>
 		</div>
 	</div>
 </template>
 
 <script setup>
 	import VFields from '../src/components/v-fields.vue'
-	import { ref } from 'vue'
-	import { useRouter } from 'vue-router'
-	import { useHabitStore  } from '../stores/habitStore.js'
-	const habitStore = useHabitStore()
+	import {ref} from 'vue'
+	import {useRouter} from 'vue-router'
+	import {useHabitStore} from '../stores/habitStore.js'
 
+	const habitStore = useHabitStore()
 	const router = useRouter()
 	const datafromFields = ref([])
+
 	const data = ref({
 		fields: [
 			{
@@ -72,7 +73,7 @@
 
 </script>
 
-<style >
+<style>
 	.form {
 		width: 100%;
 		height: 100vh;
@@ -111,7 +112,7 @@
 		opacity: 80%;
 	}
 
-    .form__label {
-	    font-weight: 600;
-    }
+	.form__label {
+		font-weight: 600;
+	}
 </style>
