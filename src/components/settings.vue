@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="askeza__settings">
 
 	</div>
 </template>
