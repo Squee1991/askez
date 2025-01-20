@@ -73,7 +73,9 @@
 					</button>
 				</div>
 				<div class="profile__icon-wrapper">
-					<img :src="ProfileIcon" alt="" class="profile__icon-item">
+					<NuxtLink to="/account">
+						<img :src="ProfileIcon" alt="" class="profile__icon-item">
+					</NuxtLink>
 				</div>
 			</div>
 		</div>
@@ -91,16 +93,21 @@
 	import PandaHello from "../assets/images/greetings.webp";
 	import EditPicture from '../assets/images/setting.svg'
 	import ProfileIcon from '../assets/images/profile.png'
-
 	const punktValue = ref(null);
 	const habitStore = useHabitStore();
 	const tasks = computed(() => habitStore.tasks);
-	const username = computed(() => habitStore.username);
 	const progress = ref({});
 	const radius = ref(45);
 	const isHabitGoalVisible = ref(false);
 	const circumference = computed(() => 2 * Math.PI * radius.value);
 	let lastCheckedDate = new Date();
+
+	const username = computed(() => habitStore.username);
+
+	onMounted(() => {
+		habitStore.loadUserData();
+	});
+
 
 	const calculateProgressForTask = (task) => {
 		const startDate = new Date(task.dateRange.start);
@@ -155,6 +162,7 @@
 			clearInterval(interval);
 		});
 	});
+
 
 	const formatDate = (date) => {
 		return new Date(date).toLocaleDateString("en-US", {

@@ -8,5 +8,5 @@ export class AplicationApiMockProvider implements AplicationProviderInterfaice {
             habitId: 'test habit id'
         }
     }
-
 }
+

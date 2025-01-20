@@ -1,12 +1,38 @@
 export const useHabitStore = defineStore('askezaStore', {
 	state: () => ({
 		username: null,
+		email: null,
+		password: null,
 		tasks: [],
 	}),
 	actions: {
-		setUsername(name) {
-			this.username = name;
+		setUserData(userData) {
+			this.username = userData.name;
+			this.email = userData.email;
+			this.password = userData.password;
+			localStorage.setItem('userData', JSON.stringify(userData));
 		},
+
+		loadUserData() {
+			const savedData = localStorage.getItem('userData');
+			if (savedData) {
+				const parsedData = JSON.parse(savedData);
+				this.username = parsedData.name;
+				this.email = parsedData.email;
+				this.password = parsedData.password;
+			}
+		},
+		updateUserData(newData) {
+			if (newData.name) this.username = newData.name
+			if (newData.email) this.email = newData.email
+			if (newData.password) this.password = newData.password
+			localStorage.setItem('userData' , JSON.stringify({
+				name: this.username,
+				email: this.email,
+				password: this.password
+			}))
+		},
+
 		addTask(task) {
 			const isDuplicate = this.tasks.some((item) =>
 				item.goal === task.goal &&
