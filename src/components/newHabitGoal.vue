@@ -36,7 +36,7 @@
                     <VDatePicker v-model.range="localDateRange" mode="range"/>
                 </div>
                 <button class="create__btn" @click="addValue">
-                    <NuxtLink class="full-link" to="/SuccessModal">Create new</NuxtLink>
+                   Create new
                 </button>
             </div>
         </div>
@@ -69,6 +69,8 @@ const inputValueName = ref("");
 const selectedPeriod = ref("");
 const selectedHabitType = ref("")
 const emit = defineEmits(["close", "add"]);
+const router = useRouter()
+import {useRouter} from 'vue-router'
 
 const localDateRange = ref({
     start: new Date(),
@@ -95,6 +97,8 @@ const addValue = () => {
     emit("add", newTask);
     clearFields([inputValueGoal, inputValueName]);
     isSuccessVisible.value = true;
+    router.push('/SuccessModal')
+
 };
 
 watch(localDateRange, (newVal) => {
@@ -119,7 +123,7 @@ const closeWindow = () => {
     align-items: center;
     justify-content: center;
     width: 100%;
-
+    padding: 18px;
     border: none;
     background-color: #48e37e;
     color: white;
@@ -129,16 +133,6 @@ const closeWindow = () => {
     border-radius: 8px;
     position: relative;
     overflow: hidden;
-}
-
-.full-link {
-    padding: 18px;
-    display: block;
-    width: 100%;
-    height: 100%;
-    color: inherit;
-    text-decoration: none;
-    text-align: center;
 }
 
 .vc-container {

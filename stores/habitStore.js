@@ -26,7 +26,7 @@ export const useHabitStore = defineStore('askezaStore', {
 			if (newData.name) this.username = newData.name
 			if (newData.email) this.email = newData.email
 			if (newData.password) this.password = newData.password
-			localStorage.setItem('userData' , JSON.stringify({
+			localStorage.setItem('userData', JSON.stringify({
 				name: this.username,
 				email: this.email,
 				password: this.password
@@ -48,7 +48,14 @@ export const useHabitStore = defineStore('askezaStore', {
 					progress: 0,
 				};
 				this.tasks.push(newTask);
-				this.saveToLocalStorage();
+				localStorage.setItem('tasks', JSON.stringify(this.tasks));
+			}
+		},
+
+		loadTasks() {
+			const savedTasks = localStorage.getItem('tasks');
+			if (savedTasks) {
+				this.tasks = JSON.parse(savedTasks);
 			}
 		},
 
@@ -56,16 +63,16 @@ export const useHabitStore = defineStore('askezaStore', {
 			const task = this.tasks.find((task) => task.id === taskId);
 			if (task) {
 				task.checked = checked;
-				this.saveToLocalStorage();
 			}
 		},
 		clearTasks() {
 			this.username = null;
 			this.tasks = [];
-			this.saveToLocalStorage();
 		},
-		saveToLocalStorage() {
+		removeTask(taskId) {
+			this.tasks = this.tasks.filter(task => task.id !== taskId);
 			localStorage.setItem('tasks', JSON.stringify(this.tasks));
 		},
+
 	},
 });

@@ -89,7 +89,6 @@
 
 </script>
 
-
 <style scoped>
 
 	.accout__title {
