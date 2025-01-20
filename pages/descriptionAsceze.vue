@@ -12,7 +12,7 @@
 
 <style>
 .description {
-    background-image: url("../assets/images/panda-description.webp");
+    background-image: url("../assets/images/description_them.webp");
     width: 100%;
     height: 100vh;
     background-size: cover;
