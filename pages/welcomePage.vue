@@ -1,69 +1,99 @@
 <template>
 	<div class="welcome">
-		<div class="overlay">
-			<div v-if="isHabitGoalVisible" class="habbit__goal">
-				<div class="habit-goal-wrapper">
-					<HabbitGoal @add="addTask" @close="closeHabitGoal"/>
-				</div>
-			</div>
-		</div>
-		<div class="progress__inner">
-			<div class="user__greetings">
-				<div class="title">Hello,<span class="username">{{ username }}</span></div>
-			</div>
-			<div class="banner__wrapper">
-				<div class="panda__icon-wrapper">
-					<img class="panda__icon" :src="PandaHello" alt="">
-				</div>
-			</div>
-			<div class="goals__inner">
-				<div class="habbit__content">
-					<div class="habbit__header">
-						<div class="goals__title goals__text">Your Habits</div>
-						<button class="goals__list goals__text">Show all</button>
+		<div class="habbit__page">
+			<div class="overlay">
+				<div v-if="isHabitGoalVisible" class="habbit__goal">
+					<div class="habit-goal-wrapper">
+						<HabbitGoal @add="addTask" @close="closeHabitGoal"/>
 					</div>
-					<div class="habbits__wrapper">
-						<div class="add__habbits">
-							<div :class="{'checked': task.checked}" class="task__habbit-list" v-for="task in tasks"
-							     :key="task.id">
-								<div class="task__goal-item habit goal__name">{{ task.habbit }}</div>
-								<div class="checkbox__editor">
-									<CustomCheckbox v-model="task.checked" @input="inputClick(task)"/>
-									<PunktEditor :value="punktValue"/>
-								</div>
-							</div>
+				</div>
+			</div>
+			<div class="progress__inner">
+				<div class="user__greetings">
+					<div class="title">Hello,<span class="username">{{ username }}</span></div>
+				</div>
+				<div class="banner__wrapper">
+					<div class="panda__icon-wrapper">
+						<img class="panda__icon" :src="PandaHello" alt="">
+					</div>
+				</div>
+				<div class="goals__inner">
+					<div class="habbit__content">
+						<div class="habbit__header">
+							<div class="goals__title goals__text">Your Habits</div>
+							<button class="goals__list goals__text">Show all</button>
 						</div>
-					</div>
-				</div>
-				<div class="goals__content">
-					<div class="goals__header">
-						<div class="goals__title goals__text">Your Goals</div>
-						<button class="goals__list goals__text">Show all</button>
-					</div>
-					<div class="goals__wrapper">
-						<div class="add__goals">
-							<div class="task__goal-list" v-for="task in tasks" :key="task.id">
-								<div class="task__goal-list-inner">
-									<div class="task__goal-item goals goal__name">{{ task.goal }}</div>
-									<div class="task__goal-item goal__type">
-										{{ formatDate(task.dateRange.start) }} - {{ formatDate(task.dateRange.end) }}
+						<div class="habbits__wrapper">
+							<div class="add__habbits">
+								<div :class="{'checked': task.checked}" class="task__habbit-list" v-for="task in tasks"
+								     :key="task.id">
+									<div class="task__goal-item habit goal__name">{{ task.habbit }}</div>
+									<div class="checkbox__editor">
+										<CustomCheckbox v-model="task.checked" @input="inputClick(task)"/>
+										<PunktEditor :value="punktValue"/>
 									</div>
 								</div>
-								<ProgressCircle
-									v-model:progress="progress[task.id]"
-									:radius="radius"
-									:offset="offsetForTask(task.id)"
-									:circumference="circumference"
-								/>
+							</div>
+						</div>
+					</div>
+					<div class="goals__content">
+						<div class="goals__header">
+							<div class="goals__title goals__text">Your Goals</div>
+							<button class="goals__list goals__text">Show all</button>
+						</div>
+						<div class="goals__wrapper">
+							<div class="add__goals">
+								<div class="task__goal-list" v-for="task in tasks" :key="task.id">
+									<div class="task__goal-list-inner">
+										<div class="task__goal-item goals goal__name">{{ task.goal }}</div>
+										<div class="task__datum-wrapper">
+											<div class="task__start__date tasks__date">
+												<span class="task__label">Start date</span>
+												<div class="task__goal-item goal__type">{{
+													formatDate(task.dateRange.start) }}
+												</div>
+											</div>
+											<div class="task__end__date tasks__date">
+												<span class="task__label">End date</span>
+												<div class="task__goal-item goal__type">{{
+													formatDate(task.dateRange.end) }}
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<ProgressCircle
+										:key="progress[task.id]"
+										v-model:progress="progress[task.id]"
+										:radius="radius"
+										:offset="offsetForTask(task.id)"
+										:circumference="circumference"
+									/>
+									<button @click="clearTask(task.id)" class="remove__task-btn">remove</button>
+								</div>
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="button__add-goal">
-				<button @click="toggleHabitGoal" class="goal__btn">
-					<img class="goal__btn-icon" :src="AddIcon" alt=""/>
-				</button>
+
+			<div class="content__bottom">
+				<div class="profile__icon-wrapper">
+					<NuxtLink to="/settings">
+						<img :src="EditPicture" alt="" class="profile__icon-item">
+					</NuxtLink>
+				</div>
+				<div class="button__add-goal">
+					<button @click="toggleHabitGoal" class="goal__btn">
+						<img class="goal__btn-icon" :src="AddIcon" alt=""/>
+					</button>
+				</div>
+				<div class="profile__icon-wrapper">
+					<NuxtLink to="/account">
+						<img :src="ProfileIcon" alt="" class="profile__icon-item">
+					</NuxtLink>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -74,20 +104,30 @@
 	import {useHabitStore} from "/stores/habitStore.js";
 	import ProgressCircle from "../src/components/progressBar";
 	import HabbitGoal from "../src/components/newHabitGoal.vue";
-	import AddIcon from "../assets/images/add.png";
+	import AddIcon from "../assets/images/addTask.svg";
 	import CustomCheckbox from "../src/components/customCheckbox.vue";
 	import PunktEditor from "../src/components/punkEditor.vue";
 	import PandaHello from "../assets/images/greetings.webp";
+	import EditPicture from '../assets/images/setting.svg'
+	import ProfileIcon from '../assets/images/profile.png'
 
-	const punktValue = ref("");
+	const punktValue = ref('');
 	const habitStore = useHabitStore();
 	const tasks = computed(() => habitStore.tasks);
-	const username = computed(() => habitStore.username);
 	const progress = ref({});
 	const radius = ref(45);
 	const isHabitGoalVisible = ref(false);
 	const circumference = computed(() => 2 * Math.PI * radius.value);
 	let lastCheckedDate = new Date();
+
+	const username = computed(() => habitStore.username);
+
+	onMounted(() => {
+		habitStore.loadUserData();
+		habitStore.loadTasks();
+
+	});
+
 
 	const calculateProgressForTask = (task) => {
 		const startDate = new Date(task.dateRange.start);
@@ -95,7 +135,7 @@
 		const totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
 		const daysMissed = Math.max(0, Math.min(totalDays, Math.ceil((new Date() - startDate) / (1000 * 60 * 60 * 24))));
 		const progressProcentDays = Math.floor((daysMissed / totalDays) * 100);
-		return { totalDays, daysMissed, progressProcentDays };
+		return {totalDays, daysMissed, progressProcentDays};
 	};
 
 	const offsetForTask = (taskId) => {
@@ -127,6 +167,10 @@
 		isHabitGoalVisible.value = false;
 	};
 
+	const clearTask = (taskId) => {
+		habitStore.removeTask(taskId);
+	};
+
 	onMounted(() => {
 		updateProgress();
 		const interval = setInterval(() => {
@@ -134,7 +178,7 @@
 			if (currentDate.getDate() !== lastCheckedDate.getDate()) {
 				lastCheckedDate = currentDate;
 				updateProgress();
-				console.log("Новый день: прогресс обновлен");
+				console.log("Следующий день: прогресс обновлен");
 			}
 		}, 60000);
 
@@ -142,6 +186,7 @@
 			clearInterval(interval);
 		});
 	});
+
 
 	const formatDate = (date) => {
 		return new Date(date).toLocaleDateString("en-US", {
@@ -152,6 +197,51 @@
 </script>
 
 <style>
+
+	.remove__task-btn {
+		border: none;
+		background: #94a3b8;
+		font-size: 14px;
+		border-radius: 5px;
+		padding: 20px 5px;
+		color: white;
+	}
+
+	.task__datum-wrapper {
+		display: flex;
+	}
+
+	.task__label {
+		font-size: 16px;
+		font-weight: 600;
+		font-family: "Nunito", serif;
+		color: #94a3b8;
+	}
+
+	.habbit__page {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.tasks__date {
+		padding-right: 15px;
+	}
+
+	.content__bottom {
+		position: sticky;
+		bottom: 20px;
+		margin-top: 30px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px 20px;
+	}
+
+	.settings__icon-item,
+	.profile__icon-item {
+		width: 40px;
+	}
+
 	.panda__icon {
 		width: 100%;
 		height: 100%;
@@ -164,8 +254,7 @@
 	}
 
 	.goal__type {
-		color: #a1a1c9;
-		font-weight: 600;
+		font-weight: 400;
 	}
 
 	.goals {
@@ -173,7 +262,6 @@
 		font-weight: 600;
 		font-family: "Nunito", serif;
 		color: green;
-
 	}
 
 	.task__habbit-list {
@@ -220,8 +308,8 @@
 	}
 
 	.goal__btn-icon {
-		width: 70px;
-		height: 70px;
+		width: 40px;
+		height: 40px;
 	}
 
 	.add__habbits,
@@ -238,7 +326,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background: #84dea8;
+		background: #5bbd83;
 		color: white;
 		font-size: 16px;
 		font-family: "Nunito", serif;
@@ -315,11 +403,5 @@
 		width: 100%;
 		border-radius: 15px;
 		padding: 0 20px;
-	}
-
-	.button__add-goal {
-		display: flex;
-		justify-content: end;
-		margin-top: 20px;
 	}
 </style>

@@ -73,7 +73,6 @@
 <style>
 	.wrapper {
 		position: relative;
-
 	}
 
 	.form__input {
@@ -85,7 +84,7 @@
 		border: none;
 		color: black;
 		margin-bottom: 10px;
-		font-size: 14px;
+		font-size: 13px;
 		font-weight: 600;
 		opacity: 85%;
 	}
