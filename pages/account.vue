@@ -1,7 +1,7 @@
 <template>
 	<div class="account__wrapper">
 		<div class="account__content">
-			<div class="accout__title">Account</div>
+			<div class="accout__title">Account settings</div>
 			<div class="account__fields">
 				<div v-for="field in data.fields" :key="field.id" class="account__field">
 					<span class="field__label"> {{ field.label}}</span>
@@ -20,6 +20,10 @@
 	import {ref, onMounted} from 'vue';
 	import VFields from '/src/components/v-fields.vue';
 	import {useHabitStore} from '../stores/habitStore.js';
+
+	definePageMeta({
+		layout: 'footerlayout',
+	});
 
 	const habitStore = useHabitStore();
 	import {useRouter} from 'vue-router'
