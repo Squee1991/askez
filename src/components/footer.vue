@@ -1,75 +1,74 @@
 <template>
 	<footer class="footer">
-		<div class="footer-container">
-			<div class="footer-logo">
-				<img class="footer__logo" :src="Logo" alt="Askese Logo"/>
+		<div class="content__bottom">
+			<div class="profile__icon-wrapper">
+				<NuxtLink to="/settings">
+					<img src="assets/images/setings.svg" alt="" class="profile__icon-item">
+				</NuxtLink>
 			</div>
-			<nav class="footer-links">
-				<ul class="footer__list">
-					<li class="list__item"><a class="footer__item-link" href="#">Home</a></li>
-					<li class="list__item"><a class="footer__item-link" href="#">Description</a></li>
-					<li class="list__item"><a class="footer__item-link" href="#">Profile</a></li>
-				</ul>
-			</nav>
-			<div class="footer-contact">
-				<div class="footer__contanct-row">
-					<h4>Contact Us</h4>
-					<p>Email: @askese.com</p>
-				</div>
-				<div class="footer__contanct-row">
-					<p>Follow us:</p>
-					<a href="#"><img src="" alt="instagram"/></a>
-				</div>
+			<div class="button__add-goal">
+				<button @click="toggleHabitGoalHandler"
+				        class="goal__btn">
+					<img src="assets/images/addTask.svg" alt="" class="goal__btn-icon"/>
+				</button>
 			</div>
-		</div>
-		<div class="footer-bottom">
-			<p>&copy; 2024 Askese</p>
+			<div class="profile__icon-wrapper">
+				<NuxtLink to="/welcomePage">
+					<img src="assets/images/home.svg" alt="" class="profile__icon-item">
+				</NuxtLink>
+			</div>
 		</div>
 	</footer>
 </template>
 
+
 <script setup>
-	import Logo from '/assets/images/logo-type.png'
+	const isButtonActive = ref(false);
+	import {defineEmits} from 'vue';
+
+	const emit = defineEmits(['toggleHabit']);
+	const toggleHabitGoalHandler = () => {
+		isButtonActive.value = true
+		console.log('btn in footer');
+		emit('toggleHabit');
+	};
 </script>
 
 <style>
-	.footer {
-		padding: 2rem 1rem;
-		border-top: 1px solid #ddd;
-		background: #DDDCE6;
-	}
 
-	.footer-container {
+	.content__bottom {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		background: #d6dcec;
+		padding: 10px 40px;
 		display: flex;
 		justify-content: space-between;
-		align-items: flex-start;
-		flex-wrap: wrap;
-		max-width: 1200px;
-		margin: 0 auto;
+		align-items: center;
 	}
 
-	.footer__logo {
-		width: 100px;
+	.profile__icon-item {
+		width: 25px;
 	}
 
-	.footer-bottom {
-		text-align: center;
-		margin-top: 2rem;
-		color: grey;
-		font-size: 14px;
+	.goal__btn {
+		width: 50px;
+		height: 50px;
+		padding: 10px;
+		border-radius: 50%;
+		border: none;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: #5bbd83;
+		color: white;
+		font-size: 16px;
+		font-family: "Nunito", serif;
 	}
 
-	.footer__list {
-		text-align: center;
-		font-size: 20px;
-	}
-
-	.footer__item-link {
-		color: black;
-		padding: 5px;
-	}
-
-	.footer__contanct-row {
-		padding-bottom: 20px;
+	.goal__btn-icon {
+		width: 40px;
+		height: 40px;
 	}
 </style>

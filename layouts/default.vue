@@ -8,9 +8,6 @@
 
 <script setup>
 	import {ref} from 'vue'
-	import Header from '/src/components/header.vue'
-	import Footer from '/src/components/footer.vue'
-
 	// export default {
 	// 	components: {
 	// 		Header , Footer
