@@ -4,7 +4,7 @@
 			<div class="overlay">
 				<div v-if="isHabitGoalVisible" class="habbit__goal">
 					<div class="habit-goal-wrapper">
-						<HabbitGoal @add="addTask" @close="closeHabitGoal"/>
+						<HabbitGoal  @toggleHabit="toggleHabitGoal" @add="addTask" @close="closeHabitGoal"/>
 					</div>
 				</div>
 			</div>
@@ -44,55 +44,44 @@
 						<div class="goals__wrapper">
 							<div class="add__goals">
 								<div class="task__goal-list" v-for="task in tasks" :key="task.id">
-									<div class="task__goal-list-inner">
+									<div class="task__goal-wrapper">
 										<div class="task__goal-item goals goal__name">{{ task.goal }}</div>
+									</div>
+									<div class="task__goal-list-inner">
 										<div class="task__datum-wrapper">
 											<div class="task__start__date tasks__date">
-												<span class="task__label">Start date</span>
 												<div class="task__goal-item goal__type">{{
 													formatDate(task.dateRange.start) }}
 												</div>
 											</div>
+											<img class="task__array-datum" src="../assets/images/arrayDatum.svg" alt="">
 											<div class="task__end__date tasks__date">
-												<span class="task__label">End date</span>
 												<div class="task__goal-item goal__type">{{
 													formatDate(task.dateRange.end) }}
 												</div>
 											</div>
 										</div>
+										<ProgressCircle
+											:key="progress[task.id]"
+											v-model:progress="progress[task.id]"
+											:radius="radius"
+											:offset="offsetForTask(task.id)"
+											:circumference="circumference"
+										/>
 									</div>
-
-									<ProgressCircle
-										:key="progress[task.id]"
-										v-model:progress="progress[task.id]"
-										:radius="radius"
-										:offset="offsetForTask(task.id)"
-										:circumference="circumference"
-									/>
-									<button @click="clearTask(task.id)" class="remove__task-btn">remove</button>
+									<div class="delete__block__btns">
+										<button @click="clearTask(task.id)" class="remove__task-btn">
+											<span class="delete__text">Delete</span>
+											<img class="delete__icon" src="../assets/images/deleteIcon.svg" alt="">
+										</button>
+									</div>
 								</div>
 
 							</div>
+
 						</div>
 					</div>
-				</div>
-			</div>
-
-			<div class="content__bottom">
-				<div class="profile__icon-wrapper">
-					<NuxtLink to="/settings">
-						<img :src="EditPicture" alt="" class="profile__icon-item">
-					</NuxtLink>
-				</div>
-				<div class="button__add-goal">
-					<button @click="toggleHabitGoal" class="goal__btn">
-						<img class="goal__btn-icon" :src="AddIcon" alt=""/>
-					</button>
-				</div>
-				<div class="profile__icon-wrapper">
-					<NuxtLink to="/account">
-						<img :src="ProfileIcon" alt="" class="profile__icon-item">
-					</NuxtLink>
+					<Footer @toggleHabit="toggleHabitGoal"/>
 				</div>
 			</div>
 		</div>
@@ -100,16 +89,15 @@
 </template>
 
 <script setup>
-	import {ref, computed, onMounted, onUnmounted} from "vue";
+	import {ref, computed, onMounted, onUnmounted, defineEmits} from "vue";
 	import {useHabitStore} from "/stores/habitStore.js";
 	import ProgressCircle from "../src/components/progressBar";
 	import HabbitGoal from "../src/components/newHabitGoal.vue";
-	import AddIcon from "../assets/images/addTask.svg";
 	import CustomCheckbox from "../src/components/customCheckbox.vue";
 	import PunktEditor from "../src/components/punkEditor.vue";
 	import PandaHello from "../assets/images/greetings.webp";
-	import EditPicture from '../assets/images/setting.svg'
 	import ProfileIcon from '../assets/images/profile.png'
+	import Footer from '../src/components/footer.vue'
 
 	const punktValue = ref('');
 	const habitStore = useHabitStore();
@@ -127,7 +115,6 @@
 		habitStore.loadTasks();
 
 	});
-
 
 	const calculateProgressForTask = (task) => {
 		const startDate = new Date(task.dateRange.start);
@@ -160,6 +147,7 @@
 	};
 
 	const toggleHabitGoal = () => {
+		console.log('btn from footer in WeclomePage');
 		isHabitGoalVisible.value = true;
 	};
 
@@ -187,7 +175,6 @@
 		});
 	});
 
-
 	const formatDate = (date) => {
 		return new Date(date).toLocaleDateString("en-US", {
 			day: "2-digit",
@@ -198,17 +185,47 @@
 
 <style>
 
+	.task__array-datum {
+		width: 18px;
+		margin-right: 10px;
+	}
+
+	.delete__block__btns {
+		margin-bottom: 10px;
+		display: flex;
+		width: 100%;
+	}
+
+	.delete__text {
+		padding-right: 10px;
+	}
+
+	.delete__icon {
+		width: 10px;
+	}
+
 	.remove__task-btn {
+		width: 100%;
 		border: none;
-		background: #94a3b8;
+		background: #FF3E4BCC;
 		font-size: 14px;
-		border-radius: 5px;
-		padding: 20px 5px;
+		border-radius: 10px;
+		padding: 10px 0;
 		color: white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: "Nunito", serif;
 	}
 
 	.task__datum-wrapper {
 		display: flex;
+		align-items: center;
+	}
+
+	.task__goal-list-inner {
+		display: flex;
+		justify-content: space-between;
 	}
 
 	.task__label {
@@ -228,18 +245,20 @@
 	}
 
 	.content__bottom {
-		position: sticky;
-		bottom: 20px;
-		margin-top: 30px;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		background: #d6dcec;
+		padding: 10px 40px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 10px 20px;
 	}
 
 	.settings__icon-item,
 	.profile__icon-item {
-		width: 40px;
+		width: 25px;
 	}
 
 	.panda__icon {
@@ -280,9 +299,6 @@
 	}
 
 	.task__goal-list {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
 		background: #FBFBFB;
 		margin: 7px 0;
 		border-radius: 10px;

@@ -68,12 +68,12 @@
 		if (password.length < 6) {
 			errors.push("Password must be at least 6 characters long");
 		}
-		if (!/[A-Z]/.test(password)) {
-			errors.push("Password must include at least one uppercase letter");
-		}
-		if (!/[0-9]/.test(password)) {
-			errors.push("Password must include at least one number");
-		}
+		// if (!/[A-Z]/.test(password)) {
+		// 	errors.push("Password must include at least one uppercase letter");
+		// }
+		// if (!/[0-9]/.test(password)) {
+		// 	errors.push("Password must include at least one number");
+		// }
 		// if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
 		//     errors.push("Password must include at least one special character");
 		// }
@@ -146,14 +146,13 @@
 	.form__logo {
 		display: flex;
 		justify-content: center;
-		flex-direction: column;
 		align-items: center;
 		text-align: center;
 		margin-bottom: 20px;
 	}
 
 	.form__logo-icon {
-		padding: 10px;
+		padding: 5px;
 		width: 60px;
 	}
 
