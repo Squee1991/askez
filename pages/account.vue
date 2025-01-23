@@ -1,7 +1,7 @@
 <template>
 	<div class="account__wrapper">
 		<div class="account__content">
-			<div class="accout__title">Account settings</div>
+			<HeaderWithback title="Account"/>
 			<div class="account__fields">
 				<div v-for="field in data.fields" :key="field.id" class="account__field">
 					<span class="field__label"> {{ field.label}}</span>
@@ -15,8 +15,8 @@
 		</div>
 	</div>
 </template>
-
 <script setup>
+	import HeaderWithback from '../src/components/headerWithBack.vue'
 	import {ref, onMounted} from 'vue';
 	import VFields from '/src/components/v-fields.vue';
 	import {useHabitStore} from '../stores/habitStore.js';
@@ -90,18 +90,9 @@
 		router.push("/welcomePage");
 	};
 
-
 </script>
 
 <style scoped>
-
-	.accout__title {
-		font-family: "Nunito", serif;
-		font-size: 29px;
-		font-weight: 700;
-		line-height: 39.56px;
-		margin-bottom: 30px;
-	}
 
 	.account__content {
 		padding: 30px;

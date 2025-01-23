@@ -156,7 +156,6 @@
 		width: 60px;
 	}
 
-
 	.form__field {
 		margin-bottom: 20px;
 	}

@@ -1,64 +1,62 @@
 <template>
-	<div class="askeza__settings">
-		<div class="askeza__settings-content">
-			<div class="settings__title">Settings</div>
-			<div class="settings__btn-wrapper">
-				<NuxtLink to="/account">
-					<button class="account__settings-btn">
-						Account settings
-					</button>
-				</NuxtLink>
-			</div>
-			<div class="settings__btn-wrapper">
-				<NuxtLink>
-					<button class="account__settings-btn">
-						About app
-					</button>
-				</NuxtLink>
-			</div>
-			<div class="settings__btn-wrapper">
-				<NuxtLink>
-					<button class="account__settings-btn">
-						Language
-					</button>
-				</NuxtLink>
+	<div class="settings__wrapper">
+		<HeaderWithBack :title="settings.title" />
+		<div class="settings__btns">
+			<div
+				v-for="item in settings.items"
+				:key="item.id"
+				class="menu__btn-wrapper"
+			>
+				<button class="account__settings-btn">
+					<span class="accoun__text">{{ item.text }}</span>
+				</button>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
-	definePageMeta({
-		layout: 'footerlayout'
-	})
+	import { ref, onMounted } from "vue";
+	import HeaderWithBack from '../src/components/headerWithBack.vue';
+	const settings = ref([]);
+	onMounted(async () => {
+		const response = await fetch('/dataListJSON.json');
+		const data = await response.json();
+		settings.value = data.settings;
+	});
 </script>
 
 <style scoped>
-
-	.askeza__settings-content {
+	.settings__wrapper {
+		padding: 25px;
+		height: 100vh;
 		width: 100%;
-		padding: 30px;
 	}
 
-	.settings__title {
-	    font-size: 30px;
-		font-family: "Nunito", serif;
-		padding: 15px;
-		margin-bottom: 10px;
+
+	.menu__btn-wrapper {
+		padding: 10px 0;
 	}
 
 	.account__settings-btn {
+		background: none;
 		border: none;
+		padding: 10px 0;
 		width: 100%;
-		padding: 15px;
 		font-size: 18px;
-		border-radius: 10px;
+		font-weight: 600;
 		font-family: "Nunito", serif;
-		font-weight: 700;
 		text-align: start;
+		border-radius: 10px;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		position: relative;
+		cursor: pointer;
 	}
-
-	.settings__btn-wrapper {
-		padding:  10px 0;
+	
+	.accoun__text {
+		font-size: 16px;
+		color: #333;
 	}
 </style>

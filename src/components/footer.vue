@@ -2,8 +2,8 @@
 	<footer class="footer">
 		<div class="content__bottom">
 			<div class="profile__icon-wrapper">
-				<NuxtLink to="/settings">
-					<img src="assets/images/setings.svg" alt="" class="profile__icon-item">
+				<NuxtLink to="/menu">
+					<img src="assets/images/menu.svg" alt="" class="profile__icon-item">
 				</NuxtLink>
 			</div>
 			<div class="button__add-goal">
@@ -37,11 +37,13 @@
 <style>
 
 	.content__bottom {
+		border-top-right-radius: 20px;
+		border-top-left-radius: 20px;
 		position: fixed;
 		bottom: 0;
 		left: 0;
 		width: 100%;
-		background: #d6dcec;
+		background-color: #DFF4E4;
 		padding: 10px 40px;
 		display: flex;
 		justify-content: space-between;
@@ -53,8 +55,8 @@
 	}
 
 	.goal__btn {
-		width: 50px;
-		height: 50px;
+		width: 40px;
+		height: 40px;
 		padding: 10px;
 		border-radius: 50%;
 		border: none;
