@@ -15,7 +15,6 @@
 </template>
 
 <script setup>
-
 	import SuccessPanda from '/assets/images/successPanda.png';
 	import { useRoute } from 'vue-router';
 	const route = useRoute();

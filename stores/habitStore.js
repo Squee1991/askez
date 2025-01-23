@@ -1,18 +1,23 @@
+import { defineStore } from 'pinia'
 export const useHabitStore = defineStore('askezaStore', {
 	state: () => ({
 		username: null,
 		email: null,
 		password: null,
 		tasks: [],
+		radius: 45,
+		selectedTask: null,
 	}),
 	actions: {
+		saveTasks() {
+			localStorage.setItem("tasks", JSON.stringify(this.tasks));
+		},
 		setUserData(userData) {
 			this.username = userData.name;
 			this.email = userData.email;
 			this.password = userData.password;
 			localStorage.setItem('userData', JSON.stringify(userData));
 		},
-
 		loadUserData() {
 			const savedData = localStorage.getItem('userData');
 			if (savedData) {
@@ -32,11 +37,9 @@ export const useHabitStore = defineStore('askezaStore', {
 				password: this.password
 			}))
 		},
-
 		addTask(task) {
 			const isDuplicate = this.tasks.some((item) =>
 				item.goal === task.goal &&
-				item.habbit === task.habbit &&
 				item.dateRange.start === task.dateRange.start &&
 				item.dateRange.end === task.dateRange.end
 			);
@@ -44,27 +47,35 @@ export const useHabitStore = defineStore('askezaStore', {
 				const newTask = {
 					...task,
 					id: Date.now(),
-					checked: false,
 					progress: 0,
 				};
 				this.tasks.push(newTask);
+				this.updateProgress(newTask);
 				localStorage.setItem('tasks', JSON.stringify(this.tasks));
 			}
 		},
-
 		loadTasks() {
 			const savedTasks = localStorage.getItem('tasks');
 			if (savedTasks) {
 				this.tasks = JSON.parse(savedTasks);
+				this.updateAllProgress();
 			}
+		},
+		updateProgress(task) {
+			const circumference = 2 * Math.PI * this.radius;
+			const startDate = new Date(task.dateRange.start);
+			const endDate = new Date(task.dateRange.end);
+			const totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+			const daysPassed = Math.ceil((new Date() - startDate) / (1000 * 60 * 60 * 24));
+			const progress = Math.min(100, Math.floor((daysPassed / totalDays) * 100));
+			task.progress = progress;
+			task.offset = circumference - (progress / 100) * circumference;
 		},
 
-		updateTask(taskId, checked) {
-			const task = this.tasks.find((task) => task.id === taskId);
-			if (task) {
-				task.checked = checked;
-			}
+		updateAllProgress() {
+			this.tasks.forEach((task) => this.updateProgress(task));
 		},
+
 		clearTasks() {
 			this.username = null;
 			this.tasks = [];
@@ -73,6 +84,5 @@ export const useHabitStore = defineStore('askezaStore', {
 			this.tasks = this.tasks.filter(task => task.id !== taskId);
 			localStorage.setItem('tasks', JSON.stringify(this.tasks));
 		},
-
 	},
 });
