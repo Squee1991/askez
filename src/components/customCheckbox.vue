@@ -11,7 +11,8 @@
 </template>
 
 <script setup>
-	import { defineProps, defineEmits } from "vue";
+	import {defineProps, defineEmits} from "vue";
+
 	defineProps({
 		modelValue: {
 			type: Boolean,
@@ -39,19 +40,19 @@
 		z-index: 0;
 	}
 
-.fake:before {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background-image: url('../../assets/images/checkbox.svg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    opacity: 0;
-}
+	.fake:before {
+		content: '';
+		position: absolute;
+		width: 30px;
+		height: 30px;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		background-image: url('../../assets/images/checkbox.svg');
+		background-size: cover;
+		background-repeat: no-repeat;
+		opacity: 0;
+	}
 
 	.checkbox:checked + .fake:before {
 		opacity: 1;
