@@ -38,6 +38,7 @@
 		}
 	};
 
+
 	watch(() => props.field.value, (newValue) => {
 		localFieldValue.value = newValue;
 	});

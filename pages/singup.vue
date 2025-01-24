@@ -59,6 +59,15 @@
 				placeholder: "Enter you password",
 				value: "",
 				error: false
+			},
+			{
+				id: 4,
+				name: "confirm",
+				type: "password",
+				label: "",
+				placeholder: "Enter you password",
+				value: "",
+				error: false
 			}
 		],
 	})
