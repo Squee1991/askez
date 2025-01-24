@@ -14,9 +14,7 @@
 				/>
 				<p v-if="field.error" class="form__error">{{ field.error }}</p>
 			</div>
-
-			<button @click="submitForm" class="form__btn"> Registration</button>
-
+			<button @click="submitForm" class="form__btn">Registration</button>
 		</div>
 	</div>
 </template>
