@@ -1,12 +1,12 @@
 <template>
 	<div class="progress-container">
 		<svg class="progress-circle" viewBox="0 0 100 100">
-			<circle class="background-circle" cx="50" cy="50" r="45"/>
+			<circle class="background-circle" cx="50" cy="50" r="40" />
 			<circle
 				class="progress"
 				cx="50"
 				cy="50"
-				:r="radius"
+				r="40"
 				:stroke-dasharray="circumference"
 				:stroke-dashoffset="offset"
 			/>
@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-	import {defineProps, defineEmits, watch} from "vue";
+	import { defineProps, defineEmits, watch } from "vue";
 
 	const emit = defineEmits(["update:progress"]);
 	const props = defineProps({
@@ -42,14 +42,14 @@
 	});
 
 	watch(() => props.progress, (newVal) => {
-		emit("update:progress", newVal)
+		emit("update:progress", newVal);
 	});
 </script>
 
 <style scoped>
+
 	.progress-container {
 		padding: 10px;
-		width: 100px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -63,20 +63,19 @@
 	.background-circle {
 		fill: none;
 		stroke: #e6e6e6;
-		stroke-width: 10;
+		stroke-width: 13;
 	}
 
 	.progress {
 		fill: none;
-		stroke: #ff8a65;
-		stroke-width: 10;
-		stroke-linecap: round;
+		stroke: #4FC55C;
+		stroke-width:13;
 		transition: stroke-dashoffset 0.5s ease;
 	}
 
 	.progress-text {
 		font-family: "Nunito", serif;
-		font-size: 24px;
-		color: black;
+		fill: #4FC55C;
+		font-weight: 600;
 	}
 </style>

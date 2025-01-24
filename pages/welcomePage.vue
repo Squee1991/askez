@@ -4,7 +4,7 @@
 			<div class="overlay">
 				<div v-if="isHabitGoalVisible" class="habbit__goal">
 					<div class="habit-goal-wrapper">
-						<HabbitGoal  @toggleHabit="toggleHabitGoal" @add="addTask" @close="closeHabitGoal"/>
+						<HabbitGoal @toggleHabit="toggleHabitGoal" @add="addTask" @close="closeHabitGoal"/>
 					</div>
 				</div>
 			</div>
@@ -22,40 +22,50 @@
 						<div class="goals__wrapper">
 							<div class="add__goals">
 								<div class="task__goal-list" v-for="task in tasks" :key="task.id">
-									<div class="task__goal-wrapper">
-										<div class="task__goal-item goals goal__name">{{ task.goal }}</div>
-									</div>
+
 									<div class="task__goal-list-inner">
-										<div class="task__datum-wrapper">
-											<div class="task__start__date tasks__date">
-												<div class="task__goal-item goal__type">{{
-													formatDate(task.dateRange.start) }}
-												</div>
+										<div class="taks__progress__date-wrapper">
+											<div class="progres__wrapper">
+												<ProgressCircle
+													:progress="task.progress"
+													:offset="task.offset"
+													:radius="habitStore.radius"
+													:circumference="circumference"
+												/>
 											</div>
-											<img class="task__array-datum" src="../assets/images/arrayDatum.svg" alt="">
-											<div class="task__end__date tasks__date">
-												<div class="task__goal-item goal__type">{{
-													formatDate(task.dateRange.end) }}
+											<div class="task__datum-wrapper">
+												<div class="task__goal-wrapper">
+													<div class="task__goal-item goals goal__name">{{ task.goal }}</div>
+												</div>
+												<div class="task__date-wrapper">
+													<div class="task__start__date tasks__date">
+														<div class="task__goal-item goal__type">{{
+															formatDate(task.dateRange.start) }}
+														</div>
+													</div>
+													<img class="arrow__datum" src="../assets/images/arrayDatum.svg" alt="">
+													<div class="task__end__date tasks__date">
+														<div class="task__goal-item goal__type">{{
+															formatDate(task.dateRange.end) }}
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
-										<ProgressCircle
-											:progress="task.progress"
-											:offset="task.offset"
-											:radius="habitStore.radius"
-											:circumference="circumference"
-										/>
-										<button style="padding: 10px" @click="openTaskDetails(task)">Данные задачи</button>
-									</div>
-									<div class="delete__block__btns">
-										<button @click="clearTask(task.id)" class="remove__task-btn">
-											<span class="delete__text">Delete</span>
-											<img class="delete__icon" src="../assets/images/deleteIcon.svg" alt="">
-										</button>
-									</div>
-									<div class="not__task-inner" v-if="isNotTask">
-										<img class="no__task-icon" :src="NotaskIcon" alt="">
-										<span class="no__task-text">No active Goals</span>
+										<div class="taks__btns">
+											<div class="btn__delete-wrapper">
+												<button @click="clearTask(task.id)" class="task__btn remove__task-btn">
+													<img class="delete__icon" src="../assets/images/deleteIcon.svg"
+													     alt="">
+												</button>
+											</div>
+											<div class="btn__details-wrapper">
+												<button @click="openTaskDetails(task)" class="task__btn task__come-btn">
+													Open goal
+												</button>
+											</div>
+										</div>
+
 									</div>
 								</div>
 							</div>
@@ -81,8 +91,10 @@
 	import PandaHello from "../assets/images/greetings.webp";
 	import Footer from '../src/components/footer.vue'
 	import NotaskIcon from '../assets/images/NoTask.svg'
-    const isNotTask = ref(true)
-    import {useRouter} from 'vue-router'
+
+	const isNotTask = ref(true)
+	import {useRouter} from 'vue-router'
+
 	const router = useRouter()
 	const habitStore = useHabitStore();
 	const tasks = computed(() => habitStore.tasks);
@@ -135,10 +147,58 @@
 		console.log("Даты   :", formattedDate);
 		return formattedDate;
 	};
-
 </script>
 
 <style>
+	.task__come-btn {
+		padding: 9px 18px;
+		border: none;
+		background: #4FC55C;
+		border-radius: 5px;
+		color: white;
+		font-family: "Nunito", serif;
+	}
+
+	.remove__task-btn {
+		border: none;
+	}
+
+	.taks__btns {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+	}
+
+	.taks__progress__date-wrapper {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.btn__delete-wrapper {
+		display: flex;
+		justify-content: center;
+		padding: 10px;
+	}
+
+	.progres__wrapper {
+		width: 90px;
+	}
+
+	.task__datum-wrapper {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		align-items: start;
+	}
+
+	.task__date-wrapper {
+		display: flex;
+		font-size: 14px;
+	}
+
+	.delete__icon {
+		width: 20px;
+	}
 
 	.not__task-inner {
 		margin: 10px auto;
@@ -162,16 +222,6 @@
 		color: #aed7ae;
 	}
 
-	.task__array-datum {
-		width: 18px;
-		margin-right: 10px;
-	}
-
-	.task__datum-wrapper {
-		display: flex;
-		align-items: center;
-	}
-
 	.task__goal-list-inner {
 		display: flex;
 		justify-content: space-between;
@@ -180,10 +230,6 @@
 	.habbit__page {
 		display: flex;
 		flex-direction: column;
-	}
-
-	.tasks__date {
-		padding-right: 15px;
 	}
 
 	.panda__icon {
@@ -195,18 +241,23 @@
 		font-weight: 400;
 	}
 
+	.arrow__datum {
+		margin: 0 5px;
+		width: 16px;
+	}
+
 	.goals {
 		font-size: 18px;
 		font-weight: 600;
 		font-family: "Nunito", serif;
-		color: green;
+		color: #2F2F2F;
 	}
 
 	.task__goal-list {
-		background: #FBFBFB;
+		background: rgba(248, 246, 246, 0.95);
 		margin: 7px 0;
 		border-radius: 10px;
-		padding: 5px 10px;
+		padding: 10px;
 	}
 
 	.habbit__goal {
@@ -221,24 +272,13 @@
 	}
 
 	.add__goals {
+		margin-bottom: 40px;
 		padding: 10px 0;
-	}
-
-	.habbit__header
-	.goals__header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 0 10px;
 	}
 
 	.progress__inner {
 		width: 100%;
 		padding: 10px;
-	}
-
-	.goals__inner {
-		padding: 30px 0;
 	}
 
 	.welcome {
@@ -247,7 +287,6 @@
 		position: relative;
 		height: 100vh;
 		max-height: 100vh;
-
 	}
 
 	.title {
