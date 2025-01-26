@@ -25,6 +25,8 @@
 
 	a {
 		text-decoration: none;
+		display: flex;
+		align-items: center;
 	}
 
 	li {

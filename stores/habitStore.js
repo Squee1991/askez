@@ -61,12 +61,13 @@ export const useHabitStore = defineStore('askezaStore', {
 				this.updateAllProgress();
 			}
 		},
+
 		updateProgress(task) {
 			const circumference = 2 * Math.PI * this.radius;
 			const startDate = new Date(task.dateRange.start);
 			const endDate = new Date(task.dateRange.end);
-			const totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
-			const daysPassed = Math.ceil((new Date() - startDate) / (1000 * 60 * 60 * 24));
+			const totalDays = Math.max(1, Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)));
+			const daysPassed = Math.max(0, Math.ceil((new Date() - startDate) / (1000 * 60 * 60 * 24)));
 			const progress = Math.min(100, Math.floor((daysPassed / totalDays) * 100));
 			task.progress = progress;
 			task.offset = circumference - (progress / 100) * circumference;
