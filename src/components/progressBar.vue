@@ -9,6 +9,7 @@
 				r="40"
 				:stroke-dasharray="circumference"
 				:stroke-dashoffset="offset"
+				transform="rotate(-90 50 50)"
 			/>
 			<text x="50" y="55" text-anchor="middle" class="progress-text">
 				{{ progress }}%

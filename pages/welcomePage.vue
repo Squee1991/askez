@@ -53,14 +53,8 @@
 											</div>
 										</div>
 										<div class="taks__btns">
-											<div class="btn__delete-wrapper">
-												<button @click="clearTask(task.id)" class="task__btn remove__task-btn">
-													<img class="delete__icon" src="../assets/images/deleteIcon.svg"
-													     alt="">
-												</button>
-											</div>
 											<div class="btn__details-wrapper">
-												<button @click="openTaskDetails(task)" class="task__btn task__come-btn">
+												<button @click="openTaskDetails(task)" class="task__come-btn">
 													Open goal
 												</button>
 											</div>
