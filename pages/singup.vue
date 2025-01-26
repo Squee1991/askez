@@ -4,7 +4,7 @@
             <img class="form__logo-icon" src="../assets/images/logo.png" alt="Logo"/>
             <h1 class="form__logo-label">SCETIC</h1>
         </div>
-        <!-- Начало формы -->
+
         <form @submit.prevent="submitForm" class="form__field-inner">
             <div v-for="field in data.fields" :key="field.id" class="form__field">
                 <span class="form__label">{{ field.label }}</span>
@@ -27,7 +27,7 @@
                 <span v-else>Register</span>
             </button>
         </form>
-        <!-- Конец формы -->
+
     </div>
 </template>
 
@@ -143,16 +143,16 @@ const validateField = (field) => {
 const submitForm = async () => {
     isSubmitting.value = true;
 
-    // Валидация всех полей
+
     data.value.fields.forEach(validateField);
 
-    // Если форма не валидна
+
     if (!isFormValid.value) {
         isSubmitting.value = false;
         return;
     }
 
-    // Формирование данных для отправки
+
     const userData = data.value.fields.reduce((acc, field) => {
         acc[field.name] = field.value;
         return acc;
