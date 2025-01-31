@@ -11,10 +11,16 @@
 					<NuxtLink :to="item.link" class="account__settings-btn">
 						<img
 							class="account__icon"
+							:class="{
+							'settings-bg-orange': item.icon === 'setings.svg',
+							'lang-bg-rot': item.icon === 'language.svg',
+							'aboutapp-bg-green': item.icon === 'aboutAPP.svg',
+							'acc-bg-blue': item.icon === 'account.svg'
+						}"
 							:src="item.icon"
-							alt=""
+							:alt="item.text"
 						/>
-						<span class="accoun__text">{{ item.text }}</span>
+						<span class="account__text">{{ item.text }}</span>
 					</NuxtLink>
 				</div>
 			</div>
@@ -24,7 +30,8 @@
 
 <script setup>
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
-	import { ref, onMounted } from "vue";
+	import {ref, onMounted} from "vue";
+
 	const menuList = ref([]);
 	onMounted(async () => {
 		const response = await fetch('/dataListJSON.json');
@@ -38,43 +45,64 @@
 
 </script>
 
-<style>
-.account__icon {
-	width: 20px;
-	margin-right: 20px;
-}
+<style scoped>
 
-.accoun__text {
-	color: #2C3E50; /* Тёмно-синий цвет текста для хорошего контраста */
-}
+	.lang-bg-rot {
+		background: #D64545;
+	}
 
-.askeza__menu-content {
-	width: 100%;
-	padding: 30px;
-	height: 100vh;
-	background: #E8F6F3; /* Светло-голубой пастельный фон */
-}
+	.settings-bg-orange {
+		background: #ffa450;
+	}
 
-.menu__title {
-	font-size: 30px;
-	font-family: "Nunito", serif;
-	padding: 15px 0;
-	font-weight: 700;
-	margin-bottom: 10px;
-	color: #2C3E50; /* Тёмно-синий цвет заголовка */
-}
+	.acc-bg-blue {
+		background: #4169E1;
+	}
 
-.account__settings-btn:after {
-	content: '';
-	width: 100%;
-	height: 1px;
-	background: #2C3E50; /* Тёмно-синяя линия под кнопкой */
-	bottom: 0;
-	left: 0;
-	position: absolute;
-}
+	.aboutapp-bg-green {
+		background: #32CD32;
+	}
 
-.menu__btn-wrapper {
-	padding: 5px 0;
-}
+
+	.account__icon {
+		width: 35px;
+		margin-right: 20px;
+		padding: 5px;
+		border-radius:10px;
+	}
+
+	.account__text {
+		color: var(--text-color);
+	}
+
+	.askeza__menu-content {
+		width: 100%;
+		padding: 30px;
+		height: 100vh;
+		background-color: var(--background-color);
+	}
+
+	.menu__title {
+		font-size: 30px;
+		font-family: "Nunito", serif;
+		padding: 15px 0;
+		font-weight: 700;
+		margin-bottom: 10px;
+		color: var(--text-color);
+	}
+
+	.account__settings-btn:after {
+		content: '';
+		width: 100%;
+		height: 1px;
+		background: #dec8b4;
+		bottom: 0;
+		left: 0;
+		position: absolute;
+	}
+
+	.menu__btn-wrapper {
+		padding: 5px 0;
+	}
+
 </style>

@@ -1,0 +1,45 @@
+.vc-highlight-light-bg {
+	background: white;
+}
+
+.vc-highlight-bg-solid {
+	background-color: #4FC55C;
+}
+
+.vc-highlight-bg-light {
+	background-color: var(--vc-highlight-bg);
+}
+
+.vc-blue {
+	border: none;
+}
+
+.vc-header .vc-arrow {
+	color: var(--vc-arrow-cal);
+}
+
+.vc-container {
+	width: 100%;
+	border: none;
+	background: var(--background-color);
+	padding: 10px;
+}
+
+.vc-header .vc-title {
+	color: var(--text-color);
+	background: none;
+	font-size: 20px;
+}
+
+.vc-header {
+	margin-top: 0;
+}
+
+.vc-highlight-content-light {
+	color: var(--text-color);
+}
+
+.vc-day,
+.vc-weekday {
+	color: var(--text-color);
+}

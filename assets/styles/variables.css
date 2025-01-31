@@ -1,0 +1,36 @@
+:root {
+	--background-color: #ffffff;
+	--text-color: #000000;
+	--button-bg: #2E2E2E;
+	--button-text-color: #ffffff;
+	--calendar--bg: #FBFBFB;
+	--calendar-d-color: #ffffff;
+	--calendar-border-color: #ffffff;
+	--title-c: black;
+	--footer-bg: #DFF4E4;
+	--task-bg: #F2F8F6F6;
+	--goals-name: #2F2F2F;
+	--goals-date-color: #2F2F2F;
+	--background-new-goal: #f8f4f4;
+	--vc-arrow-cal: #FF5C00;
+	--vc-highlight-bg: #C7FFDE;
+}
+
+.dark {
+	--background-color: #34364a;
+	--text-color: #ffffff;
+	--button-bg: #FBFBFB;
+	--button-text-color: #2F2F2F;
+	--calendar--bg: rgba(57, 214, 219, 0.27);
+	--calendar--d-color: black;
+	--calendar-border-color: black;
+	--title-c: #ffffff;
+	--footer-bg: #3C3F47;
+	--task-bg: #3C3F47;
+	--goals-name: #F2F8F6F6;
+	--goals-date-color: #F2F8F6F6;
+	--background-new-goal: #2F2F2F;
+	--vc-arrow-cal: #2F2F2F;
+	--vc-highlight-bg: #394E4A;
+}
+

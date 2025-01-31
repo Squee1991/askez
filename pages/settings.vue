@@ -7,8 +7,12 @@
 				:key="item.id"
 				class="menu__btn-wrapper"
 			>
-				<button class="account__settings-btn">
+				<button class="account__settings-btn"
+				        @click="buttonClick(item.text)">
 					<span class="accoun__text">{{ item.text }}</span>
+					<img class="color__mode-icon"
+						:src="colorMode.preference === 'dark' ? item.lightIcon : item.darkIcon"
+						alt="">
 				</button>
 			</div>
 		</div>
@@ -16,47 +20,81 @@
 </template>
 
 <script setup>
-	import { ref, onMounted } from "vue";
+	import { ref, onMounted } from 'vue';
 	import HeaderWithBack from '../src/components/headerWithBack.vue';
 	const settings = ref([]);
+
+	const colorMode = useColorMode();
+	const toggleTheme = () => {
+		colorMode.preference = colorMode.preference === 'light' ? 'dark' : 'light';
+	};
+
+	const buttonClick = (text ) => {
+		if (text === 'Mode') {
+			toggleTheme()
+		}
+	}
+
 	onMounted(async () => {
 		const response = await fetch('/dataListJSON.json');
 		const data = await response.json();
 		settings.value = data.settings;
 	});
+
+	definePageMeta({
+		layout: "footerlayout"
+	})
+
 </script>
 
 <style scoped>
+
+	.color__mode-icon {
+		width: 30px;
+	}
 	.settings__wrapper {
 		padding: 25px;
 		height: 100vh;
 		width: 100%;
+		background-color: var(--background-color);
 	}
 
-
 	.menu__btn-wrapper {
-		padding: 10px 0;
+		padding: 6px 0;
 	}
 
 	.account__settings-btn {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		background: none;
 		border: none;
 		padding: 10px 0;
 		width: 100%;
 		font-size: 18px;
-		font-weight: 600;
+		font-weight: 400;
 		font-family: "Nunito", serif;
 		text-align: start;
 		border-radius: 10px;
-		display: flex;
-		justify-content: flex-start;
 		align-items: center;
 		position: relative;
 		cursor: pointer;
+		color: var(--text-color);
+
 	}
-	
-	.accoun__text {
-		font-size: 16px;
-		color: #333;
+
+	.color-mode-btn {
+		margin-top: 20px;
+		padding: 10px 20px;
+		background-color: var(--background-color);
+		color: var(--text-color);
+		border: 1px solid var(--text-color);
+		border-radius: 8px;
+		cursor: pointer;
+	}
+
+	.color-mode-btn:hover {
+		background-color: var(--text-color);
+		color: var(--background-color);
 	}
 </style>

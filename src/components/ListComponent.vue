@@ -68,19 +68,33 @@
 		align-items: center;
 		border: none;
 		width: 100%;
-		padding: 10px 0;
-		font-size: 18px;
+		padding: 12px 0;
+		font-size: 20px;
 		border-radius: 10px;
 		font-family: "Nunito", serif;
-		font-weight: 700;
+		font-weight: 400;
 		text-align: start;
 		background: none;
 		position: relative;
 	}
 
+	.account__settings-btn:after {
+		content: '';
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		height: 1px;
+		width: 100%;
+		background: #dec8b4;
+	}
+
 	.no-space {
 		display: flex;
 		justify-content: space-between;
+	}
+
+	.accoun__text {
+		color: var(--text-color);
 	}
 
 </style>

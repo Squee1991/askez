@@ -47,7 +47,9 @@
 			},
 			{
 				"id": 4,
-				"text": "Night mode"
+				"text": "Mode",
+				"darkIcon" : "dark.png",
+				"lightIcon" : "light.png"
 			}
 		]
 	},
@@ -75,7 +77,7 @@
 			{
 				"id": 4,
 				"icon": "setings.svg",
-				"text": "Settings",
+				"text": "settings",
 				"link": "settings"
 			}
 		]

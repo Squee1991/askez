@@ -16,7 +16,12 @@
 				</div>
 				<div class="date__picker-inenr">
 					<span class="date__picke-label label">Select date period</span>
-					<VDatePicker v-model.range="localDateRange" mode="range"/>
+					<VDatePicker
+						locale="en-EN"
+						:min-date='new Date()'
+						v-model.range="localDateRange"
+						mode="range"
+					/>
 				</div>
 				<button class="create__btn" @click="addValue">Create new</button>
 			</div>
@@ -28,7 +33,7 @@
 	import CloseIcon from "/assets/images/close.svg";
 	import SuccessModal from "../../pages/SuccessModal.vue";
 	import SelectComponent from '/src/components/selectComponent.vue'
-	import {useHabitStore} from '/stores/habitStore.js'
+	import {useHabitStore} from '../stores/habitStore.js'
 
 	const habitStore = useHabitStore()
 	const isSuccessVisible = ref(false);
@@ -39,11 +44,11 @@
 	const emit = defineEmits(["close", "add"]);
 	const router = useRouter()
 	import {useRouter} from 'vue-router'
-
+    const date = new Date()
 	const localDateRange = ref({
 		start: new Date(),
 		end: new Date()
-	});
+	})
 
 	const clearFields = (fields) => fields.forEach(field => field.value = "")
 	const addValue = () => {
@@ -77,7 +82,55 @@
 
 </script>
 <style>
+
+	.vc-highlight-light-bg {
+		background: white;
+	}
+
+	.vc-highlight-bg-solid {
+		background-color: #4FC55C;
+	}
+
+	.vc-highlight-bg-light {
+		background-color: var(--vc-highlight-bg);
+	}
+
+	.vc-blue {
+		border: none;
+	}
+
+	.vc-header .vc-arrow {
+		color: var(--vc-arrow-cal);
+	}
+
+	.vc-container {
+		width: 100%;
+		border: none;
+		background: var(--background-color);
+		padding: 10px;
+	}
+
+	.vc-header .vc-title {
+		color: var(--text-color);
+		background: none;
+		font-size: 20px;
+	}
+
+	.vc-header {
+		margin-top: 0;
+	}
+
+	.vc-highlight-content-light {
+		color: var(--text-color);
+	}
+
+	.vc-day,
+	.vc-weekday {
+		color: var(--text-color);
+	}
+
 	.create__btn {
+		margin-top: 10px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -92,11 +145,6 @@
 		border-radius: 8px;
 		position: relative;
 		overflow: hidden;
-	}
-
-	.vc-container {
-		width: 100%;
-		border: none;
 	}
 
 	.label {
@@ -125,7 +173,7 @@
 
 	.input__fields-wrapper {
 		padding: 20px;
-		background: #f8f4f4;
+		background-color: var(--background-color);
 		border-radius: 10px;
 	}
 
@@ -148,6 +196,7 @@
 		font-size: 18px;
 		font-weight: 700;
 		font-family: "Nunito", serif;
+		color: var(--title-c);
 	}
 
 	.close__goal-btn {
@@ -164,12 +213,13 @@
 		font-family: "Nunito", serif;
 		font-weight: 700;
 		padding-bottom: 5px;
+		color: var(--title-c);
 	}
 
 	.input__goal {
 		margin: 3px 0 3px 0;
 		width: 100%;
-		padding: 10px;
+		padding: 15px;
 		border-radius: 10px;
 		border: 1px solid #ededed;
 	}
@@ -177,4 +227,6 @@
 	.input__goal:focus {
 		border: 1px solid #47b7c1;
 	}
+
+
 </style>

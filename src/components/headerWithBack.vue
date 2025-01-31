@@ -24,21 +24,25 @@
 		router.push('/menu');
 	};
 </script>
-<style scoped>
+<style >
 	.back-header {
 		display: flex;
 		align-items: center;
 	}
 
 	.back__arrow-icon {
-		width: 30px;
+		width: 33px;
+		height: 33px;
 		margin-right: 10px;
-
+		padding: 5px;
+		background: #b7b8d0;
+		border-radius: 50%;
 	}
 
 	.header-title {
 		font-size: 30px;
 		padding: 15px 0;
-		font-weight: bold
+		font-weight: bold;
+		color: var(--text-color);
 	}
 </style>

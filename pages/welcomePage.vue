@@ -27,10 +27,9 @@
 										<div class="taks__progress__date-wrapper">
 											<div class="progres__wrapper">
 												<ProgressCircle
-													:progress="task.progress"
-													:offset="task.offset"
-													:radius="habitStore.radius"
-													:circumference="circumference"
+													:progress="Math.floor(task.progress)"
+													:progressMiss="Math.floor(task.progressMiss)"
+													:history="task.history"
 												/>
 											</div>
 											<div class="task__datum-wrapper">
@@ -78,7 +77,7 @@
 
 <script setup>
 	import {ref, computed, onMounted, onUnmounted} from "vue";
-	import {useHabitStore} from "/stores/habitStore.js";
+	import {useHabitStore} from "../stores/habitStore.js";
 	import ProgressCircle from "../src/components/progressBar";
 	import HabbitGoal from "../src/components/newHabitGoal.vue";
 	import CustomCheckbox from "../src/components/customCheckbox.vue";
@@ -232,7 +231,8 @@
 	}
 
 	.goal__type {
-		font-weight: 400;
+		font-weight: 300;
+		color: var(--goals-date-color);
 	}
 
 	.arrow__datum {
@@ -244,11 +244,11 @@
 		font-size: 18px;
 		font-weight: 600;
 		font-family: "Nunito", serif;
-		color: #2F2F2F;
+		color:var(--goals-name);
 	}
 
 	.task__goal-list {
-		background: rgba(248, 246, 246, 0.95);
+		background-color: var(--task-bg);
 		margin: 7px 0;
 		border-radius: 10px;
 		padding: 10px;
@@ -277,7 +277,7 @@
 
 	.welcome {
 		width: 100%;
-		background: #FCFCFF;
+		background-color: var(--background-color);
 		position: relative;
 		height: 100vh;
 		max-height: 100vh;
@@ -285,7 +285,7 @@
 
 	.title {
 		font-size: 2.0rem;
-		color: black;
+		color: var(--title-c);
 		font-family: "Nunito", serif;
 	}
 
