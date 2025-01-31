@@ -39,42 +39,42 @@
 </script>
 
 <style>
-	.account__icon {
-		width: 20px;
-		margin-right: 20px;
-	}
+.account__icon {
+	width: 20px;
+	margin-right: 20px;
+}
 
-	.accoun__text {
-		color: #2D2D2D;
-	}
+.accoun__text {
+	color: #2C3E50; /* Тёмно-синий цвет текста для хорошего контраста */
+}
 
-	.askeza__menu-content {
-		width: 100%;
-		padding: 30px;
-		height: 100vh;
-		background: #aed7ae;
-	}
+.askeza__menu-content {
+	width: 100%;
+	padding: 30px;
+	height: 100vh;
+	background: #E8F6F3; /* Светло-голубой пастельный фон */
+}
 
-	.menu__title {
-		font-size: 30px;
-		font-family: "Nunito", serif;
-		padding: 15px 0;
-		font-weight: 700;
-		margin-bottom: 10px;
-	}
+.menu__title {
+	font-size: 30px;
+	font-family: "Nunito", serif;
+	padding: 15px 0;
+	font-weight: 700;
+	margin-bottom: 10px;
+	color: #2C3E50; /* Тёмно-синий цвет заголовка */
+}
 
-	.account__settings-btn:after {
-		content: '';
-		width: 100%;
-		height: 1px;
-		background: black;
-		bottom: 0;
-		left: 0;
-		position: absolute;
-	}
+.account__settings-btn:after {
+	content: '';
+	width: 100%;
+	height: 1px;
+	background: #2C3E50; /* Тёмно-синяя линия под кнопкой */
+	bottom: 0;
+	left: 0;
+	position: absolute;
+}
 
-	.menu__btn-wrapper {
-		padding: 5px 0;
-	}
-
+.menu__btn-wrapper {
+	padding: 5px 0;
+}
 </style>
