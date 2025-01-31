@@ -7,10 +7,15 @@ export default defineNuxtConfig({
     },
     compatibilityDate: '2024-11-01',
     devtools: {enabled: true},
-    modules: ['@pinia/nuxt', '@nuxtjs/google-fonts'],
+    modules: ['@pinia/nuxt', '@nuxtjs/google-fonts', '@nuxtjs/color-mode'],
     googleFonts: {
         families: {
             Nunito: true
         }
+    },
+    colorMode: {
+        preference: 'light',
+        fallback: 'light',
+        classSuffix: '',
     },
 })

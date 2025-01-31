@@ -61,7 +61,7 @@
 		width: 100%;
 		padding: 30px;
 		height: 100vh;
-		background: #aed7ae;
+		background-color: var(--background-color);
 	}
 
 	.no-space {

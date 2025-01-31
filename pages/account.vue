@@ -40,41 +40,12 @@
 				value: "",
 				error: false,
 			},
-			{
-				id: 2,
-				name: "email",
-				type: "email",
-				label: "Email",
-				placeholder: "Enter your email",
-				value: "",
-				error: false,
-			},
-			{
-				id: 3,
-				name: "password",
-				type: "password",
-				label: "Password",
-				placeholder: "Enter your password",
-				value: "",
-				error: false,
-			},
-			{
-				id: 4,
-				name: "password",
-				type: "password",
-				label: "Password",
-				placeholder: "Enter your password",
-				value: "",
-				error: false,
-			},
 		],
 	});
 	onMounted(() => {
 		habitStore.loadUserData();
 		data.value.fields.forEach((field) => {
 			if (field.name === "name") field.value = habitStore.username;
-			if (field.name === "email") field.value = habitStore.email;
-			if (field.name === "password") field.value = habitStore.password;
 		});
 	});
 
@@ -82,8 +53,6 @@
 		let updatedData = {};
 		data.value.fields.forEach((field) => {
 			if (field.name === "name") updatedData.name = field.value;
-			if (field.name === "email") updatedData.email = field.value;
-			if (field.name === "password") updatedData.password = field.value;
 		});
 
 		habitStore.updateUserData(updatedData);
@@ -101,7 +70,7 @@
 	}
 
 	.account__wrapper {
-		background: #bbe3bb;
+		background-color: var(--background-color);
 		height: 100vh;
 	}
 
@@ -112,9 +81,11 @@
 		padding: 15px;
 		border-radius: 10px;
 		font-size: 20px;
+		background-color: var(--button-bg);
+		color: var(--button-text-color);
 	}
 
 	.field__label {
-		color: #666666;
+		color: var(--text-color);
 	}
 </style>

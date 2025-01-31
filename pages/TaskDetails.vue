@@ -20,7 +20,6 @@
 				<div class="edit__menu-wrapper">
 					<EditDeleteMenu @click="editMenu"/>
 					<ul v-if="isOpen" class="edit__menu-list">
-						<li @click="updateTaskDates" class="edit__menu-item">Edit tsk</li>
 						<li @click="openConfirmWindow(selectedTask.id)" class="edit__menu-item">Del task</li>
 					</ul>
 				</div>
@@ -36,96 +35,243 @@
 				</div>
 			</div>
 			<div class="date__picker">
-				<VDatePicker v-model.range="localDateRange" mode="range"/>
+				<v-calendar
+					is-expanded
+					v-if="localDateRange.start && localDateRange.end"
+					locale="en"
+					:min-date="new Date()"
+					:max-date="localDateRange.end"
+					:disabled-dates="disabledDates"
+					v-model.range="localDateRange"
+					@dayclick="onDateSelect"
+					:attributes="checkedDatesAttributes"
+				/>
 			</div>
 			<div class="task__details-btns">
 				<div class="task__details-btn check">
-					<button class="update__task-btn check">Check</button>
+					<button @click="onCheckClick" class="update__task-btn check">Green</button>
 				</div>
 				<div class="task__details-btn">
-					<button class="update__task-btn">Miss</button>
+					<button @click="onMissClick" class="update__task-btn">Grey</button>
 				</div>
 			</div>
 			<div class="progress__container-details">
 				<ProgressBar
 					:progress="selectedTask.progress"
-					:offset="selectedTask.offset"
-					:radius="habitStore.radius"
-					:circumference="circumference"
+					:progressMiss="selectedTask.progressMiss"
+					:history="selectedTask.history"
+					:size="200"
+					:padding="25"
 				/>
 			</div>
 			<div class="checked__progress">
 				<div class="checked__progress-wrapper">
 					<div class="checked__wrapper">
 						<img src="../assets/images/checkIcon.svg" alt="" class="checked__icon">
-						<span class="checked__text checked__green">goal has checked</span>
+						<span class="checked__text checked__green">{{ checkedCount }} goal has checked</span>
 					</div>
 					<div class="checked__wrapper">
 						<img src="../assets/images/noyChecked.svg" alt="" class="checked__icon">
-						<span class="checked__text">goal hasn’t checked</span>
+						<span class="checked__text"> {{ missedCount }} goal hasn’t checked</span>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
 </template>
-
 <script setup>
 	import {ref, computed, onMounted} from "vue";
 	import {useRoute} from "vue-router";
-	import {useHabitStore} from "/stores/habitStore.js";
+	import {useHabitStore} from "../stores/habitStore.js";
 	import ProgressBar from "../src/components/progressBar.vue";
-	import HeaderWithBack from '../src/components/headerWithBack.vue'
-	import EditDeleteMenu from '../src/components/EditDeleteMenu.vue'
-	import ConfirmWindow from '../src/components/confirmWindow.vue'
+	import EditDeleteMenu from '../src/components/EditDeleteMenu.vue';
 
-	const editState = ref(false)
+	const editState = ref(false);
 	const isOpen = ref(false);
 	const taskToDelete = ref(null);
 	const router = useRoute();
+	const missedCount = ref(0)
+	const checkedCount = ref(0)
+	const isDateSelected = ref(false);
+	const checkedDates = ref([])
+	const missedDates = ref([])
 	const habitStore = useHabitStore();
-	const circumference = computed(() => 2 * Math.PI * habitStore.radius);
 	const selectedTask = computed(() =>
 		habitStore.tasks.find((task) => task.id === Number(router.query.id)) || null
 	);
 
-	const localDateRange = ref({
-		start: selectedTask.value?.dateRange.start || "",
-		end: selectedTask.value?.dateRange.end || "",
+	const onDateSelect = (day) => {
+		if (!day || !day.id || !selectedTask.value) return;
+		const selectedDate = day.id;
+		if (selectedDate < selectedTask.value.dateRange.start || selectedDate > selectedTask.value.dateRange.end) {
+			console.log("Дата вне диапазона");
+			return;
+		}
+		isDateSelected.value = true;
+		localDateRange.value.start = selectedDate;
+		console.log("Выбрана", selectedDate);
+	};
+
+	const disabledDates = computed(() => {
+		return selectedTask.value?.blockedDates || [];
 	});
 
+	const loadTask = () => {
+		habitStore.loadTasks();
+		if (selectedTask.value) {
+			const savedDateRange = localStorage.getItem(`task_${selectedTask.value.id}_dateRange`);
+			if (savedDateRange) {
+				localDateRange.value = JSON.parse(savedDateRange);
+			} else {
+				localDateRange.value = {
+					start: selectedTask.value.dateRange.start,
+					end: selectedTask.value.dateRange.end,
+				};
+			}
+			const savedCheckedDates = localStorage.getItem(`task_${selectedTask.value.id}_checkedDates`);
+			if (savedCheckedDates) {
+				checkedDates.value = JSON.parse(savedCheckedDates);
+				selectedTask.value.checkedDates = [...checkedDates.value];
+			}
+
+			const savedMissedDates = localStorage.getItem(`task_${selectedTask.value.id}_missedDates`);
+			if (savedMissedDates) {
+				missedDates.value = JSON.parse(savedMissedDates);
+				selectedTask.value.missedDates = [...missedDates.value];
+			}
+		}
+	};
+
+	onMounted(() => {
+		loadTask();
+		const savedCheckedCount = localStorage.getItem("checkedCount");
+		if (savedCheckedCount) {
+			checkedCount.value = parseInt(savedCheckedCount, 10);
+		}
+		const savedMissedCount = localStorage.getItem("missedCount");
+		if (savedMissedCount) {
+			missedCount.value = parseInt(savedMissedCount, 10);
+		}
+	});
+
+	const onCheckClick = () => {
+		if (!selectedTask.value) return;
+		const selectedDate = localDateRange.value.start;
+		if (!selectedDate || new Date(selectedDate) < new Date(selectedTask.value.dateRange.start) || new Date(selectedDate) > new Date(selectedTask.value.dateRange.end)
+		) {
+			console.log("дата вне диапазона!");
+			localDateRange.value.start = null;
+			return;
+		}
+		if (checkedDates.value.includes(selectedDate)) return;
+		if (!selectedTask.value.checkedDates) {
+			selectedTask.value.checkedDates = [];
+		}
+		selectedTask.value.checkedDates.push(selectedDate);
+		checkedDates.value.push(selectedDate);
+		localStorage.setItem(`task_${selectedTask.value.id}_checkedDates`, JSON.stringify(checkedDates.value)
+	);
+		checkedCount.value++;
+
+		const totalDays = Math.max(1, (new Date(selectedTask.value.dateRange.end) - new Date(selectedTask.value.dateRange.start)) / (1000 * 60 * 60 * 24) + 1);
+		const step = (100 / totalDays).toFixed(2);
+		if (!selectedTask.value.history) {
+			selectedTask.value.history = [];
+		}
+
+		const remainingProgress = 100 - selectedTask.value.progressMiss - selectedTask.value.progress;
+		if (remainingProgress <= 0) return;
+		selectedTask.value.history.push({
+			color: "#4FC55C",
+			percent: Math.min(parseFloat(step), remainingProgress),
+		});
+
+		habitStore.updateProgress(selectedTask.value);
+		habitStore.saveTasks();
+	};
+
+	const onMissClick = () => {
+		if (!selectedTask.value) return;
+		const selectedDate = localDateRange.value.start;
+		if (!selectedDate || missedDates.value.includes(selectedDate)) return;
+		if (!selectedTask.value.missedDates) {
+			selectedTask.value.missedDates = [];
+		}
+		if (!selectedTask.value.missedDates.includes(selectedDate)) {
+			selectedTask.value.missedDates.push(selectedDate);
+			missedDates.value.push(selectedDate);
+			localStorage.setItem(`task_${selectedTask.value.id}_missedDates`, JSON.stringify(missedDates.value)
+			);
+
+			const totalDays = Math.max(1, (new Date(selectedTask.value.dateRange.end) - new Date(selectedTask.value.dateRange.start)) / (1000 * 60 * 60 * 24) + 1);
+			const step = (100 / totalDays).toFixed(2);
+			if (!selectedTask.value.history) {
+				selectedTask.value.history = [];
+			}
+			const remainingProgress = 100 - selectedTask.value.progressMiss - selectedTask.value.progress;
+			if (remainingProgress <= 0) return;
+			selectedTask.value.history.push({
+				color: "#FF5C00",
+				percent: Math.min(parseFloat(step), remainingProgress),
+			});
+			missedCount.value++;
+			habitStore.updateProgress(selectedTask.value);
+			habitStore.saveTasks();
+		}
+	};
+
+	const checkedDatesAttributes = computed(() => {
+		return [
+			...checkedDates.value.map(date => ({
+				key: `checked-${date}`,
+				dates: [new Date(date)],
+				highlight: {
+					contentClass: "vc-highlight-green",
+				},
+			})),
+			...missedDates.value.map(date => ({
+				key: `missed-${date}`,
+				dates: [new Date(date)],
+				highlight: {
+					contentClass: "vc-highlight-red",
+				},
+			})),
+		];
+	});
+	const localDateRange = ref({
+		start: selectedTask.value?.dateRange.start || null,
+		end: selectedTask.value?.dateRange.end || null,
+	});
 	const clearTask = (taskId) => {
 		if (!taskId) return;
 		habitStore.removeTask(taskId);
 		editState.value = false;
-	};
 
+		if (habitStore.tasks.length === 0) {
+			checkedCount.value = 0;
+			missedCount.value = 0;
+		} else {
+			checkedCount.value = habitStore.tasks.reduce((sum, task) => sum + (task.checkedDates?.length || 0), 0);
+			missedCount.value = habitStore.tasks.reduce((sum, task) => sum + (task.missedDates?.length || 0), 0);
+		}
+
+		localStorage.setItem("checkedCount", checkedCount.value);
+		localStorage.setItem("missedCount", missedCount.value);
+	};
 	const editMenu = () => {
-		isOpen.value = true
-	}
+		isOpen.value = true;
+	};
 
 	const cancelDelete = () => {
 		taskToDelete.value = null;
 		isOpen.value = false;
-		editState.value = false
+		editState.value = false;
 	};
 
 	const openConfirmWindow = (taskId) => {
 		taskToDelete.value = taskId;
 		isOpen.value = false;
 		editState.value = true;
-	};
-
-	const updateTaskDates = () => {
-		if (!selectedTask.value) return;
-		selectedTask.value.dateRange = {
-			start: localDateRange.value.start,
-			end: localDateRange.value.end,
-		};
-		habitStore.updateProgress(selectedTask.value);
-		habitStore.saveTasks();
-		isOpen.value = false
 	};
 
 	const formatDate = (date) => {
@@ -135,24 +281,29 @@
 			year: "numeric",
 		});
 	};
-	onMounted(() => {
-		habitStore.loadTasks();
-		if (selectedTask.value) {
-			localDateRange.value = {
-				start: selectedTask.value.dateRange.start,
-				end: selectedTask.value.dateRange.end,
-			};
-		}
-	});
 
 	definePageMeta({
-		layout: 'footerlayout'
-	})
+		layout: 'footerlayout',
+	});
+
+	watch([checkedCount, missedCount], () => {
+		localStorage.setItem("checkedCount", checkedCount.value);
+		localStorage.setItem("missedCount", missedCount.value);
+	});
 </script>
 <style>
+	.vc-highlight-red {
+		background-color: #FF3030 !important;
+		color: white !important;
+	}
+
+	.vc-highlight-green {
+		background-color: #00D100 !important;
+		color: white !important;
+	}
 
 	.vc-highlight-light-bg {
-		background: red;
+		background: white;
 	}
 
 	.vc-highlight-bg-solid {
@@ -160,7 +311,7 @@
 	}
 
 	.vc-highlight-bg-light {
-		background: #C7FFDE;
+		background-color: var(--vc-highlight-bg);
 	}
 
 	.vc-blue {
@@ -168,18 +319,18 @@
 	}
 
 	.vc-header .vc-arrow {
-		color: #FF5C00;
+		color: var(--vc-arrow-cal);
 	}
 
 	.vc-container {
 		width: 100%;
 		border: none;
-		background: #FBFBFB;
+		background: var(--background-color);
 		padding: 10px;
 	}
 
 	.vc-header .vc-title {
-		color: #FF5C00;
+		color: var(--text-color);
 		background: none;
 		font-size: 20px;
 	}
@@ -188,16 +339,16 @@
 		margin-top: 0;
 	}
 
+	.vc-highlight-content-light {
+		color: var(--text-color);
+	}
+
+	.vc-day, .vc-weekday {
+		color: var(--text-color);
+	}
+
 	.task__details__arrow-icon {
 		width: 40px;
-	}
-
-	.confirm__content-wrapper {
-
-	}
-
-	.checked__green {
-		color: #4FC55C;
 	}
 
 	.checked__wrapper {
@@ -211,6 +362,7 @@
 		font-family: "Nunito", serif;
 		line-height: 21.82px;
 		padding: 3px;
+		color: var(--text-color);
 	}
 
 	.checked__progress {
@@ -221,10 +373,9 @@
 	}
 
 	.progress__container-details {
+		margin-top: 14px;
 		display: flex;
-		margin: 0 auto;
 		justify-content: center;
-		width: 65%;
 	}
 
 	.task__details-btns {
@@ -234,14 +385,14 @@
 
 	.range__date-text {
 		font-size: 13px;
-		color: #2F2F2F;
+		color: var(--text-color);
 		font-family: "Nunito", serif;
 	}
 
 	.range__date__data {
 		font-size: 14px;
 		font-weight: 500;
-		color: #2F2F2F;
+		color: var(--text-color);
 		font-family: "Nunito", serif;
 	}
 
@@ -249,7 +400,7 @@
 		font-size: 16px;
 		margin: 2px;
 		padding: 2px;
-		color: white;
+		color: var(--text-color);
 		border-radius: 5px;
 		font-weight: 400;
 	}
@@ -262,6 +413,10 @@
 		position: absolute;
 		top: 0;
 		right: 0;
+	}
+
+	.task__goal-name {
+		color: var(--text-color);
 	}
 
 	.edit__menu-wrapper {
@@ -280,7 +435,7 @@
 		padding: 20px;
 		overflow: auto;
 		position: relative;
-
+		background-color: var(--background-color);
 	}
 
 	.range__date-wrapper {
@@ -294,14 +449,17 @@
 		justify-content: space-between;
 		align-items: center;
 		font-size: 30px;
-		color: black;
 		padding: 0 10px 10px 10px;
 		font-family: "Nunito", serif;
 		font-weight: 600;
 	}
 
 	.task__icon-back {
-		width: 30px;
+		width: 35px;
+		height: 35px;
+		background: var(--footer-bg);
+		padding: 4px;
+		border-radius: 50%;
 	}
 
 	.update__task-btn {
@@ -310,8 +468,8 @@
 		border: none;
 		font-size: 18px;
 		border-radius: 10px;
-		background: linear-gradient(48.62deg, #FFA450 11.85%, #FF5C00 66.77%);
-		color: white;
+		background: #FF5C00;
+		color: var(--text-color);
 		font-family: "Nunito", serif;
 	}
 
@@ -340,14 +498,14 @@
 	}
 
 	.confirm__content-wrapper {
-		background: #DFF4E4;
+		background: var(--footer-bg);
 		width: 100%;
 		height: 100%;
 	}
 
 	.confirm__title {
 		padding: 15px;
-		color: #2F2F2F;
+		color: var(--text-color);
 		text-align: center;
 		font-size: 24px;
 		font-family: "Nunito", serif;
@@ -374,8 +532,7 @@
 		border-radius: 10px;
 		border: none;
 		background: #FF5C00;
-		color: white;
+		color: var(--text-color);
 		font-family: "Nunito", serif;
 	}
-
 </style>

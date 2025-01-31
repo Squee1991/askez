@@ -43,7 +43,7 @@
 		bottom: 0;
 		left: 0;
 		width: 100%;
-		background-color: #DFF4E4;
+		background-color: var(--footer-bg);
 		padding: 10px 40px;
 		display: flex;
 		justify-content: space-between;
