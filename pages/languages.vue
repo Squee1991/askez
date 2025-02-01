@@ -15,48 +15,70 @@
 </template>
 
 <script setup>
-	import {ref, onMounted, computed} from 'vue';
+	import {ref, onMounted, computed, watch} from 'vue';
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
 	import ListComponent from '../src/components/ListComponent.vue';
 	import SelectedIcon from '../assets/images/selectedLanguage.svg';
-	import Arrowicon from '../assets/images/arrowSvg.svg'
-
-	const languages = ref([]);
+	const languages = ref({});
 	const selectedLanguage = ref(null);
-
-	const computedClassNames = computed(()=> {
+	const computedClassNames = computed(() => {
 		if (languages.value) {
 			return {
 				['menu--' + languages.value.mode]: languages.value.mode,
-				"mainMenu": languages.value.items && languages.value.items.length > 2
-			}
+				mainMenu: languages.value.items && languages.value.items.length > 2
+			};
 		}
-	})
+		return {};
+	});
 
-	const changeDefaultTypelanguage = () => {
-		const localStorageLanguage = localStorage.getItem('language')
+	const loadLanguageData = async (lang) => {
+		try {
+			let response;
+			if (lang === 'de') {
+				response = await fetch('/dataListDeutsch.json');
+			}
+			else if (lang === 'es') {
+				response = await fetch('/dataListSpanian.json');
+			}
+			else if (lang === 'ru') {
+				response = await fetch('/dataListRussian.json');
+			}
+			else if(lang === 'by') {
+				response = await fetch('/dataListBelorussian.json')
+			}
+			else {
+				response = await fetch('/dataListJSON.json');
+			}
+
+			const data = await response.json();
+			languages.value = data.languages;
+		} catch (error) {
+
+		}
+	};
+	onMounted(async () => {
+		changeDefaultTypeLanguage();
+		await loadLanguageData(selectedLanguage.value);
+	});
+
+	const changeDefaultTypeLanguage = () => {
+		const localStorageLanguage = localStorage.getItem('language');
 		if (localStorageLanguage) {
-			selectedLanguage.value = localStorageLanguage
+			selectedLanguage.value = localStorageLanguage;
 			return
 		}
-		selectedLanguage.value = 'ru'
-	}
+		selectedLanguage.value = 'ru';
+	};
 
-	onMounted(async ()=> {
-		const response = await fetch('/dataListJSON.json');
-		const data = await response.json();
-		languages.value = data.languages;
-		changeDefaultTypelanguage()
+	watch(selectedLanguage, (newLang) => {
+		localStorage.setItem('language', newLang);
+		loadLanguageData(newLang);
 	});
 
-	definePageMeta({
-		layout: 'footerlayout'
-	});
 
 </script>
 
 <style scoped>
-
 	.language__wrapper {
 		width: 100%;
 		padding: 30px;

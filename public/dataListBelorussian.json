@@ -1,83 +1,83 @@
 {
 	"languages": {
 		"mode": "no-space",
-		"title": "Language",
+		"title": "Мова",
 		"items": [
 			{
 				"code": "ru",
-				"name": "Russian",
+				"name": "Рускі",
 				"className": "no-space"
 			},
 			{
 				"code": "by",
-				"name": "Belorussian",
+				"name": "Беларускі",
 				"className": "no-space"
 			},
 			{
 				"code": "en",
-				"name": "English",
+				"name": "Англійская",
 				"className": "no-space"
 			},
 			{
 				"code": "de",
-				"name": "Deutsch",
+				"name": "Нямецкая",
 				"className": "no-space"
 			},
 			{
 				"code": "es",
-				"name": "Español",
+				"name": "Іспанская",
 				"className": "no-space"
 			}
 		]
 	},
 	"settings": {
-		"title": "Settings",
+		"title": "Налады",
 		"items": [
 			{
 				"id": 1,
-				"text": "Delete account"
+				"text": "Выдаліць уліковы запіс"
 			},
 			{
 				"id": 2,
-				"text": "Privacy Policy"
+				"text": "Палітыка прыватнасці"
 			},
 			{
 				"id": 3,
-				"text": "Contact us"
+				"text": "Звязацца з намі"
 			},
 			{
 				"id": 4,
-				"text": "Mode",
-				"darkIcon" : "dark.png",
-				"lightIcon" : "light.png"
+				"text": "Рэжым",
+				"darkIcon": "dark.png",
+				"lightIcon": "light.png"
 			}
 		]
 	},
 	"menu": {
-		"title": "Menu",
+		"title": "Меню",
 		"items": [
 			{
 				"id": 1,
 				"icon": "account.svg",
-				"text": "Account",
+				"text": "Уліковы запіс",
 				"link": "account"
 			},
 			{
 				"id": 2,
 				"icon": "aboutAPP.svg",
-				"text": "About app",
+				"text": "Пра праграму",
 				"link": ""
 			},
 			{
 				"id": 3,
 				"icon": "language.svg",
-				"text": "Language",
+				"text": "Мова",
 				"link": "languages"
 			},
 			{
 				"id": 4,
 				"icon": "setings.svg",
-				"text": "settings",
+				"text": "Налады",
 				"link": "settings"
 			}
 		]

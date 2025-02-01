@@ -1,26 +1,26 @@
 {
 	"languages": {
 		"mode": "no-space",
-		"title": "Language",
+		"title": "Idioma",
 		"items": [
 			{
 				"code": "ru",
-				"name": "Russian",
+				"name": "Ruso",
 				"className": "no-space"
 			},
 			{
 				"code": "by",
-				"name": "Belorussian",
+				"name": "Bielorruso",
 				"className": "no-space"
 			},
 			{
 				"code": "en",
-				"name": "English",
+				"name": "Inglés",
 				"className": "no-space"
 			},
 			{
 				"code": "de",
-				"name": "Deutsch",
+				"name": "Alemán",
 				"className": "no-space"
 			},
 			{
@@ -31,53 +31,53 @@
 		]
 	},
 	"settings": {
-		"title": "Settings",
+		"title": "Configuración",
 		"items": [
 			{
 				"id": 1,
-				"text": "Delete account"
+				"text": "Eliminar cuenta"
 			},
 			{
 				"id": 2,
-				"text": "Privacy Policy"
+				"text": "Política de privacidad"
 			},
 			{
 				"id": 3,
-				"text": "Contact us"
+				"text": "Contáctanos"
 			},
 			{
 				"id": 4,
-				"text": "Mode",
-				"darkIcon" : "dark.png",
-				"lightIcon" : "light.png"
+				"text": "Modo",
+				"darkIcon": "dark.png",
+				"lightIcon": "light.png"
 			}
 		]
 	},
 	"menu": {
-		"title": "Menu",
+		"title": "Menú",
 		"items": [
 			{
 				"id": 1,
 				"icon": "account.svg",
-				"text": "Account",
+				"text": "Cuenta",
 				"link": "account"
 			},
 			{
 				"id": 2,
 				"icon": "aboutAPP.svg",
-				"text": "About app",
+				"text": "Sobre la app",
 				"link": ""
 			},
 			{
 				"id": 3,
 				"icon": "language.svg",
-				"text": "Language",
+				"text": "Idioma",
 				"link": "languages"
 			},
 			{
 				"id": 4,
 				"icon": "setings.svg",
-				"text": "settings",
+				"text": "Configuración",
 				"link": "settings"
 			}
 		]
