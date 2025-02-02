@@ -1,7 +1,9 @@
 <template>
 	<div class="language">
 		<div class="language__wrapper">
-			<HeaderwithBack :title="languages.title"/>
+			<HeaderwithBack
+				:icon="Arrowicon"
+				:title="languages.title"/>
 			<div v-if="languages" class="language__list">
 				<ListComponent
 					:class="computedClassNames"
@@ -19,7 +21,7 @@
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
 	import ListComponent from '../src/components/ListComponent.vue';
 	import SelectedIcon from '../assets/images/selectedLanguage.svg';
-
+	import Arrowicon from '../assets/images/arrowSvg.svg'
 	const languages = ref({});
 	const selectedLanguage = ref(null);
 	const computedClassNames = computed(() => {
@@ -44,7 +46,7 @@
 			} else if (lang === 'by') {
 				response = await fetch('/dataListBelorussian.json')
 			} else {
-				response = await fetch('/dataListJSON.json');
+				response = await fetch('/dataListEnglish.json');
 			}
 
 			const data = await response.json();

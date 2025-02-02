@@ -1,7 +1,9 @@
 <template>
 	<div class="account__wrapper">
 		<div class="account__content">
-			<HeaderWithback title="Account"/>
+			<HeaderWithback
+				:icon="Arrowicon"
+				title="Account"/>
 			<div class="account__fields">
 				<div v-for="field in data.fields" :key="field.id" class="account__field">
 					<span class="field__label"> {{ field.label}}</span>
@@ -16,6 +18,7 @@
 	</div>
 </template>
 <script setup>
+	import Arrowicon from '../assets/images/arrowSvg.svg'
 	import HeaderWithback from '../src/components/headerWithBack.vue'
 	import {ref, onMounted} from 'vue';
 	import VFields from '/src/components/v-fields.vue';

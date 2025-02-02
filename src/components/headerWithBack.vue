@@ -1,13 +1,12 @@
 <template>
 	<div class="back-header">
-		<img @click="goBack" class="back__arrow-icon" :src="Arrowicon" alt="Back"/>
+		<img v-if="props.icon" @click="goBack" class="back__arrow-icon" :src="props.icon" alt="Back"/>
 		<div class="header-title">{{ props.title }}</div>
 	</div>
 </template>
 <script setup>
 	import {useRouter} from 'vue-router';
 	import {defineProps} from 'vue';
-	import Arrowicon from '../../assets/images/arrowSvg.svg'
 
 	const router = useRouter();
 	const props = defineProps({
@@ -15,16 +14,16 @@
 			type: String,
 		},
 		title: {
-			type: [String],
-
-		},
+			type: String,
+			required: false,
+		}
 	});
 
 	const goBack = () => {
 		router.push('/menu');
 	};
 </script>
-<style >
+<style>
 	.back-header {
 		display: flex;
 		align-items: center;
