@@ -17,7 +17,7 @@
 				<div class="date__picker-inenr">
 					<span class="date__picke-label label">Select date period</span>
 					<VDatePicker
-						locale="en-EN"
+						locale="pl"
 						:min-date='new Date()'
 						v-model.range="localDateRange"
 						mode="range"
@@ -33,18 +33,14 @@
 	import CloseIcon from "/assets/images/close.svg";
 	import SuccessModal from "../../pages/SuccessModal.vue";
 	import SelectComponent from '/src/components/selectComponent.vue'
-	import {useHabitStore} from '../stores/habitStore.js'
+	import {useHabitStore} from '../../stores/habitStore.js'
 
 	const habitStore = useHabitStore()
-	const isSuccessVisible = ref(false);
-	const inputValueGoal = ref("");
 
-	const selectedPeriod = ref("");
-	const selectedHabitType = ref("")
+	const inputValueGoal = ref("");
 	const emit = defineEmits(["close", "add"]);
 	const router = useRouter()
 	import {useRouter} from 'vue-router'
-    const date = new Date()
 	const localDateRange = ref({
 		start: new Date(),
 		end: new Date()
@@ -54,22 +50,17 @@
 	const addValue = () => {
 		const isInputValid = [inputValueGoal.value].every((value) => value.trim?.());
 		const isDateRangeValid = localDateRange.value.start && localDateRange.value.end;
+		if (!isInputValid || !isDateRangeValid) return;
 
-		if (!isInputValid || !isDateRangeValid) {
-			return;
-		}
 		const newTask = {
 			goal: inputValueGoal.value,
-
 			dateRange: localDateRange.value,
 			checked: false,
 		};
 		habitStore.addTask(newTask);
 		emit("add", newTask);
 		clearFields([inputValueGoal]);
-		isSuccessVisible.value = true;
 		router.push('/SuccessModal')
-
 	};
 
 	watch(localDateRange, (newVal) => {
@@ -82,7 +73,6 @@
 
 </script>
 <style>
-
 	.vc-highlight-light-bg {
 		background: white;
 	}
@@ -159,18 +149,6 @@
 		position: relative;
 	}
 
-	.success__modal-window {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		background: rgba(0, 0, 0, 0.5);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
 	.input__fields-wrapper {
 		padding: 20px;
 		background-color: var(--background-color);
@@ -227,6 +205,4 @@
 	.input__goal:focus {
 		border: 1px solid #47b7c1;
 	}
-
-
 </style>

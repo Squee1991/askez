@@ -58,7 +58,6 @@
 												</button>
 											</div>
 										</div>
-
 									</div>
 								</div>
 							</div>
@@ -92,9 +91,7 @@
 	const habitStore = useHabitStore();
 	const tasks = computed(() => habitStore.tasks);
 	const progress = ref({});
-	const radius = ref(45);
 	const isHabitGoalVisible = ref(false);
-	const circumference = computed(() => 2 * Math.PI * habitStore.radius);
 	const username = computed(() => habitStore.username);
 
 	onMounted(() => {
@@ -133,7 +130,7 @@
 	};
 
 	const formatDate = (date) => {
-		const formattedDate = new Date(date).toLocaleDateString("en-US", {
+		const formattedDate = new Date(date).toLocaleDateString("en-EN", {
 			day: "2-digit",
 			month: "long",
 		});
@@ -152,10 +149,6 @@
 		font-family: "Nunito", serif;
 	}
 
-	.remove__task-btn {
-		border: none;
-	}
-
 	.taks__btns {
 		display: flex;
 		flex-direction: column;
@@ -165,12 +158,6 @@
 	.taks__progress__date-wrapper {
 		display: flex;
 		justify-content: space-between;
-	}
-
-	.btn__delete-wrapper {
-		display: flex;
-		justify-content: center;
-		padding: 10px;
 	}
 
 	.progres__wrapper {
@@ -187,10 +174,6 @@
 	.task__date-wrapper {
 		display: flex;
 		font-size: 14px;
-	}
-
-	.delete__icon {
-		width: 20px;
 	}
 
 	.not__task-inner {
@@ -268,6 +251,7 @@
 	.add__goals {
 		margin-bottom: 40px;
 		padding: 10px 0;
+		overflow: auto;
 	}
 
 	.progress__inner {

@@ -19,6 +19,7 @@
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
 	import ListComponent from '../src/components/ListComponent.vue';
 	import SelectedIcon from '../assets/images/selectedLanguage.svg';
+
 	const languages = ref({});
 	const selectedLanguage = ref(null);
 	const computedClassNames = computed(() => {
@@ -36,26 +37,21 @@
 			let response;
 			if (lang === 'de') {
 				response = await fetch('/dataListDeutsch.json');
-			}
-			else if (lang === 'es') {
+			} else if (lang === 'es') {
 				response = await fetch('/dataListSpanian.json');
-			}
-			else if (lang === 'ru') {
+			} else if (lang === 'ru') {
 				response = await fetch('/dataListRussian.json');
-			}
-			else if(lang === 'by') {
+			} else if (lang === 'by') {
 				response = await fetch('/dataListBelorussian.json')
-			}
-			else {
+			} else {
 				response = await fetch('/dataListJSON.json');
 			}
 
 			const data = await response.json();
 			languages.value = data.languages;
-		} catch (error) {
-
-		}
+		} catch (error) {}
 	};
+
 	onMounted(async () => {
 		changeDefaultTypeLanguage();
 		await loadLanguageData(selectedLanguage.value);
@@ -75,7 +71,9 @@
 		loadLanguageData(newLang);
 	});
 
-
+	definePageMeta({
+		layout: "footerlayout"
+	})
 </script>
 
 <style scoped>

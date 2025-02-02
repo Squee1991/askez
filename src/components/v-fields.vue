@@ -61,6 +61,7 @@
 		font-size: 14px;
 		border: 1px solid #ccc;
 		border-radius: 8px;
+		padding: 12px;
 	}
 
 	.toggle-icon {
