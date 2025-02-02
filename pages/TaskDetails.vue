@@ -48,12 +48,8 @@
                 />
             </div>
             <div class="task__details-btns">
-                <div class="task__details-btn check">
-                    <button @click="onCheckClick" :disabled="isDateMarked" class="update__task-btn check">Green</button>
-                </div>
-                <div class="task__details-btn">
-                    <button @click="onMissClick" :disabled="isDateMarked" class="update__task-btn">Grey</button>
-                </div>
+                <button @click="onCheckClick" :disabled="isActionDisabled" class="update__task-btn check">Green</button>
+                <button @click="onMissClick" :disabled="isActionDisabled" class="update__task-btn">Grey</button>
             </div>
             <div class="progress__container-details">
                 <ProgressBar
@@ -99,7 +95,10 @@ const habitStore = useHabitStore();
 const selectedTask = computed(() =>
     habitStore.tasks.find((task) => task.id === Number(router.query.id)) || null
 );
-
+const isActionDisabled = computed(() => {
+    if (!localDateRange.value.start) return true;
+    return checkedDates.value.includes(localDateRange.value.start) || missedDates.value.includes(localDateRange.value.start);
+});
 const onDateSelect = (day) => {
     if (!day || !day.id || !selectedTask.value) return;
     const selectedDate = day.id;
