@@ -48,8 +48,8 @@
 			{
 				"id": 4,
 				"text": "Mode",
-				"darkIcon" : "dark.png",
-				"lightIcon" : "light.png"
+				"darkIcon": "dark.png",
+				"lightIcon": "light.png"
 			}
 		]
 	},
@@ -81,5 +81,49 @@
 				"link": "settings"
 			}
 		]
+	},
+	"startPage": {
+		"value": "get started"
+	},
+	"description": {
+		"value": "Next step"
+	},
+	"register": {
+		"btnValue": "register",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "enter your name"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "enter your email"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "enter your password"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "confirm your password"
+			}
+		]
+	},
+	"homePage": {
+		"greetings": "Hello"
+	},
+	"createTask": {
+		"title": "Create new Goal",
+		"btn": "Create new"
+	},
+	"succes": {
+		"title": "Done",
+		"article": "Let's do the best to achieve your goal",
+		"btn": "Ok"
+	},
+	"delConfirm": {
+		"title": "Delete goal?",
+		"accept": "Yes",
+		"reject": "No"
 	}
 }

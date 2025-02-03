@@ -81,5 +81,52 @@
 				"link": "settings"
 			}
 		]
+	},
+	"startPage": {
+		"value": "Начать"
+	},
+	"description" : {
+		"value": "Следующий шаг"
+	},
+	"register": {
+		"btnValue": "зарегистрироваться",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "введите ваше имя"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "введите ваш email"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "введите ваш пароль"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "подтвердите ваш пароль"
+			}
+		]
+	},
+	"homePage": {
+		"greetings": "Привет",
+		"btn": "Открыть цель"
+	},
+
+	"createTask": {
+		"title": "Создать новую цель",
+		"btn": "Создать новую"
+	},
+	"succes": {
+		"title": "Готово",
+		"article": "Давай сделаем всё возможное, чтобы достичь твоей цели",
+		"btn": "Ок"
+	},
+	"taskDetails": {
+		"startDate": "Дата начала",
+		"endtDate": "Дата окончания"
 	}
+
+
 }

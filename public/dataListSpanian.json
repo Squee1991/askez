@@ -81,5 +81,51 @@
 				"link": "settings"
 			}
 		]
+	},
+	"startPage": {
+		"value": "comenzar"
+	},
+	"description": {
+		"value": "siguiente paso"
+	},
+	"register": {
+		"btnValue": "registrarse",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "introduce tu nombre"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "introduce tu email"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "introduce tu contraseña"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "confirma tu contraseña"
+			}
+		]
+	},
+	"homePage": {
+		"greetings": "Hola",
+		"btn": "Abrir objetivo"
+	},
+
+	"createTask": {
+		"title": "Crear un nuevo objetivo",
+		"btn": "Crear nuevo"
+	},
+	"succes": {
+		"title": "Hecho",
+		"article": "Hagamos lo mejor para alcanzar tu objetivo",
+		"btn": "Ok"
+	},
+	"taskDetails": {
+		"startDate": "Fecha de inicio",
+		"endtDate": "Fecha de finalización"
 	}
+
 }

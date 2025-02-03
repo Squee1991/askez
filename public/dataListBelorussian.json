@@ -81,5 +81,50 @@
 				"link": "settings"
 			}
 		]
+	},
+	"startPage": {
+		"value": "Пчаць"
+	},
+	"description": {
+		"value": "Наступны крок"
+	},
+	"register": {
+		"btnValue": "зарэгістравацца",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "увядзіце сваё імя"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "увядзіце свой email"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "увядзіце свой пароль"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "пацвердзіце свой пароль"
+			}
+		]
+	},
+	"homePage": {
+		"greetings": "Вітаем",
+		"btn": "Адкрыць мэту"
+	},
+	"createTask": {
+		"title": "Стварыць новую мэту",
+		"btn": "Стварыць новую"
+	},
+	"succes": {
+		"title": "Гатова",
+		"article": "Давай зробім усё магчымае, каб дасягнуць тваёй мэты",
+		"btn": "Ок"
+	},
+	"taskDetails": {
+		"startDate": "Дата пачатку",
+		"endtDate": "Дата заканчэння"
 	}
+
 }

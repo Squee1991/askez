@@ -2,7 +2,8 @@
 	<div class="settings__wrapper">
 		<HeaderWithBack
 			:icon="Arrowicon"
-			:title="settings.title" />
+			:title="settings.title"
+		/>
 		<div class="settings__btns">
 			<div
 				v-for="item in settings.items"
@@ -13,8 +14,8 @@
 				        @click="buttonClick(item.text)">
 					<span class="accoun__text">{{ item.text }}</span>
 					<img class="color__mode-icon"
-						:src="colorMode.preference === 'dark' ? item.lightIcon : item.darkIcon"
-						alt="">
+					     :src="colorMode.preference === 'dark' ? item.lightIcon : item.darkIcon"
+					     alt="">
 				</button>
 			</div>
 		</div>
@@ -22,16 +23,17 @@
 </template>
 
 <script setup>
-	import { ref, onMounted } from 'vue';
+	import {ref, onMounted} from 'vue';
 	import HeaderWithBack from '../src/components/headerWithBack.vue';
 	import Arrowicon from '../assets/images/arrowSvg.svg'
+
 	const settings = ref([]);
 	const colorMode = useColorMode();
 	const toggleTheme = () => {
 		colorMode.preference = colorMode.preference === 'light' ? 'dark' : 'light';
 	};
 
-	const buttonClick = (text ) => {
+	const buttonClick = (text) => {
 		if (text === 'Mode') {
 			toggleTheme()
 		}
@@ -54,6 +56,7 @@
 	.color__mode-icon {
 		width: 30px;
 	}
+
 	.settings__wrapper {
 		padding: 25px;
 		height: 100vh;
