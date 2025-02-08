@@ -1,10 +1,18 @@
 <template>
     <div class="edit__menu">
-	    <img class="edit__menu-icon" src="../../assets/images/editIcon.svg" alt="">
+	    <img class="edit__menu-icon" :src="props.icon" alt="">
     </div>
 </template>
 
 <script setup>
+	import { defineProps} from 'vue'
+
+	const props = defineProps({
+		icon: {
+			type: String,
+			required: true
+		}
+	})
 </script>
 
 <style scoped>

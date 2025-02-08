@@ -1,6 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import WelcomePage from '../../pages/welcomePage.vue'
-import SuccessModal from '../../pages/welcomePage.vue'
+import SuccessModal from '../../pages/SuccessModal.vue'
 
 const routes = [
 	{

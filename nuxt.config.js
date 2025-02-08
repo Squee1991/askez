@@ -7,7 +7,18 @@ export default defineNuxtConfig({
     },
     compatibilityDate: '2024-11-01',
     devtools: {enabled: true},
-    modules: ['@pinia/nuxt', '@nuxtjs/google-fonts', '@nuxtjs/color-mode'],
+    modules: [
+        '@pinia/nuxt', '@nuxtjs/google-fonts', '@nuxtjs/color-mode', 'nuxt-vuefire'
+    ],
+    vuefire: {
+        config: {
+            apiKey: '',
+            authDomain: '',
+            projectId: '',
+            appId: '',
+
+        }
+    },
     googleFonts: {
         families: {
             Nunito: true
@@ -18,4 +29,5 @@ export default defineNuxtConfig({
         fallback: 'light',
         classSuffix: '',
     },
+
 })

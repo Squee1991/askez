@@ -7,7 +7,7 @@
 
         <form @submit.prevent="submitForm" class="form__field-inner">
             <div v-for="field in data.fields" :key="field.id" class="form__field">
-                <span class="form__label">{{ field.label }}</span>
+                <span v-if="closed" class="form__label">{{ field.label }}</span>
                 <v-fields
                         :field="field"
                         v-model="field.value"
@@ -34,7 +34,7 @@
 
 <script setup>
 import VFields from '../src/components/v-fields.vue'
-import {ref} from 'vue'
+import {ref , computed} from 'vue'
 import {useRouter} from 'vue-router'
 import {useHabitStore} from '../stores/habitStore.js'
 import {validateEmail, validatePassword, validateConfirmPassword, validateName} from '../src/utils/validations.js';
@@ -88,6 +88,7 @@ const data = ref({
         },
     ],
 })
+const closed = ref(false)
 const isSubmitting = ref(false);
 const showPasswordStrength = ref(false);
 const passwordStrength = ref('');
@@ -157,9 +158,8 @@ const submitForm = async () => {
         acc[field.name] = field.value;
         return acc;
     }, {});
-
     try {
-        await habitStore.setUserData(userData); // API call
+        await habitStore.setUserData(userData);
         router.push('/welcomePage');
     } catch (error) {
         console.error('Error submitting form:', error);
@@ -191,13 +191,11 @@ const submitForm = async () => {
 input {
     width: 100%;
     padding: 12px 16px;
-    margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 16px;
     outline: none;
     transition: border-color 0.3s ease;
-    margin-top: 10px;
 }
 
 input:focus {
@@ -208,7 +206,7 @@ input:focus {
 .form {
     width: 100%;
     padding: 30px;
-    background: #e5f9ed;
+    background: var(--background-color);
     height: 100vh;
 }
 
@@ -218,6 +216,7 @@ input:focus {
     align-items: center;
     text-align: center;
     margin-bottom: 20px;
+    color: var(--text-color);
 }
 
 .form__logo-icon {
@@ -277,5 +276,9 @@ input:focus {
 
 .form__label {
     font-weight: 600;
+    color: var(--text-color);
+    font-size: 13px;
+    font-family: "Nunito", serif;
+    padding-bottom: 5px;
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
 	<div class="askeza__menu">
 		<div class="askeza__menu-content">
-			<div class="menu__title">Menu</div>
+			<HeaderwithBack
+				:title="menuList.title"
+			/>
 			<div class="menu__btns">
 				<div
 					v-for="item in menuList.items"
@@ -10,15 +12,14 @@
 				>
 					<NuxtLink :to="item.link" class="account__settings-btn">
 						<img
+							:src="item.icon"
+							:alt="item.text"
 							class="account__icon"
 							:class="{
 							'settings-bg-orange': item.icon === 'setings.svg',
 							'lang-bg-rot': item.icon === 'language.svg',
 							'aboutapp-bg-green': item.icon === 'aboutAPP.svg',
-							'acc-bg-blue': item.icon === 'account.svg'
-						}"
-							:src="item.icon"
-							:alt="item.text"
+							'acc-bg-blue': item.icon === 'account.svg'}"
 						/>
 						<span class="account__text">{{ item.text }}</span>
 					</NuxtLink>
@@ -34,7 +35,7 @@
 
 	const menuList = ref([]);
 	onMounted(async () => {
-		const response = await fetch('/dataListJSON.json');
+		const response = await fetch('/dataListBelorussian.json');
 		const data = await response.json();
 		menuList.value = data.menu;
 	});
@@ -68,7 +69,7 @@
 		width: 35px;
 		margin-right: 20px;
 		padding: 5px;
-		border-radius:10px;
+		border-radius: 10px;
 	}
 
 	.account__text {

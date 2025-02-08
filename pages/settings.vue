@@ -1,6 +1,8 @@
 <template>
 	<div class="settings__wrapper">
-		<HeaderWithBack :title="settings.title" />
+		<HeaderWithBack
+			:icon="Arrowicon"
+			:title="settings.title" />
 		<div class="settings__btns">
 			<div
 				v-for="item in settings.items"
@@ -22,8 +24,8 @@
 <script setup>
 	import { ref, onMounted } from 'vue';
 	import HeaderWithBack from '../src/components/headerWithBack.vue';
+	import Arrowicon from '../assets/images/arrowSvg.svg'
 	const settings = ref([]);
-
 	const colorMode = useColorMode();
 	const toggleTheme = () => {
 		colorMode.preference = colorMode.preference === 'light' ? 'dark' : 'light';
@@ -36,7 +38,7 @@
 	}
 
 	onMounted(async () => {
-		const response = await fetch('/dataListJSON.json');
+		const response = await fetch('/dataListEnglish.json');
 		const data = await response.json();
 		settings.value = data.settings;
 	});

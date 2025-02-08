@@ -1,0 +1,85 @@
+{
+	"languages": {
+		"mode": "no-space",
+		"title": "Язык",
+		"items": [
+			{
+				"code": "ru",
+				"name": "Русский",
+				"className": "no-space"
+			},
+			{
+				"code": "by",
+				"name": "Белорусский",
+				"className": "no-space"
+			},
+			{
+				"code": "en",
+				"name": "Английский",
+				"className": "no-space"
+			},
+			{
+				"code": "de",
+				"name": "Немецкий",
+				"className": "no-space"
+			},
+			{
+				"code": "es",
+				"name": "Испанский",
+				"className": "no-space"
+			}
+		]
+	},
+	"settings": {
+		"title": "Настройки",
+		"items": [
+			{
+				"id": 1,
+				"text": "Удалить аккаунт"
+			},
+			{
+				"id": 2,
+				"text": "Политика конфиденциальности"
+			},
+			{
+				"id": 3,
+				"text": "Свяжитесь с нами"
+			},
+			{
+				"id": 4,
+				"text": "Режим",
+				"darkIcon": "dark.png",
+				"lightIcon": "light.png"
+			}
+		]
+	},
+	"menu": {
+		"title": "Меню",
+		"items": [
+			{
+				"id": 1,
+				"icon": "account.svg",
+				"text": "Аккаунт",
+				"link": "account"
+			},
+			{
+				"id": 2,
+				"icon": "aboutAPP.svg",
+				"text": "О приложении",
+				"link": ""
+			},
+			{
+				"id": 3,
+				"icon": "language.svg",
+				"text": "Язык",
+				"link": "languages"
+			},
+			{
+				"id": 4,
+				"icon": "settings.svg",
+				"text": "Настройки",
+				"link": "settings"
+			}
+		]
+	}
+}

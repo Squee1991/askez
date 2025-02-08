@@ -18,7 +18,9 @@
                 </NuxtLink>
                 <span class="task__goal-name">{{ selectedTask.goal }}</span>
                 <div class="edit__menu-wrapper">
-                    <EditDeleteMenu @click="editMenu"/>
+                    <EditDeleteMenu
+                            :icon="editIcon"
+                            @click="editMenu"/>
                     <ul v-if="isOpen" class="edit__menu-list">
                         <li @click="openConfirmWindow(selectedTask.id)" class="edit__menu-item">Del task</li>
                     </ul>
@@ -48,8 +50,12 @@
                 />
             </div>
             <div class="task__details-btns">
-                <button @click="onCheckClick" :disabled="isActionDisabled" class="update__task-btn check">Green</button>
-                <button @click="onMissClick" :disabled="isActionDisabled" class="update__task-btn">Grey</button>
+                <div class="task__details-btn check">
+                    <button @click="onCheckClick" :disabled="isDateMarked" class="update__task-btn check">Green</button>
+                </div>
+                <div class="task__details-btn">
+                    <button @click="onMissClick" :disabled="isDateMarked" class="update__task-btn">Grey</button>
+                </div>
             </div>
             <div class="progress__container-details">
                 <ProgressBar
@@ -76,12 +82,14 @@
     </div>
 </template>
 <script setup>
-import {ref, computed, onMounted} from "vue";
+import {ref, computed, onMounted,watch} from "vue";
 import {useRoute} from "vue-router";
 import {useHabitStore} from "../stores/habitStore.js";
 import ProgressBar from "../src/components/progressBar.vue";
 import EditDeleteMenu from '../src/components/EditDeleteMenu.vue';
+import EditIcon from '../assets/images/editIcon.svg'
 
+const editIcon = ref(EditIcon)
 const editState = ref(false);
 const isOpen = ref(false);
 const taskToDelete = ref(null);
@@ -92,28 +100,58 @@ const isDateSelected = ref(false);
 const checkedDates = ref([])
 const missedDates = ref([])
 const habitStore = useHabitStore();
+const disabledDates = computed(() => {
+    if (!selectedTask.value) return [];
+
+    const disabled = [];
+    const taskStart = new Date(selectedTask.value.dateRange.start);
+    const taskEnd = new Date(selectedTask.value.dateRange.end);
+    const today = new Date();
+    const todayStr =  today.toISOString().split("T")[0];
+    // Проходим по всем датам в диапазоне и отключаем все, кроме сегодняшней.
+    for (let d = new Date(taskStart); d <= taskEnd; d.setDate(d.getDate() + 1)) {
+        const dStr = new Date(d).toISOString().split("T")[0];
+        if (dStr !== todayStr) {
+            disabled.push(new Date(dStr));
+        }
+    }
+    // Если в задаче определены дополнительные заблокированные даты – можно их добавить
+    if (selectedTask.value.blockedDates && Array.isArray(selectedTask.value.blockedDates)) {
+        selectedTask.value.blockedDates.forEach(bd => {
+            const bdStr = new Date(bd).toISOString().split("T")[0];
+            if (bdStr !== todayStr && !disabled.some(d => d.toISOString().split("T")[0] === bdStr)) {
+                disabled.push(new Date(bdStr));
+            }
+        });
+    }
+    return disabled;
+});
+
+
 const selectedTask = computed(() =>
     habitStore.tasks.find((task) => task.id === Number(router.query.id)) || null
 );
-const isActionDisabled = computed(() => {
-    if (!localDateRange.value.start) return true;
-    return checkedDates.value.includes(localDateRange.value.start) || missedDates.value.includes(localDateRange.value.start);
-});
+
 const onDateSelect = (day) => {
     if (!day || !day.id || !selectedTask.value) return;
+
     const selectedDate = day.id;
-    if (selectedDate < selectedTask.value.dateRange.start || selectedDate > selectedTask.value.dateRange.end) {
-        console.log("Дата вне диапазона");
+    const todayStr = new Date().toISOString().split("T")[0];
+
+    if (selectedDate !== todayStr) {
+        console.log("Можно выбирать только сегодняшнюю дату");
         return;
     }
+
+    // Если сегодня выбрана – сохраняем её
     isDateSelected.value = true;
     localDateRange.value.start = selectedDate;
     console.log("Выбрана", selectedDate);
 };
 
-const disabledDates = computed(() => {
-    return selectedTask.value?.blockedDates || [];
-});
+// const disabledDates = computed(() => {
+// 	return selectedTask.value?.blockedDates || [];
+// });
 
 const loadTask = () => {
     habitStore.loadTasks();
@@ -151,6 +189,7 @@ onMounted(() => {
     if (savedMissedCount) {
         missedCount.value = parseInt(savedMissedCount, 10);
     }
+    let currentDateStr = new Date().toISOString().split("T")[0];
 });
 
 const onCheckClick = () => {
