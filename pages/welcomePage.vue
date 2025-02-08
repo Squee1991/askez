@@ -73,7 +73,6 @@
 		</div>
 	</div>
 </template>
-
 <script setup>
 	import {ref, computed, onMounted, onUnmounted} from "vue";
 	import {useHabitStore} from "../stores/habitStore.js";
