@@ -57,42 +57,16 @@
 		"Eliminar cuenta",
 		"Política de privacidad",
 		"Contáctanos",
-		"Contáctanos"
+		"Mode"
 	],
-	"men": {
-		"title": "Menú",
-		"items": [
-			{
-				"id": 1,
-				"icon": "account.svg",
-				"text": "Cuenta",
-				"link": "account"
-			},
-			{
-				"id": 2,
-				"icon": "aboutAPP.svg",
-				"text": "Sobre la app",
-				"link": ""
-			},
-			{
-				"id": 3,
-				"icon": "language.svg",
-				"text": "Idioma",
-				"link": "languages"
-			},
-			{
-				"id": 4,
-				"icon": "setings.svg",
-				"text": "Configuración",
-				"link": "settings"
-			}
-		]
+	"menu": {
+		"title": "Menú"
 	},
 	"meniu": [
 		"Cuenta",
 		"Sobre la app",
 		"Idioma",
-		"Mode"
+		"Configuración"
 	],
 	"account": {
 		"accoutTitle": "Cuenta",
