@@ -1,0 +1,160 @@
+{
+	"languages": {
+		"mode": "no-space",
+		"title": "Sprache",
+		"items": [
+			{
+				"code": "ru",
+				"name": "Russisch",
+				"className": "no-space"
+			},
+			{
+				"code": "by",
+				"name": "Weißrussisch",
+				"className": "no-space"
+			},
+			{
+				"code": "en",
+				"name": "Englisch",
+				"className": "no-space"
+			},
+			{
+				"code": "de",
+				"name": "Deutsch",
+				"className": "no-space"
+			},
+			{
+				"code": "es",
+				"name": "Spanisch",
+				"className": "no-space"
+			}
+		]
+	},
+	"settings": {
+		"title": "Einstellungen",
+		"items": [
+			{
+				"id": 1,
+				"text": "Konto löschen"
+			},
+			{
+				"id": 2,
+				"text": "Datenschutzrichtlinie"
+			},
+			{
+				"id": 3,
+				"text": "Kontakt"
+			},
+			{
+				"id": 4,
+				"text": "Modus",
+				"darkIcon": "dark.png",
+				"lightIcon": "light.png"
+			}
+		]
+	},
+	"setting": [
+		"Konto löschen",
+		"Datenschutzbestimmungen",
+		"Kontaktieren Sie uns",
+		"Mode"
+	],
+	"menu": {
+		"title": "Menü",
+		"items": [
+			{
+				"id": 1,
+				"icon": "account.svg",
+				"text": "Konto",
+				"link": "account"
+			},
+			{
+				"id": 2,
+				"icon": "aboutAPP.svg",
+				"text": "Über die App",
+				"link": ""
+			},
+			{
+				"id": 3,
+				"icon": "language.svg",
+				"text": "Sprache",
+				"link": "languages"
+			},
+			{
+				"id": 4,
+				"icon": "setings.svg",
+				"text": "Einstellungen",
+				"link": "settings"
+			}
+		]
+	},
+	"meniu": [
+		"Konto",
+		"Über die App",
+		"Sprache",
+		"Einstellungen"
+	],
+	"account": {
+		"accoutTitle": "Konto",
+		"accountBtn": "Aktualisieren"
+	},
+	"startPage": {
+		"value": "anfangen"
+	},
+	"description": {
+		"value": "Nächster Schritt"
+	},
+	"register": {
+		"btnValue": "registrieren",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "Geben Sie Ihren Namen ein"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "Geben Sie Ihre E-Mail ein"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "Geben Sie Ihr Passwort ein"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "Bestätigen Sie Ihr Passwort"
+			}
+		]
+	},
+	"homePage": {
+		"greetings": "Hallo",
+		"btn": "öffnen",
+		"no_active_goals": "Keine aktiven Ziele"
+	},
+	"createTask": {
+		"title": "Neues Ziel erstellen",
+		"btn": "Neu erstellen",
+		"task": "Dein Ziel",
+		"datum": "Wählen Sie einen Datumsbereich"
+	},
+	"success": {
+		"title": "Fertig!!",
+		"article": "Lass uns unser Bestes geben, um dein Ziel zu erreichen",
+		"button": "OK"
+	},
+	"taskDetails": {
+		"startDate": "Startdatum",
+		"endDate": "Enddatum"
+	},
+	"delConfirm": {
+		"title": "Ziel löschen?",
+		"accept": "Ja",
+		"reject": "Nein"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Löschen"
+	},
+	"CheckedProgress": {
+		"checked": "Ziel ist erledigt",
+		"notChecked": "Ziel ist nicht erledigt"
+	}
+}

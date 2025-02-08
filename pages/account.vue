@@ -1,9 +1,7 @@
 <template>
 	<div class="account__wrapper">
 		<div class="account__content">
-			<HeaderWithback
-				:icon="Arrowicon"
-				title="Account"/>
+			<HeaderWithback :icon="Arrowicon" :title="$t('account.accoutTitle')"/>
 			<div class="account__fields">
 				<div v-for="field in data.fields" :key="field.id" class="account__field">
 					<span class="field__label"> {{ field.label}}</span>
@@ -13,7 +11,7 @@
 					/>
 				</div>
 			</div>
-			<button @click="changeData" class="account__btn">Update</button>
+			<button @click="changeData" class="account__btn">{{ $t('account.accountBtn')}}</button>
 		</div>
 	</div>
 </template>
@@ -23,14 +21,10 @@
 	import {ref, onMounted} from 'vue';
 	import VFields from '/src/components/v-fields.vue';
 	import {useHabitStore} from '../stores/habitStore.js';
-
-	definePageMeta({
-		layout: 'footerlayout',
-	});
-
-	const habitStore = useHabitStore();
 	import {useRouter} from 'vue-router'
 
+
+	const habitStore = useHabitStore();
 	const router = useRouter()
 	const data = ref({
 		fields: [
@@ -61,6 +55,10 @@
 		habitStore.updateUserData(updatedData);
 		router.push("/welcomePage");
 	};
+
+	definePageMeta({
+		layout: 'footerlayout',
+	});
 
 </script>
 

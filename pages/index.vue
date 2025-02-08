@@ -4,8 +4,8 @@
             <div ref="animationContainer"></div>
         </div>
         <div class="nuxt__links">
-            <NuxtLink to="/descriptionAsceze">
-                <button class="btn">Get started</button>
+            <NuxtLink :to="localePath('/descriptionAsceze')">
+                <button v-if="$i18n.locale" class="btn"> {{ $t("startPage.value")}}</button>
             </NuxtLink>
         </div>
     </div>
@@ -15,6 +15,8 @@
 import Lottie from 'lottie-web'
 import {ref, onMounted} from 'vue'
 import Panda from 'assets/animations/panda.json'
+import { useLocalePath } from '#i18n';
+const localePath = useLocalePath()
 
 const animationContainer = ref(null)
 const config = useRuntimeConfig()

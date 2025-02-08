@@ -26,6 +26,7 @@
 	const isButtonActive = ref(false);
 	import {defineEmits} from 'vue';
 
+
 	const emit = defineEmits(['toggleHabit']);
 	const toggleHabitGoalHandler = () => {
 		isButtonActive.value = true

@@ -1,136 +1,108 @@
 <template>
-    <div class="update__date-wrapper">
-        <div :class="{'show__confirm': editState}" class="confirm__window">
-            <div class="confirm__content-wrapper">
-                <div class="confirm__title">Delete your goal ?</div>
-                <div class="confirm__btns">
-                    <button @click="cancelDelete" class="btn-green confirm__btn">No</button>
-                    <NuxtLink @click="clearTask(selectedTask.id)" class="confirm__btn" to="/welcomePage">
-                        <button class="confirm__btn">Yes</button>
-                    </NuxtLink>
-                </div>
-            </div>
-        </div>
-        <div v-if="selectedTask">
-            <div class="task__name">
-                <NuxtLink to="/welcomePage">
-                    <img class="task__icon-back" src="../assets/images/arrowSvg.svg" alt="">
-                </NuxtLink>
-                <span class="task__goal-name">{{ selectedTask.goal }}</span>
-                <div class="edit__menu-wrapper">
-                    <EditDeleteMenu
-                            :icon="editIcon"
-                            @click="editMenu"/>
-                    <ul v-if="isOpen" class="edit__menu-list">
-                        <li @click="openConfirmWindow(selectedTask.id)" class="edit__menu-item">Del task</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="range__date-wrapper">
-                <div class="range__date">
-                    <div class="range__date-text">Start date:</div>
-                    <div class="range__date__data start">{{ formatDate(selectedTask.dateRange.start) }}</div>
-                </div>
-                <div class="range__date">
-                    <div class="range__date-text">End date:</div>
-                    <div class="range__date__data end">{{ formatDate(selectedTask.dateRange.end) }}</div>
-                </div>
-            </div>
-            <div class="date__picker">
-                <v-calendar
-                        is-expanded
-                        v-if="localDateRange.start && localDateRange.end"
-                        locale="en"
-                        :min-date="localDateRange.start"
-                        :max-date="localDateRange.end"
-                        :disabled-dates="disabledDates"
-                        v-model.range="localDateRange"
-                        @dayclick="onDateSelect"
-                        :attributes="checkedDatesAttributes"
-                />
-            </div>
-            <div class="task__details-btns">
-                <div class="task__details-btn check">
-                    <button @click="onCheckClick" :disabled="isDateMarked" class="update__task-btn check">Green</button>
-                </div>
-                <div class="task__details-btn">
-                    <button @click="onMissClick" :disabled="isDateMarked" class="update__task-btn">Grey</button>
-                </div>
-            </div>
-            <div class="progress__container-details">
-                <ProgressBar
-                        :progress="selectedTask.progress"
-                        :progressMiss="selectedTask.progressMiss"
-                        :history="selectedTask.history"
-                        :size="200"
-                        :padding="25"
-                />
-            </div>
-            <div class="checked__progress">
-                <div class="checked__progress-wrapper">
-                    <div class="checked__wrapper">
-                        <img src="../assets/images/checkIcon.svg" alt="" class="checked__icon">
-                        <span class="checked__text checked__green">{{ checkedCount }} goal has checked</span>
-                    </div>
-                    <div class="checked__wrapper">
-                        <img src="../assets/images/noyChecked.svg" alt="" class="checked__icon">
-                        <span class="checked__text"> {{ missedCount }} goal hasn’t checked</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="update__date-wrapper">
+		<div :class="{'show__confirm': editState}" class="confirm__window">
+			<div class="confirm__content-wrapper">
+				<div class="confirm__title">{{ $t('delConfirm.title')}}</div>
+				<div class="confirm__btns">
+					<button @click="cancelDelete" class="btn-green confirm__btn">{{ $t('delConfirm.reject')}}</button>
+					<NuxtLink @click="clearTask(selectedTask.id)" class="confirm__btn" to="/welcomePage">
+						<button class="confirm__btn">{{ $t('delConfirm.accept')}}</button>
+					</NuxtLink>
+				</div>
+			</div>
+		</div>
+		<div v-if="selectedTask">
+			<div class="task__name">
+				<NuxtLink to="/welcomePage">
+					<img class="task__icon-back" src="../assets/images/arrowSvg.svg" alt="">
+				</NuxtLink>
+				<span class="task__goal-name">{{ selectedTask.goal }}</span>
+				<div class="edit__menu-wrapper">
+					<EditDeleteMenu
+						:icon="editIcon"
+						@click="editMenu"/>
+					<ul v-if="isOpen" class="edit__menu-list">
+						<li @click="openConfirmWindow(selectedTask.id)" class="edit__menu-item">{{ $t('EditDeleteMenu.delTask')}}</li>
+					</ul>
+				</div>
+			</div>
+			<div class="range__date-wrapper">
+				<div class="range__date">
+					<div class="range__date-text">{{ $t('taskDetails.startDate')}}</div>
+					<div class="range__date__data start">{{ formatDate(selectedTask.dateRange.start) }}</div>
+				</div>
+				<div class="range__date">
+					<div class="range__date-text">{{ $t('taskDetails.endDate')}}</div>
+					<div class="range__date__data end">{{ formatDate(selectedTask.dateRange.end) }}</div>
+				</div>
+			</div>
+			<div class="date__picker">
+				<v-calendar
+					is-expanded
+					v-if="localDateRange.start && localDateRange.end"
+					:locale="locale"
+					:min-date="localDateRange.start"
+					:max-date="localDateRange.end"
+					:disabled-dates="disabledDates"
+					v-model.range="localDateRange"
+					@dayclick="onDateSelect"
+					:attributes="checkedDatesAttributes"
+				/>
+			</div>
+			<div class="task__details-btns">
+				<div class="task__details-btn check">
+					<button @click="onCheckClick" :disabled="isDateMarked" class="update__task-btn check">Green</button>
+				</div>
+				<div class="task__details-btn">
+					<button @click="onMissClick" :disabled="isDateMarked" class="update__task-btn">Grey</button>
+				</div>
+			</div>
+			<div class="progress__container-details">
+				<ProgressBar
+					:progress="selectedTask.progress"
+					:progressMiss="selectedTask.progressMiss"
+					:history="selectedTask.history"
+					:size="200"
+					:padding="25"
+				/>
+			</div>
+			<div class="checked-progress">
+				<div class="checked__progress-wrapper">
+					<div class="checked__wrapper">
+						<img src="../assets/images/checkIcon.svg" alt="" class="checked__icon">
+						<span class="checked__text checked__green">{{ checkedCount }} {{ $t('CheckedProgress.checked')}}</span>
+					</div>
+					<div class="checked__wrapper">
+						<img src="../assets/images/noyChecked.svg" alt="" class="checked__icon">
+						<span class="checked__text"> {{ missedCount }} {{ $t('CheckedProgress.notChecked')}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 <script setup>
-import {ref, computed, onMounted,watch} from "vue";
-import {useRoute} from "vue-router";
-import {useHabitStore} from "../stores/habitStore.js";
-import ProgressBar from "../src/components/progressBar.vue";
-import EditDeleteMenu from '../src/components/EditDeleteMenu.vue';
-import EditIcon from '../assets/images/editIcon.svg'
-
-const editIcon = ref(EditIcon)
-const editState = ref(false);
-const isOpen = ref(false);
-const taskToDelete = ref(null);
-const router = useRoute();
-const missedCount = ref(0)
-const checkedCount = ref(0)
-const isDateSelected = ref(false);
-const checkedDates = ref([])
-const missedDates = ref([])
-const habitStore = useHabitStore();
-const disabledDates = computed(() => {
-    if (!selectedTask.value) return [];
-
-    const disabled = [];
-    const taskStart = new Date(selectedTask.value.dateRange.start);
-    const taskEnd = new Date(selectedTask.value.dateRange.end);
-    const today = new Date();
-    const todayStr =  today.toISOString().split("T")[0];
-    // Проходим по всем датам в диапазоне и отключаем все, кроме сегодняшней.
-    for (let d = new Date(taskStart); d <= taskEnd; d.setDate(d.getDate() + 1)) {
-        const dStr = new Date(d).toISOString().split("T")[0];
-        if (dStr !== todayStr) {
-            disabled.push(new Date(dStr));
-        }
-    }
-    // Если в задаче определены дополнительные заблокированные даты – можно их добавить
-    if (selectedTask.value.blockedDates && Array.isArray(selectedTask.value.blockedDates)) {
-        selectedTask.value.blockedDates.forEach(bd => {
-            const bdStr = new Date(bd).toISOString().split("T")[0];
-            if (bdStr !== todayStr && !disabled.some(d => d.toISOString().split("T")[0] === bdStr)) {
-                disabled.push(new Date(bdStr));
-            }
-        });
-    }
-    return disabled;
-});
-
-
-const selectedTask = computed(() =>
-    habitStore.tasks.find((task) => task.id === Number(router.query.id)) || null
-);
+	import {ref, computed, onMounted} from "vue";
+	import {useRoute} from "vue-router";
+	import {useHabitStore} from "../stores/habitStore.js";
+	import ProgressBar from "../src/components/progressBar.vue";
+	import EditDeleteMenu from '../src/components/EditDeleteMenu.vue';
+	import EditIcon from  '../assets/images/editIcon.svg'
+	const { locale } = useI18n()
+    const editIcon = ref(EditIcon)
+	const editState = ref(false);
+	const isOpen = ref(false);
+	const taskToDelete = ref(null);
+	const router = useRoute();
+	const missedCount = ref(0)
+	const checkedCount = ref(0)
+	const isDateSelected = ref(false);
+	const checkedDates = ref([])
+	const missedDates = ref([])
+	const habitStore = useHabitStore();
+	const selectedTask = computed(() =>
+		habitStore.tasks.find((task) => task.id === Number(router.query.id)) || null
+	);
 
 const onDateSelect = (day) => {
     if (!day || !day.id || !selectedTask.value) return;
@@ -416,6 +388,16 @@ watch([checkedCount, missedCount], () => {
     color: var(--text-color);
 }
 
+	.checked__progress-wrapper {
+		margin-top: 10px;
+	}
+
+	.checked-progress {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 45px;
+	}
 .checked__progress {
     display: flex;
     justify-content: center;
@@ -447,14 +429,14 @@ watch([checkedCount, missedCount], () => {
     font-family: "Nunito", serif;
 }
 
-.edit__menu-item {
-    font-size: 16px;
-    margin: 2px;
-    padding: 2px;
-    color: var(--text-color);
-    border-radius: 5px;
-    font-weight: 400;
-}
+	.edit__menu-item {
+		font-size: 12px;
+		margin: 2px;
+		padding: 2px;
+		color: var(--text-color);
+		border-radius: 5px;
+		font-weight: 400;
+	}
 
 .edit__menu-list {
     width: 78px;

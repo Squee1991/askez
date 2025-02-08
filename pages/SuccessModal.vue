@@ -4,18 +4,17 @@
 			<div class="img__wrrapper">
 				<img class="img__panda" :src="SuccessPanda" alt="">
 			</div>
-			<div class="success__title">Done!!</div>
-			<div class="success__text">Let’s do the best to achieve your goal!</div>
-			<!--				<button class="success__btn" @click="$emit('close')">OK</button>-->
+			<div class="success__title">{{$t('success.title')}}</div>
+			<div class="success__text">{{$t('success.article')}}!</div>
 			<NuxtLink to="/welcomePage">
-				<button class="success__btn">OK</button>
+				<button class="success__btn">{{$t('success.button')}}</button>
 			</NuxtLink>
 		</div>
 	</div>
 </template>
 
 <script setup>
-	import SuccessPanda from '/assets/images/successPanda.png';
+	import SuccessPanda from '/assets/images/successS.png';
 	import { useRoute } from 'vue-router';
 	const route = useRoute();
 	const username = route.query.username
@@ -27,7 +26,7 @@
 		position: relative;
 		width: 100vw;
 		height: 100vh;
-		background: #fff;
+		background: var(--background-color);
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -63,6 +62,8 @@
 		border: none;
 		border-radius: 15px;
 		cursor: pointer;
+		font-weight: bold;
+		font-family: "Nunito", serif;
 	}
 
 	* {
@@ -74,14 +75,18 @@
 	.success__title {
 		font-size: 40px;
 		font-weight: bold;
-		color: #5D4037;
+		/*color: #5D4037;*/
+		color: var(--text-color);
 	}
 
 	.success__text {
 		text-align: center;
 		padding: 10px;
-		color: #757575;
-		font-size: 16px;
+		color: var(--text-color);
+		font-size: 15px;
+		font-weight: 400;
+		font-family: "Nunito", serif;
+		letter-spacing: 2px;
 	}
 
 </style>

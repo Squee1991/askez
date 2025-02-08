@@ -1,0 +1,160 @@
+{
+	"languages": {
+		"mode": "no-space",
+		"title": "Language",
+		"items": [
+			{
+				"code": "ru",
+				"name": "Russian",
+				"className": "no-space"
+			},
+			{
+				"code": "by",
+				"name": "Belorussian",
+				"className": "no-space"
+			},
+			{
+				"code": "en",
+				"name": "English",
+				"className": "no-space"
+			},
+			{
+				"code": "de",
+				"name": "Deutsch",
+				"className": "no-space"
+			},
+			{
+				"code": "es",
+				"name": "Español",
+				"className": "no-space"
+			}
+		]
+	},
+	"settings": {
+		"title": "Settings",
+		"items": [
+			{
+				"id": 1,
+				"text": "Delete account"
+			},
+			{
+				"id": 2,
+				"text": "Privacy Policy"
+			},
+			{
+				"id": 3,
+				"text": "Contact us"
+			},
+			{
+				"id": 4,
+				"text": "Mode",
+				"darkIcon": "dark.png",
+				"lightIcon": "light.png"
+			}
+		]
+	},
+	"setting": [
+		"Delete account",
+		"Privacy Policy",
+		"Contact us",
+		"Mode"
+	],
+	"menu": {
+		"title": "Menu",
+		"items": [
+			{
+				"id": 1,
+				"icon": "account.svg",
+				"text": "Account",
+				"link": "account"
+			},
+			{
+				"id": 2,
+				"icon": "aboutAPP.svg",
+				"text": "About app",
+				"link": ""
+			},
+			{
+				"id": 3,
+				"icon": "language.svg",
+				"text": "Language",
+				"link": "languages"
+			},
+			{
+				"id": 4,
+				"icon": "setings.svg",
+				"text": "settings",
+				"link": "settings"
+			}
+		]
+	},
+	"meniu": [
+		"Account",
+		"About the App",
+		"Languages",
+		"Settings"
+	],
+	"account": {
+		"accoutTitle": "Account",
+		"accountBtn": "Update"
+	},
+	"startPage": {
+		"value": "get started"
+	},
+	"description": {
+		"value": "Next step"
+	},
+	"register": {
+		"btnValue": "register",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "enter your name"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "enter your email"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "enter your password"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "confirm your password"
+			}
+		]
+	},
+	"homePage": {
+		"greetings": "Hello",
+		"btn": "Open",
+		"no_active_goals": "No active goals"
+	},
+	"createTask": {
+		"title": "Create new Goal",
+		"btn": "Create new",
+		"task": "Your goal",
+		"datum": "Select a date range"
+	},
+	"success": {
+		"title": "Done!!",
+		"article": "Let's do the best to achieve your goal",
+		"button": "OK"
+	},
+	"taskDetails": {
+		"startDate": "Start date",
+		"endtDate": "End date"
+	},
+	"delConfirm": {
+		"title": "Delete goal?",
+		"accept": "Yes",
+		"reject": "No"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Delete"
+	},
+	"CheckedProgress": {
+		"checked": "goal has checked",
+		"notChecked": "goal hasn’t checked"
+	}
+}

@@ -24,7 +24,7 @@
                     :disabled="isSubmitting || !isFormValid"
             >
                 <span v-if="isSubmitting">Loading...</span>
-                <span v-else>Register</span>
+                <span v-else> {{ $t('register.btnValue')}}</span>
             </button>
         </form>
 
@@ -39,10 +39,8 @@ import {useRouter} from 'vue-router'
 import {useHabitStore} from '../stores/habitStore.js'
 import {validateEmail, validatePassword, validateConfirmPassword, validateName} from '../src/utils/validations.js';
 
-
 const habitStore = useHabitStore()
 const router = useRouter()
-
 
 const data = ref({
     fields: [
@@ -88,32 +86,27 @@ const data = ref({
         },
     ],
 })
-const closed = ref(false)
 const isSubmitting = ref(false);
 const showPasswordStrength = ref(false);
 const passwordStrength = ref('');
 const isFormValid = computed(() => data.value.fields.every((field) => !field.error && field.value.trim() !== ''));
-
+const closed = ref(false)
 const passwordStrengthClass = computed(() => {
     if (passwordStrength.value === 'Weak') return 'weak';
     if (passwordStrength.value === 'Medium') return 'medium';
     if (passwordStrength.value === 'Strong') return 'strong';
     return '';
 });
-watch(
-    () => data.value.fields,
-    (fields) => {
+watch(() => data.value.fields, (fields) => {
         fields.forEach((field) => {
-
             if (field.error) {
                 validateField(field);
             }
         });
-    },
-    {deep: true}
+    }, {deep: true}
 );
-const validateField = (field) => {
 
+const validateField = (field) => {
     if (!field.value.trim()) {
         field.error = `${field.label} is required.`;
         return;
@@ -144,16 +137,11 @@ const validateField = (field) => {
 const submitForm = async () => {
     isSubmitting.value = true;
 
-
     data.value.fields.forEach(validateField);
-
-
     if (!isFormValid.value) {
         isSubmitting.value = false;
         return;
     }
-
-
     const userData = data.value.fields.reduce((acc, field) => {
         acc[field.name] = field.value;
         return acc;
