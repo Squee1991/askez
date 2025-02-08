@@ -53,6 +53,12 @@
 			}
 		]
 	},
+	"setting": [
+		"Konto löschen",
+		"Datenschutzbestimmungen",
+		"Kontaktieren Sie uns",
+		"Mode"
+	],
 	"menu": {
 		"title": "Menü",
 		"items": [
@@ -82,6 +88,12 @@
 			}
 		]
 	},
+	"meniu": [
+		"Konto",
+		"Über die App",
+		"Sprache",
+		"Einstellungen"
+	],
 	"account": {
 		"accoutTitle": "Konto",
 		"accountBtn": "Aktualisieren"

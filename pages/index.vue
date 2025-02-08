@@ -5,7 +5,7 @@
         </div>
         <div class="nuxt__links">
             <NuxtLink :to="localePath('/descriptionAsceze')">
-                <button class="btn"> {{ $t("startPage.value")}}</button>
+                <button v-if="$i18n.locale" class="btn"> {{ $t("startPage.value")}}</button>
             </NuxtLink>
         </div>
     </div>

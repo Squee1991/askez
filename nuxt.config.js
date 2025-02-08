@@ -33,7 +33,7 @@ export default defineNuxtConfig({
 			{
 				code: 'by-BY',
 				iso: 'by-BY',
-				name: 'Беларуски',
+				name: 'Беларускі',
 				file: 'by-BY.json',
 			},
 			{
@@ -44,7 +44,7 @@ export default defineNuxtConfig({
 			},
 		],
 		detectBrowserLanguage: false,
-		defaultLocale: 'en-US',
+		defaultLocale: null,
 		lazy: true,
 	},
 

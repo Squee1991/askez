@@ -3,23 +3,16 @@
 		<div class="askeza__menu-content">
 			<HeaderwithBack :title="$t('menu.title')"/>
 			<div class="menu__btns">
-				<div
-					v-for="item in menuList.items"
-					:key="item.id"
-					class="menu__btn-wrapper"
-				>
-					<NuxtLink :to="item.link" class="account__settings-btn">
-						<img class="account__icon" :class="
-						    {
-                             'settings-bg-orange': item.icon === 'setings.svg',
-                             'lang-bg-rot': item.icon === 'language.svg',
-                             'aboutapp-bg-green': item.icon === 'aboutAPP.svg',
-                             'acc-bg-blue': item.icon === 'account.svg'
-						     }"
-							:src="item.icon"
-							:alt="item.text"
-						/>
-						<span class="account__text">{{ item.text }}</span>
+				<div v-for="(item , index) in menuPlain" :key="index">
+					<NuxtLink class="account__settings-btn" :to="getMenuPlainLink(item)">
+						<img :class="{
+                              'acc-bg-blue': accountLabels.includes(item),
+                              'aboutapp-bg-green': aboutLabels.includes(item),
+                              'lang-bg-rot': languageLabels.includes(item),
+                              'settings-bg-orange': settingsLabels.includes(item)
+                                     }"
+						     class="account__icon" :src="getMenuPlainIcon(item)" alt="">
+						<span class="account__text"> {{ item }}</span>
 					</NuxtLink>
 				</div>
 			</div>
@@ -30,14 +23,57 @@
 <script setup>
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
 	import {ref, onMounted, computed} from 'vue';
+	import AccoutIcon from '../assets/images/account.svg'
+	import AboutApp from '../assets/images/aboutApp.svg'
+	import languageIcon from '../assets/images/language.svg'
+	import SettingsIcon from '../assets/images/setings.svg'
 	import {useI18n} from 'vue-i18n';
 
-	const menuList = ref({});
-	onMounted(async () => {
-		const response = await fetch('/dataListBelorussian.json');
-		const data = await response.json();
-		menuList.value = data.menu;
-	});
+	const accountLabels = ['Акаўнт', 'Аккаунт', 'Account', 'Konto', 'Cuenta'];
+	const aboutLabels = ['Пра праграму', 'О программе', 'About the App', 'Über die App', 'Sobre la app'];
+	const languageLabels = ['Мова', 'Язык', 'Languages', 'Sprache', 'Idioma'];
+	const settingsLabels = ['Налады', 'Настройки', 'Settings', 'Einstellungen', 'Configuración'];
+
+	const getMenuPlainLink = (text) => {
+		const isLink = text.trim();
+		if (accountLabels.includes(isLink)) {
+			return '/account';
+		} else if (aboutLabels.includes(isLink)) {
+			return '/about';
+		} else if (languageLabels.includes(isLink)) {
+			return '/languages';
+		} else if (settingsLabels.includes(isLink)) {
+			return '/settings';
+		} else {
+			return ''
+		}
+	};
+
+	const getMenuPlainIcon = (text) => {
+		const isItem = text.trim();
+		if (accountLabels.includes(isItem)) {
+			return AccoutIcon;
+		} else if (aboutLabels.includes(isItem)) {
+			return AboutApp;
+		} else if (languageLabels.includes(isItem)) {
+			return languageIcon;
+		} else if (settingsLabels.includes(isItem)) {
+			return SettingsIcon;
+		} else {
+			return '';
+		}
+	};
+
+	const {locale, messages} = useI18n();
+	const menuPlain = computed(() => {
+		const raw = messages.value[locale.value].meniu;
+		return raw.map(item => {
+			if (typeof item === 'string') {
+				return item
+			}
+			return item.body?.static || '';
+		})
+	})
 
 	definePageMeta({
 		layout: 'footerlayout'

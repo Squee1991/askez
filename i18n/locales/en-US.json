@@ -53,6 +53,12 @@
 			}
 		]
 	},
+	"setting": [
+		"Delete account",
+		"Privacy Policy",
+		"Contact us",
+		"Mode"
+	],
 	"menu": {
 		"title": "Menu",
 		"items": [
@@ -82,7 +88,12 @@
 			}
 		]
 	},
-
+	"meniu": [
+		"Account",
+		"About the App",
+		"Languages",
+		"Settings"
+	],
 	"account": {
 		"accoutTitle": "Account",
 		"accountBtn": "Update"
