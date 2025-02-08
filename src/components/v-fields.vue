@@ -1,109 +1,83 @@
-<script setup>
-	import { defineProps, ref, defineEmits } from 'vue';
-	import hideIcon from '/assets/images/hideicon.png';
-	import showIcon from '/assets/images/showicon.png';
-
-	const props = defineProps({
-		text: {
-			type: String,
-			default: '',
-		},
-		placeholder: {
-			type: String,
-			default: '',
-		},
-		field: {
-			type: Object,
-			required: true,
-		},
-
-	});
-
-	const currentThemeSrc = ref(hideIcon);
-	const localFieldValue = ref(props.field.model);
-	const fieldType = ref(props.field.type);
-	const emit = defineEmits(['update:modelValue']);
-
-	onMounted(() => {
-		fieldType.value = props.field.type;
-	});
-
-	const togglePasswordIcon = () => {
-		if (fieldType.value === 'password') {
-			currentThemeSrc.value = showIcon;
-			fieldType.value = 'text';
-		} else {
-			currentThemeSrc.value = hideIcon;
-			fieldType.value = 'password';
-		}
-	};
-
-	watch(() => props.field.value, (newValue) => {
-		localFieldValue.value = newValue;
-	});
-</script>
-
 <template>
-	<div class="wrapper">
+	<div class="v-field-wrapper">
 		<input
-			class="form__input"
-			:value="localFieldValue"
-			:id="props.field.id"
-			v-model="localFieldValue"
-			:placeholder="props.placeholder"
-			:type="fieldType"
-			@input="$emit('update:modelValue', $event.target.value)"
+			class="v-field-input"
+			:type="localType"
+			v-model="localValue"
+			:placeholder="field.placeholder"
+			:autocomplete="field.autocomplete || 'off'"
 		/>
-		<div
-			class="form__icon-wrapper"
-			v-if="props.field.type === 'password'"
-			@click="togglePasswordIcon"
-		>
-			<img
-				v-if="currentThemeSrc"
-				class="form__icon"
-				:src="currentThemeSrc"
-				alt="Password icon"
-			/>
+		<div v-if="field.type === 'password'" class="toggle-icon" @click="togglePassword">
+			<img :src="currentIcon" alt="Toggle password visibility" class="toggle-icon-item"/>
 		</div>
 	</div>
 </template>
 
+<script setup>
+	import {defineProps, ref, watch} from 'vue';
+	import hideIcon from '/assets/images/hideicon.png';
+	import showIcon from '/assets/images/showicon.png';
 
-<style>
-	.wrapper {
+	const props = defineProps({
+		field: {
+			type: Object,
+			required: true,
+		},
+	});
+
+	const emit = defineEmits(['update:modelValue']);
+
+	const localValue = ref(props.field.value);
+	const localType = ref(props.field.type);
+	const currentIcon = ref(hideIcon);
+
+	watch(() => props.field.value, (newVal) => {
+		localValue.value = newVal;
+	});
+
+	watch(localValue, (newVal) => {
+		emit('update:modelValue', newVal);
+	});
+
+	const togglePassword = () => {
+		if (localType.value === 'password') {
+			localType.value = 'text';
+			currentIcon.value = showIcon;
+		} else {
+			localType.value = 'password';
+			currentIcon.value = hideIcon;
+		}
+	};
+</script>
+
+<style scoped>
+	.v-field-wrapper {
+		margin-top: 3px;
 		position: relative;
 	}
 
-	.form__input {
-		padding: 18px 30px 18px 18px;
-		border-radius: 11px;
-		position: relative;
+	.v-field-input {
 		width: 100%;
-		background: white;
-		border: none;
-		color: black;
-		margin-bottom: 10px;
-		font-size: 13px;
-		font-weight: 600;
-		opacity: 85%;
+		font-size: 14px;
+		border: 1px solid #ccc;
+		border-radius: 8px;
+		padding: 12px;
 	}
 
-	.form__icon-wrapper {
-		position: absolute;
-		left: 90%;
-		bottom: 10%;
-		width: 40px;
-		height: 40px;
-	}
-
-	.form__icon {
-		padding: 5px 10px 5px 5px;
-		width: 32px;
-		height: 27px;
+	.toggle-icon {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		position: absolute;
+		right: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		cursor: pointer;
+		width: 40px;
+		padding: 10px;
 	}
 
+	.toggle-icon-item {
+		width: 100%;
+	}
 </style>

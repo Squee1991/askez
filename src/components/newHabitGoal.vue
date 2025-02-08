@@ -3,22 +3,27 @@
 		<div class="habit-goal-modal">
 			<div class="input__fields-wrapper">
 				<div class="close__wrapper">
-					<div class="close__title">Create New Habit Goal</div>
+					<div class="close__title"> {{ $t('createTask.title')}}</div>
 					<button class="close__goal-btn" @click="closeWindow">
 						<img class="close__goal" :src="CloseIcon" alt=""/>
 					</button>
 				</div>
 				<div class="input__fields-inner">
 					<div class="input__fields">
-						<span class="input__label label">Your Goal</span>
+						<span class="input__label label">{{ $t('createTask.task')}}</span>
 						<input class="input__goal" v-model="inputValueGoal" type="text"/>
 					</div>
 				</div>
 				<div class="date__picker-inenr">
-					<span class="date__picke-label label">Select date period</span>
-					<VDatePicker v-model.range="localDateRange" mode="range"/>
+					<span class="date__picke-label label">{{ $t('createTask.datum')}}</span>
+					<VDatePicker
+						:locale="locale"
+						:min-date='new Date()'
+						v-model.range="localDateRange"
+						mode="range"
+					/>
 				</div>
-				<button class="create__btn" @click="addValue">Create new</button>
+				<button class="create__btn" @click="addValue">{{ $t('createTask.btn')}}</button>
 			</div>
 		</div>
 	</div>
@@ -28,43 +33,33 @@
 	import CloseIcon from "/assets/images/close.svg";
 	import SuccessModal from "../../pages/SuccessModal.vue";
 	import SelectComponent from '/src/components/selectComponent.vue'
-	import {useHabitStore} from '/stores/habitStore.js'
-
+	import {useHabitStore} from '../../stores/habitStore.js'
 	const habitStore = useHabitStore()
-	const isSuccessVisible = ref(false);
+	const { locale } = useI18n()
 	const inputValueGoal = ref("");
-
-	const selectedPeriod = ref("");
-	const selectedHabitType = ref("")
 	const emit = defineEmits(["close", "add"]);
 	const router = useRouter()
 	import {useRouter} from 'vue-router'
-
 	const localDateRange = ref({
 		start: new Date(),
 		end: new Date()
-	});
+	})
 
 	const clearFields = (fields) => fields.forEach(field => field.value = "")
 	const addValue = () => {
 		const isInputValid = [inputValueGoal.value].every((value) => value.trim?.());
 		const isDateRangeValid = localDateRange.value.start && localDateRange.value.end;
+		if (!isInputValid || !isDateRangeValid) return;
 
-		if (!isInputValid || !isDateRangeValid) {
-			return;
-		}
 		const newTask = {
 			goal: inputValueGoal.value,
-
 			dateRange: localDateRange.value,
 			checked: false,
 		};
 		habitStore.addTask(newTask);
 		emit("add", newTask);
 		clearFields([inputValueGoal]);
-		isSuccessVisible.value = true;
 		router.push('/SuccessModal')
-
 	};
 
 	watch(localDateRange, (newVal) => {
@@ -77,7 +72,54 @@
 
 </script>
 <style>
+	.vc-highlight-light-bg {
+		background: white;
+	}
+
+	.vc-highlight-bg-solid {
+		background-color: #4FC55C;
+	}
+
+	.vc-highlight-bg-light {
+		background-color: var(--vc-highlight-bg);
+	}
+
+	.vc-blue {
+		border: none;
+	}
+
+	.vc-header .vc-arrow {
+		color: var(--vc-arrow-cal);
+	}
+
+	.vc-container {
+		width: 100%;
+		border: none;
+		background: var(--background-color);
+		padding: 10px;
+	}
+
+	.vc-header .vc-title {
+		color: var(--text-color);
+		background: none;
+		font-size: 20px;
+	}
+
+	.vc-header {
+		margin-top: 0;
+	}
+
+	.vc-highlight-content-light {
+		color: var(--text-color);
+	}
+
+	.vc-day,
+	.vc-weekday {
+		color: var(--text-color);
+	}
+
 	.create__btn {
+		margin-top: 10px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -94,11 +136,6 @@
 		overflow: hidden;
 	}
 
-	.vc-container {
-		width: 100%;
-		border: none;
-	}
-
 	.label {
 		font-family: "Nunito", serif;
 		font-size: 14px;
@@ -111,21 +148,9 @@
 		position: relative;
 	}
 
-	.success__modal-window {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		background: rgba(0, 0, 0, 0.5);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
 	.input__fields-wrapper {
 		padding: 20px;
-		background: #f8f4f4;
+		background-color: var(--background-color);
 		border-radius: 10px;
 	}
 
@@ -148,6 +173,7 @@
 		font-size: 18px;
 		font-weight: 700;
 		font-family: "Nunito", serif;
+		color: var(--title-c);
 	}
 
 	.close__goal-btn {
@@ -164,12 +190,13 @@
 		font-family: "Nunito", serif;
 		font-weight: 700;
 		padding-bottom: 5px;
+		color: var(--title-c);
 	}
 
 	.input__goal {
 		margin: 3px 0 3px 0;
 		width: 100%;
-		padding: 10px;
+		padding: 15px;
 		border-radius: 10px;
 		border: 1px solid #ededed;
 	}

@@ -1,7 +1,7 @@
 <template>
 	<div class="account__wrapper">
 		<div class="account__content">
-			<HeaderWithback title="Account"/>
+			<HeaderWithback :icon="Arrowicon" :title="$t('account.accoutTitle')"/>
 			<div class="account__fields">
 				<div v-for="field in data.fields" :key="field.id" class="account__field">
 					<span class="field__label"> {{ field.label}}</span>
@@ -11,23 +11,20 @@
 					/>
 				</div>
 			</div>
-			<button @click="changeData" class="account__btn">Update</button>
+			<button @click="changeData" class="account__btn">{{ $t('account.accountBtn')}}</button>
 		</div>
 	</div>
 </template>
 <script setup>
+	import Arrowicon from '../assets/images/arrowSvg.svg'
 	import HeaderWithback from '../src/components/headerWithBack.vue'
 	import {ref, onMounted} from 'vue';
 	import VFields from '/src/components/v-fields.vue';
 	import {useHabitStore} from '../stores/habitStore.js';
-
-	definePageMeta({
-		layout: 'footerlayout',
-	});
-
-	const habitStore = useHabitStore();
 	import {useRouter} from 'vue-router'
 
+
+	const habitStore = useHabitStore();
 	const router = useRouter()
 	const data = ref({
 		fields: [
@@ -40,41 +37,12 @@
 				value: "",
 				error: false,
 			},
-			{
-				id: 2,
-				name: "email",
-				type: "email",
-				label: "Email",
-				placeholder: "Enter your email",
-				value: "",
-				error: false,
-			},
-			{
-				id: 3,
-				name: "password",
-				type: "password",
-				label: "Password",
-				placeholder: "Enter your password",
-				value: "",
-				error: false,
-			},
-			{
-				id: 4,
-				name: "password",
-				type: "password",
-				label: "Password",
-				placeholder: "Enter your password",
-				value: "",
-				error: false,
-			},
 		],
 	});
 	onMounted(() => {
 		habitStore.loadUserData();
 		data.value.fields.forEach((field) => {
 			if (field.name === "name") field.value = habitStore.username;
-			if (field.name === "email") field.value = habitStore.email;
-			if (field.name === "password") field.value = habitStore.password;
 		});
 	});
 
@@ -82,13 +50,15 @@
 		let updatedData = {};
 		data.value.fields.forEach((field) => {
 			if (field.name === "name") updatedData.name = field.value;
-			if (field.name === "email") updatedData.email = field.value;
-			if (field.name === "password") updatedData.password = field.value;
 		});
 
 		habitStore.updateUserData(updatedData);
 		router.push("/welcomePage");
 	};
+
+	definePageMeta({
+		layout: 'footerlayout',
+	});
 
 </script>
 
@@ -101,7 +71,7 @@
 	}
 
 	.account__wrapper {
-		background: #bbe3bb;
+		background-color: var(--background-color);
 		height: 100vh;
 	}
 
@@ -112,9 +82,11 @@
 		padding: 15px;
 		border-radius: 10px;
 		font-size: 20px;
+		background-color: var(--button-bg);
+		color: var(--button-text-color);
 	}
 
 	.field__label {
-		color: #666666;
+		color: var(--text-color);
 	}
 </style>

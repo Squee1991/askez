@@ -30,8 +30,6 @@
 
 <script setup>
 	import {ref, computed, onMounted} from 'vue';
-	import Lottie from "lottie-web";
-	import BannerAnimation from "../../assets/animations/bannerAnimation.json";
 
 	const users = ref([]);
 	const usersPerpage = ref(10)
@@ -40,8 +38,6 @@
 		const response = await fetch('https://jsonplaceholder.typicode.com/todos')
 		const data = await response.json();
 		users.value = data;
-		console.log(users.value.length)
-
 	}
 
 	const sortingByTitle = () => {
@@ -93,20 +89,6 @@
 		localStorage.removeItem('values');
 	};
 
-	onMounted(() => {
-		const savedValues = localStorage.getItem('values');
-		if (savedValues) {
-			values.value = JSON.parse(savedValues);
-		}
-		if (destContainer.value) {
-			Lottie.loadAnimation({
-				container: destContainer.value,
-				loop: false,
-				autoplay: true,
-				animationData: BannerAnimation
-			})
-		}
-	})
 
 </script>
 

@@ -1,11 +1,12 @@
-import { defineStore } from 'pinia'
-export const useHabitStore = defineStore('askezaStore', {
+import { defineStore } from "pinia";
+
+export const useHabitStore = defineStore("askezaStore", {
 	state: () => ({
 		username: null,
 		email: null,
 		password: null,
 		tasks: [],
-		radius: 45,
+		radius: 42,
 		selectedTask: null,
 	}),
 	actions: {
@@ -16,10 +17,10 @@ export const useHabitStore = defineStore('askezaStore', {
 			this.username = userData.name;
 			this.email = userData.email;
 			this.password = userData.password;
-			localStorage.setItem('userData', JSON.stringify(userData));
+			localStorage.setItem("userData", JSON.stringify(userData));
 		},
 		loadUserData() {
-			const savedData = localStorage.getItem('userData');
+			const savedData = localStorage.getItem("userData");
 			if (savedData) {
 				const parsedData = JSON.parse(savedData);
 				this.username = parsedData.name;
@@ -28,48 +29,79 @@ export const useHabitStore = defineStore('askezaStore', {
 			}
 		},
 		updateUserData(newData) {
-			if (newData.name) this.username = newData.name
-			if (newData.email) this.email = newData.email
-			if (newData.password) this.password = newData.password
-			localStorage.setItem('userData', JSON.stringify({
-				name: this.username,
-				email: this.email,
-				password: this.password
-			}))
+			if (newData.name) this.username = newData.name;
+			if (newData.email) this.email = newData.email;
+			if (newData.password) this.password = newData.password;
+			localStorage.setItem(
+				"userData",
+				JSON.stringify({
+					name: this.username,
+					email: this.email,
+					password: this.password,
+				})
+			);
 		},
 		addTask(task) {
-			const isDuplicate = this.tasks.some((item) =>
-				item.goal === task.goal &&
-				item.dateRange.start === task.dateRange.start &&
-				item.dateRange.end === task.dateRange.end
+			const isDuplicate = this.tasks.some(
+				(item) =>
+					item.goal === task.goal &&
+					item.dateRange.start === task.dateRange.start &&
+					item.dateRange.end === task.dateRange.end
 			);
 			if (!isDuplicate) {
 				const newTask = {
 					...task,
 					id: Date.now(),
 					progress: 0,
+					progressMiss: 0,
+					history: [],
+					checkedDates: [],
+					missedDates: [],
+					checkedCount: 0,
+					missedCount: 0
 				};
 				this.tasks.push(newTask);
 				this.updateProgress(newTask);
-				localStorage.setItem('tasks', JSON.stringify(this.tasks));
+				this.saveTasks();
 			}
 		},
 		loadTasks() {
-			const savedTasks = localStorage.getItem('tasks');
+			const savedTasks = localStorage.getItem("tasks");
 			if (savedTasks) {
-				this.tasks = JSON.parse(savedTasks);
-				this.updateAllProgress();
+				try {
+					this.tasks = JSON.parse(savedTasks) || [];
+					this.tasks.forEach((task) => {
+						if (task.progressMiss === undefined) {
+							task.progressMiss = 0;
+						}
+						if (!task.history) {
+							task.history = [];
+						}
+					});
+
+					this.updateAllProgress();
+				} catch (error) {
+
+					this.tasks = [];
+				}
+			} else {
+				this.tasks = [];
 			}
 		},
+
 		updateProgress(task) {
-			const circumference = 2 * Math.PI * this.radius;
-			const startDate = new Date(task.dateRange.start);
-			const endDate = new Date(task.dateRange.end);
-			const totalDays = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
-			const daysPassed = Math.ceil((new Date() - startDate) / (1000 * 60 * 60 * 24));
-			const progress = Math.min(100, Math.floor((daysPassed / totalDays) * 100));
-			task.progress = progress;
-			task.offset = circumference - (progress / 100) * circumference;
+			const totalDays = Math.max(1, (new Date(task.dateRange.end) - new Date(task.dateRange.start)) / (1000 * 60 * 60 * 24) + 1);
+			const completedDays = task.checkedDates ? task.checkedDates.length : 0;
+			const missedDays = task.missedDates ? task.missedDates.length : 0;
+			const progress = (completedDays / totalDays) * 100;
+			const progressMiss = (missedDays / totalDays) * 100;
+			task.progress = Math.round(progress, 100);
+			task.progressMiss = Math.round(progressMiss, 100);
+			const taskIndex = this.tasks.findIndex((t) => t.id === task.id);
+			if (taskIndex !== -1) {
+				this.tasks.splice(taskIndex, 1, task);
+			}
+			this.saveTasks();
 		},
 
 		updateAllProgress() {
@@ -80,9 +112,10 @@ export const useHabitStore = defineStore('askezaStore', {
 			this.username = null;
 			this.tasks = [];
 		},
+
 		removeTask(taskId) {
-			this.tasks = this.tasks.filter(task => task.id !== taskId);
-			localStorage.setItem('tasks', JSON.stringify(this.tasks));
+			this.tasks = this.tasks.filter((task) => task.id !== taskId);
+			this.saveTasks();
 		},
 	},
 });

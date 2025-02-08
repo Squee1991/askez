@@ -1,20 +1,18 @@
 <template>
 	<div class="askeza__menu">
 		<div class="askeza__menu-content">
-			<div class="menu__title">Menu</div>
+			<HeaderwithBack :title="$t('menu.title')"/>
 			<div class="menu__btns">
-				<div
-					v-for="item in menuList.items"
-					:key="item.id"
-					class="menu__btn-wrapper"
-				>
-					<NuxtLink :to="item.link" class="account__settings-btn">
-						<img
-							class="account__icon"
-							:src="item.icon"
-							alt=""
-						/>
-						<span class="accoun__text">{{ item.text }}</span>
+				<div v-for="(item , index) in menuPlain" :key="index">
+					<NuxtLink class="account__settings-btn" :to="getMenuPlainLink(item)">
+						<img :class="{
+                              'acc-bg-blue': accountLabels.includes(item),
+                              'aboutapp-bg-green': aboutLabels.includes(item),
+                              'lang-bg-rot': languageLabels.includes(item),
+                              'settings-bg-orange': settingsLabels.includes(item)
+                                     }"
+						     class="account__icon" :src="getMenuPlainIcon(item)" alt="">
+						<span class="account__text"> {{ item }}</span>
 					</NuxtLink>
 				</div>
 			</div>
@@ -24,57 +22,126 @@
 
 <script setup>
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
-	import { ref, onMounted } from "vue";
-	const menuList = ref([]);
-	onMounted(async () => {
-		const response = await fetch('/dataListJSON.json');
-		const data = await response.json();
-		menuList.value = data.menu;
-	});
+	import {ref, onMounted, computed} from 'vue';
+	import AccoutIcon from '../assets/images/account.svg'
+	import AboutApp from '../assets/images/aboutApp.svg'
+	import languageIcon from '../assets/images/language.svg'
+	import SettingsIcon from '../assets/images/setings.svg'
+	import {useI18n} from 'vue-i18n';
+
+	const accountLabels = ['Акаўнт', 'Аккаунт', 'Account', 'Konto', 'Cuenta'];
+	const aboutLabels = ['Пра праграму', 'О программе', 'About the App', 'Über die App', 'Sobre la app'];
+	const languageLabels = ['Мова', 'Язык', 'Languages', 'Sprache', 'Idioma'];
+	const settingsLabels = ['Налады', 'Настройки', 'Settings', 'Einstellungen', 'Configuración'];
+
+	const getMenuPlainLink = (text) => {
+		const isLink = text.trim();
+		if (accountLabels.includes(isLink)) {
+			return '/account';
+		} else if (aboutLabels.includes(isLink)) {
+			return '/about';
+		} else if (languageLabels.includes(isLink)) {
+			return '/languages';
+		} else if (settingsLabels.includes(isLink)) {
+			return '/settings';
+		} else {
+			return ''
+		}
+	};
+
+	const getMenuPlainIcon = (text) => {
+		const isItem = text.trim();
+		if (accountLabels.includes(isItem)) {
+			return AccoutIcon;
+		} else if (aboutLabels.includes(isItem)) {
+			return AboutApp;
+		} else if (languageLabels.includes(isItem)) {
+			return languageIcon;
+		} else if (settingsLabels.includes(isItem)) {
+			return SettingsIcon;
+		} else {
+			return '';
+		}
+	};
+
+	const {locale, messages} = useI18n();
+	const menuPlain = computed(() => {
+		const raw = messages.value[locale.value].meniu;
+		return raw.map(item => {
+			if (typeof item === 'string') {
+				return item
+			}
+			return item.body?.static || '';
+		})
+	})
 
 	definePageMeta({
 		layout: 'footerlayout'
 	});
-
 </script>
 
-<style>
-	.account__icon {
-		width: 20px;
-		margin-right: 20px;
+<style scoped>
+
+	.lang-bg-rot {
+		background: #d64545;
 	}
 
-	.accoun__text {
-		color: #2D2D2D;
+	.settings-bg-orange {
+		background: #ffa450;
+	}
+
+	.acc-bg-blue {
+		background: #4169e1;
+	}
+
+	.aboutapp-bg-green {
+		background: #32cd32;
+	}
+
+	.account__icon {
+		width: 35px;
+		margin-right: 20px;
+		padding: 5px;
+		border-radius: 10px;
+	}
+
+	.account__text {
+		color: var(--text-color);
 	}
 
 	.askeza__menu-content {
 		width: 100%;
 		padding: 30px;
 		height: 100vh;
-		background: #aed7ae;
-	}
-
-	.menu__title {
-		font-size: 30px;
-		font-family: "Nunito", serif;
-		padding: 15px 0;
-		font-weight: 700;
-		margin-bottom: 10px;
-	}
-
-	.account__settings-btn:after {
-		content: '';
-		width: 100%;
-		height: 1px;
-		background: black;
-		bottom: 0;
-		left: 0;
-		position: absolute;
+		background-color: var(--background-color);
 	}
 
 	.menu__btn-wrapper {
 		padding: 5px 0;
 	}
 
+	.account__settings-btn {
+		display: flex;
+		align-items: center;
+		border: none;
+		width: 100%;
+		padding: 12px 0;
+		font-size: 20px;
+		border-radius: 10px;
+		font-family: "Nunito", serif;
+		font-weight: 400;
+		text-align: start;
+		background: none;
+		position: relative;
+	}
+
+	.account__settings-btn:after {
+		content: '';
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		height: 1px;
+		width: 100%;
+		background: #dec8b4;
+	}
 </style>

@@ -10,7 +10,7 @@
 			</div>
 			<div class="progress__inner">
 				<div class="user__greetings">
-					<div class="title">Hello,<span class="username">{{ username }}</span></div>
+						<div class="title"> {{ $t('homePage.greetings')}} <span class="username">{{ username }}</span></div>
 				</div>
 				<div class="banner__wrapper">
 					<div class="panda__icon-wrapper">
@@ -27,10 +27,9 @@
 										<div class="taks__progress__date-wrapper">
 											<div class="progres__wrapper">
 												<ProgressCircle
-													:progress="task.progress"
-													:offset="task.offset"
-													:radius="habitStore.radius"
-													:circumference="circumference"
+													:progress="Math.floor(task.progress)"
+													:progressMiss="Math.floor(task.progressMiss)"
+													:history="task.history"
 												/>
 											</div>
 											<div class="task__datum-wrapper">
@@ -53,26 +52,19 @@
 											</div>
 										</div>
 										<div class="taks__btns">
-											<div class="btn__delete-wrapper">
-												<button @click="clearTask(task.id)" class="task__btn remove__task-btn">
-													<img class="delete__icon" src="../assets/images/deleteIcon.svg"
-													     alt="">
-												</button>
-											</div>
 											<div class="btn__details-wrapper">
-												<button @click="openTaskDetails(task)" class="task__btn task__come-btn">
-													Open goal
+												<button @click="openTaskDetails(task)" class="task__come-btn">
+													{{ $t('homePage.btn')}}
 												</button>
 											</div>
 										</div>
-
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="not__task-inner" v-if="isNotTask">
 							<img class="no__task-icon" src="../assets/images/NoTask.svg" alt="">
-							<span class="no__task-text">No active Goals</span>
+							<span class="no__task-text"> {{ $t('homePage.no_active_goals')}}</span>
 						</div>
 					</div>
 					<Footer @toggleHabit="toggleHabitGoal"/>
@@ -81,27 +73,25 @@
 		</div>
 	</div>
 </template>
-
 <script setup>
 	import {ref, computed, onMounted, onUnmounted} from "vue";
-	import {useHabitStore} from "/stores/habitStore.js";
+	import {useHabitStore} from "../stores/habitStore.js";
 	import ProgressCircle from "../src/components/progressBar";
 	import HabbitGoal from "../src/components/newHabitGoal.vue";
 	import CustomCheckbox from "../src/components/customCheckbox.vue";
-	import PandaHello from "../assets/images/greetings.webp";
+	import PandaHello from "../assets/images/sPanda.png";
 	import Footer from '../src/components/footer.vue'
 	import NotaskIcon from '../assets/images/NoTask.svg'
-
-	const isNotTask = ref(true)
+	import { useLocalePath } from '#i18n';
 	import {useRouter} from 'vue-router'
 
+	const localePath = useLocalePath()
+	const isNotTask = ref(true)
 	const router = useRouter()
 	const habitStore = useHabitStore();
 	const tasks = computed(() => habitStore.tasks);
 	const progress = ref({});
-	const radius = ref(45);
 	const isHabitGoalVisible = ref(false);
-	const circumference = computed(() => 2 * Math.PI * habitStore.radius);
 	const username = computed(() => habitStore.username);
 
 	onMounted(() => {
@@ -159,10 +149,6 @@
 		font-family: "Nunito", serif;
 	}
 
-	.remove__task-btn {
-		border: none;
-	}
-
 	.taks__btns {
 		display: flex;
 		flex-direction: column;
@@ -172,12 +158,6 @@
 	.taks__progress__date-wrapper {
 		display: flex;
 		justify-content: space-between;
-	}
-
-	.btn__delete-wrapper {
-		display: flex;
-		justify-content: center;
-		padding: 10px;
 	}
 
 	.progres__wrapper {
@@ -194,10 +174,6 @@
 	.task__date-wrapper {
 		display: flex;
 		font-size: 14px;
-	}
-
-	.delete__icon {
-		width: 20px;
 	}
 
 	.not__task-inner {
@@ -220,6 +196,7 @@
 		font-weight: bold;
 		font-size: 15px;
 		color: #aed7ae;
+		text-align: center;
 	}
 
 	.task__goal-list-inner {
@@ -233,12 +210,13 @@
 	}
 
 	.panda__icon {
-		width: 100%;
-		height: 100%;
+		height: 200px;
+		width: 150px;
 	}
 
 	.goal__type {
-		font-weight: 400;
+		font-weight: 300;
+		color: var(--goals-date-color);
 	}
 
 	.arrow__datum {
@@ -250,11 +228,11 @@
 		font-size: 18px;
 		font-weight: 600;
 		font-family: "Nunito", serif;
-		color: #2F2F2F;
+		color:var(--goals-name);
 	}
 
 	.task__goal-list {
-		background: rgba(248, 246, 246, 0.95);
+		background-color: var(--task-bg);
 		margin: 7px 0;
 		border-radius: 10px;
 		padding: 10px;
@@ -274,6 +252,7 @@
 	.add__goals {
 		margin-bottom: 40px;
 		padding: 10px 0;
+		overflow: auto;
 	}
 
 	.progress__inner {
@@ -283,7 +262,7 @@
 
 	.welcome {
 		width: 100%;
-		background: #FCFCFF;
+		background-color: var(--background-color);
 		position: relative;
 		height: 100vh;
 		max-height: 100vh;
@@ -291,7 +270,7 @@
 
 	.title {
 		font-size: 2.0rem;
-		color: black;
+		color: var(--title-c);
 		font-family: "Nunito", serif;
 	}
 
