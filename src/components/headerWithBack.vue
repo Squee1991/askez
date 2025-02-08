@@ -1,6 +1,19 @@
 <template>
 	<div class="back-header">
-		<img v-if="props.icon" @click="goBack" class="back__arrow-icon" :src="props.icon" alt="Back"/>
+		<div v-if="props.icon" @click="goBack" class="back__arrow-icon">
+			<svg  v-once viewBox="0 0 25 25">
+				<g
+				id="Left-2"
+				stroke-width="2"
+				stroke-linecap="round"
+				data-name="Left"><polygon
+				points="24 12.001 2.914 12.001 8.208
+				6.706 7.501 5.999 1 12.501 7.5 19.001
+				8.207 18.294 2.914 13.001 24 13.001 24 12.001"
+				style="fill:currentColor" stroke="currentColor"/>
+				</g>
+			</svg>
+		</div>
 		<div class="header-title">{{ props.title }}</div>
 	</div>
 </template>
@@ -11,7 +24,7 @@
 	const router = useRouter();
 	const props = defineProps({
 		icon: {
-			type: String,
+			type: [Object, null , String],
 		},
 		title: {
 			type: String,
@@ -22,11 +35,18 @@
 	const goBack = () => {
 		router.push('/menu');
 	};
+
 </script>
 <style>
 	.back-header {
 		display: flex;
 		align-items: center;
+		color: var(--text-color);
+	}
+
+	svg {
+		color: currentColor;
+		width: 100%;
 	}
 
 	.back__arrow-icon {
@@ -34,8 +54,9 @@
 		height: 33px;
 		margin-right: 10px;
 		padding: 5px;
-		background: #b7b8d0;
+
 		border-radius: 50%;
+		color: var(--text-color);
 	}
 
 	.header-title {

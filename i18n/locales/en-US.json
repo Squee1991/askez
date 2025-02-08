@@ -82,6 +82,11 @@
 			}
 		]
 	},
+
+	"account": {
+		"accoutTitle": "Account",
+		"accountBtn": "Update"
+	},
 	"startPage": {
 		"value": "get started"
 	},
@@ -110,18 +115,20 @@
 		]
 	},
 	"homePage": {
-		"greetings": "Hello"
+		"greetings": "Hello",
+		"btn": "Open",
+		"no_active_goals": "No active goals"
 	},
 	"createTask": {
 		"title": "Create new Goal",
+		"btn": "Create new",
 		"task": "Your goal",
-		"datum": "Select date period",
-		"btn": "Create new"
+		"datum": "Select a date range"
 	},
-	"succes": {
-		"title": "Done",
+	"success": {
+		"title": "Done!!",
 		"article": "Let's do the best to achieve your goal",
-		"btn": "Ok"
+		"button": "OK"
 	},
 	"taskDetails": {
 		"startDate": "Start date",
@@ -131,5 +138,12 @@
 		"title": "Delete goal?",
 		"accept": "Yes",
 		"reject": "No"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Delete"
+	},
+	"CheckedProgress": {
+		"checked": "goal has checked",
+		"notChecked": "goal hasn’t checked"
 	}
 }

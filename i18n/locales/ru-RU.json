@@ -82,6 +82,10 @@
 			}
 		]
 	},
+	"account": {
+		"accoutTitle": "Аккаунт",
+		"accountBtn": "Обновить"
+	},
 	"startPage": {
 		"value": "Начать"
 	},
@@ -111,24 +115,31 @@
 	},
 	"homePage": {
 		"greetings": "Привет",
-		"btn": "Открыть цель"
+		"btn": "Открыть",
+		"no_active_goals": "Нет активных целей"
 	},
 	"createTask": {
 		"title": "Создать новую цель",
-		"btn": "Создать новую"
+		"btn": "Создать новую",
+		"task": "Ваша цель",
+		"datum": "Выберите период дат"
 	},
-	"succes": {
-		"title": "Готово",
+	"success": {
+		"title": "Готово!!",
 		"article": "Давай сделаем всё возможное, чтобы достичь твоей цели",
-		"btn": "Ок"
+		"button": "ОK"
 	},
 	"taskDetails": {
 		"startDate": "Дата начала",
 		"endtDate": "Дата окончания"
 	},
 	"delConfirm": {
-		"title": "Удалить цель?",
+		"title": "Удалить аскезу?",
 		"accept": "Да",
 		"reject": "Нет"
-	}
+	},
+	"EditDeleteMenu": {
+		"delTask": "Delete"
+	},
+
 }

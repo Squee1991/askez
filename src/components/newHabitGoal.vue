@@ -3,27 +3,27 @@
 		<div class="habit-goal-modal">
 			<div class="input__fields-wrapper">
 				<div class="close__wrapper">
-					<div class="close__title">Create New Habit Goal</div>
+					<div class="close__title"> {{ $t('createTask.title')}}</div>
 					<button class="close__goal-btn" @click="closeWindow">
 						<img class="close__goal" :src="CloseIcon" alt=""/>
 					</button>
 				</div>
 				<div class="input__fields-inner">
 					<div class="input__fields">
-						<span class="input__label label">Your Goal</span>
+						<span class="input__label label">{{ $t('createTask.task')}}</span>
 						<input class="input__goal" v-model="inputValueGoal" type="text"/>
 					</div>
 				</div>
 				<div class="date__picker-inenr">
-					<span class="date__picke-label label">Select date period</span>
+					<span class="date__picke-label label">{{ $t('createTask.datum')}}</span>
 					<VDatePicker
-						locale="pl"
+						:locale="locale"
 						:min-date='new Date()'
 						v-model.range="localDateRange"
 						mode="range"
 					/>
 				</div>
-				<button class="create__btn" @click="addValue">Create new</button>
+				<button class="create__btn" @click="addValue">{{ $t('createTask.btn')}}</button>
 			</div>
 		</div>
 	</div>
@@ -34,9 +34,8 @@
 	import SuccessModal from "../../pages/SuccessModal.vue";
 	import SelectComponent from '/src/components/selectComponent.vue'
 	import {useHabitStore} from '../../stores/habitStore.js'
-
 	const habitStore = useHabitStore()
-
+	const { locale } = useI18n()
 	const inputValueGoal = ref("");
 	const emit = defineEmits(["close", "add"]);
 	const router = useRouter()

@@ -13,10 +13,12 @@
 	--goals-date-color: #2F2F2F;
 	--background-new-goal: #f8f4f4;
 	--vc-arrow-cal: #FF5C00;
-	--vc-highlight-bg: #C7FFDE;
+	--vc-highlight-bg: #c7ffde;
+	--bg-arrow-icon: #c7ffde;
 }
 
 .dark {
+	--bg-arrow-icon: #b7b8d0;
 	--background-color: #34364a;
 	--text-color: #ffffff;
 	--button-bg: #FBFBFB;

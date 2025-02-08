@@ -2,7 +2,7 @@
 	<div class="settings__wrapper">
 		<HeaderWithBack
 			:icon="Arrowicon"
-			:title="settings.title"
+			:title="$t('settings.title')"
 		/>
 		<div class="settings__btns">
 			<div
@@ -26,7 +26,6 @@
 	import {ref, onMounted} from 'vue';
 	import HeaderWithBack from '../src/components/headerWithBack.vue';
 	import Arrowicon from '../assets/images/arrowSvg.svg'
-
 	const settings = ref([]);
 	const colorMode = useColorMode();
 	const toggleTheme = () => {
@@ -81,11 +80,18 @@
 		font-family: "Nunito", serif;
 		text-align: start;
 		border-radius: 10px;
-		align-items: center;
 		position: relative;
 		cursor: pointer;
 		color: var(--text-color);
-
+	}
+	.account__settings-btn:after {
+		content: '';
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		height: 1px;
+		width: 100%;
+		background: #dec8b4;
 	}
 
 	.color-mode-btn {

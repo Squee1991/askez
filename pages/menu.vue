@@ -1,9 +1,7 @@
 <template>
 	<div class="askeza__menu">
 		<div class="askeza__menu-content">
-			<HeaderwithBack
-				:title="menuList.title"
-			/>
+			<HeaderwithBack :title="$t('menu.title')"/>
 			<div class="menu__btns">
 				<div
 					v-for="item in menuList.items"
@@ -11,15 +9,15 @@
 					class="menu__btn-wrapper"
 				>
 					<NuxtLink :to="item.link" class="account__settings-btn">
-						<img
+						<img class="account__icon" :class="
+						    {
+                             'settings-bg-orange': item.icon === 'setings.svg',
+                             'lang-bg-rot': item.icon === 'language.svg',
+                             'aboutapp-bg-green': item.icon === 'aboutAPP.svg',
+                             'acc-bg-blue': item.icon === 'account.svg'
+						     }"
 							:src="item.icon"
 							:alt="item.text"
-							class="account__icon"
-							:class="{
-							'settings-bg-orange': item.icon === 'setings.svg',
-							'lang-bg-rot': item.icon === 'language.svg',
-							'aboutapp-bg-green': item.icon === 'aboutAPP.svg',
-							'acc-bg-blue': item.icon === 'account.svg'}"
 						/>
 						<span class="account__text">{{ item.text }}</span>
 					</NuxtLink>
@@ -31,9 +29,10 @@
 
 <script setup>
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
-	import {ref, onMounted} from "vue";
+	import {ref, onMounted, computed} from 'vue';
+	import {useI18n} from 'vue-i18n';
 
-	const menuList = ref([]);
+	const menuList = ref({});
 	onMounted(async () => {
 		const response = await fetch('/dataListBelorussian.json');
 		const data = await response.json();
@@ -43,13 +42,12 @@
 	definePageMeta({
 		layout: 'footerlayout'
 	});
-
 </script>
 
 <style scoped>
 
 	.lang-bg-rot {
-		background: #D64545;
+		background: #d64545;
 	}
 
 	.settings-bg-orange {
@@ -57,13 +55,12 @@
 	}
 
 	.acc-bg-blue {
-		background: #4169E1;
+		background: #4169e1;
 	}
 
 	.aboutapp-bg-green {
-		background: #32CD32;
+		background: #32cd32;
 	}
-
 
 	.account__icon {
 		width: 35px;
@@ -83,27 +80,32 @@
 		background-color: var(--background-color);
 	}
 
-	.menu__title {
-		font-size: 30px;
-		font-family: "Nunito", serif;
-		padding: 15px 0;
-		font-weight: 700;
-		margin-bottom: 10px;
-		color: var(--text-color);
-	}
-
-	.account__settings-btn:after {
-		content: '';
-		width: 100%;
-		height: 1px;
-		background: #dec8b4;
-		bottom: 0;
-		left: 0;
-		position: absolute;
-	}
-
 	.menu__btn-wrapper {
 		padding: 5px 0;
 	}
 
+	.account__settings-btn {
+		display: flex;
+		align-items: center;
+		border: none;
+		width: 100%;
+		padding: 12px 0;
+		font-size: 20px;
+		border-radius: 10px;
+		font-family: "Nunito", serif;
+		font-weight: 400;
+		text-align: start;
+		background: none;
+		position: relative;
+	}
+
+	.account__settings-btn:after {
+		content: '';
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		height: 1px;
+		width: 100%;
+		background: #dec8b4;
+	}
 </style>

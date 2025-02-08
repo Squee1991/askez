@@ -1,0 +1,148 @@
+{
+	"languages": {
+		"mode": "no-space",
+		"title": "Мова",
+		"items": [
+			{
+				"code": "ru",
+				"name": "Рускі",
+				"className": "no-space"
+			},
+			{
+				"code": "by",
+				"name": "Беларускі",
+				"className": "no-space"
+			},
+			{
+				"code": "en",
+				"name": "Англійская",
+				"className": "no-space"
+			},
+			{
+				"code": "de",
+				"name": "Нямецкая",
+				"className": "no-space"
+			},
+			{
+				"code": "es",
+				"name": "Іспанская",
+				"className": "no-space"
+			}
+		]
+	},
+	"settings": {
+		"title": "Налады",
+		"items": [
+			{
+				"id": 1,
+				"text": "Выдаліць уліковы запіс"
+			},
+			{
+				"id": 2,
+				"text": "Палітыка прыватнасці"
+			},
+			{
+				"id": 3,
+				"text": "Звязацца з намі"
+			},
+			{
+				"id": 4,
+				"text": "Рэжым",
+				"darkIcon": "dark.png",
+				"lightIcon": "light.png"
+			}
+		]
+	},
+	"menu": {
+		"title": "Меню",
+		"items": [
+			{
+				"id": 1,
+				"icon": "account.svg",
+				"text": "Акаўнт",
+				"link": "account"
+			},
+			{
+				"id": 2,
+				"icon": "aboutAPP.svg",
+				"text": "Пра праграму",
+				"link": ""
+			},
+			{
+				"id": 3,
+				"icon": "language.svg",
+				"text": "Мова",
+				"link": "languages"
+			},
+			{
+				"id": 4,
+				"icon": "./images/setings.svg",
+				"text": "Налады",
+				"link": "settings"
+			}
+		]
+	},
+	"account": {
+		"accoutTitle": "Акаўнт",
+		"accountBtn": "Абнавіць"
+	},
+	"startPage": {
+		"value": "Пачаць"
+	},
+	"description": {
+		"value": "Наступны крок"
+	},
+	"register": {
+		"btnValue": "зарэгістравацца",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "увядзіце сваё імя"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "увядзіце свой email"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "увядзіце свой пароль"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "пацвердзіце свой пароль"
+			}
+		]
+	},
+	"homePage": {
+		"greetings": "Вітаем",
+		"btn": "Адкрыць",
+		"no_active_goals": "Няма актыўных мэтаў"
+	},
+	"createTask": {
+		"title": "Стварыць новую мэту",
+		"btn": "Стварыць новую",
+		"task": "Ваша мэта",
+		"datum": "Выберыце перыяд дат"
+	},
+	"success": {
+		"title": "Гатова!!",
+		"article": "Давай зробім усё магчымае, каб дасягнуць тваёй мэты",
+		"button": "ОК"
+	},
+	"taskDetails": {
+		"startDate": "Дата пачатку",
+		"endDate": "Дата заканчэння"
+	},
+	"delConfirm": {
+		"title": "Выдаліць аскезу?",
+		"accept": "Так",
+		"reject": "Не"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Выдаліць"
+	},
+	"CheckedProgress": {
+		"checked": " Выканана",
+		"notChecked": "Не выканана"
+	}
+}

@@ -10,7 +10,7 @@
 			</div>
 			<div class="progress__inner">
 				<div class="user__greetings">
-					<div class="title">Hello,<span class="username">{{ username }}</span></div>
+						<div class="title"> {{ $t('homePage.greetings')}} <span class="username">{{ username }}</span></div>
 				</div>
 				<div class="banner__wrapper">
 					<div class="panda__icon-wrapper">
@@ -54,7 +54,7 @@
 										<div class="taks__btns">
 											<div class="btn__details-wrapper">
 												<button @click="openTaskDetails(task)" class="task__come-btn">
-													Open goal
+													{{ $t('homePage.btn')}}
 												</button>
 											</div>
 										</div>
@@ -64,7 +64,7 @@
 						</div>
 						<div class="not__task-inner" v-if="isNotTask">
 							<img class="no__task-icon" src="../assets/images/NoTask.svg" alt="">
-							<span class="no__task-text">No active Goals</span>
+							<span class="no__task-text"> {{ $t('homePage.no_active_goals')}}</span>
 						</div>
 					</div>
 					<Footer @toggleHabit="toggleHabitGoal"/>
@@ -80,13 +80,14 @@
 	import ProgressCircle from "../src/components/progressBar";
 	import HabbitGoal from "../src/components/newHabitGoal.vue";
 	import CustomCheckbox from "../src/components/customCheckbox.vue";
-	import PandaHello from "../assets/images/greetings.webp";
+	import PandaHello from "../assets/images/sPanda.png";
 	import Footer from '../src/components/footer.vue'
 	import NotaskIcon from '../assets/images/NoTask.svg'
-
-	const isNotTask = ref(true)
+	import { useLocalePath } from '#i18n';
 	import {useRouter} from 'vue-router'
 
+	const localePath = useLocalePath()
+	const isNotTask = ref(true)
 	const router = useRouter()
 	const habitStore = useHabitStore();
 	const tasks = computed(() => habitStore.tasks);
@@ -130,7 +131,7 @@
 	};
 
 	const formatDate = (date) => {
-		const formattedDate = new Date(date).toLocaleDateString("en-EN", {
+		const formattedDate = new Date(date).toLocaleDateString("en-US", {
 			day: "2-digit",
 			month: "long",
 		});
@@ -196,6 +197,7 @@
 		font-weight: bold;
 		font-size: 15px;
 		color: #aed7ae;
+		text-align: center;
 	}
 
 	.task__goal-list-inner {
@@ -209,8 +211,8 @@
 	}
 
 	.panda__icon {
-		width: 100%;
-		height: 100%;
+		height: 200px;
+		width: 150px;
 	}
 
 	.goal__type {

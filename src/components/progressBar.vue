@@ -201,11 +201,11 @@
 		top: 41%;
 		transform: translateY(-50%);
 		color: green;
-		font-size: 25px;
+		font-size: 20px;
 	}
 
 	.progress-text.bottom {
-		bottom: 41%;
+		bottom: 40%;
 		transform: translateY(50%);
 		color: #bfbfbf;
 		font-size: 18px;

@@ -2,11 +2,11 @@
 	<div class="update__date-wrapper">
 		<div :class="{'show__confirm': editState}" class="confirm__window">
 			<div class="confirm__content-wrapper">
-				<div class="confirm__title">Delete your goal ?</div>
+				<div class="confirm__title">{{ $t('delConfirm.title')}}</div>
 				<div class="confirm__btns">
-					<button @click="cancelDelete" class="btn-green confirm__btn">No</button>
+					<button @click="cancelDelete" class="btn-green confirm__btn">{{ $t('delConfirm.reject')}}</button>
 					<NuxtLink @click="clearTask(selectedTask.id)" class="confirm__btn" to="/welcomePage">
-						<button class="confirm__btn">Yes</button>
+						<button class="confirm__btn">{{ $t('delConfirm.accept')}}</button>
 					</NuxtLink>
 				</div>
 			</div>
@@ -22,17 +22,17 @@
 						:icon="editIcon"
 						@click="editMenu"/>
 					<ul v-if="isOpen" class="edit__menu-list">
-						<li @click="openConfirmWindow(selectedTask.id)" class="edit__menu-item">Del task</li>
+						<li @click="openConfirmWindow(selectedTask.id)" class="edit__menu-item">{{ $t('EditDeleteMenu.delTask')}}</li>
 					</ul>
 				</div>
 			</div>
 			<div class="range__date-wrapper">
 				<div class="range__date">
-					<div class="range__date-text">Start date:</div>
+					<div class="range__date-text">{{ $t('taskDetails.startDate')}}</div>
 					<div class="range__date__data start">{{ formatDate(selectedTask.dateRange.start) }}</div>
 				</div>
 				<div class="range__date">
-					<div class="range__date-text">End date:</div>
+					<div class="range__date-text">{{ $t('taskDetails.endDate')}}</div>
 					<div class="range__date__data end">{{ formatDate(selectedTask.dateRange.end) }}</div>
 				</div>
 			</div>
@@ -40,7 +40,7 @@
 				<v-calendar
 					is-expanded
 					v-if="localDateRange.start && localDateRange.end"
-					locale="en"
+					:locale="locale"
 					:min-date="localDateRange.start"
 					:max-date="localDateRange.end"
 					:disabled-dates="disabledDates"
@@ -66,15 +66,15 @@
 					:padding="25"
 				/>
 			</div>
-			<div class="checked__progress">
+			<div class="checked-progress">
 				<div class="checked__progress-wrapper">
 					<div class="checked__wrapper">
 						<img src="../assets/images/checkIcon.svg" alt="" class="checked__icon">
-						<span class="checked__text checked__green">{{ checkedCount }} goal has checked</span>
+						<span class="checked__text checked__green">{{ checkedCount }} {{ $t('CheckedProgress.checked')}}</span>
 					</div>
 					<div class="checked__wrapper">
 						<img src="../assets/images/noyChecked.svg" alt="" class="checked__icon">
-						<span class="checked__text"> {{ missedCount }} goal hasn’t checked</span>
+						<span class="checked__text"> {{ missedCount }} {{ $t('CheckedProgress.notChecked')}}</span>
 					</div>
 				</div>
 			</div>
@@ -88,6 +88,7 @@
 	import ProgressBar from "../src/components/progressBar.vue";
 	import EditDeleteMenu from '../src/components/EditDeleteMenu.vue';
 	import EditIcon from  '../assets/images/editIcon.svg'
+	const { locale } = useI18n()
     const editIcon = ref(EditIcon)
 	const editState = ref(false);
 	const isOpen = ref(false);
@@ -381,7 +382,11 @@
 		color: var(--text-color);
 	}
 
-	.checked__progress {
+	.checked__progress-wrapper {
+		margin-top: 10px;
+	}
+
+	.checked-progress {
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -413,7 +418,7 @@
 	}
 
 	.edit__menu-item {
-		font-size: 16px;
+		font-size: 12px;
 		margin: 2px;
 		padding: 2px;
 		color: var(--text-color);

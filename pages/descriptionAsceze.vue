@@ -1,12 +1,13 @@
 <template>
 	<div class="description">
-		<NuxtLink to="/singup">
-			<button class="next__btn">Next step</button>
+		<NuxtLink :to="localePath('/singup')">
+			<button class="next__btn">{{ $t("description.value")}}</button>
 		</NuxtLink>
 	</div>
 </template>
 <script setup>
-
+	import { useLocalePath } from '#i18n';
+	const localePath = useLocalePath()
 </script>
 
 <style>

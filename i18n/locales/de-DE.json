@@ -82,6 +82,10 @@
 			}
 		]
 	},
+	"account": {
+		"accoutTitle": "Konto",
+		"accountBtn": "Aktualisieren"
+	},
 	"startPage": {
 		"value": "anfangen"
 	},
@@ -111,19 +115,34 @@
 	},
 	"homePage": {
 		"greetings": "Hallo",
-		"btn": "Ziel öffnen"
+		"btn": "öffnen",
+		"no_active_goals": "Keine aktiven Ziele"
 	},
 	"createTask": {
 		"title": "Neues Ziel erstellen",
-		"btn": "Neu erstellen"
+		"btn": "Neu erstellen",
+		"task": "Dein Ziel",
+		"datum": "Wählen Sie einen Datumsbereich"
 	},
-	"succes": {
-		"title": "Fertig",
+	"success": {
+		"title": "Fertig!!",
 		"article": "Lass uns unser Bestes geben, um dein Ziel zu erreichen",
-		"btn": "Ok"
+		"button": "OK"
 	},
 	"taskDetails": {
 		"startDate": "Startdatum",
-		"endtDate": "Enddatum"
+		"endDate": "Enddatum"
+	},
+	"delConfirm": {
+		"title": "Ziel löschen?",
+		"accept": "Ja",
+		"reject": "Nein"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Löschen"
+	},
+	"CheckedProgress": {
+		"checked": "Ziel ist erledigt",
+		"notChecked": "Ziel ist nicht erledigt"
 	}
 }

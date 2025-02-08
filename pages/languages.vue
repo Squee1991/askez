@@ -3,7 +3,7 @@
 		<div class="language__wrapper">
 			<HeaderwithBack
 				:icon="Arrowicon"
-				:title="languages.title"/>
+				:title="$t('languages.title')"/>
 			<div v-if="languages" class="language__list">
 				<ListComponent
 					:class="computedClassNames"
@@ -21,9 +21,10 @@
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
 	import ListComponent from '../src/components/ListComponent.vue';
 	import SelectedIcon from '../assets/images/selectedLanguage.svg';
-	import Arrowicon from '../assets/images/arrowSvg.svg'
+	import Arrowicon from '../assets/images/arrowSvg.svg?url';
 	const languages = ref({});
 	const selectedLanguage = ref(null);
+	const { locales, local } = useI18n()
 	const computedClassNames = computed(() => {
 		if (languages.value) {
 			return {
@@ -34,29 +35,13 @@
 		return {};
 	});
 
-	const loadLanguageData = async (lang) => {
-		try {
-			let response;
-			if (lang === 'de') {
-				response = await fetch('/dataListDeutsch.json');
-			} else if (lang === 'es') {
-				response = await fetch('/dataListSpanian.json');
-			} else if (lang === 'ru') {
-				response = await fetch('/dataListRussian.json');
-			} else if (lang === 'by') {
-				response = await fetch('/dataListBelorussian.json')
-			} else {
-				response = await fetch('/dataListEnglish.json');
-			}
-
-			const data = await response.json();
-			languages.value = data.languages;
-		} catch (error) {}
+	const loadLanguageData =  (lang) => {
+		languages.value  = lang
 	};
 
-	onMounted(async () => {
+	onMounted( () => {
 		changeDefaultTypeLanguage();
-		await loadLanguageData(selectedLanguage.value);
+		loadLanguageData(selectedLanguage.value);
 	});
 
 	const changeDefaultTypeLanguage = () => {
@@ -65,7 +50,7 @@
 			selectedLanguage.value = localStorageLanguage;
 			return
 		}
-		selectedLanguage.value = 'ru';
+		selectedLanguage.value = local;
 	};
 
 	watch(selectedLanguage, (newLang) => {

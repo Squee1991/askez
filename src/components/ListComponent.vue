@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div
-			v-for="item in data.items"
+			v-for="item in locales"
 			:key="item.code || item.id || item.text"
 			class="menu__btn-wrapper"
 		>
@@ -26,17 +26,16 @@
 
 <script setup>
 	import {defineProps, defineEmits, ref, watch} from 'vue';
-
+	const { locales, setLocale  } = useI18n()
 	const emit = defineEmits(['update:model-value']);
 	const localValue = ref(null)
-
 	const props = defineProps({
 		icon: {
-			type: String,
-			default: ''
+			type: null,
+
 		},
 		data: {
-			type: [Array, Object],
+			type: [Array, Object , String],
 			required: true
 		},
 		modelValue: {
@@ -47,6 +46,7 @@
 	const changeLanguage = (code) => {
 		localStorage.setItem('language' , code)
 		localValue.value = code
+		setLocale(code)
 		emit('update:model-value', localValue.value);
 	};
 
@@ -57,8 +57,7 @@
 
 </script>
 
-<style >
-
+<style scoped >
 	.selected__icon {
 		width: 20px;
 	}
@@ -76,6 +75,7 @@
 		text-align: start;
 		background: none;
 		position: relative;
+		justify-content: space-between ;
 	}
 
 	.account__settings-btn:after {
@@ -96,5 +96,4 @@
 	.accoun__text {
 		color: var(--text-color);
 	}
-
 </style>
