@@ -64,5 +64,6 @@
 		padding: 15px 0;
 		font-weight: bold;
 		color: var(--text-color);
+		font-family: "Merienda", serif;
 	}
 </style>

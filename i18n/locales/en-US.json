@@ -1,57 +1,10 @@
 {
 	"languages": {
 		"mode": "no-space",
-		"title": "Language",
-		"items": [
-			{
-				"code": "ru",
-				"name": "Russian",
-				"className": "no-space"
-			},
-			{
-				"code": "by",
-				"name": "Belorussian",
-				"className": "no-space"
-			},
-			{
-				"code": "en",
-				"name": "English",
-				"className": "no-space"
-			},
-			{
-				"code": "de",
-				"name": "Deutsch",
-				"className": "no-space"
-			},
-			{
-				"code": "es",
-				"name": "Español",
-				"className": "no-space"
-			}
-		]
+		"title": "Language"
 	},
 	"settings": {
-		"title": "Settings",
-		"items": [
-			{
-				"id": 1,
-				"text": "Delete account"
-			},
-			{
-				"id": 2,
-				"text": "Privacy Policy"
-			},
-			{
-				"id": 3,
-				"text": "Contact us"
-			},
-			{
-				"id": 4,
-				"text": "Mode",
-				"darkIcon": "dark.png",
-				"lightIcon": "light.png"
-			}
-		]
+		"title": "Settings"
 	},
 	"setting": [
 		"Delete account",
@@ -60,33 +13,7 @@
 		"Mode"
 	],
 	"menu": {
-		"title": "Menu",
-		"items": [
-			{
-				"id": 1,
-				"icon": "account.svg",
-				"text": "Account",
-				"link": "account"
-			},
-			{
-				"id": 2,
-				"icon": "aboutAPP.svg",
-				"text": "About app",
-				"link": ""
-			},
-			{
-				"id": 3,
-				"icon": "language.svg",
-				"text": "Language",
-				"link": "languages"
-			},
-			{
-				"id": 4,
-				"icon": "setings.svg",
-				"text": "settings",
-				"link": "settings"
-			}
-		]
+		"title": "Menu"
 	},
 	"meniu": [
 		"Account",

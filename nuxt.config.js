@@ -44,13 +44,19 @@ export default defineNuxtConfig({
 			},
 		],
 		detectBrowserLanguage: false,
-		defaultLocale: null,
+		defaultLocale: 'en-US',
 		lazy: true,
 	},
 
 	googleFonts: {
 		families: {
-			Nunito: true
+			Nunito: true,
+			Bangers: true,
+			'Indie Flower': true,
+			'Permanent Marker': true,
+			Acme: true,
+			Merienda: true,
+			Itim: true
 		}
 	},
 	colorMode: {

@@ -1,57 +1,10 @@
 {
 	"languages": {
 		"mode": "no-space",
-		"title": "Idioma",
-		"items": [
-			{
-				"code": "ru",
-				"name": "Ruso",
-				"className": "no-space"
-			},
-			{
-				"code": "by",
-				"name": "Bielorruso",
-				"className": "no-space"
-			},
-			{
-				"code": "en",
-				"name": "Inglés",
-				"className": "no-space"
-			},
-			{
-				"code": "de",
-				"name": "Alemán",
-				"className": "no-space"
-			},
-			{
-				"code": "es",
-				"name": "Español",
-				"className": "no-space"
-			}
-		]
+		"title": "Idioma"
 	},
 	"settings": {
-		"title": "Configuración",
-		"items": [
-			{
-				"id": 1,
-				"text": "Eliminar cuenta"
-			},
-			{
-				"id": 2,
-				"text": "Política de privacidad"
-			},
-			{
-				"id": 3,
-				"text": "Contáctanos"
-			},
-			{
-				"id": 4,
-				"text": "Modo",
-				"darkIcon": "dark.png",
-				"lightIcon": "light.png"
-			}
-		]
+		"title": "Configuración"
 	},
 	"setting": [
 		"Eliminar cuenta",

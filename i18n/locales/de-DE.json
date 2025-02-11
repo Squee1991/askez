@@ -1,57 +1,10 @@
 {
 	"languages": {
 		"mode": "no-space",
-		"title": "Sprache",
-		"items": [
-			{
-				"code": "ru",
-				"name": "Russisch",
-				"className": "no-space"
-			},
-			{
-				"code": "by",
-				"name": "Weißrussisch",
-				"className": "no-space"
-			},
-			{
-				"code": "en",
-				"name": "Englisch",
-				"className": "no-space"
-			},
-			{
-				"code": "de",
-				"name": "Deutsch",
-				"className": "no-space"
-			},
-			{
-				"code": "es",
-				"name": "Spanisch",
-				"className": "no-space"
-			}
-		]
+		"title": "Sprache"
 	},
 	"settings": {
-		"title": "Einstellungen",
-		"items": [
-			{
-				"id": 1,
-				"text": "Konto löschen"
-			},
-			{
-				"id": 2,
-				"text": "Datenschutzrichtlinie"
-			},
-			{
-				"id": 3,
-				"text": "Kontakt"
-			},
-			{
-				"id": 4,
-				"text": "Modus",
-				"darkIcon": "dark.png",
-				"lightIcon": "light.png"
-			}
-		]
+		"title": "Einstellungen"
 	},
 	"setting": [
 		"Konto löschen",
@@ -60,33 +13,7 @@
 		"Mode"
 	],
 	"menu": {
-		"title": "Menü",
-		"items": [
-			{
-				"id": 1,
-				"icon": "account.svg",
-				"text": "Konto",
-				"link": "account"
-			},
-			{
-				"id": 2,
-				"icon": "aboutAPP.svg",
-				"text": "Über die App",
-				"link": ""
-			},
-			{
-				"id": 3,
-				"icon": "language.svg",
-				"text": "Sprache",
-				"link": "languages"
-			},
-			{
-				"id": 4,
-				"icon": "setings.svg",
-				"text": "Einstellungen",
-				"link": "settings"
-			}
-		]
+		"title": "Menü"
 	},
 	"meniu": [
 		"Konto",
@@ -99,7 +26,7 @@
 		"accountBtn": "Aktualisieren"
 	},
 	"startPage": {
-		"value": "anfangen"
+		"value": "Los"
 	},
 	"description": {
 		"value": "Nächster Schritt"

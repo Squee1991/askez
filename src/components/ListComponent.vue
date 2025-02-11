@@ -59,7 +59,8 @@
 
 <style scoped >
 	.selected__icon {
-		width: 20px;
+		width: 38px;
+		margin-right: 5px;
 	}
 
 	.account__settings-btn {
@@ -67,7 +68,7 @@
 		align-items: center;
 		border: none;
 		width: 100%;
-		padding: 12px 0;
+		padding: 5px 0;
 		font-size: 20px;
 		border-radius: 10px;
 		font-family: "Nunito", serif;
@@ -95,5 +96,6 @@
 
 	.accoun__text {
 		color: var(--text-color);
+		padding: 12px 0;
 	}
 </style>

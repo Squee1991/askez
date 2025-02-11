@@ -84,7 +84,7 @@
 	import NotaskIcon from '../assets/images/NoTask.svg'
 	import { useLocalePath } from '#i18n';
 	import {useRouter} from 'vue-router'
-
+	const { locale } = useI18n()
 	const localePath = useLocalePath()
 	const isNotTask = ref(true)
 	const router = useRouter()
@@ -130,12 +130,10 @@
 	};
 
 	const formatDate = (date) => {
-		const formattedDate = new Date(date).toLocaleDateString("en-US", {
+		return new Date(date).toLocaleDateString(locale.value , {
 			day: "2-digit",
 			month: "long",
 		});
-		console.log("Даты   :", formattedDate);
-		return formattedDate;
 	};
 </script>
 

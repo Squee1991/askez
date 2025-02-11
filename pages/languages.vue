@@ -20,7 +20,7 @@
 	import {ref, onMounted, computed, watch} from 'vue';
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
 	import ListComponent from '../src/components/ListComponent.vue';
-	import SelectedIcon from '../assets/images/selectedLanguage.svg';
+	import SelectedIcon from '../assets/images/langPNG.png';
 	import Arrowicon from '../assets/images/arrowSvg.svg?url';
 	const languages = ref({});
 	const selectedLanguage = ref(null);

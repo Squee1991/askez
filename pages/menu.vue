@@ -33,13 +33,14 @@
 	const aboutLabels = ['Пра праграму', 'О программе', 'About the App', 'Über die App', 'Sobre la app'];
 	const languageLabels = ['Мова', 'Язык', 'Languages', 'Sprache', 'Idioma'];
 	const settingsLabels = ['Налады', 'Настройки', 'Settings', 'Einstellungen', 'Configuración'];
+	const {locale, messages} = useI18n();
 
 	const getMenuPlainLink = (text) => {
 		const isLink = text.trim();
 		if (accountLabels.includes(isLink)) {
 			return '/account';
 		} else if (aboutLabels.includes(isLink)) {
-			return '/about';
+			return '/aboutApp';
 		} else if (languageLabels.includes(isLink)) {
 			return '/languages';
 		} else if (settingsLabels.includes(isLink)) {
@@ -48,7 +49,6 @@
 			return ''
 		}
 	};
-
 	const getMenuPlainIcon = (text) => {
 		const isItem = text.trim();
 		if (accountLabels.includes(isItem)) {
@@ -64,7 +64,6 @@
 		}
 	};
 
-	const {locale, messages} = useI18n();
 	const menuPlain = computed(() => {
 		const raw = messages.value[locale.value].meniu;
 		return raw.map(item => {
@@ -78,6 +77,7 @@
 	definePageMeta({
 		layout: 'footerlayout'
 	});
+
 </script>
 
 <style scoped>
@@ -107,6 +107,10 @@
 
 	.account__text {
 		color: var(--text-color);
+		font-size: 18px;
+		font-family: "Itim", serif;
+		letter-spacing: 1px;
+		font-style: normal;
 	}
 
 	.askeza__menu-content {
