@@ -33,7 +33,6 @@
     "v-calendar": "^3.1.2",
     "vue": "latest",
     "vue-i18n": "^10.0.5",
-    "vue-router": "latest"
     "vue-router": "latest",
     "vuefire": "^3.2.1"
   },
