@@ -53,9 +53,6 @@
 		isMounted.value = true;
 	});
 
-	definePageMeta({
-		layout: "footerlayout"
-	});
 </script>
 
 <style scoped>
@@ -72,6 +69,13 @@
 
 	.menu__btn-wrapper {
 		padding: 3px 0;
+
+	}
+
+	.settings__btns {
+		background: var(--menu--btn-bg);
+		padding:0 15px;
+		border-radius: 12px;
 	}
 
 	.account__settings-btn {
@@ -83,7 +87,8 @@
 		padding: 10px 0 13px 0;
 		width: 100%;
 		font-size: 18px;
-		font-weight: 400;
+		font-weight: 600;
+		letter-spacing: 1px;
 		font-family: "Nunito", serif;
 		text-align: start;
 		border-radius: 10px;
@@ -100,6 +105,11 @@
 		height: 1px;
 		width: 100%;
 		background: #dec8b4;
+		transform: scaleY(0.2);
+	}
+
+	.menu__btn-wrapper:last-child .account__settings-btn:after {
+		opacity: 0;
 	}
 
 	.color-mode-btn {

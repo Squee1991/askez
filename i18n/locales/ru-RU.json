@@ -1,57 +1,10 @@
 {
 	"languages": {
 		"mode": "no-space",
-		"title": "Язык",
-		"items": [
-			{
-				"code": "ru",
-				"name": "Русский",
-				"className": "no-space"
-			},
-			{
-				"code": "by",
-				"name": "Белорусский",
-				"className": "no-space"
-			},
-			{
-				"code": "en",
-				"name": "Английский",
-				"className": "no-space"
-			},
-			{
-				"code": "de",
-				"name": "Немецкий",
-				"className": "no-space"
-			},
-			{
-				"code": "es",
-				"name": "Испанский",
-				"className": "no-space"
-			}
-		]
+		"title": "Язык"
 	},
 	"settings": {
-		"title": "Настройки",
-		"items": [
-			{
-				"id": 1,
-				"text": "Удалить аккаунт"
-			},
-			{
-				"id": 2,
-				"text": "Политика конфиденциальности"
-			},
-			{
-				"id": 3,
-				"text": "Свяжитесь с нами"
-			},
-			{
-				"id": 4,
-				"text": "Режим",
-				"darkIcon": "dark.png",
-				"lightIcon": "light.png"
-			}
-		]
+		"title": "Настройки"
 	},
 	"setting": [
 		"Удалить аккаунт",
@@ -60,43 +13,25 @@
 		"Мод"
 	],
 	"menu": {
-		"title": "Меню",
-		"items": [
-			{
-				"id": 1,
-				"icon": "account.svg",
-				"text": "Аккаунт",
-				"link": "account"
-			},
-			{
-				"id": 2,
-				"icon": "aboutAPP.svg",
-				"text": "О приложении",
-				"link": ""
-			},
-			{
-				"id": 3,
-				"icon": "language.svg",
-				"text": "Язык",
-				"link": "languages"
-			},
-			{
-				"id": 4,
-				"icon": "setings.svg",
-				"text": "Настройки",
-				"link": "settings"
-			}
-		]
+		"title": "Меню"
 	},
 	"meniu": [
 		"Аккаунт",
 		"О программе",
 		"Язык",
+		"Обратная связь",
 		"Настройки"
 	],
 	"account": {
 		"accoutTitle": "Аккаунт",
 		"accountBtn": "Обновить"
+	},
+	"feedBack": {
+		"title": "Обратная связь",
+		"placeholder": "Оставьте отзыв или предложение",
+		"button": "Отправить",
+		"overlayBtn": "OK",
+		"overlayTitle": "Cпасибо за обратную связь"
 	},
 	"startPage": {
 		"value": "Начать"
@@ -104,6 +39,21 @@
 	"description": {
 		"value": "Следующий шаг"
 	},
+	"navTop": {
+		"achiv": "Достижения",
+		"askez": "Все аскезы",
+		"stats": "Статистика"
+	},
+	"statslable": {
+		"total": "Всего создано аскез",
+		"doneTotal": "Всего выполненных",
+		"InProgressTotal" : "В процессе выполенения"
+	},
+	"infoLabels": {
+		"name": "Название",
+		"status": "Статус"
+	},
+
 	"register": {
 		"btnValue": "зарегистрироваться",
 		"placeholderFields": [
@@ -143,7 +93,7 @@
 	},
 	"taskDetails": {
 		"startDate": "Дата начала",
-		"endtDate": "Дата окончания"
+		"endDate": "Дата окончания"
 	},
 	"delConfirm": {
 		"title": "Удалить аскезу?",

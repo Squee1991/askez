@@ -9,7 +9,8 @@
                               'acc-bg-blue': accountLabels.includes(item),
                               'aboutapp-bg-green': aboutLabels.includes(item),
                               'lang-bg-rot': languageLabels.includes(item),
-                              'settings-bg-orange': settingsLabels.includes(item)
+                              'settings-bg-orange': settingsLabels.includes(item),
+                              'feedback-bg-l-blue': feedback.includes(item)
                                      }"
 						     class="account__icon" :src="getMenuPlainIcon(item)" alt="">
 						<span class="account__text"> {{ item }}</span>
@@ -27,23 +28,28 @@
 	import AboutApp from '../assets/images/aboutApp.svg'
 	import languageIcon from '../assets/images/language.svg'
 	import SettingsIcon from '../assets/images/setings.svg'
+	import FeedBackIcon from '../assets/images/feedbackIcon.svg'
 	import {useI18n} from 'vue-i18n';
 
 	const accountLabels = ['Акаўнт', 'Аккаунт', 'Account', 'Konto', 'Cuenta'];
 	const aboutLabels = ['Пра праграму', 'О программе', 'About the App', 'Über die App', 'Sobre la app'];
 	const languageLabels = ['Мова', 'Язык', 'Languages', 'Sprache', 'Idioma'];
+	const feedback = ['Обратная связь', 'Зваротная сувязь', 'Feedback', 'Feedback', 'Comentarios']
 	const settingsLabels = ['Налады', 'Настройки', 'Settings', 'Einstellungen', 'Configuración'];
+	const {locale, messages} = useI18n();
 
 	const getMenuPlainLink = (text) => {
 		const isLink = text.trim();
 		if (accountLabels.includes(isLink)) {
 			return '/account';
 		} else if (aboutLabels.includes(isLink)) {
-			return '/about';
+			return '/aboutApp';
 		} else if (languageLabels.includes(isLink)) {
 			return '/languages';
 		} else if (settingsLabels.includes(isLink)) {
 			return '/settings';
+		} else if (feedback.includes(isLink)) {
+			return '/feedBack';
 		} else {
 			return ''
 		}
@@ -59,12 +65,13 @@
 			return languageIcon;
 		} else if (settingsLabels.includes(isItem)) {
 			return SettingsIcon;
+		} else if (feedback.includes(isItem)) {
+			return FeedBackIcon
 		} else {
 			return '';
 		}
 	};
 
-	const {locale, messages} = useI18n();
 	const menuPlain = computed(() => {
 		const raw = messages.value[locale.value].meniu;
 		return raw.map(item => {
@@ -78,6 +85,7 @@
 	definePageMeta({
 		layout: 'footerlayout'
 	});
+
 </script>
 
 <style scoped>
@@ -98,15 +106,23 @@
 		background: #32cd32;
 	}
 
+	.feedback-bg-l-blue {
+		background: #00BCD4;
+	}
+
 	.account__icon {
-		width: 35px;
-		margin-right: 20px;
-		padding: 5px;
-		border-radius: 10px;
+		width: 40px;
+		height: 40px;
+		margin-right: 15px;
+		padding: 8px;
+		border-radius: 15px;
 	}
 
 	.account__text {
 		color: var(--text-color);
+		font-size: 18px;
+		font-weight: 600;
+		font-family: "Roboto", serif;
 	}
 
 	.askeza__menu-content {
@@ -123,16 +139,13 @@
 	.account__settings-btn {
 		display: flex;
 		align-items: center;
-		border: none;
-		width: 100%;
-		padding: 12px 0;
-		font-size: 20px;
-		border-radius: 10px;
-		font-family: "Nunito", serif;
+		padding: 15px;
 		font-weight: 400;
-		text-align: start;
-		background: none;
-		position: relative;
+		background: var(--menu--btn-bg);
+		border-radius: 12px;
+		margin-bottom: 10px;
+		transition: background 0.3s ease;
+
 	}
 
 	.account__settings-btn:after {
