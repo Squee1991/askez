@@ -1,5 +1,5 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
+import {defineStore} from "pinia";
+import {ref, computed} from "vue";
 
 export const useHabitStore = defineStore("askezaStore", () => {
 	const username = ref(null);
@@ -7,6 +7,14 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	const password = ref(null);
 	const tasks = ref([]);
 	const selectedTask = ref(null);
+	const amountOfTask = computed(() => tasks.value.length)
+	const doneTask = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) === 100))
+	const doneTaskNames = computed(() => tasks.value.filter(task => task.progress === 100).map(task => task.goal));
+	const notdone = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) < 100 ))
+	const completionRate = computed(() => {
+		if (amountOfTask.value === 0) return 0
+		return Math.round((doneTask.value.length / amountOfTask.value) * 100)
+	})
 
 	const saveTasks = () => {
 		localStorage.setItem("tasks", JSON.stringify(tasks.value));
@@ -61,7 +69,6 @@ export const useHabitStore = defineStore("askezaStore", () => {
 				checkedCount: 0,
 				missedCount: 0,
 			};
-
 			tasks.value.push(newTask);
 			updateProgress(newTask);
 			saveTasks();
@@ -88,7 +95,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	};
 
 	const updateProgress = (task) => {
-		const totalDays = Math.max(1,(new Date(task.dateRange.end) - new Date(task.dateRange.start)) / (1000 * 60 * 60 * 24) + 1);
+		const totalDays = Math.max(1, (new Date(task.dateRange.end) - new Date(task.dateRange.start)) / (1000 * 60 * 60 * 24) + 1);
 		const completedDays = task.checkedDates ? task.checkedDates.length : 0;
 		const missedDays = task.missedDates ? task.missedDates.length : 0;
 		const progress = (completedDays / totalDays) * 100;
@@ -122,6 +129,12 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		password,
 		tasks,
 		selectedTask,
+		amountOfTask,
+		doneTask,
+		notdone,
+		doneTaskNames,
+		completionRate,
+
 
 		saveTasks,
 		setUserData,

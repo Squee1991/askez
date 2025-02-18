@@ -59,8 +59,12 @@
 
 <style scoped >
 	.selected__icon {
-		width: 38px;
+		width: 30px;
 		margin-right: 5px;
+	}
+
+	.menu__btn-wrapper {
+		padding: 0 10px;
 	}
 
 	.account__settings-btn {
@@ -85,8 +89,12 @@
 		left: 0;
 		bottom: 0;
 		height: 1px;
+		transform: scaleY(0.2);
 		width: 100%;
-		background: #dec8b4;
+		background: grey;
+	}
+	.menu__btn-wrapper:last-child .account__settings-btn:after{
+		opacity: 0;
 	}
 
 	.no-space {
@@ -97,5 +105,6 @@
 	.accoun__text {
 		color: var(--text-color);
 		padding: 12px 0;
+		font-weight: 600;
 	}
 </style>

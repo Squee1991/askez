@@ -19,17 +19,39 @@
 		"Konto",
 		"Über die App",
 		"Sprache",
+		"Feedback",
 		"Einstellungen"
 	],
 	"account": {
 		"accoutTitle": "Konto",
 		"accountBtn": "Aktualisieren"
 	},
+	"feedBack": {
+		"title": "Feedback",
+		"placeholder": "Hinterlassen Sie eine Bewertung oder einen Vorschlag",
+		"button": "Senden",
+		"overlayBtn": "OK",
+		"overlayTitle": "Danke für dein Feedback"
+	},
 	"startPage": {
 		"value": "Los"
 	},
 	"description": {
 		"value": "Nächster Schritt"
+	},
+	"navTop": {
+		"achiv": "Erfolge",
+		"askez": "Alle Askesen",
+		"stats": "Statistik"
+	},
+	"statslable": {
+		"total": "Insgesamt erstellte Askesen",
+		"doneTotal": "Insgesamt abgeschlossen",
+		"InProgressTotal": "In Bearbeitung"
+	},
+	"infoLabels": {
+		"name": "Name",
+		"status": "Status"
 	},
 	"register": {
 		"btnValue": "registrieren",

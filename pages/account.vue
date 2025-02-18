@@ -51,14 +51,9 @@
 		data.value.fields.forEach((field) => {
 			if (field.name === "name") updatedData.name = field.value;
 		});
-
 		habitStore.updateUserData(updatedData);
 		router.push("/welcomePage");
 	};
-
-	definePageMeta({
-		layout: 'footerlayout',
-	});
 
 </script>
 
@@ -84,9 +79,11 @@
 		font-size: 20px;
 		background-color: var(--button-bg);
 		color: var(--button-text-color);
+		font-family: "Acme", serif;
 	}
 
 	.field__label {
 		color: var(--text-color);
+		font-family: "Acme", serif;
 	}
 </style>

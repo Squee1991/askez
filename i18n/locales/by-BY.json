@@ -19,11 +19,19 @@
 		"Акаўнт",
 		"Пра праграму",
 		"Мова",
+		"Зваротная сувязь",
 		"Налады"
 	],
 	"account": {
 		"accoutTitle": "Акаўнт",
 		"accountBtn": "Абнавіць"
+	},
+	"feedBack": {
+		"title": "Зваротная сувязь",
+		"placeholder": "Пакіньце водгук або прапанову",
+		"button": "Адправіць",
+		"overlayBtn": "OK",
+		"overlayTitle": "Дзякуй за зваротную сувязь"
 	},
 	"startPage": {
 		"value": "Пачаць"
@@ -31,6 +39,21 @@
 	"description": {
 		"value": "Наступны крок"
 	},
+	"navTop": {
+		"achiv": "Дасціжэнні",
+		"askez": "Усе аскезы",
+		"stats": "Статыстыка"
+	},
+	"statslable": {
+		"total": "Усяго створана аскез",
+		"doneTotal": "Усяго выкананых",
+		"InProgressTotal": "У працэсе выканання"
+	},
+	"infoLabels": {
+		"name": "Назва",
+		"status": "Статус"
+	},
+
 	"register": {
 		"btnValue": "зарэгістравацца",
 		"placeholderFields": [

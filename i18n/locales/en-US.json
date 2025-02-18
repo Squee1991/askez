@@ -19,17 +19,39 @@
 		"Account",
 		"About the App",
 		"Languages",
+		"Feedback",
 		"Settings"
 	],
 	"account": {
 		"accoutTitle": "Account",
 		"accountBtn": "Update"
 	},
+	"feedBack": {
+		"title": "Feedback",
+		"placeholder": "Leave a review or suggestion",
+		"button": "Send",
+		"overlayBtn": "OK",
+		"overlayTitle": "Thank you for your feedback"
+	},
 	"startPage": {
 		"value": "get started"
 	},
 	"description": {
 		"value": "Next step"
+	},
+	"navTop": {
+		"achiv": "Achievements",
+		"askez": "All asceticisms",
+		"stats": "Statistics"
+	},
+	"statslable": {
+		"total": "Total created askeses",
+		"doneTotal": "Total completed",
+		"InProgressTotal": "In progress"
+	},
+	"infoLabels": {
+		"name": "Name",
+		"status": "Status"
 	},
 	"register": {
 		"btnValue": "register",
@@ -70,7 +92,7 @@
 	},
 	"taskDetails": {
 		"startDate": "Start date",
-		"endtDate": "End date"
+		"endDate": "End date"
 	},
 	"delConfirm": {
 		"title": "Delete goal?",

@@ -19,17 +19,39 @@
 		"Cuenta",
 		"Sobre la app",
 		"Idioma",
+		"Comentarios",
 		"Configuración"
 	],
 	"account": {
 		"accoutTitle": "Cuenta",
 		"accountBtn": "Actualizar"
 	},
+	"feedBack": {
+		"title": "Comentarios",
+		"placeholder": "Deja un comentario o sugerencia",
+		"button": "Enviar",
+		"overlayBtn": "OK",
+		"overlayTitle": "Gracias por tu retroalimentación"
+	},
 	"startPage": {
 		"value": "comenzar"
 	},
 	"description": {
 		"value": "siguiente paso"
+	},
+	"navTop": {
+		"achiv": "Logros",
+		"askez": "Todas las ascesis",
+		"stats": "Estadísticas"
+	},
+	"statslable": {
+		"total": "Total de ascesis creadas",
+		"doneTotal": "Total completado",
+		"InProgressTotal": "En proceso de ejecución"
+	},
+	"infoLabels": {
+		"name": "Nombre",
+		"status": "Estado"
 	},
 	"register": {
 		"btnValue": "registrarse",

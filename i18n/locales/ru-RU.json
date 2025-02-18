@@ -19,11 +19,19 @@
 		"Аккаунт",
 		"О программе",
 		"Язык",
+		"Обратная связь",
 		"Настройки"
 	],
 	"account": {
 		"accoutTitle": "Аккаунт",
 		"accountBtn": "Обновить"
+	},
+	"feedBack": {
+		"title": "Обратная связь",
+		"placeholder": "Оставьте отзыв или предложение",
+		"button": "Отправить",
+		"overlayBtn": "OK",
+		"overlayTitle": "Cпасибо за обратную связь"
 	},
 	"startPage": {
 		"value": "Начать"
@@ -31,6 +39,21 @@
 	"description": {
 		"value": "Следующий шаг"
 	},
+	"navTop": {
+		"achiv": "Достижения",
+		"askez": "Все аскезы",
+		"stats": "Статистика"
+	},
+	"statslable": {
+		"total": "Всего создано аскез",
+		"doneTotal": "Всего выполненных",
+		"InProgressTotal" : "В процессе выполенения"
+	},
+	"infoLabels": {
+		"name": "Название",
+		"status": "Статус"
+	},
+
 	"register": {
 		"btnValue": "зарегистрироваться",
 		"placeholderFields": [

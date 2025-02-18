@@ -9,6 +9,7 @@ export default defineNuxtConfig({
 	devtools: {enabled: true},
 	modules: ['@pinia/nuxt', '@nuxtjs/google-fonts', '@nuxtjs/color-mode', '@nuxtjs/i18n'],
 	i18n: {
+		legacy: false,
 		langDir: 'locales/',
 		strategy: 'no_prefix',
 		locales: [
@@ -56,7 +57,8 @@ export default defineNuxtConfig({
 			'Permanent Marker': true,
 			Acme: true,
 			Merienda: true,
-			Itim: true
+			Itim: true,
+			Roboto: true
 		}
 	},
 	colorMode: {
