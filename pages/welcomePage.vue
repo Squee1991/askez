@@ -10,13 +10,8 @@
 			</div>
 			<div class="progress__inner">
 				<div class="user__greetings">
-					<div class="title"> {{ $t('homePage.greetings')}},<span class="username">{{ username }}</span></div>
+					<div class="title"> {{ $t('homePage.greetings')}},<span class="username">{{ username || 'Guest'}} </span></div>
 				</div>
-				<!--				<div class="banner__wrapper">-->
-				<!--					<div class="panda__icon-wrapper">-->
-				<!--						<img class="panda__icon" :src="PandaHello" alt="">-->
-				<!--					</div>-->
-				<!--				</div>-->
 				<div class="goals__inner">
 					<div class="goals__content">
 							<div class="goals__btns-inner">
@@ -46,13 +41,6 @@
 									     v-for="task in tasks" :key="task.id">
 										<div class="task__goal-list-inner">
 											<div class="taks__progress__date-wrapper">
-												<!--											<div class="progres__wrapper">-->
-												<!--												<ProgressCircle-->
-												<!--													:progress="Math.floor(task.progress)"-->
-												<!--													:progressMiss="Math.floor(task.progressMiss)"-->
-												<!--													:history="task.history"-->
-												<!--												/>-->
-												<!--											</div>-->
 												<div class="task__datum-wrapper">
 													<div class="task__goal-wrapper">
 														<div class="task__goal-item goals goal__name">{{ task.goal }}
@@ -71,6 +59,17 @@
 																formatDate(task.dateRange.end) }}
 															</div>
 														</div>
+													</div>
+
+												</div>
+											</div>
+											<div class="task__progress-wrapper">
+												<div class="task__progress-value">
+													<div class="task__progress-green">
+														<span class="progress-green">&#9989; {{ habitStore.result(task.id).progress }}</span>
+													</div>
+													<div class="task__progress-green">
+														<span class="progress-red">&#10060; {{ habitStore.result(task.id).progressMiss }}</span>
 													</div>
 												</div>
 											</div>
@@ -178,6 +177,17 @@
 
 	html , body {
 		overflow-x: hidden;
+	}
+
+	.task__progress-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 14px;
+		color: #94ea97;
+		font-weight: bold;
+		font-family: "Nunito", serif;
+		border: none;
 	}
 
 	.task__goal-content {
@@ -344,11 +354,6 @@
 		flex-direction: column;
 	}
 
-	.panda__icon {
-		height: 200px;
-		width: 150px;
-	}
-
 	.goal__type {
 		font-weight: 300;
 		color: var(--goals-date-color);
@@ -365,7 +370,7 @@
 		font-size: 18px;
 		font-weight: 600;
 		font-family: "Acme", serif;
-		color: var(--goals-name);
+		color: #4FC55C;
 	}
 
 	.task__goal-list {
@@ -425,9 +430,4 @@
 		padding: 8px 20px;
 	}
 
-	.banner__wrapper {
-		width: 100%;
-		border-radius: 15px;
-		padding: 0 20px;
-	}
 </style>

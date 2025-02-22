@@ -9,7 +9,6 @@
 	"setting": [
 		"Konto löschen",
 		"Datenschutzbestimmungen",
-		"Kontaktieren Sie uns",
 		"Mode"
 	],
 	"menu": {
@@ -49,9 +48,18 @@
 		"doneTotal": "Insgesamt abgeschlossen",
 		"InProgressTotal": "In Bearbeitung"
 	},
+	"hasNotAskez": {
+		"value": "Keine erstellten Askezas"
+	},
 	"infoLabels": {
 		"name": "Name",
 		"status": "Status"
+	},
+	"delAllDatas": {
+		"title": "Alle Daten löschen?",
+		"subTitle": "Sind Sie sicher, dass Sie alle Daten löschen möchten?",
+		"acceptBtn": "Ja",
+		"rejectBtn": "Nein"
 	},
 	"register": {
 		"btnValue": "registrieren",

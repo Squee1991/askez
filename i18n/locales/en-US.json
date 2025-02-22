@@ -9,7 +9,6 @@
 	"setting": [
 		"Delete account",
 		"Privacy Policy",
-		"Contact us",
 		"Mode"
 	],
 	"menu": {
@@ -17,7 +16,7 @@
 	},
 	"meniu": [
 		"Account",
-		"About the App",
+		"About App",
 		"Languages",
 		"Feedback",
 		"Settings"
@@ -41,7 +40,7 @@
 	},
 	"navTop": {
 		"achiv": "Achievements",
-		"askez": "All asceticisms",
+		"askez": "All askeza",
 		"stats": "Statistics"
 	},
 	"statslable": {
@@ -49,9 +48,18 @@
 		"doneTotal": "Total completed",
 		"InProgressTotal": "In progress"
 	},
+	"hasNotAskez": {
+		"value": "No created askezas"
+	},
 	"infoLabels": {
 		"name": "Name",
 		"status": "Status"
+	},
+	"delAllDatas": {
+		"title": "Delete all data?",
+		"subTitle": "Are you sure you want to delete all data?",
+		"acceptBtn": "Yes",
+		"rejectBtn": "No"
 	},
 	"register": {
 		"btnValue": "register",

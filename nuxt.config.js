@@ -43,6 +43,12 @@ export default defineNuxtConfig({
 				name: 'Español',
 				file: 'es-ES.json',
 			},
+			{
+				code: 'fr-FR',
+				iso: 'fr-FR',
+				name: 'Français',
+				file: 'fr-FR.json',
+			},
 		],
 		detectBrowserLanguage: false,
 		defaultLocale: 'en-US',

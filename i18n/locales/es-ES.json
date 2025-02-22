@@ -9,7 +9,6 @@
 	"setting": [
 		"Eliminar cuenta",
 		"Política de privacidad",
-		"Contáctanos",
 		"Mode"
 	],
 	"menu": {
@@ -48,6 +47,15 @@
 		"total": "Total de ascesis creadas",
 		"doneTotal": "Total completado",
 		"InProgressTotal": "En proceso de ejecución"
+	},
+	"hasNotAskez": {
+		"value": "No hay askezas creadas"
+	},
+	"delAllDatas": {
+		"title": "¿Eliminar todos los datos?",
+		"subTitle": "¿Estás seguro de que quieres eliminar todos los datos?",
+		"acceptBtn": "Sí",
+		"rejectBtn": "No"
 	},
 	"infoLabels": {
 		"name": "Nombre",

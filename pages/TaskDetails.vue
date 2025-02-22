@@ -62,7 +62,7 @@
 					:progress="selectedTask.progress"
 					:progressMiss="selectedTask.progressMiss"
 					:history="selectedTask.history"
-					:size="200"
+					:size="190"
 					:padding="25"
 				/>
 			</div>
@@ -390,13 +390,11 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		margin-bottom: 45px;
+		margin-bottom: 55px;
 	}
 
 	.progress__container-details {
 		margin-top: 14px;
-		display: flex;
-		justify-content: center;
 	}
 
 	.task__details-btns {
@@ -462,7 +460,7 @@
 	.range__date-wrapper {
 		display: flex;
 		justify-content: space-between;
-		padding: 10px;
+		padding: 2px 10px;
 	}
 
 	.task__name {

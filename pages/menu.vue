@@ -8,8 +8,8 @@
 						<img :class="{
                               'acc-bg-blue': accountLabels.includes(item),
                               'aboutapp-bg-green': aboutLabels.includes(item),
-                              'lang-bg-rot': languageLabels.includes(item),
-                              'settings-bg-orange': settingsLabels.includes(item),
+                              'lang-bg-orange': languageLabels.includes(item),
+                              'settings-bg-fiol': settingsLabels.includes(item),
                               'feedback-bg-l-blue': feedback.includes(item)
                                      }"
 						     class="account__icon" :src="getMenuPlainIcon(item)" alt="">
@@ -31,11 +31,11 @@
 	import FeedBackIcon from '../assets/images/feedbackIcon.svg'
 	import {useI18n} from 'vue-i18n';
 
-	const accountLabels = ['Акаўнт', 'Аккаунт', 'Account', 'Konto', 'Cuenta'];
-	const aboutLabels = ['Пра праграму', 'О программе', 'About the App', 'Über die App', 'Sobre la app'];
-	const languageLabels = ['Мова', 'Язык', 'Languages', 'Sprache', 'Idioma'];
-	const feedback = ['Обратная связь', 'Зваротная сувязь', 'Feedback', 'Feedback', 'Comentarios']
-	const settingsLabels = ['Налады', 'Настройки', 'Settings', 'Einstellungen', 'Configuración'];
+	const accountLabels = ['Акаўнт', 'Аккаунт', 'Account', 'Konto', 'Cuenta' , 'Compte'];
+	const aboutLabels = ['Пра праграму', 'О программе', 'About App', 'Über die App', 'Sobre la app' , 'À propos de l\'application'];
+	const languageLabels = ['Мова', 'Язык', 'Languages', 'Sprache', 'Idioma' , 'Langue'];
+	const feedback = ['Обратная связь', 'Зваротная сувязь', 'Feedback', 'Feedback', 'Comentarios' , 'Commentaires']
+	const settingsLabels = ['Налады', 'Настройки', 'Settings', 'Einstellungen', 'Configuración' , 'Paramètres'];
 	const {locale, messages} = useI18n();
 
 	const getMenuPlainLink = (text) => {
@@ -90,16 +90,16 @@
 
 <style scoped>
 
-	.lang-bg-rot {
-		background: #d64545;
+	.lang-bg-orange {
+		background: #FF8C00;
 	}
 
-	.settings-bg-orange {
-		background: #ffa450;
+	.settings-bg-fiol {
+		background: #9a50ff;
 	}
 
 	.acc-bg-blue {
-		background: #4169e1;
+		background: #1E90FF;
 	}
 
 	.aboutapp-bg-green {
