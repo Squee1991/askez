@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import {ref, computed} from "vue";
+import {computed, ref} from "vue";
 
 export const useHabitStore = defineStore("askezaStore", () => {
 	const username = ref(null);
@@ -8,8 +8,16 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	const tasks = ref([]);
 	const selectedTask = ref(null);
 	const activeColor = ref(null)
+	const achieveCount = ref(0)
+	const achievementThresholds = ref([1, 5, 10, 20, 50, 100]);
+	const archiveTasks = ref([])
+
+
 	const amountOfTask = computed(() => tasks.value.length)
-	const doneTask = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) === 100))
+	const doneTask = computed(() =>
+		tasks.value.filter(task => task.progress === 100 && task.progressMiss === 0)
+	);
+
 	const doneTaskNames = computed(() => tasks.value.filter(task => task.progress === 100).map(task => task.goal));
 	const notdone = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) < 100))
 	const result = computed(() => {
@@ -23,10 +31,16 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		};
 	});
 
+	const activeAchievements = computed(() => {
+		return achievementThresholds.value.map(threshold => achieveCount.value >= threshold);
+	});
+
+
 	const completionRate = computed(() => {
-		if (amountOfTask.value === 0) return 0
-		return Math.round((doneTask.value.length / amountOfTask.value) * 100)
-	})
+		if (tasks.value.length === 0) return 0;
+		return Math.round((doneTask.value.length / tasks.value.length) * 100);
+	});
+
 
 	const saveTasks = () => {
 		localStorage.setItem("tasks", JSON.stringify(tasks.value));
@@ -62,11 +76,10 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	};
 
 	const addTask = (task) => {
-		const isDuplicate = tasks.value.some(
-			(item) =>
-				item.goal === task.goal &&
-				item.dateRange.start === task.dateRange.start &&
-				item.dateRange.end === task.dateRange.end
+		const isDuplicate = tasks.value.some((item) =>
+			item.goal === task.goal &&
+			item.dateRange.start === task.dateRange.start &&
+			item.dateRange.end === task.dateRange.end
 		);
 
 		if (!isDuplicate) {
@@ -80,6 +93,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
 				missedDates: [],
 				checkedCount: 0,
 				missedCount: 0,
+				isAchieved: false,
 			};
 			tasks.value.push(newTask);
 			updateProgress(newTask);
@@ -103,6 +117,8 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		} else {
 			tasks.value = [];
 		}
+		loadArchiveTasks();
+		loadAchieveCount();
 	};
 
 	const updateProgress = (task) => {
@@ -121,37 +137,84 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		}
 		task.progress = progress;
 		task.progressMiss = progressMiss;
+
+		if (progress === 100 && !task.isAchieved) {
+			task.isAchieved = true;
+			achieveCount.value++;
+			saveAchieveCount();
+		}
+
 		const taskIndex = tasks.value.findIndex((t) => t.id === task.id);
 		if (taskIndex !== -1) {
 			tasks.value.splice(taskIndex, 1, task);
 		}
-
 		saveTasks();
 	};
 
+	const loadAchieveCount = () => {
+		const savedCount = localStorage.getItem('achieveCount');
+		if (savedCount) {
+			achieveCount.value = parseInt(savedCount);
+		}
+	};
 
 	const updateAllProgress = () => {
 		tasks.value.forEach((task) => updateProgress(task));
 	};
 
-	const clearTasks = () => {
-		username.value = null;
-		tasks.value = [];
+
+
+	const saveArchiveTasks = () => {
+		localStorage.setItem('archiveTasks', JSON.stringify(archiveTasks.value))
+	}
+
+	const saveAchieveCount = () => {
+		localStorage.setItem('achieveCount', achieveCount.value);
 	};
+
+	const loadArchiveTasks = () => {
+		const savedArchive = localStorage.getItem("archiveTasks");
+		if (savedArchive) {
+			archiveTasks.value = JSON.parse(savedArchive);
+		} else {
+			archiveTasks.value = [];
+		}
+	};
+
+	const recalculateAchievements = () => {
+		achieveCount.value = Math.max(achieveCount.value, doneTask.value.length);
+		saveAchieveCount();
+	};
+
 
 	const clearAlldates = () => {
 		tasks.value = [];
 		username.value = null
 		email.value = null
 		password.value = null
+		achieveCount.value = 0
+		archiveTasks.value = []
 		localStorage.removeItem('userData')
 		localStorage.removeItem('tasks')
+		localStorage.removeItem('archiveTasks')
+		localStorage.removeItem('achieveCount')
 	}
 
+	const clearTasks = () => {
+		username.value = null;
+		tasks.value = [];
+	};
+
 	const removeTask = (taskId) => {
-		tasks.value = tasks.value.filter((task) => task.id !== taskId);
+		const taskToRemove = tasks.value.find(task => task.id === taskId);
+		if (taskToRemove) {
+			archiveTasks.value.push(taskToRemove);
+			saveArchiveTasks();
+		}
+		tasks.value = tasks.value.filter(task => task.id !== taskId);
 		saveTasks();
 	};
+
 
 	return {
 		username,
@@ -166,6 +229,11 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		completionRate,
 		activeColor,
 		result,
+		achievementThresholds,
+		activeAchievements,
+		archiveTasks,
+		achieveCount,
+
 
 		clearAlldates,
 		saveTasks,
@@ -178,5 +246,8 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		updateAllProgress,
 		clearTasks,
 		removeTask,
+		loadArchiveTasks,
+		recalculateAchievements,
+		saveAchieveCount,
 	};
 });

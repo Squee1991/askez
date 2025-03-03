@@ -25,6 +25,13 @@
 		"accoutTitle": "Account",
 		"accountBtn": "Update"
 	},
+	"archieve": {
+		"name": "Your askezas",
+		"achieveTitle": "Ascezas archive",
+		"totalDays": "Total days",
+		"checkedDays": "Checked",
+		"notChecked": "Not checked"
+	},
 	"feedBack": {
 		"title": "Feedback",
 		"placeholder": "Leave a review or suggestion",

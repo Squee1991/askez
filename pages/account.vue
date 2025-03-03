@@ -72,7 +72,7 @@
 <style scoped>
 
 	.account__content {
-		padding: 30px;
+		padding: 15px 30px;
 		display: flex;
 		flex-direction: column;
 	}

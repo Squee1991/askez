@@ -25,6 +25,13 @@
 		"accoutTitle": "Аккаунт",
 		"accountBtn": "Обновить"
 	},
+	"archieve": {
+		"achieveTitle": "Архіў аскез",
+		"name": "Вашы аскезы",
+		"totalDays": "Усяго дзён",
+		"checkedDays": "Адзначана",
+		"notChecked": "Не адзначана"
+	},
 	"feedBack": {
 		"title": "Обратная связь",
 		"placeholder": "Оставьте отзыв или предложение",
@@ -46,7 +53,7 @@
 	"statslable": {
 		"total": "Всего создано аскез",
 		"doneTotal": "Всего выполненных",
-		"InProgressTotal" : "В процессе выполенения"
+		"InProgressTotal": "В процессе выполенения"
 	},
 	"hasNotAskez": {
 		"value": "Нет созданных аскез"
@@ -57,7 +64,7 @@
 	},
 	"delAllDatas": {
 		"title": "Удалить все данные?",
-		"subTitle:": "Вы действительно хотите удалить все данные?",
+		"subTitle": "Вы действительно хотите удалить все данные?",
 		"acceptBtn": "Да",
 		"rejectBtn": "Нет"
 	},

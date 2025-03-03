@@ -25,6 +25,13 @@
 		"accoutTitle": "Compte",
 		"accountBtn": "Mettre à jour"
 	},
+	"archieve": {
+		"name": "Vos ascèses",
+		"achieveTitle": "Archive des ascèses",
+		"totalDays": "Total de jours",
+		"checkedDays": "Marqué",
+		"notChecked": "Non marqué"
+	},
 	"feedBack": {
 		"title": "Commentaires",
 		"placeholder": "Laissez un commentaire ou une suggestion",

@@ -1,5 +1,6 @@
 console.log(process.env.NODE_ENV)
 export default defineNuxtConfig({
+	ssr: false,
 	runtimeConfig: {
 		public: {
 			apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://default-api.example.com'
@@ -67,6 +68,7 @@ export default defineNuxtConfig({
 			Roboto: true
 		}
 	},
+
 	colorMode: {
 		preference: 'light',
 		fallback: 'light',

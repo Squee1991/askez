@@ -25,6 +25,14 @@
 		"accoutTitle": "Акаўнт",
 		"accountBtn": "Абнавіць"
 	},
+
+	"archieve": {
+		"name": "Вашы аскезы",
+		"achieveTitle": "Архіў аскез",
+		"totalDays": "Усяго дзён",
+		"checkedDays": "Адзначана",
+		"notChecked": "Не адзначана"
+	},
 	"feedBack": {
 		"title": "Зваротная сувязь",
 		"placeholder": "Пакіньце водгук або прапанову",

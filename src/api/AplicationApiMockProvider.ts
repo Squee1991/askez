@@ -1,4 +1,4 @@
-import type {AddHabitParams, AplicationProviderInterfaice} from "../api/AplicationProviderInterfaice";
+import type {AddHabitParams, AplicationProviderInterfaice} from "api/AplicationProviderInterfaice";
 import type {Habit} from "../model/Habit";
 
 export class AplicationApiMockProvider implements AplicationProviderInterfaice {

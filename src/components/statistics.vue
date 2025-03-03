@@ -2,7 +2,7 @@
 	import {useHabitStore} from '../../stores/habitStore.js'
 	import {computed} from "vue";
 	import CheckedIcon from '../../assets/images/checkIcon.svg'
-	import CheckedNotFull from '../../assets/images/checkNotFull.svg'
+	import CheckedNotFull from '../../assets/images/cross.svg'
 	import InProgressIcon from '../../assets/images/in-progress.svg'
 
 	const counter = useHabitStore()
@@ -28,8 +28,6 @@
 		if (progress > 0) return "#a10505";
 		if (progress === 0) return "grey"
 	});
-
-
 </script>
 
 <template>

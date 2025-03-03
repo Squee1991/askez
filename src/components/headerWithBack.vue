@@ -35,7 +35,11 @@
 	});
 
 	const goBack = () => {
-		router.push('/menu');
+		if (router.currentRoute.value.path === '/archive') {
+			router.push('/welcomePage');
+		} else {
+			router.push('/menu');
+		}
 	};
 
 </script>
@@ -56,7 +60,6 @@
 		height: 33px;
 		margin-right: 10px;
 		padding: 5px;
-
 		border-radius: 50%;
 		color: var(--text-color);
 	}

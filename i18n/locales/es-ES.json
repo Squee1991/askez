@@ -25,6 +25,13 @@
 		"accoutTitle": "Cuenta",
 		"accountBtn": "Actualizar"
 	},
+	"archieve": {
+		"name": "Tus ascetismos",
+		"achieveTitle": "Archivo de ascetismos",
+		"totalDays": "Total de días",
+		"checkedDays": "Marcado",
+		"notChecked": "No marcado"
+	},
 	"feedBack": {
 		"title": "Comentarios",
 		"placeholder": "Deja un comentario o sugerencia",

@@ -25,6 +25,13 @@
 		"accoutTitle": "Konto",
 		"accountBtn": "Aktualisieren"
 	},
+	"archieve": {
+		"name": "Ihre Askesen",
+		"achieveTitle": "Archiv der Askesen",
+		"totalDays": "Gesamttage",
+		"checkedDays": "Markiert",
+		"notChecked": "Nicht markiert"
+	},
 	"feedBack": {
 		"title": "Feedback",
 		"placeholder": "Hinterlassen Sie eine Bewertung oder einen Vorschlag",
