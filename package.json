@@ -14,8 +14,9 @@
     "@capacitor/cli": "^6.2.0",
     "@capacitor/core": "^6.2.0",
     "@firebase/app-types": "^0.9.3",
-    "@ionic/core": "^8.4.1",
-    "@ionic/vue": "^8.4.1",
+    "@ionic/core": "^8.4.3",
+    "@ionic/vue": "^8.4.3",
+    "@ionic/vue-router": "^8.4.3",
     "@nuxtjs/color-mode": "^3.5.2",
     "@nuxtjs/google-fonts": "^3.2.0",
     "@nuxtjs/i18n": "^9.1.5",
@@ -24,7 +25,7 @@
     "dotenv": "^16.4.7",
     "emailjs": "^4.0.3",
     "emailjs-com": "^3.2.0",
-    "firebase": "^11.2.0",
+    "firebase": "^11.3.1",
     "firebase-admin": "^13.0.2",
     "firebase-functions": "^6.3.1",
     "lottie-web": "^5.12.2",
@@ -35,10 +36,10 @@
     "v-calendar": "^3.1.2",
     "vue": "latest",
     "vue-i18n": "^10.0.5",
-    "vue-router": "latest",
     "vuefire": "^3.2.1"
   },
   "devDependencies": {
-    "pinia": "^2.3.0"
+    "pinia": "^2.3.0",
+    "vue-router": "^4.5.0"
   }
 }

@@ -4,6 +4,9 @@ import SuccessModal from '../../pages/SuccessModal.vue'
 
 const routes = [
 	{
+		middleware:['auth']
+	},
+	{
 		path: '/welcomePage',
 		name: 'welcomePage',
 		component: WelcomePage,

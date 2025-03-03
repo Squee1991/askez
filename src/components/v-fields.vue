@@ -6,6 +6,8 @@
 			v-model="localValue"
 			:placeholder="field.placeholder"
 			:autocomplete="field.autocomplete || 'off'"
+			:readonly="field.readonly"
+
 		/>
 		<div v-if="field.type === 'password'" class="toggle-icon" @click="togglePassword">
 			<img :src="currentIcon" alt="Toggle password visibility" class="toggle-icon-item"/>
@@ -23,10 +25,10 @@
 			type: Object,
 			required: true,
 		},
+		readonly: Boolean
 	});
 
 	const emit = defineEmits(['update:modelValue']);
-
 	const localValue = ref(props.field.value);
 	const localType = ref(props.field.type);
 	const currentIcon = ref(hideIcon);
@@ -52,16 +54,17 @@
 
 <style scoped>
 	.v-field-wrapper {
-		margin-top: 3px;
+		margin: 3px 0 10px 0;
 		position: relative;
 	}
 
 	.v-field-input {
 		width: 100%;
-		font-size: 14px;
+		font-size: 16px;
 		border: 1px solid #ccc;
 		border-radius: 8px;
 		padding: 12px;
+		caret-color: #9a50ff;
 	}
 
 	.toggle-icon {

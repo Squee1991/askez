@@ -22,6 +22,9 @@ const animationContainer = ref(null)
 const config = useRuntimeConfig()
 const apiBase = config.public.apiBase;
 
+definePageMeta({
+    middleware: ['auth'],
+})
 console.log('apiBase test:', apiBase)
 onMounted(() => {
     if (animationContainer.value) {

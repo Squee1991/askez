@@ -1,5 +1,8 @@
 <template>
-	<div class="language">
+	<div v-if="preloader" class="preloader__lang">
+		<Reloader/>
+	</div>
+	<div v-if="!preloader" class="language">
 		<div class="language__content">
 			<div class="language__wrapper">
 				<HeaderwithBack
@@ -24,8 +27,10 @@
 	import ListComponent from '../src/components/ListComponent.vue';
 	import SelectedIcon from '../assets/images/checkIcon.svg';
 	import Arrowicon from '../assets/images/arrowSvg.svg?url';
+	import Reloader from '../src/components/preloader.vue'
 	const languages = ref({});
 	const selectedLanguage = ref(null);
+	const preloader = ref(false)
 	const { locales, local } = useI18n()
 	const computedClassNames = computed(() => {
 		if (languages.value) {
@@ -55,9 +60,14 @@
 		selectedLanguage.value = local;
 	};
 
-	watch(selectedLanguage, (newLang) => {
-		localStorage.setItem('language', newLang);
-		loadLanguageData(newLang);
+	watch(selectedLanguage, (newValue, oldValue) => {
+		if (!oldValue) return;
+		preloader.value = true;
+		setTimeout(() => {
+			localStorage.setItem('language', newValue);
+			loadLanguageData(newValue);
+			preloader.value = false;
+		}, 3500);
 	});
 
 </script>

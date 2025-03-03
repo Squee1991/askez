@@ -1,5 +1,5 @@
 <template>
-	<div c>
+	<div>
 		<div class="achiv__text">
 			<div class="achiv-text-item">Выполненные достижения</div>
 		</div>

@@ -7,10 +7,22 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	const password = ref(null);
 	const tasks = ref([]);
 	const selectedTask = ref(null);
+	const activeColor = ref(null)
 	const amountOfTask = computed(() => tasks.value.length)
 	const doneTask = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) === 100))
 	const doneTaskNames = computed(() => tasks.value.filter(task => task.progress === 100).map(task => task.goal));
-	const notdone = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) < 100 ))
+	const notdone = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) < 100))
+	const result = computed(() => {
+		return (taskId) => {
+			const task = tasks.value.find(task => task.id === taskId);
+			if (!task) return {progress: "0%", progressMiss: "0%"};
+			return {
+				progress: `${Math.round(task.progress)}%`,
+				progressMiss: `${Math.round(task.progressMiss)}%`
+			};
+		};
+	});
+
 	const completionRate = computed(() => {
 		if (amountOfTask.value === 0) return 0
 		return Math.round((doneTask.value.length / amountOfTask.value) * 100)
@@ -84,7 +96,6 @@ export const useHabitStore = defineStore("askezaStore", () => {
 					if (task.progressMiss === undefined) task.progressMiss = 0;
 					if (!task.history) task.history = [];
 				});
-
 				updateAllProgress();
 			} catch (error) {
 				tasks.value = [];
@@ -98,16 +109,26 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		const totalDays = Math.max(1, (new Date(task.dateRange.end) - new Date(task.dateRange.start)) / (1000 * 60 * 60 * 24) + 1);
 		const completedDays = task.checkedDates ? task.checkedDates.length : 0;
 		const missedDays = task.missedDates ? task.missedDates.length : 0;
-		const progress = (completedDays / totalDays) * 100;
-		const progressMiss = (missedDays / totalDays) * 100;
-		task.progress = Math.round(progress, 100);
-		task.progressMiss = Math.round(progressMiss, 100);
+		let progress = (completedDays / totalDays) * 100;
+		let progressMiss = (missedDays / totalDays) * 100;
+		progress = Math.round(progress);
+		progressMiss = Math.round(progressMiss);
+		const totalProgress = progress + progressMiss;
+		if (totalProgress > 100) {
+			const factor = 100 / totalProgress;
+			progress = Math.round(progress * factor);
+			progressMiss = Math.round(progressMiss * factor);
+		}
+		task.progress = progress;
+		task.progressMiss = progressMiss;
 		const taskIndex = tasks.value.findIndex((t) => t.id === task.id);
 		if (taskIndex !== -1) {
 			tasks.value.splice(taskIndex, 1, task);
 		}
+
 		saveTasks();
 	};
+
 
 	const updateAllProgress = () => {
 		tasks.value.forEach((task) => updateProgress(task));
@@ -117,6 +138,15 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		username.value = null;
 		tasks.value = [];
 	};
+
+	const clearAlldates = () => {
+		tasks.value = [];
+		username.value = null
+		email.value = null
+		password.value = null
+		localStorage.removeItem('userData')
+		localStorage.removeItem('tasks')
+	}
 
 	const removeTask = (taskId) => {
 		tasks.value = tasks.value.filter((task) => task.id !== taskId);
@@ -134,8 +164,10 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		notdone,
 		doneTaskNames,
 		completionRate,
+		activeColor,
+		result,
 
-
+		clearAlldates,
 		saveTasks,
 		setUserData,
 		loadUserData,

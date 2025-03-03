@@ -29,7 +29,8 @@
 	--calendar--d-color: black;
 	--calendar-border-color: black;
 	--title-c: #ffffff;
-	--footer-bg: #3C3F47;
+	/*--footer-bg: #3C3F47;*/
+	--footer-bg: #525766;
 	--task-bg: #3C3F47;
 	--goals-name: #F2F8F6F6;
 	--goals-date-color: #F2F8F6F6;
