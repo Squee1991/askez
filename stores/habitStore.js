@@ -1,121 +1,253 @@
-import { defineStore } from "pinia";
+import {defineStore} from "pinia";
+import {computed, ref} from "vue";
 
-export const useHabitStore = defineStore("askezaStore", {
-	state: () => ({
-		username: null,
-		email: null,
-		password: null,
-		tasks: [],
-		radius: 42,
-		selectedTask: null,
-	}),
-	actions: {
-		saveTasks() {
-			localStorage.setItem("tasks", JSON.stringify(this.tasks));
-		},
-		setUserData(userData) {
-			this.username = userData.name;
-			this.email = userData.email;
-			this.password = userData.password;
-			localStorage.setItem("userData", JSON.stringify(userData));
-		},
-		loadUserData() {
-			const savedData = localStorage.getItem("userData");
-			if (savedData) {
-				const parsedData = JSON.parse(savedData);
-				this.username = parsedData.name;
-				this.email = parsedData.email;
-				this.password = parsedData.password;
+export const useHabitStore = defineStore("askezaStore", () => {
+	const username = ref(null);
+	const email = ref(null);
+	const password = ref(null);
+	const tasks = ref([]);
+	const selectedTask = ref(null);
+	const activeColor = ref(null)
+	const achieveCount = ref(0)
+	const achievementThresholds = ref([1, 5, 10, 20, 50, 100]);
+	const archiveTasks = ref([])
+
+
+	const amountOfTask = computed(() => tasks.value.length)
+	const doneTask = computed(() =>
+		tasks.value.filter(task => task.progress === 100 && task.progressMiss === 0)
+	);
+
+	const doneTaskNames = computed(() => tasks.value.filter(task => task.progress === 100).map(task => task.goal));
+	const notdone = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) < 100))
+	const result = computed(() => {
+		return (taskId) => {
+			const task = tasks.value.find(task => task.id === taskId);
+			if (!task) return {progress: "0%", progressMiss: "0%"};
+			return {
+				progress: `${Math.round(task.progress)}%`,
+				progressMiss: `${Math.round(task.progressMiss)}%`
+			};
+		};
+	});
+
+	const activeAchievements = computed(() => {
+		return achievementThresholds.value.map(threshold => achieveCount.value >= threshold);
+	});
+
+
+	const completionRate = computed(() => {
+		if (tasks.value.length === 0) return 0;
+		return Math.round((doneTask.value.length / tasks.value.length) * 100);
+	});
+
+
+	const saveTasks = () => {
+		localStorage.setItem("tasks", JSON.stringify(tasks.value));
+	};
+
+	const setUserData = (userData) => {
+		username.value = userData.name;
+		email.value = userData.email;
+		password.value = userData.password;
+		localStorage.setItem("userData", JSON.stringify(userData));
+	};
+
+	const loadUserData = () => {
+		const savedData = localStorage.getItem("userData");
+		if (savedData) {
+			const parsedData = JSON.parse(savedData);
+			username.value = parsedData.name;
+			email.value = parsedData.email;
+			password.value = parsedData.password;
+		}
+	};
+
+	const updateUserData = (newData) => {
+		if (newData.name) username.value = newData.name;
+		if (newData.email) email.value = newData.email;
+		if (newData.password) password.value = newData.password;
+		localStorage.setItem("userData", JSON.stringify({
+				name: username.value,
+				email: email.value,
+				password: password.value,
+			})
+		);
+	};
+
+	const addTask = (task) => {
+		const isDuplicate = tasks.value.some((item) =>
+			item.goal === task.goal &&
+			item.dateRange.start === task.dateRange.start &&
+			item.dateRange.end === task.dateRange.end
+		);
+
+		if (!isDuplicate) {
+			const newTask = {
+				...task,
+				id: Date.now(),
+				progress: 0,
+				progressMiss: 0,
+				history: [],
+				checkedDates: [],
+				missedDates: [],
+				checkedCount: 0,
+				missedCount: 0,
+				isAchieved: false,
+			};
+			tasks.value.push(newTask);
+			updateProgress(newTask);
+			saveTasks();
+		}
+	};
+
+	const loadTasks = () => {
+		const savedTasks = localStorage.getItem("tasks");
+		if (savedTasks) {
+			try {
+				tasks.value = JSON.parse(savedTasks) || [];
+				tasks.value.forEach((task) => {
+					if (task.progressMiss === undefined) task.progressMiss = 0;
+					if (!task.history) task.history = [];
+				});
+				updateAllProgress();
+			} catch (error) {
+				tasks.value = [];
 			}
-		},
-		updateUserData(newData) {
-			if (newData.name) this.username = newData.name;
-			if (newData.email) this.email = newData.email;
-			if (newData.password) this.password = newData.password;
-			localStorage.setItem(
-				"userData",
-				JSON.stringify({
-					name: this.username,
-					email: this.email,
-					password: this.password,
-				})
-			);
-		},
-		addTask(task) {
-			const isDuplicate = this.tasks.some(
-				(item) =>
-					item.goal === task.goal &&
-					item.dateRange.start === task.dateRange.start &&
-					item.dateRange.end === task.dateRange.end
-			);
-			if (!isDuplicate) {
-				const newTask = {
-					...task,
-					id: Date.now(),
-					progress: 0,
-					progressMiss: 0,
-					history: [],
-					checkedDates: [],
-					missedDates: [],
-					checkedCount: 0,
-					missedCount: 0
-				};
-				this.tasks.push(newTask);
-				this.updateProgress(newTask);
-				this.saveTasks();
-			}
-		},
-		loadTasks() {
-			const savedTasks = localStorage.getItem("tasks");
-			if (savedTasks) {
-				try {
-					this.tasks = JSON.parse(savedTasks) || [];
-					this.tasks.forEach((task) => {
-						if (task.progressMiss === undefined) {
-							task.progressMiss = 0;
-						}
-						if (!task.history) {
-							task.history = [];
-						}
-					});
+		} else {
+			tasks.value = [];
+		}
+		loadArchiveTasks();
+		loadAchieveCount();
+	};
 
-					this.updateAllProgress();
-				} catch (error) {
+	const updateProgress = (task) => {
+		const totalDays = Math.max(1, (new Date(task.dateRange.end) - new Date(task.dateRange.start)) / (1000 * 60 * 60 * 24) + 1);
+		const completedDays = task.checkedDates ? task.checkedDates.length : 0;
+		const missedDays = task.missedDates ? task.missedDates.length : 0;
+		let progress = (completedDays / totalDays) * 100;
+		let progressMiss = (missedDays / totalDays) * 100;
+		progress = Math.round(progress);
+		progressMiss = Math.round(progressMiss);
+		const totalProgress = progress + progressMiss;
+		if (totalProgress > 100) {
+			const factor = 100 / totalProgress;
+			progress = Math.round(progress * factor);
+			progressMiss = Math.round(progressMiss * factor);
+		}
+		task.progress = progress;
+		task.progressMiss = progressMiss;
 
-					this.tasks = [];
-				}
-			} else {
-				this.tasks = [];
-			}
-		},
+		if (progress === 100 && !task.isAchieved) {
+			task.isAchieved = true;
+			achieveCount.value++;
+			saveAchieveCount();
+		}
 
-		updateProgress(task) {
-			const totalDays = Math.max(1, (new Date(task.dateRange.end) - new Date(task.dateRange.start)) / (1000 * 60 * 60 * 24) + 1);
-			const completedDays = task.checkedDates ? task.checkedDates.length : 0;
-			const missedDays = task.missedDates ? task.missedDates.length : 0;
-			const progress = (completedDays / totalDays) * 100;
-			const progressMiss = (missedDays / totalDays) * 100;
-			task.progress = Math.round(progress, 100);
-			task.progressMiss = Math.round(progressMiss, 100);
-			const taskIndex = this.tasks.findIndex((t) => t.id === task.id);
-			if (taskIndex !== -1) {
-				this.tasks.splice(taskIndex, 1, task);
-			}
-			this.saveTasks();
-		},
+		const taskIndex = tasks.value.findIndex((t) => t.id === task.id);
+		if (taskIndex !== -1) {
+			tasks.value.splice(taskIndex, 1, task);
+		}
+		saveTasks();
+	};
 
-		updateAllProgress() {
-			this.tasks.forEach((task) => this.updateProgress(task));
-		},
+	const loadAchieveCount = () => {
+		const savedCount = localStorage.getItem('achieveCount');
+		if (savedCount) {
+			achieveCount.value = parseInt(savedCount);
+		}
+	};
 
-		clearTasks() {
-			this.username = null;
-			this.tasks = [];
-		},
+	const updateAllProgress = () => {
+		tasks.value.forEach((task) => updateProgress(task));
+	};
 
-		removeTask(taskId) {
-			this.tasks = this.tasks.filter((task) => task.id !== taskId);
-			this.saveTasks();
-		},
-	},
+
+
+	const saveArchiveTasks = () => {
+		localStorage.setItem('archiveTasks', JSON.stringify(archiveTasks.value))
+	}
+
+	const saveAchieveCount = () => {
+		localStorage.setItem('achieveCount', achieveCount.value);
+	};
+
+	const loadArchiveTasks = () => {
+		const savedArchive = localStorage.getItem("archiveTasks");
+		if (savedArchive) {
+			archiveTasks.value = JSON.parse(savedArchive);
+		} else {
+			archiveTasks.value = [];
+		}
+	};
+
+	const recalculateAchievements = () => {
+		achieveCount.value = Math.max(achieveCount.value, doneTask.value.length);
+		saveAchieveCount();
+	};
+
+
+	const clearAlldates = () => {
+		tasks.value = [];
+		username.value = null
+		email.value = null
+		password.value = null
+		achieveCount.value = 0
+		archiveTasks.value = []
+		localStorage.removeItem('userData')
+		localStorage.removeItem('tasks')
+		localStorage.removeItem('archiveTasks')
+		localStorage.removeItem('achieveCount')
+	}
+
+	const clearTasks = () => {
+		username.value = null;
+		tasks.value = [];
+	};
+
+	const removeTask = (taskId) => {
+		const taskToRemove = tasks.value.find(task => task.id === taskId);
+		if (taskToRemove) {
+			archiveTasks.value.push(taskToRemove);
+			saveArchiveTasks();
+		}
+		tasks.value = tasks.value.filter(task => task.id !== taskId);
+		saveTasks();
+	};
+
+
+	return {
+		username,
+		email,
+		password,
+		tasks,
+		selectedTask,
+		amountOfTask,
+		doneTask,
+		notdone,
+		doneTaskNames,
+		completionRate,
+		activeColor,
+		result,
+		achievementThresholds,
+		activeAchievements,
+		archiveTasks,
+		achieveCount,
+
+
+		clearAlldates,
+		saveTasks,
+		setUserData,
+		loadUserData,
+		updateUserData,
+		addTask,
+		loadTasks,
+		updateProgress,
+		updateAllProgress,
+		clearTasks,
+		removeTask,
+		loadArchiveTasks,
+		recalculateAchievements,
+		saveAchieveCount,
+	};
 });

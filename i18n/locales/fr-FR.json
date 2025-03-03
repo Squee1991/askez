@@ -1,0 +1,124 @@
+{
+	"languages": {
+		"mode": "pas d'espace",
+		"title": "Langue"
+	},
+	"settings": {
+		"title": "Paramètres"
+	},
+	"setting": [
+		"Supprimer le compte",
+		"Politique de confidentialité",
+		"Mode"
+	],
+	"menu": {
+		"title": "Menu"
+	},
+	"meniu": [
+		"Compte",
+		"À propos de l'application",
+		"Langue",
+		"Commentaires",
+		"Paramètres"
+	],
+	"account": {
+		"accoutTitle": "Compte",
+		"accountBtn": "Mettre à jour"
+	},
+	"archieve": {
+		"name": "Vos ascèses",
+		"achieveTitle": "Archive des ascèses",
+		"totalDays": "Total de jours",
+		"checkedDays": "Marqué",
+		"notChecked": "Non marqué"
+	},
+	"feedBack": {
+		"title": "Commentaires",
+		"placeholder": "Laissez un commentaire ou une suggestion",
+		"button": "Envoyer",
+		"overlayBtn": "OK",
+		"overlayTitle": "Merci pour votre retour"
+	},
+	"startPage": {
+		"value": "commencer"
+	},
+	"description": {
+		"value": "étape suivante"
+	},
+	"navTop": {
+		"achiv": "Succès",
+		"askez": "Toutes les ascèses",
+		"stats": "Statistiques"
+	},
+	"statslable": {
+		"total": "Total des ascèses créées",
+		"doneTotal": "Total complété",
+		"InProgressTotal": "En cours"
+	},
+	"hasNotAskez": {
+		"value": "Aucune Askeza créée"
+	},
+	"infoLabels": {
+		"name": "Nom",
+		"status": "Statut"
+	},
+	"delAllDatas": {
+		"title": "Supprimer toutes les données ?",
+		"subTitle": "Êtes-vous sûr de vouloir supprimer toutes les données ?",
+		"acceptBtn": "Oui",
+		"rejectBtn": "Non"
+	},
+	"register": {
+		"btnValue": "s'inscrire",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "entrez votre nom"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "entrez votre email"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "entrez votre mot de passe"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "confirmez votre mot de passe"
+			}
+		]
+	},
+	"homePage": {
+		"greetings": "Salut",
+		"btn": "Ouvrir",
+		"no_active_goals": "Aucun objectif actif"
+	},
+	"createTask": {
+		"title": "Créer un nouvel objectif",
+		"btn": "Créer nouveau",
+		"task": "Votre objectif",
+		"datum": "Sélectionnez une période de dates"
+	},
+	"success": {
+		"title": "Fait !!",
+		"article": "Faisons de notre mieux pour atteindre votre objectif",
+		"button": "OK"
+	},
+	"taskDetails": {
+		"startDate": "Date de début",
+		"endDate": "Date de fin"
+	},
+	"delConfirm": {
+		"title": "Supprimer l'objectif?",
+		"accept": "Oui",
+		"reject": "Non"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Supprimer"
+	},
+	"CheckedProgress": {
+		"checked": "Objectif atteint",
+		"notChecked": "Objectif non atteint"
+	}
+}

@@ -1,16 +1,21 @@
 <template>
-	<div class="language">
-		<div class="language__wrapper">
-			<HeaderwithBack
-				:icon="Arrowicon"
-				:title="$t('languages.title')"/>
-			<div v-if="languages" class="language__list">
-				<ListComponent
-					:class="computedClassNames"
-					:data="languages"
-					:icon="SelectedIcon"
-					v-model="selectedLanguage"
-				/>
+	<div v-if="preloader" class="preloader__lang">
+		<Reloader/>
+	</div>
+	<div v-if="!preloader" class="language">
+		<div class="language__content">
+			<div class="language__wrapper">
+				<HeaderwithBack
+					:icon="Arrowicon"
+					:title="$t('languages.title')"/>
+				<div v-if="languages" class="language__list">
+					<ListComponent
+						:class="computedClassNames"
+						:data="languages"
+						:icon="SelectedIcon"
+						v-model="selectedLanguage"
+					/>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -20,10 +25,12 @@
 	import {ref, onMounted, computed, watch} from 'vue';
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
 	import ListComponent from '../src/components/ListComponent.vue';
-	import SelectedIcon from '../assets/images/selectedLanguage.svg';
+	import SelectedIcon from '../assets/images/checkIcon.svg';
 	import Arrowicon from '../assets/images/arrowSvg.svg?url';
+	import Reloader from '../src/components/preloader.vue'
 	const languages = ref({});
 	const selectedLanguage = ref(null);
+	const preloader = ref(false)
 	const { locales, local } = useI18n()
 	const computedClassNames = computed(() => {
 		if (languages.value) {
@@ -53,26 +60,36 @@
 		selectedLanguage.value = local;
 	};
 
-	watch(selectedLanguage, (newLang) => {
-		localStorage.setItem('language', newLang);
-		loadLanguageData(newLang);
+	watch(selectedLanguage, (newValue, oldValue) => {
+		if (!oldValue) return;
+		preloader.value = true;
+		setTimeout(() => {
+			localStorage.setItem('language', newValue);
+			loadLanguageData(newValue);
+			preloader.value = false;
+		}, 3500);
 	});
 
-	definePageMeta({
-		layout: "footerlayout"
-	})
 </script>
 
 <style scoped>
+
 	.language__wrapper {
 		width: 100%;
-		padding: 30px;
+		padding: 15px 6vw;
 		height: 100vh;
 		background-color: var(--background-color);
+	}
+
+	.language__list {
+		background: var(--menu--btn-bg);
+		padding: 10px 10px 10px 10px;
+		border-radius: 15px;
 	}
 
 	.no-space {
 		display: flex;
 		justify-content: space-between;
 	}
+
 </style>

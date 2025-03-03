@@ -133,7 +133,6 @@
 		},
 		size: {
 			type: Number,
-
 			default: 85,
 		},
 		padding: {
@@ -163,6 +162,7 @@
 		}
 		return stops.join(", ");
 	});
+
 
 </script>
 
@@ -198,17 +198,17 @@
 	}
 
 	.progress-text.top {
-		top: 41%;
+		top: 40%;
 		transform: translateY(-50%);
 		color: green;
-		font-size: 20px;
+		font-size: 18px;
 	}
 
 	.progress-text.bottom {
-		bottom: 40%;
+		bottom: 37%;
 		transform: translateY(50%);
 		color: #bfbfbf;
-		font-size: 18px;
+		font-size: 12px;
 	}
 </style>
 

@@ -1,7 +1,7 @@
 :root {
 	--background-color: #ffffff;
 	--text-color: #000000;
-	--button-bg: #2E2E2E;
+	--button-bg: #2e2e2e;
 	--button-text-color: #ffffff;
 	--calendar--bg: #FBFBFB;
 	--calendar-d-color: #ffffff;
@@ -15,11 +15,13 @@
 	--vc-arrow-cal: #FF5C00;
 	--vc-highlight-bg: #c7ffde;
 	--bg-arrow-icon: #c7ffde;
+  --menu--btn-bg: #f3f6f3;
 }
 
 .dark {
+	--menu--btn-bg:  #FFFFFF0F;
 	--bg-arrow-icon: #b7b8d0;
-	--background-color: #34364a;
+	--background-color: #3b3d52;
 	--text-color: #ffffff;
 	--button-bg: #FBFBFB;
 	--button-text-color: #2F2F2F;
@@ -27,7 +29,8 @@
 	--calendar--d-color: black;
 	--calendar-border-color: black;
 	--title-c: #ffffff;
-	--footer-bg: #3C3F47;
+	/*--footer-bg: #3C3F47;*/
+	--footer-bg: #525766;
 	--task-bg: #3C3F47;
 	--goals-name: #F2F8F6F6;
 	--goals-date-color: #F2F8F6F6;

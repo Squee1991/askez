@@ -62,7 +62,7 @@
 					:progress="selectedTask.progress"
 					:progressMiss="selectedTask.progressMiss"
 					:history="selectedTask.history"
-					:size="200"
+					:size="190"
 					:padding="25"
 				/>
 			</div>
@@ -309,6 +309,12 @@
 	});
 </script>
 <style>
+
+	* {
+		box-sizing: border-box;
+		padding: 0;
+		margin: 0;
+	}
 	.vc-highlight-red {
 		background-color: #FF3030 !important;
 		color: white !important;
@@ -390,13 +396,11 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		margin-bottom: 45px;
+		margin-bottom: 55px;
 	}
 
 	.progress__container-details {
 		margin-top: 14px;
-		display: flex;
-		justify-content: center;
 	}
 
 	.task__details-btns {
@@ -437,6 +441,7 @@
 	}
 
 	.task__goal-name {
+		font-size: 18px;
 		color: var(--text-color);
 	}
 
@@ -462,7 +467,7 @@
 	.range__date-wrapper {
 		display: flex;
 		justify-content: space-between;
-		padding: 10px;
+		padding: 2px 10px;
 	}
 
 	.task__name {

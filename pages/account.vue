@@ -18,11 +18,10 @@
 <script setup>
 	import Arrowicon from '../assets/images/arrowSvg.svg'
 	import HeaderWithback from '../src/components/headerWithBack.vue'
-	import {ref, onMounted} from 'vue';
+	import {ref, onMounted, computed} from 'vue';
 	import VFields from '/src/components/v-fields.vue';
 	import {useHabitStore} from '../stores/habitStore.js';
 	import {useRouter} from 'vue-router'
-
 
 	const habitStore = useHabitStore();
 	const router = useRouter()
@@ -33,16 +32,28 @@
 				name: "name",
 				type: "text",
 				label: "Name",
-				placeholder: "Enter your name",
+				placeholder: "",
 				value: "",
 				error: false,
 			},
+			{
+				id: 2,
+				name: "email",
+				type: "email",
+				label: "Email",
+				placeholder: "",
+				value: "",
+				error: false,
+				readonly:true
+			},
 		],
+
 	});
 	onMounted(() => {
 		habitStore.loadUserData();
 		data.value.fields.forEach((field) => {
 			if (field.name === "name") field.value = habitStore.username;
+			if (field.name === "email") field.value = habitStore.email;
 		});
 	});
 
@@ -50,22 +61,18 @@
 		let updatedData = {};
 		data.value.fields.forEach((field) => {
 			if (field.name === "name") updatedData.name = field.value;
+			if (field.name === "email") updatedData.email = field.value;
 		});
-
 		habitStore.updateUserData(updatedData);
 		router.push("/welcomePage");
 	};
-
-	definePageMeta({
-		layout: 'footerlayout',
-	});
 
 </script>
 
 <style scoped>
 
 	.account__content {
-		padding: 30px;
+		padding: 15px 30px;
 		display: flex;
 		flex-direction: column;
 	}
@@ -84,9 +91,11 @@
 		font-size: 20px;
 		background-color: var(--button-bg);
 		color: var(--button-text-color);
+		font-family: "Acme", serif;
 	}
 
 	.field__label {
 		color: var(--text-color);
+		font-family: "Acme", serif;
 	}
 </style>

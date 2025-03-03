@@ -1,108 +1,72 @@
 {
 	"languages": {
 		"mode": "no-space",
-		"title": "Language",
-		"items": [
-			{
-				"code": "ru",
-				"name": "Russian",
-				"className": "no-space"
-			},
-			{
-				"code": "by",
-				"name": "Belorussian",
-				"className": "no-space"
-			},
-			{
-				"code": "en",
-				"name": "English",
-				"className": "no-space"
-			},
-			{
-				"code": "de",
-				"name": "Deutsch",
-				"className": "no-space"
-			},
-			{
-				"code": "es",
-				"name": "Español",
-				"className": "no-space"
-			}
-		]
+		"title": "Language"
 	},
 	"settings": {
-		"title": "Settings",
-		"items": [
-			{
-				"id": 1,
-				"text": "Delete account"
-			},
-			{
-				"id": 2,
-				"text": "Privacy Policy"
-			},
-			{
-				"id": 3,
-				"text": "Contact us"
-			},
-			{
-				"id": 4,
-				"text": "Mode",
-				"darkIcon": "dark.png",
-				"lightIcon": "light.png"
-			}
-		]
+		"title": "Settings"
 	},
 	"setting": [
 		"Delete account",
 		"Privacy Policy",
-		"Contact us",
 		"Mode"
 	],
 	"menu": {
-		"title": "Menu",
-		"items": [
-			{
-				"id": 1,
-				"icon": "account.svg",
-				"text": "Account",
-				"link": "account"
-			},
-			{
-				"id": 2,
-				"icon": "aboutAPP.svg",
-				"text": "About app",
-				"link": ""
-			},
-			{
-				"id": 3,
-				"icon": "language.svg",
-				"text": "Language",
-				"link": "languages"
-			},
-			{
-				"id": 4,
-				"icon": "setings.svg",
-				"text": "settings",
-				"link": "settings"
-			}
-		]
+		"title": "Menu"
 	},
 	"meniu": [
 		"Account",
-		"About the App",
+		"About App",
 		"Languages",
+		"Feedback",
 		"Settings"
 	],
 	"account": {
 		"accoutTitle": "Account",
 		"accountBtn": "Update"
 	},
+	"archieve": {
+		"name": "Your askezas",
+		"achieveTitle": "Ascezas archive",
+		"totalDays": "Total days",
+		"checkedDays": "Checked",
+		"notChecked": "Not checked"
+	},
+	"feedBack": {
+		"title": "Feedback",
+		"placeholder": "Leave a review or suggestion",
+		"button": "Send",
+		"overlayBtn": "OK",
+		"overlayTitle": "Thank you for your feedback"
+	},
 	"startPage": {
 		"value": "get started"
 	},
 	"description": {
 		"value": "Next step"
+	},
+	"navTop": {
+		"achiv": "Achievements",
+		"askez": "All askeza",
+		"stats": "Statistics"
+	},
+	"statslable": {
+		"total": "Total created askeses",
+		"doneTotal": "Total completed",
+		"InProgressTotal": "In progress"
+	},
+	"hasNotAskez": {
+		"value": "No created askezas"
+	},
+	"infoLabels": {
+		"name": "Name",
+		"status": "Status"
+	},
+	"delAllDatas": {
+		"title": "Delete all data?",
+		"subTitle": "Are you sure you want to delete all data?",
+		"acceptBtn": "Yes",
+		"rejectBtn": "No"
 	},
 	"register": {
 		"btnValue": "register",
@@ -143,7 +107,7 @@
 	},
 	"taskDetails": {
 		"startDate": "Start date",
-		"endtDate": "End date"
+		"endDate": "End date"
 	},
 	"delConfirm": {
 		"title": "Delete goal?",

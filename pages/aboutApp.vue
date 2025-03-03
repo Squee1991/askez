@@ -1,9 +1,8 @@
 <template>
-	<div>
-	</div>
+	<NuxtLink to="/menu"> back to menu</NuxtLink>
 </template>
 
-<script setup>
+<script>
 
 </script>
 

@@ -1,16 +1,18 @@
 <template>
 	<div class="back-header">
 		<div v-if="props.icon" @click="goBack" class="back__arrow-icon">
-			<svg  v-once viewBox="0 0 25 25">
+			<svg viewBox="0 0 25 25">
 				<g
-				id="Left-2"
-				stroke-width="2"
-				stroke-linecap="round"
-				data-name="Left"><polygon
-				points="24 12.001 2.914 12.001 8.208
-				6.706 7.501 5.999 1 12.501 7.5 19.001
-				8.207 18.294 2.914 13.001 24 13.001 24 12.001"
-				style="fill:currentColor" stroke="currentColor"/>
+					id="Left-2"
+					stroke-width="2"
+					stroke-linecap="round"
+					data-name="Left">
+					<polygon :points="'24 12.001 2.914 12.001 8.208 ' +
+					 '6.706 7.501 5.999 1 12.501 7.5 19.001 8.207 ' +
+					  '18.294 2.914 13.001 24 13.001 24 12.001'"
+					         style="fill:currentColor"
+					         stroke="currentColor"
+					/>
 				</g>
 			</svg>
 		</div>
@@ -24,7 +26,7 @@
 	const router = useRouter();
 	const props = defineProps({
 		icon: {
-			type: [Object, null , String],
+			type: [Object, null, String],
 		},
 		title: {
 			type: String,
@@ -33,7 +35,11 @@
 	});
 
 	const goBack = () => {
-		router.push('/menu');
+		if (router.currentRoute.value.path === '/archive') {
+			router.push('/welcomePage');
+		} else {
+			router.push('/menu');
+		}
 	};
 
 </script>
@@ -54,7 +60,6 @@
 		height: 33px;
 		margin-right: 10px;
 		padding: 5px;
-
 		border-radius: 50%;
 		color: var(--text-color);
 	}
@@ -64,5 +69,6 @@
 		padding: 15px 0;
 		font-weight: bold;
 		color: var(--text-color);
+		font-family: "Merienda", serif;
 	}
 </style>

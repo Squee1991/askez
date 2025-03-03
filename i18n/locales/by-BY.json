@@ -1,102 +1,44 @@
 {
 	"languages": {
 		"mode": "no-space",
-		"title": "Мова",
-		"items": [
-			{
-				"code": "ru",
-				"name": "Рускі",
-				"className": "no-space"
-			},
-			{
-				"code": "by",
-				"name": "Беларускі",
-				"className": "no-space"
-			},
-			{
-				"code": "en",
-				"name": "Англійская",
-				"className": "no-space"
-			},
-			{
-				"code": "de",
-				"name": "Нямецкая",
-				"className": "no-space"
-			},
-			{
-				"code": "es",
-				"name": "Іспанская",
-				"className": "no-space"
-			}
-		]
+		"title": "Мова"
 	},
 	"settings": {
-		"title": "Налады",
-		"items": [
-			{
-				"id": 1,
-				"text": "Выдаліць уліковы запіс"
-			},
-			{
-				"id": 2,
-				"text": "Палітыка прыватнасці"
-			},
-			{
-				"id": 3,
-				"text": "Звязацца з намі"
-			},
-			{
-				"id": 4,
-				"text": "Рэжым",
-				"darkIcon": "dark.png",
-				"lightIcon": "light.png"
-			}
-		]
+		"title": "Налады"
 	},
 	"setting": [
 		"Выдаліць акаунт",
 		"Палітыка прыватнасці",
-		"Звязацца з намі",
 		"Мод"
 	],
 	"menu": {
-		"title": "Меню",
-		"items": [
-			{
-				"id": 1,
-				"icon": "account.svg",
-				"text": "Акаўнт",
-				"link": "account"
-			},
-			{
-				"id": 2,
-				"icon": "aboutAPP.svg",
-				"text": "Пра праграму",
-				"link": ""
-			},
-			{
-				"id": 3,
-				"icon": "language.svg",
-				"text": "Мова",
-				"link": "languages"
-			},
-			{
-				"id": 4,
-				"icon": "./images/setings.svg",
-				"text": "Налады",
-				"link": "settings"
-			}
-		]
+		"title": "Меню"
 	},
 	"meniu": [
 		"Акаўнт",
 		"Пра праграму",
 		"Мова",
+		"Зваротная сувязь",
 		"Налады"
 	],
 	"account": {
 		"accoutTitle": "Акаўнт",
 		"accountBtn": "Абнавіць"
+	},
+
+	"archieve": {
+		"name": "Вашы аскезы",
+		"achieveTitle": "Архіў аскез",
+		"totalDays": "Усяго дзён",
+		"checkedDays": "Адзначана",
+		"notChecked": "Не адзначана"
+	},
+	"feedBack": {
+		"title": "Зваротная сувязь",
+		"placeholder": "Пакіньце водгук або прапанову",
+		"button": "Адправіць",
+		"overlayBtn": "OK",
+		"overlayTitle": "Дзякуй за зваротную сувязь"
 	},
 	"startPage": {
 		"value": "Пачаць"
@@ -104,6 +46,30 @@
 	"description": {
 		"value": "Наступны крок"
 	},
+	"navTop": {
+		"achiv": "Дасціжэнні",
+		"askez": "Усе аскезы",
+		"stats": "Статыстыка"
+	},
+	"statslable": {
+		"total": "Усяго створана аскез",
+		"doneTotal": "Усяго выкананых",
+		"InProgressTotal": "У працэсе выканання"
+	},
+	"hasNotAskez": {
+		"value": "Няма створаных аскез"
+	},
+	"delAllDatas": {
+		"title": "Выдаліць усе дадзеныя?",
+		"subTitle": "Вы сапраўды хочаце выдаліць усе дадзеныя?",
+		"acceptBtn": "Так",
+		"rejectBtn": "Не"
+	},
+	"infoLabels": {
+		"name": "Назва",
+		"status": "Статус"
+	},
+
 	"register": {
 		"btnValue": "зарэгістравацца",
 		"placeholderFields": [

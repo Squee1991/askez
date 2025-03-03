@@ -1,5 +1,6 @@
 console.log(process.env.NODE_ENV)
 export default defineNuxtConfig({
+	ssr: false,
 	runtimeConfig: {
 		public: {
 			apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://default-api.example.com'
@@ -9,6 +10,7 @@ export default defineNuxtConfig({
 	devtools: {enabled: true},
 	modules: ['@pinia/nuxt', '@nuxtjs/google-fonts', '@nuxtjs/color-mode', '@nuxtjs/i18n'],
 	i18n: {
+		legacy: false,
 		langDir: 'locales/',
 		strategy: 'no_prefix',
 		locales: [
@@ -42,17 +44,31 @@ export default defineNuxtConfig({
 				name: 'Español',
 				file: 'es-ES.json',
 			},
+			{
+				code: 'fr-FR',
+				iso: 'fr-FR',
+				name: 'Français',
+				file: 'fr-FR.json',
+			},
 		],
 		detectBrowserLanguage: false,
-		defaultLocale: null,
+		defaultLocale: 'en-US',
 		lazy: true,
 	},
 
 	googleFonts: {
 		families: {
-			Nunito: true
+			Nunito: true,
+			Bangers: true,
+			'Indie Flower': true,
+			'Permanent Marker': true,
+			Acme: true,
+			Merienda: true,
+			Itim: true,
+			Roboto: true
 		}
 	},
+
 	colorMode: {
 		preference: 'light',
 		fallback: 'light',
