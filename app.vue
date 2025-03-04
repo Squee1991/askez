@@ -5,6 +5,9 @@
 </template>
 
 <script setup>
+	import './assets/styles/global.css'
+
+
 </script>
 
 <style src="assets/styles/variables.css">

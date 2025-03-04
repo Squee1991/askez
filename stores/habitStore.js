@@ -9,9 +9,8 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	const selectedTask = ref(null);
 	const activeColor = ref(null)
 	const achieveCount = ref(0)
-	const achievementThresholds = ref([1, 5, 10, 20, 50, 100]);
+	const achievementThresholds = ref([1, 10, 25, 50, 50, 200]);
 	const archiveTasks = ref([])
-
 
 	const amountOfTask = computed(() => tasks.value.length)
 	const doneTask = computed(() =>

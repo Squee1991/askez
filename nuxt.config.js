@@ -65,7 +65,8 @@ export default defineNuxtConfig({
 			Acme: true,
 			Merienda: true,
 			Itim: true,
-			Roboto: true
+			Roboto: true,
+			Inter: true
 		}
 	},
 

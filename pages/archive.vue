@@ -1,9 +1,10 @@
 <script setup>
-	import { ref, onMounted } from 'vue'
+	import {ref, onMounted} from 'vue'
 	import Arrowicon from '../assets/images/arrowSvg.svg'
 	import HeaderWichback from '../src/components/headerWithBack.vue'
-	import { useHabitStore } from '../stores/habitStore.js'
+	import {useHabitStore} from '../stores/habitStore.js'
 	import Arrow from '../assets/images/ArrowTask.svg'
+
 	const habitStore = useHabitStore()
 	const isScaled = ref({})
 	const openTask = (id) => {
@@ -28,8 +29,10 @@
 	})
 
 	const formatDate = (date) => {
-		return new Date(date).toLocaleDateString({day: "2-digit", month: "long"
-		});};
+		return new Date(date).toLocaleDateString({
+			day: "2-digit", month: "long"
+		});
+	};
 </script>
 
 <template>
@@ -51,33 +54,42 @@
 					>
 						<div class="archive__list-inner">
 							<div class="archive__list-goal">{{ task.goal }}</div>
-							<div @click="openTask(task.id)" :class="{'archive__icon--rotated': isScaled[task.id]}" class="archive__icon">
+							<div @click="openTask(task.id)" :class="{'archive__icon--rotated': isScaled[task.id]}"
+							     class="archive__icon">
 								<svg width="25px" height="25px" viewBox="0 0 24 24" fill="none"
 								     xmlns="http://www.w3.org/2000/svg">
-									<path d="M18 9L12 15L6 9" stroke="currentColor" stroke-width="3"/>
+									<path d="M18 9L12 15L6 9" stroke="#4FC55C" stroke-width="3"/>
 								</svg>
 							</div>
 						</div>
 						<div class="archive__range">
-							<div class="archive__range-text archive__range-text--start">{{ $t('taskDetails.startDate') }}</div>
-							<div class="archive__range-text archive__range-text--end">{{ $t('taskDetails.endDate') }}</div>
+							<div class="archive__range-text archive__range-text--start">{{ $t('taskDetails.startDate')
+								}}
+							</div>
+							<div class="archive__range-text archive__range-text--end">{{ $t('taskDetails.endDate') }}
+							</div>
+						</div>
+						<div class="archieve__format-data">
+							<div class="archive__data-text"> {{ formatDate(task.dateRange.start)}}</div>
+							<div class="archive__data-text"> {{ formatDate(task.dateRange.end)}}</div>
 						</div>
 						<div class="archive__task-description">
-							<div class="archive__description-label">{{ $t('archieve.totalDays') }}</div>
+							<div class="archive__description-label">{{ $t('archieve.totalDays') }} :</div>
 							<div class="archive__description-value archive__description-value--total">
 								{{ calculateDaysBetweenRange(task.dateRange.start, task.dateRange.end) }}
 							</div>
 						</div>
 						<div class="archive__task-description">
-							<div class="archive__description-label">{{ $t('archieve.checkedDays') }}</div>
+							<div class="archive__description-label">{{ $t('archieve.checkedDays') }} :</div>
 							<div class="archive__description-value archive__description-value--checked">
 								{{ task.checkedDates?.length || 0 }}
 							</div>
 						</div>
 						<div class="archive__task-description">
-							<div class="archive__description-label">{{ $t('archieve.notChecked') }}</div>
+							<div class="archive__description-label">{{ $t('archieve.notChecked') }} :</div>
 							<div class="archive__description-value archive__description-value--not-checked">
-								{{ calculateDaysBetweenRange(task.dateRange.start, task.dateRange.end) - (task.checkedDates?.length || 0) }}
+								{{ calculateDaysBetweenRange(task.dateRange.start, task.dateRange.end) -
+								(task.checkedDates?.length || 0) }}
 							</div>
 						</div>
 					</div>
@@ -90,7 +102,6 @@
 <style scoped>
 
 
-
 	.archive__wrapper {
 		width: 100%;
 		background: var(--background-color);
@@ -98,18 +109,34 @@
 		padding: 10px 6vw;
 	}
 
+	.archive__data-text {
+		padding: 4px 0 5px 0;
+		font-size: 12px;
+		color: #f1e2f3;
+		font-weight: 400;
+		font-family: "Nunito", serif;
+	}
+
+	.archive__range-text {
+		color: #a597a7;
+		font-family: "Nunito", serif;
+		font-weight: 600;
+		font-size: 17px;
+	}
+
 	.archive__banner {
 		margin-bottom: 10px;
 	}
 
-	.archive__header {
+	.archive__header,
+	.archieve__format-data {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 	}
 
 	.archive__name {
-		font-size: 22px;
+		font-size: 23px;
 		color: var(--text-color);
 		font-family: "Acme", serif;
 	}
@@ -126,7 +153,7 @@
 	}
 
 	.archive__list--expanded {
-		height: 170px;
+		height: 190px;
 		transition: .3s;
 	}
 
@@ -137,7 +164,7 @@
 	}
 
 	.archive__list-goal {
-		color: var(--text-color);
+		color: #4FC55C;
 		font-size: 20px;
 		font-weight: 600;
 	}
@@ -163,18 +190,6 @@
 		color: var(--text-color);
 	}
 
-	.archive__range-text {
-		/* Базовые стили для текста диапазона */
-	}
-
-	.archive__range-text--start {
-		/* Модификатор для даты начала, если нужно */
-	}
-
-	.archive__range-text--end {
-		/* Модификатор для даты конца, если нужно */
-	}
-
 	.archive__task-description {
 		padding-top: 5px;
 		display: flex;
@@ -182,7 +197,7 @@
 	}
 
 	.archive__description-label {
-		font-size: 19px;
+		font-size: 16px;
 		color: var(--text-color);
 		font-family: "Acme", serif;
 		font-weight: 400;
@@ -196,15 +211,15 @@
 	}
 
 	.archive__description-value--total {
-		color: #74baff;
+		color: #7DA6FF;
 	}
 
 	.archive__description-value--checked {
-		color: #32cd32;
+		color: #85C88A;
 	}
 
 	.archive__description-value--not-checked {
-		color: #fd4d4d;
+		color: #E57373;
 	}
 
 	.svg {

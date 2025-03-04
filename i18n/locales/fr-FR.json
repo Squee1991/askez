@@ -25,12 +25,26 @@
 		"accoutTitle": "Compte",
 		"accountBtn": "Mettre à jour"
 	},
+
 	"archieve": {
 		"name": "Vos ascèses",
 		"achieveTitle": "Archive des ascèses",
 		"totalDays": "Total de jours",
 		"checkedDays": "Marqué",
 		"notChecked": "Non marqué"
+	},
+	"achieveTitle": {
+		"title": "Vos réussites",
+		"subtitle": "Total des réussites obtenues",
+		"achiveDone": "Terminé"
+	},
+	"achieve": {
+		"1": "Terminer la première askeza",
+		"2": "Terminer 10 askezas",
+		"3": "Terminer 25 askezas",
+		"4": "Terminer 50 askezas",
+		"5": "Terminer 100 askezas",
+		"6": "Terminer 200 askezas"
 	},
 	"feedBack": {
 		"title": "Commentaires",

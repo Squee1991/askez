@@ -32,6 +32,19 @@
 		"checkedDays": "Marcado",
 		"notChecked": "No marcado"
 	},
+	"achieveTitle": {
+		"title": "Tus logros",
+		"subtitle": "Total de logros obtenidos",
+		"achiveDone": "Completado"
+	},
+	"achieve": {
+		"1": "Completa la primera askeza",
+		"2": "Completa 10 askezas",
+		"3": "Completa 25 askezas",
+		"4": "Completa 50 askezas",
+		"5": "Completa 100 askezas",
+		"6": "Completa 200 askezas"
+	},
 	"feedBack": {
 		"title": "Comentarios",
 		"placeholder": "Deja un comentario o sugerencia",

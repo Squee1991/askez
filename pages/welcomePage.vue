@@ -12,7 +12,7 @@
 				<div class="user__greetings">
 					<div class="title"> {{ $t('homePage.greetings')}},<span
 						class="username">{{ username || 'Guest'}} </span></div>
-					<div :class="{'empty' : !habitStore.archiveTasks.length}"
+					<div v-if="habitStore.archiveTasks.length" :class="{'empty' : !habitStore.archiveTasks.length}"
 					     @click="toArchieve" class="archive__icon">
 						<svg height="30px" width="30px" viewBox="0 0 60 60" xml:space="preserve">
 <g stroke="currentColor" stroke-width="4">
@@ -109,7 +109,7 @@
 							</div>
 						</div>
 						<div class="not__task-inner" v-if="isNotTask && activeButton === 'tasks'">
-							<img class="no__task-icon" src="../assets/images/NoTask.svg" alt="">
+							<img class="no__task-icon" src="../assets/images/Memepanda.png" alt="">
 							<span class="no__task-text"> {{ $t('homePage.no_active_goals')}}</span>
 						</div>
 					</div>
@@ -380,9 +380,10 @@
 	}
 
 	.not__task-inner {
-		margin: 10px auto;
-		width: 140px;
-		height: 140px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50% , -50%);
 		border-radius: 30%;
 		display: flex;
 		flex-direction: column;
@@ -391,13 +392,14 @@
 	}
 
 	.no__task-icon {
-		width: 45px;
+		width: 120px;
 	}
 
 	.no__task-text {
+
 		font-family: "Nunito", serif;
 		font-weight: bold;
-		font-size: 15px;
+		font-size: 30px;
 		color: #aed7ae;
 		text-align: center;
 	}
