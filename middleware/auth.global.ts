@@ -3,6 +3,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     // Избегаем бесконечного редиректа, проверяя, что не перенаправляем на ту же страницу
     if (!user && to.path !== '/singup') {
-        return navigateTo({ path: '/singup' })
+        return navigateTo('singup')
     }
 })
