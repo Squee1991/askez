@@ -1,5 +1,5 @@
-import {defineStore} from "pinia";
-import {ref, computed} from "vue";
+import { defineStore } from "pinia";
+import { ref, computed } from "vue";
 
 export const useHabitStore = defineStore("askezaStore", () => {
 	const username = ref(null);
@@ -7,15 +7,17 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	const password = ref(null);
 	const tasks = ref([]);
 	const selectedTask = ref(null);
-	const activeColor = ref(null)
-	const amountOfTask = computed(() => tasks.value.length)
-	const doneTask = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) === 100))
+	const activeColor = ref(null);
+
+	const amountOfTask = computed(() => tasks.value.length);
+	const doneTask = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) === 100));
 	const doneTaskNames = computed(() => tasks.value.filter(task => task.progress === 100).map(task => task.goal));
-	const notdone = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) < 100))
+	const notdone = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) < 100));
+
 	const result = computed(() => {
 		return (taskId) => {
 			const task = tasks.value.find(task => task.id === taskId);
-			if (!task) return {progress: "0%", progressMiss: "0%"};
+			if (!task) return { progress: "0%", progressMiss: "0%" };
 			return {
 				progress: `${Math.round(task.progress)}%`,
 				progressMiss: `${Math.round(task.progressMiss)}%`
@@ -23,10 +25,12 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		};
 	});
 
+	const user = ref(null); // state for user data
+
 	const completionRate = computed(() => {
-		if (amountOfTask.value === 0) return 0
-		return Math.round((doneTask.value.length / amountOfTask.value) * 100)
-	})
+		if (amountOfTask.value === 0) return 0;
+		return Math.round((doneTask.value.length / amountOfTask.value) * 100);
+	});
 
 	const saveTasks = () => {
 		localStorage.setItem("tasks", JSON.stringify(tasks.value));
@@ -54,11 +58,10 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		if (newData.email) email.value = newData.email;
 		if (newData.password) password.value = newData.password;
 		localStorage.setItem("userData", JSON.stringify({
-				name: username.value,
-				email: email.value,
-				password: password.value,
-			})
-		);
+			name: username.value,
+			email: email.value,
+			password: password.value,
+		}));
 	};
 
 	const addTask = (task) => {
@@ -129,7 +132,6 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		saveTasks();
 	};
 
-
 	const updateAllProgress = () => {
 		tasks.value.forEach((task) => updateProgress(task));
 	};
@@ -141,16 +143,39 @@ export const useHabitStore = defineStore("askezaStore", () => {
 
 	const clearAlldates = () => {
 		tasks.value = [];
-		username.value = null
-		email.value = null
-		password.value = null
-		localStorage.removeItem('userData')
-		localStorage.removeItem('tasks')
-	}
+		username.value = null;
+		email.value = null;
+		password.value = null;
+		localStorage.removeItem("userData");
+		localStorage.removeItem("tasks");
+	};
 
 	const removeTask = (taskId) => {
 		tasks.value = tasks.value.filter((task) => task.id !== taskId);
 		saveTasks();
+	};
+
+	const loginUser = async (userData) => {
+		try {
+			const response = await fetch('/api/auth/login', {
+				method: 'POST',
+				body: JSON.stringify(userData),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+
+			if (!response.ok) {
+				throw new Error('Ошибка при авторизации');
+			}
+
+			const data = await response.json();
+			user.value = data.user;
+			return data;
+		} catch (error) {
+			console.error('Ошибка loginUser:', error);
+			throw error;
+		}
 	};
 
 	return {
@@ -166,7 +191,6 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		completionRate,
 		activeColor,
 		result,
-
 		clearAlldates,
 		saveTasks,
 		setUserData,
@@ -178,5 +202,6 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		updateAllProgress,
 		clearTasks,
 		removeTask,
+		loginUser,
 	};
 });

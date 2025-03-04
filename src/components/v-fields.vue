@@ -7,6 +7,7 @@
 			:placeholder="field.placeholder"
 			:autocomplete="field.autocomplete || 'off'"
 			:readonly="field.readonly"
+			:required="field.required"
 
 		/>
 		<div v-if="field.type === 'password'" class="toggle-icon" @click="togglePassword">

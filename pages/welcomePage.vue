@@ -10,7 +10,7 @@
 			</div>
 			<div class="progress__inner">
 				<div class="user__greetings">
-					<div class="title"> {{ $t('homePage.greetings')}},<span class="username">{{ username || 'Guest'}} </span></div>
+					<div class="title"> {{ $t('homePage.greetings')}},<span class="username">{{displayName || 'Guest'}} </span></div>
 				</div>
 				<div class="goals__inner">
 					<div class="goals__content">
@@ -108,6 +108,7 @@
 	import NotaskIcon from '../assets/images/NoTask.svg'
 	import {useLocalePath} from '#i18n';
 	import {useRouter} from 'vue-router'
+	import {getAuth} from "firebase/auth";
 
 	const {locale} = useI18n()
 	const localePath = useLocalePath()
@@ -120,6 +121,9 @@
 	const username = computed(() => habitStore.username);
 	const activeButton = ref('tasks');
 	const buttonBackground = ref(null);
+	const auth = getAuth()
+	const user = auth.currentUser
+	const displayName = user?.displayName
 	onMounted(() => {
 		habitStore.loadUserData();
 		habitStore.loadTasks();
@@ -140,6 +144,9 @@
 		console.log(habitStore.tasks);
 		isNotTask.value = tasks.value.length === 0;
 	};
+
+
+
 
 	const toggleHabitGoal = () => {
 		console.log('btn from footer in WeclomePage');
