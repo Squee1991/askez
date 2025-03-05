@@ -1,22 +1,22 @@
 <script setup>
-import {useHabitStore} from '../../stores/habitStore.js'
-import {computed} from "vue";
-import CheckedIcon from '../../assets/images/checkIcon.svg'
-import CheckedNotFull from '../../assets/images/checkNotFull.svg'
-import InProgressIcon from '../../assets/images/in-progress.svg'
+	import {useHabitStore} from '../../stores/habitStore.js'
+	import {computed} from "vue";
+	import CheckedIcon from '../../assets/images/checkIcon.svg'
+	import CheckedNotFull from '../../assets/images/cross.svg'
+	import InProgressIcon from '../../assets/images/in-progress.svg'
 
-const counter = useHabitStore()
-const tasks = computed(() => counter.tasks);
+	const counter = useHabitStore()
+	const tasks = computed(() => counter.tasks);
 
-const currenticon = (task) => {
-    if (task.progress === 100) {
-        return CheckedIcon
-    } else if (task.progress + task.progressMiss === 100) {
-        return CheckedNotFull
-    } else {
-        return InProgressIcon
-    }
-}
+	const currenticon = (task) => {
+		if (task.progress === 100) {
+			return CheckedIcon
+		} else if (task.progress + task.progressMiss === 100) {
+			return CheckedNotFull
+		} else {
+			return InProgressIcon
+		}
+	}
 
 	const completionColor = computed(() => {
 		const progress = counter.completionRate;
@@ -28,8 +28,6 @@ const currenticon = (task) => {
 		if (progress > 0) return "#a10505";
 		if (progress === 0) return "grey"
 	});
-
-
 </script>
 
 <template>

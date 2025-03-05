@@ -11,81 +11,106 @@
 			<div class="progress__inner">
 				<div class="user__greetings">
 					<div class="title"> {{ $t('homePage.greetings')}},<span class="username">{{displayName || 'Guest'}} </span></div>
+					<div class="title"> {{ $t('homePage.greetings')}},<span
+						class="username">{{ username || 'Guest'}} </span></div>
+					<div v-if="habitStore.archiveTasks.length" :class="{'empty' : !habitStore.archiveTasks.length}"
+					     @click="toArchieve" class="archive__icon">
+						<svg height="30px" width="30px" viewBox="0 0 60 60" xml:space="preserve">
+<g stroke="currentColor" stroke-width="4">
+	<path d="M55,47.166c-0.43-4.107-3.853-7.333-7.954-7.333c-2.564,0-4.983,1.287-6.479,3.402c-0.292-0.051-0.588-0.076-0.884-0.076
+		c-2.32,0-4.381,1.577-5.066,3.813c-1.907,1.131-3.116,3.241-3.116,5.502c0,3.506,2.785,6.358,6.208,6.358h10.774
+		c0.058,0,0.114-0.003,0.188-0.007c0.057,0.004,0.114,0.007,0.172,0.007h4.31c3.225,0,5.849-2.687,5.849-5.989
+		C59,50.244,57.358,47.971,55,47.166z M53.151,56.833l-4.349-0.003l-0.173-0.005l-10.922,0.008c-2.32,0-4.208-1.955-4.208-4.358
+		c0-1.665,0.949-3.21,2.417-3.935l0.435-0.214l0.102-0.475c0.331-1.56,1.689-2.692,3.229-2.692c0.344,0,0.687,0.057,1.019,0.169
+		l0.777,0.261l0.409-0.711c1.079-1.878,3.057-3.045,5.158-3.045c3.265,0,5.955,2.747,5.999,6.124l0.011,0.814l0.799,0.154
+		C55.677,49.279,57,50.927,57,52.844C57,55.043,55.273,56.833,53.151,56.833z" stroke="#b8b1b1"/>
+	<path d="M22.505,18h10.99C35.428,18,37,16.428,37,14.495V13c0-0.553-0.447-1-1-1s-1,0.447-1,1v1.495C35,15.325,34.325,16,33.495,16
+		h-10.99C21.675,16,21,15.325,21,14.495V13c0-0.553-0.447-1-1-1s-1,0.447-1,1v1.495C19,16.428,20.572,18,22.505,18z"/>
+	<path d="M30,45h-7.495C21.675,45,21,44.325,21,43.495V42c0-0.553-0.447-1-1-1s-1,0.447-1,1v1.495C19,45.428,20.572,47,22.505,47H30
+		c0.553,0,1-0.447,1-1S30.553,45,30,45z"/>
+	<path d="M26,58H3.832C3.373,58,3,57.627,3,57.168V31h50v7.074c0,0.553,0.447,1,1,1s1-0.447,1-1V2.832C55,1.271,53.729,0,52.168,0
+		H3.832C2.271,0,1,1.271,1,2.832v54.336C1,58.729,2.271,60,3.832,60H26c0.553,0,1-0.447,1-1S26.553,58,26,58z M3.832,2h48.336
+		C52.627,2,53,2.373,53,2.832V29H3V2.832C3,2.373,3.373,2,3.832,2z"/>
+</g>
+</svg>
+					</div>
 				</div>
 				<div class="goals__inner">
 					<div class="goals__content">
-							<div class="goals__btns-inner">
-								<button
-									class="achiv__btn"
-									:class="{ 'active': activeButton === 'achiv' , 'background-active': buttonBackground === 'achiv'  }"
-									@click="setActive('achiv')"> {{ $t('navTop.achiv')}}
-								</button>
-								<button class="achiv__btn"
-								        :class="{ 'active': activeButton === 'tasks' , 'background-active': buttonBackground === 'tasks' }"
-								        @click="setActive('tasks')">{{ $t('navTop.askez')}}
-								</button>
-								<button class="achiv__btn"
-								        :class="{ 'active': activeButton === 'stats' , 'background-active': buttonBackground === 'stats' }"
-								        @click="setActive('stats')">{{ $t('navTop.stats')}}
-								</button>
+						<div class="goals__btns-inner">
+							<button
+								class="achiv__btn"
+								:class="{ 'active': activeButton === 'achiv' , 'background-active': buttonBackground === 'achiv'  }"
+								@click="setActive('achiv')"> {{ $t('navTop.achiv')}}
+							</button>
+							<button class="achiv__btn"
+							        :class="{ 'active': activeButton === 'tasks' , 'background-active': buttonBackground === 'tasks' }"
+							        @click="setActive('tasks')">{{ $t('navTop.askez')}}
+							</button>
+							<button class="achiv__btn"
+							        :class="{ 'active': activeButton === 'stats' , 'background-active': buttonBackground === 'stats' }"
+							        @click="setActive('stats')">{{ $t('navTop.stats')}}
+							</button>
+						</div>
+						<div class="add__goals">
+							<div :class="{'visible' : activeButton === 'achiv' }" class="achiv">
+								<Achievment/>
 							</div>
-							<div class="add__goals">
-								<div :class="{'visible' : activeButton === 'achiv' }" class="achiv">
-									<Achievment/>
-								</div>
-								<div :class="{'visible': activeButton === 'stats'}" class="stats">
-									<Statistic/>
-								</div>
-								<div :class="{ 'visible': activeButton === 'tasks' }" class="task__goal-content">
-									<div class="task__goal-list"
-									     v-for="task in tasks" :key="task.id">
-										<div class="task__goal-list-inner">
-											<div class="taks__progress__date-wrapper">
-												<div class="task__datum-wrapper">
-													<div class="task__goal-wrapper">
-														<div class="task__goal-item goals goal__name">{{ task.goal }}
-														</div>
+							<div :class="{'visible': activeButton === 'stats'}" class="stats">
+								<Statistic/>
+							</div>
+							<div :class="{ 'visible': activeButton === 'tasks' }" class="task__goal-content">
+								<div class="task__goal-list"
+								     v-for="task in tasks" :key="task.id">
+									<div class="task__goal-list-inner">
+										<div class="taks__progress__date-wrapper">
+											<div class="task__datum-wrapper">
+												<div class="task__goal-wrapper">
+													<div class="task__goal-item goals goal__name">{{ task.goal }}
 													</div>
-													<div class="task__date-wrapper">
-														<div class="task__start__date tasks__date">
-															<div class="task__goal-item goal__type">{{
-																formatDate(task.dateRange.start) }}
-															</div>
-														</div>
-														<img class="arrow__datum" src="../assets/images/arrayDatum.svg"
-														     alt="">
-														<div class="task__end__date tasks__date">
-															<div class="task__goal-item goal__type">{{
-																formatDate(task.dateRange.end) }}
-															</div>
-														</div>
-													</div>
-
 												</div>
+												<div class="task__date-wrapper">
+													<div class="task__start__date tasks__date">
+														<div class="task__goal-item goal__type">{{
+															formatDate(task.dateRange.start) }}
+														</div>
+													</div>
+													<img class="arrow__datum" src="../assets/images/arrayDatum.svg"
+													     alt="">
+													<div class="task__end__date tasks__date">
+														<div class="task__goal-item goal__type">{{
+															formatDate(task.dateRange.end) }}
+														</div>
+													</div>
+												</div>
+
 											</div>
+										</div>
+										<div class="taks__btns">
 											<div class="task__progress-wrapper">
 												<div class="task__progress-value">
 													<div class="task__progress-green">
-														<span class="progress-green">&#9989; {{ habitStore.result(task.id).progress }}</span>
+														<span>&#9989; </span>
+														<span class="progress-green">{{ habitStore.result(task.id).progress }}</span>
 													</div>
 													<div class="task__progress-green">
-														<span class="progress-red">&#10060; {{ habitStore.result(task.id).progressMiss }}</span>
+														<span>&#10060;</span>
+														<span class="progress-red"> {{ habitStore.result(task.id).progressMiss }}</span>
 													</div>
 												</div>
 											</div>
-											<div class="taks__btns">
-												<div class="btn__details-wrapper">
-													<button @click="openTaskDetails(task)" class="task__come-btn">
-														{{ $t('homePage.btn')}}
-													</button>
-												</div>
+											<div class="btn__details-wrapper">
+												<button @click="openTaskDetails(task)" class="task__come-btn">
+													{{ $t('homePage.btn')}}
+												</button>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+						</div>
 						<div class="not__task-inner" v-if="isNotTask && activeButton === 'tasks'">
-							<img class="no__task-icon" src="../assets/images/NoTask.svg" alt="">
+							<img class="no__task-icon" src="../assets/images/Memepanda.png" alt="">
 							<span class="no__task-text"> {{ $t('homePage.no_active_goals')}}</span>
 						</div>
 					</div>
@@ -103,7 +128,7 @@
 	import ProgressCircle from "../src/components/progressBar";
 	import HabbitGoal from "../src/components/newHabitGoal.vue";
 	import CustomCheckbox from "../src/components/customCheckbox.vue";
-	import PandaHello from "../assets/images/sPanda.png";
+	import Archive from "../assets/images/Archive.svg";
 	import Footer from '../src/components/footer.vue'
 	import NotaskIcon from '../assets/images/NoTask.svg'
 	import {useLocalePath} from '#i18n';
@@ -139,14 +164,15 @@
 		});
 	};
 
+	const toArchieve = () => {
+		router.push('/archive')
+	}
+
 	const addTask = (task) => {
 		habitStore.addTask(task);
 		console.log(habitStore.tasks);
 		isNotTask.value = tasks.value.length === 0;
 	};
-
-
-
 
 	const toggleHabitGoal = () => {
 		console.log('btn from footer in WeclomePage');
@@ -182,8 +208,34 @@
 
 <style>
 
-	html , body {
+	html, body {
 		overflow-x: hidden;
+	}
+
+	.archive__icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: orange;
+	}
+
+	.empty {
+		color: #b8b1b1;
+	}
+
+	svg {
+		color: currentColor;
+	}
+
+	.task__progress-green {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.progress-green,
+	.progress-red {
+		width: 40px;
 	}
 
 	.task__progress-wrapper {
@@ -195,6 +247,10 @@
 		font-weight: bold;
 		font-family: "Nunito", serif;
 		border: none;
+	}
+
+	.task__progress-value {
+		padding: 0 8px;
 	}
 
 	.task__goal-content {
@@ -301,8 +357,8 @@
 
 	.taks__btns {
 		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.taks__progress__date-wrapper {
@@ -329,9 +385,10 @@
 	}
 
 	.not__task-inner {
-		margin: 10px auto;
-		width: 140px;
-		height: 140px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50% , -50%);
 		border-radius: 30%;
 		display: flex;
 		flex-direction: column;
@@ -340,13 +397,14 @@
 	}
 
 	.no__task-icon {
-		width: 45px;
+		width: 120px;
 	}
 
 	.no__task-text {
+
 		font-family: "Nunito", serif;
 		font-weight: bold;
-		font-size: 15px;
+		font-size: 30px;
 		color: #aed7ae;
 		text-align: center;
 	}
@@ -433,8 +491,9 @@
 
 	.user__greetings {
 		display: flex;
+		justify-content: space-between;
 		align-items: center;
-		padding: 8px 20px;
+		padding: 20px 20px 8px 20px;
 	}
 
 </style>

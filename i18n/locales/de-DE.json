@@ -25,6 +25,26 @@
 		"accoutTitle": "Konto",
 		"accountBtn": "Aktualisieren"
 	},
+	"archieve": {
+		"name": "Ihre Askesen",
+		"achieveTitle": "Archiv der Askesen",
+		"totalDays": "Gesamttage",
+		"checkedDays": "Markiert",
+		"notChecked": "Nicht markiert"
+	},
+	"achieveTitle": {
+		"title": "Ihre Erfolge",
+		"subtitle": "Insgesamt erhaltene Erfolge",
+		"achiveDone": "Abgeschlossen"
+	},
+	"achieve": {
+		"1": "Beende die erste Askese",
+		"2": "Beende 10 Askesen",
+		"3": "Beende 25 Askesen",
+		"4": "Beende 50 Askesen",
+		"5": "Beende 100 Askesen",
+		"6": "Beende 200 Askesen"
+	},
 	"feedBack": {
 		"title": "Feedback",
 		"placeholder": "Hinterlassen Sie eine Bewertung oder einen Vorschlag",

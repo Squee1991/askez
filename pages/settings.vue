@@ -1,6 +1,6 @@
 <template>
 	<div class="settings__wrapper">
-		<div v-if="confirmDeleteDatas" class="overlay">
+		<div v-show="confirmDeleteDatas" class="overlay">
 			<div class="confirm__wrapper">
 				<div class="confirm__title">{{ $t('delAllDatas.title')}}</div>
 				<div class="confirm_sub-title">{{ $t('delAllDatas.subTitle')}}</div>
@@ -15,12 +15,12 @@
 			:title="$t('settings.title')"
 		/>
 		<div class="settings__btns">
-			<div class="menu__btn-wrapper" v-for="(item, index) in settingsPlain" :key="index">
-				<button class="account__settings-btn" @click="SettingsChange(item)">
-					<span class="accoun__text">{{ item }}</span>
-					<img v-if="isMounted && (item.trim() === 'Mode' || item.trim() === 'Мод')"
+			<div class="menu__btn-wrapper" v-for="index in 3" :key="index">
+				<button class="account__settings-btn" @click="SettingsChange($t('setting.' + (index - 1)))">
+					<span class="accoun__text">{{ $t('setting.' + (index - 1)) }}</span>
+					<img v-if="isMounted && ($t('setting.' + (index - 1)).trim() === 'Mode' || $t('setting.' + (index - 1)).trim() === 'Мод')"
 					     class="color__mode-icon"
-					     :src="colorMode.preference === 'dark' ? Light : Dark "
+					     :src="colorMode.preference === 'dark' ? Light : Dark"
 					     alt="">
 				</button>
 			</div>
@@ -37,7 +37,7 @@
 	import {useRoute , useRouter} from "vue-router";
 	import {useHabitStore} from "../stores/habitStore.js";
 	import {useI18n} from 'vue-i18n';
-
+	const { t } = useI18n();
 	const isMounted = ref(false);
 	const habitStore = useHabitStore()
 	const confirmDeleteDatas = ref(false)
@@ -46,15 +46,6 @@
 	const modeLabel = ['Mode', 'Мод']
 	const deleteLabels = ['Удалить аккаунт', 'Delete account', 'Выдаліць акаунт', 'Konto löschen', 'Eliminar cuenta', 'Supprimer le compte']
 	const {locale, messages} = useI18n();
-	const settingsPlain = computed(() => {
-		const raw = messages.value[locale.value].setting;
-		return raw.map(item => {
-			if (typeof item === 'string') {
-				return item;
-			}
-			return item.body?.static;
-		});
-	});
 
 	const deleteAccount = () => {
 		confirmDeleteDatas.value = true
@@ -79,7 +70,7 @@
 		if (modeLabel.includes(textItem)) {
 			toggleTheme();
 		} else if (deleteLabels.includes(textItem)) {
-			deleteAccount()
+			deleteAccount();
 		}
 	};
 

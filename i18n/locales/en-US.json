@@ -25,6 +25,26 @@
 		"accoutTitle": "Account",
 		"accountBtn": "Update"
 	},
+	"archieve": {
+		"name": "Your askezas",
+		"achieveTitle": "Ascezas archive",
+		"totalDays": "Total days",
+		"checkedDays": "Checked",
+		"notChecked": "Not checked"
+	},
+	"achieveTitle": {
+		"title": "Your achievements",
+		"subtitle": "Total achievements received",
+		"achiveDone": "Completed"
+	},
+	"achieve": {
+		"1": "Complete the first askeza",
+		"2": "Complete 10 askezas",
+		"3": "Complete 25 askezas",
+		"4": "Complete 50 askezas",
+		"5": "Complete 100 askezas",
+		"6": "Complete 200 askezas"
+	},
 	"feedBack": {
 		"title": "Feedback",
 		"placeholder": "Leave a review or suggestion",

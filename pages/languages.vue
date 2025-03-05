@@ -73,9 +73,10 @@
 </script>
 
 <style scoped>
+
 	.language__wrapper {
 		width: 100%;
-		padding: 15px;
+		padding: 15px 6vw;
 		height: 100vh;
 		background-color: var(--background-color);
 	}
@@ -90,6 +91,5 @@
 		display: flex;
 		justify-content: space-between;
 	}
-
 
 </style>

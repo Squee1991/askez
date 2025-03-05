@@ -36,7 +36,6 @@
 	const isButtonActive = ref(false);
 	import {defineEmits} from 'vue';
 	import {useRouter} from 'vue-router'
-
 	const emit = defineEmits(['toggleHabit']);
 	const router = useRouter()
 	const activeIcon = ref(null);

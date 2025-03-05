@@ -309,6 +309,12 @@
 	});
 </script>
 <style>
+
+	* {
+		box-sizing: border-box;
+		padding: 0;
+		margin: 0;
+	}
 	.vc-highlight-red {
 		background-color: #FF3030 !important;
 		color: white !important;
@@ -435,6 +441,7 @@
 	}
 
 	.task__goal-name {
+		font-size: 18px;
 		color: var(--text-color);
 	}
 
