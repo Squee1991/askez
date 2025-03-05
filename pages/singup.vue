@@ -43,19 +43,23 @@
 
 <script setup>
 import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from 'firebase/auth';
-// import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+
 import VFields from '../src/components/v-fields.vue'
 import {ref, computed, watch} from 'vue'
 import {useRouter} from 'vue-router'
-import {useHabitStore} from '../stores/habitStore.js'
-import {validateEmail, validatePassword, validateConfirmPassword, validateName} from '../src/utils/validations.js';
+// import {useHabitStore} from '../stores/habitStore.js'
+import {useValidationStore} from '../stores/validationStore.js'
+import {useAuthStore} from '../stores/authStore.js';
 
-const habitStore = useHabitStore()
+
+// const habitStore = useHabitStore()
+const authStore = useAuthStore();
+const validationStore = useValidationStore()
 const router = useRouter()
-const isSignUp = ref(true);
-const email = ref('');
-const password = ref('');
 
+
+
+const isSignUp = ref(true);
 const data = ref({
     fields: [
         {
@@ -101,13 +105,18 @@ const data = ref({
         },
     ],
 })
+const passwordStrength = ref({
+    text: 'Weak',
+    class: 'weak'
+})
+
 
 const filteredFields = computed(() => isSignUp.value ? data.value.fields : data.value.fields.filter(f => f.name !== 'name' && f.name !== 'confirm'));
 const isSubmitting = ref(false);
 const showPasswordStrength = ref(false);
-const passwordStrength = ref('');
+
 const isFormValid = computed(() => filteredFields.value.every(f => !f.error && f.value.trim() !== ''));
-const store = ref(null)
+
 
 watch(() => data.value.fields, (newFields) => {
     newFields.forEach(field => {
@@ -121,96 +130,64 @@ watch(() => data.value.fields, (newFields) => {
 
         switch (field.name) {
             case 'email':
-                if (!validateEmail(value)) field.error = 'Invalid email format';
-                break;
+                if (!validationStore.validateEmail(value)) field.error = 'Invalid email format'
+                break
             case 'password':
-                if (!validatePassword(value)) field.error = 'Password must be at least 6 characters';
-                break;
+                if (!validationStore.validatePassword(value)) field.error = 'Password must be at least 6 characters'
+                // Обновляем силу пароля
+                passwordStrength.value = validationStore.getPasswordStrength(value)
+                break
             case 'confirm':
-                const password = newFields.find(f => f.name === 'password')?.value || '';
-                if (!validateConfirmPassword(password, value)) field.error = 'Passwords do not match';
-                break;
+                const password = newFields.find(f => f.name === 'password')?.value || ''
+                if (!validationStore.validateConfirmPassword(password, value)) field.error = 'Passwords do not match'
+                break
             case 'name':
-                if (!validateName(value)) field.error = 'Name must be at least 2 characters';
-                break;
+                if (!validationStore.validateName(value)) field.error = 'Name must be at least 2 characters'
+                break
         }
     });
 },);
-const submitForm = async () => {
-    const emailField = data.value.fields.find(f => f.name === 'email');
-    const passwordField = data.value.fields.find(f => f.name === 'password');
-    const nameField = data.value.fields.find(f => f.name === 'name');
 
-    if (!emailField || !passwordField) {
+
+const submitForm = async () => {
+
+    const formData = {
+        email: data.value.fields.find(f => f.name === 'email')?.value.trim() || '',
+        password: data.value.fields.find(f => f.name === 'password')?.value.trim() || '',
+        name: data.value.fields.find(f => f.name === 'name')?.value.trim() || '',
+    };
+
+    if (!formData.email || !formData.password) {
         console.error('Email или пароль не найдены в data.fields');
         return;
     }
 
-    const email = emailField.value.trim();
-    const password = passwordField.value.trim();
-    const name = nameField?.value.trim() || '';
 
     try {
-        const auth = getAuth();
+        isSubmitting.value = true;
 
         if (isSignUp.value) {
-            // Регистрация
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-            // Обновляем профиль с именем
-            await updateProfile(userCredential.user, {
-                displayName: name
-            });
-
-            // Здесь можно добавить сохранение в базу данных
-            console.log('User registered:', userCredential.user);
+            await authStore.registerUser(formData);
         } else {
-            // Авторизация
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            console.log('User logged in:', userCredential.user);
+            await authStore.loginUser(formData);
         }
 
-        // Перенаправление на защищенную страницу
         router.push('/welcomePage');
 
     } catch (error) {
-        console.error('Error:', error.code, error.message);
+        const errorMessage = validationStore.getFirebaseError(error);
+        const emailField = data.value.fields.find(f => f.name === 'email');
+        const passwordField = data.value.fields.find(f => f.name === 'password');
 
-        // Обработка ошибок Firebase
-        switch (error.code) {
-            case 'auth/email-already-in-use':
-                emailField.error = 'Email already exists';
-                break;
-            case 'auth/invalid-email':
-                emailField.error = 'Invalid email';
-                break;
-            case 'auth/weak-password':
-                passwordField.error = 'Password too weak';
-                break;
-            case 'auth/user-not-found':
-                emailField.error = 'User not found';
-                break;
-            case 'auth/wrong-password':
-                passwordField.error = 'Incorrect password';
-                break;
-            default:
-                emailField.error = 'An error occurred';
-        }
+        if (emailField) emailField.error = errorMessage;
+        if (passwordField) passwordField.error = errorMessage;
+    } finally {
+        isSubmitting.value = false;
     }
 };
 
-watch(isSignUp, (newVal) => {
-    if (!newVal) {
-        data.value.fields.forEach(field => {
-            if (field.name === 'name' || field.name === 'confirm') {
-                field.value = ''; // Сброс значения
-            }
-        });
-    }
-});
-
-
 const toggleAuthMode = () => isSignUp.value = !isSignUp.value;
+
 </script>
 
 <style>
