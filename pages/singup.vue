@@ -41,7 +41,6 @@
 
 	const habitStore = useHabitStore()
 	const router = useRouter()
-
 	const data = ref({
 		fields: [
 			{

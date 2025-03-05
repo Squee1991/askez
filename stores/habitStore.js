@@ -12,6 +12,13 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	const achievementThresholds = ref([1, 10, 25, 50, 50, 200]);
 	const archiveTasks = ref([])
 
+	const setUserData = (userData) => {
+		username.value = userData.name;
+		email.value = userData.email;
+		password.value = userData.password;
+		localStorage.setItem("userData", JSON.stringify(userData));
+	};
+
 	const amountOfTask = computed(() => tasks.value.length)
 	const doneTask = computed(() =>
 		tasks.value.filter(task => task.progress === 100 && task.progressMiss === 0)
@@ -43,13 +50,6 @@ export const useHabitStore = defineStore("askezaStore", () => {
 
 	const saveTasks = () => {
 		localStorage.setItem("tasks", JSON.stringify(tasks.value));
-	};
-
-	const setUserData = (userData) => {
-		username.value = userData.name;
-		email.value = userData.email;
-		password.value = userData.password;
-		localStorage.setItem("userData", JSON.stringify(userData));
 	};
 
 	const loadUserData = () => {
