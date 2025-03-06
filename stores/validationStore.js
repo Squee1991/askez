@@ -8,18 +8,13 @@ export const useValidationStore = defineStore('validation', () => {
         return re.test(String(email).toLowerCase());
     };
 
-
-    const validatePassword = (password) => {
-        return password.length >= 6
-    }
-
-    const validateConfirmPassword = (password, confirmPassword) => {
-        return password === confirmPassword
-    }
-
-    const validateName = (name) => {
-        return name.trim().length >= 2
-    }
+    const validateUsers = (fields) => {
+        return fields.find(field =>
+            field.password.length >= 6 ||
+            field.name.length >= 2 ||
+            field.confirmPassword === field.password
+        );
+    };
 
     const getPasswordStrength = (password) => {
         const strength = {
@@ -69,9 +64,7 @@ export const useValidationStore = defineStore('validation', () => {
     };
     return {
         validateEmail,
-        validatePassword,
-        validateConfirmPassword,
-        validateName,
+        validateUsers,
         getPasswordStrength,
         getFirebaseError,
 

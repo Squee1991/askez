@@ -38,6 +38,11 @@ export const useAuthStore = defineStore('auth', () => {
         const auth = getAuth();
         await signInWithEmailAndPassword(auth, email, password);
     };
+    const logout = () => {
+        const auth = getAuth();
+        signOut(auth);
+        localStorage.clear();
+    };
 
     return {
         user,
@@ -45,5 +50,7 @@ export const useAuthStore = defineStore('auth', () => {
         setUserData,
         loadUserData,
         registerUser,
-        loginUser };
+        loginUser ,
+        logout
+    };
 });
