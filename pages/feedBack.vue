@@ -31,6 +31,9 @@
 	const isSended = ref(false)
 	const feedback = ref('');
 
+	definePageMeta({
+		middleware: ['auth'],
+	})
 	const sendFeedback = async () => {
 		if (!feedback.value.trim()) return;
 		try {

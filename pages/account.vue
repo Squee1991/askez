@@ -49,6 +49,9 @@
 		],
 
 	});
+	definePageMeta({
+		middleware: ['auth'],
+	})
 	onMounted(() => {
 		habitStore.loadUserData();
 		data.value.fields.forEach((field) => {

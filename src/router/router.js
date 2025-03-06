@@ -3,20 +3,21 @@ import WelcomePage from '../../pages/welcomePage.vue'
 import SuccessModal from '../../pages/SuccessModal.vue'
 
 const routes = [
-	{
-		path: '/welcomePage',
-		name: 'welcomePage',
-		component: WelcomePage,
-	},
-	{
-		path: '/SuccesModal',
-		name: 'SuccesModal',
-		component: SuccessModal
-	}
+
+    {
+        path: '/welcomePage',
+        name: 'welcomePage',
+        component: WelcomePage,
+    },
+    {
+        path: '/SuccesModal',
+        name: 'SuccesModal',
+        component: SuccessModal
+    }
 ]
 
 export default router = createRouter({
-	history: createWebHistory(),
-	routes
+    history: createWebHistory(),
+    routes
 })
 

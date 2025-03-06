@@ -8,6 +8,9 @@
 <script setup>
 	import { useLocalePath } from '#i18n';
 	const localePath = useLocalePath()
+	definePageMeta({
+		middleware: ['auth'],
+	})
 </script>
 
 <style>
