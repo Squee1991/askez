@@ -26,11 +26,11 @@
 		"accountBtn": "Обновить"
 	},
 	"archieve": {
-		"achieveTitle": "Архіў аскез",
-		"name": "Вашы аскезы",
-		"totalDays": "Усяго дзён",
-		"checkedDays": "Адзначана",
-		"notChecked": "Не адзначана"
+		"achieveTitle": "Архив аскез",
+		"name": "Ваши аскезы",
+		"totalDays": "Всего дней",
+		"checkedDays": "Отмечено",
+		"notChecked": "Не отмечено"
 	},
 	"achieveTitle": {
 		"title": "Вашы достижения",
