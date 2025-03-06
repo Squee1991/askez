@@ -104,17 +104,22 @@
 		habitStore.tasks.find((task) => task.id === Number(router.query.id)) || null
 	);
 
-	const onDateSelect = (day) => {
-		if (!day || !day.id || !selectedTask.value) return;
-		const selectedDate = day.id;
-		if (selectedDate < selectedTask.value.dateRange.start || selectedDate > selectedTask.value.dateRange.end) {
-			console.log("Дата вне диапазона");
-			return;
-		}
-		isDateSelected.value = true;
-		localDateRange.value.start = selectedDate;
-		console.log("Выбрана", selectedDate);
-	};
+const onDateSelect = (day) => {
+    if (!day || !day.id || !selectedTask.value) return;
+
+    const selectedDate = day.id;
+    const todayStr = new Date().toISOString().split("T")[0];
+
+    if (selectedDate !== todayStr) {
+        console.log("Можно выбирать только сегодняшнюю дату");
+        return;
+    }
+
+    // Если сегодня выбрана – сохраняем её
+    isDateSelected.value = true;
+    localDateRange.value.start = selectedDate;
+    console.log("Выбрана", selectedDate);
+};
 
 	const disabledDates = computed(() => {
 		return selectedTask.value?.blockedDates || [];
@@ -158,29 +163,29 @@
 		}
 	});
 
-	const onCheckClick = () => {
-		if (!selectedTask.value) return;
-		const selectedDate = localDateRange.value.start;
-		if (!selectedDate ||
-			new Date(selectedDate) < new Date(selectedTask.value.dateRange.start) ||
-			new Date(selectedDate) > new Date(selectedTask.value.dateRange.end)
-		) {
-			console.log("дата вне диапазона!");
-			localDateRange.value.start = null;
-			return;
-		}
-		if (checkedDates.value.includes(selectedDate) || missedDates.value.includes(selectedDate)) {
-			console.log("Дата уже отмечена");
-			return;
-		}
-		if (!selectedTask.value.checkedDates) {
-			selectedTask.value.checkedDates = [];
-		}
-		selectedTask.value.checkedDates.push(selectedDate);
-		checkedDates.value.push(selectedDate);
-		localStorage.setItem(`task_${selectedTask.value.id}_checkedDates`, JSON.stringify(checkedDates.value)
-		);
-		checkedCount.value++;
+const onCheckClick = () => {
+    if (!selectedTask.value) return;
+    const selectedDate = localDateRange.value.start;
+    if (!selectedDate ||
+        new Date(selectedDate) < new Date(selectedTask.value.dateRange.start) ||
+        new Date(selectedDate) > new Date(selectedTask.value.dateRange.end)
+    ) {
+        console.log("дата вне диапазона!");
+        localDateRange.value.start = null;
+        return;
+    }
+    if (checkedDates.value.includes(selectedDate) || missedDates.value.includes(selectedDate)) {
+        console.log("Дата уже отмечена");
+        return;
+    }
+    if (!selectedTask.value.checkedDates) {
+        selectedTask.value.checkedDates = [];
+    }
+    selectedTask.value.checkedDates.push(selectedDate);
+    checkedDates.value.push(selectedDate);
+    localStorage.setItem(`task_${selectedTask.value.id}_checkedDates`, JSON.stringify(checkedDates.value)
+    );
+    checkedCount.value++;
 
 		const totalDays = Math.max(1, (new Date(selectedTask.value.dateRange.end) - new Date(selectedTask.value.dateRange.start)) / (1000 * 60 * 60 * 24) + 1);
 		const step = (100 / totalDays).toFixed(2);
@@ -309,84 +314,78 @@
 	});
 </script>
 <style>
+.vc-highlight-red {
+    background-color: #FF3030 !important;
+    color: white !important;
+}
 
-	* {
-		box-sizing: border-box;
-		padding: 0;
-		margin: 0;
-	}
-	.vc-highlight-red {
-		background-color: #FF3030 !important;
-		color: white !important;
-	}
+.vc-highlight-green {
+    background-color: #00D100 !important;
+    color: white !important;
+}
 
-	.vc-highlight-green {
-		background-color: #00D100 !important;
-		color: white !important;
-	}
+.vc-highlight-light-bg {
+    background: white;
+}
 
-	.vc-highlight-light-bg {
-		background: white;
-	}
+.vc-highlight-bg-solid {
+    background-color: #4FC55C;
+}
 
-	.vc-highlight-bg-solid {
-		background-color: #4FC55C;
-	}
+.vc-highlight-bg-light {
+    background-color: var(--vc-highlight-bg);
+}
 
-	.vc-highlight-bg-light {
-		background-color: var(--vc-highlight-bg);
-	}
+.vc-blue {
+    border: none;
+}
 
-	.vc-blue {
-		border: none;
-	}
+.vc-header .vc-arrow {
+    color: var(--vc-arrow-cal);
+}
 
-	.vc-header .vc-arrow {
-		color: var(--vc-arrow-cal);
-	}
+.vc-container {
+    width: 100%;
+    border: none;
+    background: var(--background-color);
+    padding: 10px;
+}
 
-	.vc-container {
-		width: 100%;
-		border: none;
-		background: var(--background-color);
-		padding: 10px;
-	}
+.vc-header .vc-title {
+    color: var(--text-color);
+    background: none;
+    font-size: 20px;
+}
 
-	.vc-header .vc-title {
-		color: var(--text-color);
-		background: none;
-		font-size: 20px;
-	}
+.vc-header {
+    margin-top: 0;
+}
 
-	.vc-header {
-		margin-top: 0;
-	}
+.vc-highlight-content-light {
+    color: var(--text-color);
+}
 
-	.vc-highlight-content-light {
-		color: var(--text-color);
-	}
+.vc-day, .vc-weekday {
+    color: var(--text-color);
+}
 
-	.vc-day, .vc-weekday {
-		color: var(--text-color);
-	}
+.task__details__arrow-icon {
+    width: 40px;
+}
 
-	.task__details__arrow-icon {
-		width: 40px;
-	}
+.checked__wrapper {
+    display: flex;
+    align-items: center;
+}
 
-	.checked__wrapper {
-		display: flex;
-		align-items: center;
-	}
-
-	.checked__text {
-		text-align: start;
-		font-size: 16px;
-		font-family: "Nunito", serif;
-		line-height: 21.82px;
-		padding: 3px;
-		color: var(--text-color);
-	}
+.checked__text {
+    text-align: start;
+    font-size: 16px;
+    font-family: "Nunito", serif;
+    line-height: 21.82px;
+    padding: 3px;
+    color: var(--text-color);
+}
 
 	.checked__progress-wrapper {
 		margin-top: 10px;
@@ -398,28 +397,36 @@
 		align-items: center;
 		margin-bottom: 55px;
 	}
+.checked__progress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 45px;
+}
 
 	.progress__container-details {
 		margin-top: 14px;
-	}
-
-	.task__details-btns {
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 	}
 
-	.range__date-text {
-		font-size: 13px;
-		color: var(--text-color);
-		font-family: "Nunito", serif;
-	}
+.task__details-btns {
+    display: flex;
+    justify-content: space-between;
+}
 
-	.range__date__data {
-		font-size: 14px;
-		font-weight: 500;
-		color: var(--text-color);
-		font-family: "Nunito", serif;
-	}
+.range__date-text {
+    font-size: 13px;
+    color: var(--text-color);
+    font-family: "Nunito", serif;
+}
+
+.range__date__data {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+    font-family: "Nunito", serif;
+}
 
 	.edit__menu-item {
 		font-size: 12px;
@@ -430,18 +437,17 @@
 		font-weight: 400;
 	}
 
-	.edit__menu-list {
-		width: 78px;
-		background: #4FC55C;
-		padding: 4px;
-		border-radius: 5px;
-		position: absolute;
-		top: 0;
-		right: 0;
-	}
+.edit__menu-list {
+    width: 78px;
+    background: #4FC55C;
+    padding: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 
 	.task__goal-name {
-		font-size: 18px;
 		color: var(--text-color);
 	}
 
@@ -467,7 +473,7 @@
 	.range__date-wrapper {
 		display: flex;
 		justify-content: space-between;
-		padding: 2px 10px;
+		padding: 10px;
 	}
 
 	.task__name {
@@ -480,13 +486,13 @@
 		font-weight: 600;
 	}
 
-	.task__icon-back {
-		width: 35px;
-		height: 35px;
-		background: var(--footer-bg);
-		padding: 4px;
-		border-radius: 50%;
-	}
+.task__icon-back {
+    width: 35px;
+    height: 35px;
+    background: var(--footer-bg);
+    padding: 4px;
+    border-radius: 50%;
+}
 
 	.update__task-btn {
 		width: 100%;
