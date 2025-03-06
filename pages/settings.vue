@@ -4,13 +4,6 @@
 			<div class="confirm__wrapper">
 				<div class="confirm__title">{{ $t('delAllDatas.title')}}</div>
 				<div class="confirm_sub-title">{{ $t('delAllDatas.subTitle')}}</div>
-				<input
-						v-model="password"
-						type="password"
-						:placeholder="$t('auth.password')"
-						class="password-input"
-				/>
-				<div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
 				<div class="btns-wrapper">
 					<button @click="deleteAllDatas" class="btn_del-data --del-data">{{ $t('delAllDatas.acceptBtn')}}</button>
 					<button @click="NotdeleteAllDatas" class="btn_del-data --not-del">{{ $t('delAllDatas.rejectBtn')}}</button>
@@ -38,62 +31,35 @@
 <script setup>
 	import {ref, onMounted, computed} from 'vue';
 	import { getAuth, reauthenticateWithCredential, EmailAuthProvider, deleteUser } from 'firebase/auth';
-	import {useAuthStore} from "../stores/authStore.js";
-	const authStore = useAuthStore();
-	const password = ref('');
-	const errorMessage = ref('');
 	import Light from '../assets/images/light.png';
 	import Dark from '../assets/images/dark.png';
 	import HeaderWithBack from '../src/components/headerWithBack.vue';
 	import Arrowicon from '../assets/images/arrowSvg.svg';
 	import {useRoute , useRouter} from "vue-router";
 	import {useHabitStore} from "../stores/habitStore.js";
+	import {useAuthStore} from "../stores/authStore.js";
 	import {useI18n} from 'vue-i18n';
+
 	const { t } = useI18n();
 	const isMounted = ref(false);
 	const habitStore = useHabitStore()
+	const authStore = useAuthStore()
 	const confirmDeleteDatas = ref(false)
 	const router = useRouter();
 	const colorMode = useColorMode();
+
 	const modeLabel = ['Mode', 'Мод']
 	const deleteLabels = ['Удалить аккаунт', 'Delete account', 'Выдаліць акаунт', 'Konto löschen', 'Eliminar cuenta', 'Supprimer le compte']
 	const {locale, messages} = useI18n();
 
-	try {
-		const auth = getAuth();
-		const user = auth.currentUser;
-
-		if (!user) {
-			throw new Error('Пользователь не авторизован');
-		}
-
-		// Переаутентификация
-		const credential = EmailAuthProvider.credential(user.email, password.value);
-		await reauthenticateWithCredential(user, credential);
-
-		// Удаление аккаунта Firebase
-		await deleteUser(user);
-
-		// Очистка данных приложения
-		authStore.logout();
-		habitStore.clearAlldates();
-
-		// Перенаправление
-		router.push('/');
-	} catch (error) {
-		console.error('Ошибка удаления:', error);
-		errorMessage.value = handleAuthError(error);
-	}
-
 	const cancelDelete = () => {
 		confirmDeleteDatas.value = false;
-		password.value = '';
-		errorMessage.value = '';
 	};
 
 	const deleteAllDatas = () => {
 		confirmDeleteDatas.value = false
 		habitStore.clearAlldates()
+		authStore.deleteAccount()
 		router.push("/")
 	}
 
@@ -110,7 +76,7 @@
 		if (modeLabel.includes(textItem)) {
 			toggleTheme();
 		} else if (deleteLabels.includes(textItem)) {
-			deleteAccount();
+			confirmDeleteDatas.value = true
 		}
 	};
 
@@ -121,19 +87,7 @@
 </script>
 
 <style scoped>
-.password-input {
-	width: 100%;
-	padding: 10px;
-	margin: 10px 0;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-}
 
-.error-message {
-	color: #ff4444;
-	font-size: 0.9em;
-	margin: 5px 0;
-}
 	.confirm__title {
 		color: white;
 		font-family: "Acme", serif;

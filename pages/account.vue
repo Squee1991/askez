@@ -21,9 +21,11 @@
 	import {ref, onMounted, computed} from 'vue';
 	import VFields from '/src/components/v-fields.vue';
 	import {useHabitStore} from '../stores/habitStore.js';
+	import { useAuthStore } from '../stores/authStore.js';
 	import {useRouter} from 'vue-router'
 
 	const habitStore = useHabitStore();
+	const authStore = useAuthStore();
 	const router = useRouter()
 	const data = ref({
 		fields: [
@@ -49,26 +51,27 @@
 		],
 
 	});
+
 	definePageMeta({
 		middleware: ['auth'],
 	})
+
 	onMounted(() => {
-		habitStore.loadUserData();
+		authStore.fetchingUser()
 		data.value.fields.forEach((field) => {
-			if (field.name === "name") field.value = habitStore.username;
-			if (field.name === "email") field.value = habitStore.email;
+			if (field.name === "name") field.value = authStore.name || '';
+			if (field.name === "email") field.value = authStore.email || '';
 		});
 	});
 
-	const changeData = () => {
-		let updatedData = {};
-		data.value.fields.forEach((field) => {
-			if (field.name === "name") updatedData.name = field.value;
-			if (field.name === "email") updatedData.email = field.value;
-		});
-		habitStore.updateUserData(updatedData);
+	const changeData = async () => {
+		const nameField = data.value.fields.find(field => field.name === "name");
+		if (nameField && nameField.value !== authStore.name) {
+			await authStore.UpdateNameDisplayName(nameField.value);
+		}
 		router.push("/welcomePage");
 	};
+
 
 </script>
 

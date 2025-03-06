@@ -1,56 +1,95 @@
-import { defineStore } from 'pinia';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import {defineStore} from 'pinia';
+import {ref} from 'vue';
+import {
+	getAuth,
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+	updateProfile,
+	signOut,
+	deleteUser,
+	onAuthStateChanged
+} from 'firebase/auth';
+
 export const useAuthStore = defineStore('auth', () => {
+		const name = ref(null);
+		const email = ref(null);
+		const password = ref(null);
 
-    const user = ref(null);
+		const setUserData = (data) => {
+			name.value = data.name;
+			email.value = data.email;
+			password.value = data.password;
+		};
 
-    const setUserData = (userData) => {
-        user.value = userData;
-        localStorage.setItem("userData", JSON.stringify(userData));
-    };
-    const loadUserData = () => {
-        const savedData = localStorage.getItem("userData");
-        if (savedData) {
-            user.value = JSON.parse(savedData);
-        }
-    };
-    const updateUserData = (newData) => {
-        if (newData.name) user.value.name = newData.name;
-        if (newData.email) user.value.email = newData.email;
-        localStorage.setItem("userData", JSON.stringify(user.value));
-    };
-    const registerUser = async (userData) => {
-        const auth = getAuth();
-        const userCredential = await createUserWithEmailAndPassword(
-            auth,
-            userData.email,
-            userData.password
-        );
+		const registerUser = async (userData) => {
+			const auth = getAuth();
+			const userCredential = await createUserWithEmailAndPassword(
+				auth,
+				userData.email,
+				userData.password
+			);
+			await updateProfile(userCredential.user, {
+				displayName: userData.name
+			});
+			setUserData(userData);
+		};
 
-        await updateProfile(userCredential.user, {
-            displayName: userData.name
-        });
+		const loginUser = async ({email, password}) => {
+			const auth = getAuth();
+			await signInWithEmailAndPassword(auth, email, password);
+		};
+		const logout = () => {
+			const auth = getAuth();
+			signOut(auth);
+			name.value = null;
+			email.value = null;
+			password.value = null;
+		};
 
-        // Дополнительная логика сохранения пользователя
-    };
+		const deleteAccount = async () => {
+			const auth = getAuth();
+			const user = auth.currentUser;
+			if (!user) return;
+			await deleteUser(user)
+			name.value = null;
+			email.value = null;
+		};
 
-    const loginUser = async ({ email, password }) => {
-        const auth = getAuth();
-        await signInWithEmailAndPassword(auth, email, password);
-    };
-    const logout = () => {
-        const auth = getAuth();
-        signOut(auth);
-        localStorage.clear();
-    };
+		const fetchingUser = () => {
+			const auth = getAuth();
+			onAuthStateChanged(auth, (user) => {
+				if (user) {
+					setUserData({
+						name: user.displayName,
+						email: user.email
+					})
+				}
+			})
+		}
 
-    return {
-        user,
-        updateUserData,
-        setUserData,
-        loadUserData,
-        registerUser,
-        loginUser ,
-        logout
-    };
-});
+		const UpdateNameDisplayName = async (newName) => {
+			const auth = getAuth()
+			const user = auth.currentUser
+			if (!user) return;
+			await updateProfile(user, {
+				displayName: newName
+			})
+			name.value = newName
+		};
+
+		fetchingUser();
+
+		return {
+			name,
+			email,
+			password,
+			setUserData,
+			registerUser,
+			loginUser,
+			logout,
+			deleteAccount,
+			fetchingUser,
+			UpdateNameDisplayName
+		};
+	}
+);

@@ -31,7 +31,7 @@
 	const languages = ref({});
 	const selectedLanguage = ref(null);
 	const preloader = ref(false)
-	const { locales, local } = useI18n()
+	const { locales, local , defaultLocale } = useI18n()
 	const computedClassNames = computed(() => {
 		if (languages.value) {
 			return {
@@ -57,7 +57,7 @@
 			selectedLanguage.value = localStorageLanguage;
 			return
 		}
-		selectedLanguage.value = local;
+		selectedLanguage.value = local
 	};
 
 	watch(selectedLanguage, (newValue, oldValue) => {
