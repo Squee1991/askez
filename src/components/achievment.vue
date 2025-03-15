@@ -110,7 +110,7 @@
 
 	.achiv__list-wrapper {
 		background: var(--menu--btn-bg);
-		margin: 15px;
+		margin: 15px ;
 		border-radius: 10px;
 		padding: 0 0 10px 0;
 	}

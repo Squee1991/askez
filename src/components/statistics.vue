@@ -86,8 +86,6 @@
 
 	.stat__askez-wrapper {
 		overflow-y: auto;
-		margin-bottom: 50px;
-		max-height: calc(100vh - 120px);
 	}
 
 	.askez__status-img {
