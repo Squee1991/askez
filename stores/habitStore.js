@@ -1,43 +1,63 @@
-import {defineStore} from "pinia";
-import {computed, ref} from "vue";
+import { defineStore } from "pinia";
+import { computed, ref, watch } from "vue";
+import {
+    getAuth,
+    onAuthStateChanged
+} from 'firebase/auth';
 
 export const useHabitStore = defineStore("askezaStore", () => {
     const tasks = ref([]);
     const selectedTask = ref(null);
-    const activeColor = ref(null)
-    const achieveCount = ref(0)
+    const activeColor = ref(null);
+    const achieveCount = ref(0);
     const achievementThresholds = ref([1, 10, 25, 50, 50, 200]);
-    const archiveTasks = ref([])
+    const archiveTasks = ref([]);
+    const auth = getAuth();
+    const userId = ref(null);
 
-    const setUserData = (userData) => {
-        username.value = userData.name;
-        email.value = userData.email;
-        password.value = userData.password;
-        localStorage.setItem("userData", JSON.stringify(userData));
+    const saveTasks = () => {
+        if (!userId.value) return;
+        localStorage.setItem(`tasks_${userId.value}`, JSON.stringify({
+            tasks: tasks.value,
+            achieveCount: achieveCount.value,
+            archiveTasks: archiveTasks.value,
+        }));
     };
 
-    const amountOfTask = computed(() => tasks.value.length)
+    const loadTasks = () => {
+        if (!userId.value) return;
+        const savedData = localStorage.getItem(`tasks_${userId.value}`);
+        if (savedData) {
+            try {
+                const userData = JSON.parse(savedData);
+                tasks.value = userData.tasks || [];
+                achieveCount.value = userData.achieveCount || 0;
+                archiveTasks.value = userData.archiveTasks || [];
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
+
+
+
+    const amountOfTask = computed(() => tasks.value.length);
     const doneTask = computed(() =>
         tasks.value.filter(task => task.progress === 100 && task.progressMiss === 0)
     );
 
     const doneTaskNames = computed(() => tasks.value.filter(task => task.progress === 100).map(task => task.goal));
-    const notdone = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) < 100))
+    const notdone = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) < 100));
+
     const result = computed(() => {
         return (taskId) => {
             const task = tasks.value.find(task => task.id === taskId);
-            if (!task) return {
-                progress: "0%",
-                progressMiss: "0%"
-            };
+            if (!task) return { progress: "0%", progressMiss: "0%" };
 
             const progress = Math.round(Number(task.progress) || 0);
             const progressMiss = Math.round(Number(task.progressMiss) || 0);
 
-            return {
-                progress: `${progress}%`,
-                progressMiss: `${progressMiss}%`
-            };
+            return { progress: `${progress}%`, progressMiss: `${progressMiss}%` };
         };
     });
 
@@ -49,10 +69,6 @@ export const useHabitStore = defineStore("askezaStore", () => {
         if (tasks.value.length === 0) return 0;
         return Math.round((doneTask.value.length / tasks.value.length) * 100);
     });
-
-    const saveTasks = () => {
-        localStorage.setItem("tasks", JSON.stringify(tasks.value));
-    };
 
     const addTask = (task) => {
         const isDuplicate = tasks.value.some((item) =>
@@ -80,27 +96,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
         }
     };
 
-    const loadTasks = () => {
-        const savedTasks = localStorage.getItem("tasks");
-        if (savedTasks) {
-            try {
-                tasks.value = JSON.parse(savedTasks) || [];
-                tasks.value.forEach((task) => {
-                    if (task.progressMiss === undefined) task.progressMiss = 0;
-                    if (!task.history) task.history = [];
-                });
-                updateAllProgress();
-            } catch (error) {
-                tasks.value = [];
-            }
-        } else {
-            tasks.value = [];
-        }
-        loadArchiveTasks();
-        loadAchieveCount();
-    };
-
-        const updateProgress = (task) => {
+    const updateProgress = (task) => {
         const totalDays = Math.max(1, (new Date(task.dateRange.end) - new Date(task.dateRange.start)) / (1000 * 60 * 60 * 24) + 1);
         const completedDays = task.checkedDates ? task.checkedDates.length : 0;
         const missedDays = task.missedDates ? task.missedDates.length : 0;
@@ -120,7 +116,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
         if (progress === 100 && !task.isAchieved) {
             task.isAchieved = true;
             achieveCount.value++;
-            saveAchieveCount();
+            saveTasks();
         }
 
         const taskIndex = tasks.value.findIndex((t) => t.id === task.id);
@@ -130,65 +126,53 @@ export const useHabitStore = defineStore("askezaStore", () => {
         saveTasks();
     };
 
-    const loadAchieveCount = () => {
-        const savedCount = localStorage.getItem('achieveCount');
-        if (savedCount) {
-            achieveCount.value = parseInt(savedCount);
-        }
-    };
-
-    const updateAllProgress = () => {
-        tasks.value.forEach((task) => updateProgress(task));
-    };
-
-    const saveArchiveTasks = () => {
-        localStorage.setItem('archiveTasks', JSON.stringify(archiveTasks.value))
-    }
-
-    const saveAchieveCount = () => {
-        localStorage.setItem('achieveCount', achieveCount.value);
-    };
 
     const loadArchiveTasks = () => {
-        const savedArchive = localStorage.getItem("archiveTasks");
+        if (!userId.value) return;
+        const savedArchive = localStorage.getItem(`tasks_${userId.value}`);
         if (savedArchive) {
-            archiveTasks.value = JSON.parse(savedArchive);
-        } else {
-            archiveTasks.value = [];
+            try {
+                const userData = JSON.parse(savedArchive);
+                archiveTasks.value = userData.archiveTasks || [];
+            } catch (error) {
+                console.error(error);
+            }
         }
-    };
-
-    const recalculateAchievements = () => {
-        achieveCount.value = Math.max(achieveCount.value, doneTask.value.length);
-        saveAchieveCount();
-    };
-
-
-    const clearAlldates = () => {
-        tasks.value = [];
-        achieveCount.value = 0
-        archiveTasks.value = []
-        localStorage.removeItem('userData')
-        localStorage.removeItem('tasks')
-        localStorage.removeItem('archiveTasks')
-        localStorage.removeItem('achieveCount')
-    }
-
-    const clearTasks = () => {
-        username.value = null;
-        tasks.value = [];
     };
 
     const removeTask = (taskId) => {
         const taskToRemove = tasks.value.find(task => task.id === taskId);
         if (taskToRemove) {
             archiveTasks.value.push(taskToRemove);
-            saveArchiveTasks();
         }
         tasks.value = tasks.value.filter(task => task.id !== taskId);
         saveTasks();
     };
 
+    const clearAlldates = () => {
+        tasks.value = [];
+        achieveCount.value = 0;
+        archiveTasks.value = [];
+        localStorage.removeItem(`tasks_${userId.value}`);
+    };
+
+    const updateAllProgress = () => {
+        tasks.value.forEach((task) => updateProgress(task));
+    };
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            userId.value = user.uid;
+            loadTasks();
+        } else {
+            userId.value = null;
+            tasks.value = [];
+            archiveTasks.value = [];
+            achieveCount.value = 0;
+        }
+    });
+
+    watch(tasks, saveTasks, { deep: true });
 
     return {
         tasks,
@@ -205,18 +189,13 @@ export const useHabitStore = defineStore("askezaStore", () => {
         archiveTasks,
         achieveCount,
 
-
         clearAlldates,
-        saveTasks,
-        setUserData,
         addTask,
-        loadTasks,
         updateProgress,
         updateAllProgress,
-        clearTasks,
         removeTask,
-        loadArchiveTasks,
-        recalculateAchievements,
-        saveAchieveCount,
+        loadTasks,
+        saveTasks,
+        loadArchiveTasks
     };
 });

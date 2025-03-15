@@ -144,7 +144,6 @@
 
 	const {locale} = useI18n()
 	const localePath = useLocalePath()
-	const isNotTask = ref(true)
 	const router = useRouter()
 	const habitStore = useHabitStore();
 	const authStore = useAuthStore()
@@ -156,9 +155,7 @@
 	const auth = getAuth()
 	const user = auth.currentUser
 
-	onMounted(() => {
-		isNotTask.value = tasks.value.length === 0;
-	});
+	const isNotTask = computed(() => habitStore.tasks.length === 0);
 
 	const openTaskDetails = (task) => {
 		router.push({
@@ -176,7 +173,6 @@
 	const addTask = (task) => {
 		habitStore.addTask(task);
 		console.log(habitStore.tasks);
-		isNotTask.value = tasks.value.length === 0;
 	};
 
 	const toggleHabitGoal = () => {
@@ -406,7 +402,7 @@
 	}
 
 	.no__task-text {
-
+        max-width: 200px;
 		font-family: "Nunito", serif;
 		font-weight: bold;
 		font-size: 30px;

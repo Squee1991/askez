@@ -159,7 +159,7 @@
 
 	.achiv__under-text {
 		color: var(--text-color);
-		width: 100px;
+		width: 90px;
 		text-align: center;
 		margin: 5px 0;
 		font-family: "Nunito", serif;

@@ -70,9 +70,10 @@ export default defineNuxtConfig({
                 file: 'fr-FR.json',
             },
         ],
-        detectBrowserLanguage: false,
+
         defaultLocale: 'en-US',
-        lazy: true,
+        detectBrowserLanguage: false
+
     },
 
     googleFonts: {
@@ -88,8 +89,8 @@ export default defineNuxtConfig({
         }
     },
     colorMode: {
-        preference: 'light',
-        fallback: 'light',
+        preference: 'dark',
+        fallback: 'dark',
         classSuffix: '',
     },
 })

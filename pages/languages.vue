@@ -29,9 +29,9 @@
 	import Arrowicon from '../assets/images/arrowSvg.svg?url';
 	import Reloader from '../src/components/preloader.vue'
 	const languages = ref({});
-	const selectedLanguage = ref(null);
 	const preloader = ref(false)
 	const { locales, local , defaultLocale } = useI18n()
+	const selectedLanguage = ref(null);
 	const computedClassNames = computed(() => {
 		if (languages.value) {
 			return {
@@ -43,7 +43,7 @@
 	});
 
 	const loadLanguageData =  (lang) => {
-		languages.value  = lang
+		languages.value  = lang || []
 	};
 
 	onMounted( () => {
@@ -53,11 +53,7 @@
 
 	const changeDefaultTypeLanguage = () => {
 		const localStorageLanguage = localStorage.getItem('language');
-		if (localStorageLanguage) {
-			selectedLanguage.value = localStorageLanguage;
-			return
-		}
-		selectedLanguage.value = local
+		selectedLanguage.value = localStorageLanguage || defaultLocale.value || 'en-US';
 	};
 
 	watch(selectedLanguage, (newValue, oldValue) => {
@@ -67,7 +63,7 @@
 			localStorage.setItem('language', newValue);
 			loadLanguageData(newValue);
 			preloader.value = false;
-		}, 3500);
+		}, 2000);
 	});
 
 </script>

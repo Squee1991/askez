@@ -38,9 +38,10 @@ export const useAuthStore = defineStore('auth', () => {
 			const auth = getAuth();
 			await signInWithEmailAndPassword(auth, email, password);
 		};
-		const logout = () => {
+
+		const logout = async () => {
 			const auth = getAuth();
-			signOut(auth);
+			await signOut(auth);
 			name.value = null;
 			email.value = null;
 			password.value = null;

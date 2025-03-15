@@ -25,6 +25,12 @@
 		"accoutTitle": "Cuenta",
 		"accountBtn": "Actualizar"
 	},
+	"singInUP": {
+		"singIn": "¿Ya tienes una cuenta? Iniciar sesión",
+		"singUp": "¿No tienes una cuenta? Regístrate",
+		"singInBtn": "Iniciar sesión",
+		"singUpBtn": "Regístrate"
+	},
 	"archieve": {
 		"name": "Tus ascetismos",
 		"achieveTitle": "Archivo de ascetismos",
@@ -36,6 +42,15 @@
 		"title": "Tus logros",
 		"subtitle": "Total de logros obtenidos",
 		"achiveDone": "Completado"
+	},
+	"accState": {
+		"greetings": "Bienvenido",
+		"stateBtn": "¡Vamos!",
+		"load": "Cargando"
+	},
+	"checkedBtns": {
+		"done": "Hecho",
+		"missed": "Perdido"
 	},
 	"achieve": {
 		"1": "Completa la primera askeza",
@@ -101,6 +116,10 @@
 				"placeholderConfPassword": "confirma tu contraseña"
 			}
 		]
+	},
+	"logOut": {
+		"out": "Cerrar sesión?",
+		"reject": "¿Quieres cerrar sesión?"
 	},
 	"homePage": {
 		"greetings": "Hola",

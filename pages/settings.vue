@@ -30,7 +30,7 @@
 
 <script setup>
 	import {ref, onMounted, computed} from 'vue';
-	import { getAuth, reauthenticateWithCredential, EmailAuthProvider, deleteUser } from 'firebase/auth';
+	import { getAuth, signOut, reauthenticateWithCredential, EmailAuthProvider, deleteUser } from 'firebase/auth';
 	import Light from '../assets/images/light.png';
 	import Dark from '../assets/images/dark.png';
 	import HeaderWithBack from '../src/components/headerWithBack.vue';
@@ -39,14 +39,29 @@
 	import {useHabitStore} from "../stores/habitStore.js";
 	import {useAuthStore} from "../stores/authStore.js";
 	import {useI18n} from 'vue-i18n';
-
 	const { t } = useI18n();
 	const isMounted = ref(false);
 	const habitStore = useHabitStore()
 	const authStore = useAuthStore()
 	const confirmDeleteDatas = ref(false)
 	const router = useRouter();
+
 	const colorMode = useColorMode();
+
+
+	const accept = () => {
+		authStore.logout()
+		logOutAccept.value = false
+	}
+
+	const reject = () => {
+		logOutAccept.value = false
+	}
+
+	const singOut = () => {
+		logOutAccept.value = true
+	}
+
 
 	const modeLabel = ['Mode', 'Мод']
 	const deleteLabels = ['Удалить аккаунт', 'Delete account', 'Выдаліць акаунт', 'Konto löschen', 'Eliminar cuenta', 'Supprimer le compte']
@@ -68,8 +83,13 @@
 	}
 
 	const toggleTheme = () => {
-		colorMode.preference = colorMode.preference === 'light' ? 'dark' : 'light';
+		colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark'
 	};
+
+	onMounted(() => {
+		const savedMode = localStorage.getItem('nuxt-color-mode') || 'dark';
+		colorMode.preference = savedMode;
+	});
 
 	const SettingsChange = (text) => {
 		const textItem = text.trim();

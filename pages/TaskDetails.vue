@@ -51,10 +51,10 @@
 			</div>
 			<div class="task__details-btns">
 				<div class="task__details-btn check">
-					<button @click="onCheckClick" :disabled="isDateMarked" class="update__task-btn check">Green</button>
+					<button @click="onCheckClick" :disabled="isDateMarked" class="update__task-btn check">{{ $t('checkedBtns.done')}}</button>
 				</div>
 				<div class="task__details-btn">
-					<button @click="onMissClick" :disabled="isDateMarked" class="update__task-btn">Grey</button>
+					<button @click="onMissClick" :disabled="isDateMarked" class="update__task-btn">{{ $t('checkedBtns.missed')}}</button>
 				</div>
 			</div>
 			<div class="progress__container-details">

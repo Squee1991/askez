@@ -26,9 +26,8 @@
 
 <script setup>
 	import {defineProps, defineEmits, ref, watch} from 'vue';
-	const { locales, setLocale  } = useI18n()
+	const { locales, setLocale , defaultLocale  } = useI18n()
 	const emit = defineEmits(['update:model-value']);
-	const localValue = ref(null)
 	const props = defineProps({
 		icon: {
 			type: null,
@@ -43,13 +42,13 @@
 			required: true
 		}
 	});
+	const localValue = ref(props.modelValue || defaultLocale.value)
 	const changeLanguage = (code) => {
 		localStorage.setItem('language' , code)
 		localValue.value = code
 		setLocale(code)
 		emit('update:model-value', localValue.value);
 	};
-
 	watch(() => props.modelValue, () => {
 			localValue.value = props.modelValue
 		}, {immediate: true}

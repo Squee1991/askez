@@ -25,7 +25,12 @@
 		"accoutTitle": "Compte",
 		"accountBtn": "Mettre à jour"
 	},
-
+	"singInUP": {
+		"singIn": "Vous avez déjà un compte ? Se connecter",
+		"singUp": "Pas de compte ? S'inscrire",
+		"singInBtn": "Se connecter",
+		"singUpBtn": "S'inscrire"
+	},
 	"archieve": {
 		"name": "Vos ascèses",
 		"achieveTitle": "Archive des ascèses",
@@ -37,6 +42,15 @@
 		"title": "Vos réussites",
 		"subtitle": "Total des réussites obtenues",
 		"achiveDone": "Terminé"
+	},
+	"accState": {
+		"greetings": "Bienvenue",
+		"stateBtn": "C'est parti!",
+		"load": "Chargement"
+	},
+	"checkedBtns": {
+		"done": "Terminé",
+		"missed": "Manqué"
 	},
 	"achieve": {
 		"1": "Terminer la première askeza",
@@ -102,6 +116,10 @@
 				"placeholderConfPassword": "confirmez votre mot de passe"
 			}
 		]
+	},
+	"logOut": {
+		"out": "Déconnexion?",
+		"reject": "Voulez-vous vous déconnecter?"
 	},
 	"homePage": {
 		"greetings": "Salut",

@@ -2,11 +2,20 @@
 	<div class="form">
 		<div class="form__logo">
 			<img class="form__logo-icon" src="../assets/images/logo.png" alt="Logo"/>
-			<h1 class="form__logo-label">SCETIC</h1>
 		</div>
 		<transition name="fade-slide" mode="out-in">
-			<form class="form__field-inner" :key="isSignUp">
-				<h2 class="form__title">{{ isSignUp ? 'Sign Up' : 'Sign In' }}</h2>
+			<div v-if="isLoading" class="loading-screen">
+				<div class="loading"> {{ $t('accState.load')}}</div>
+				<div class="loader"></div>
+			</div>
+			<div v-else-if="isAuthenticated" class="welcome-screen">
+				<div class="form__title">{{ $t('accState.greetings')}}
+					<span class="form__title-name">{{ authStore.name }}</span>
+				</div>
+				<button @click="goToMainPage" class="form__btn">{{ $t('accState.stateBtn')}}</button>
+			</div>
+			<div v-else class="form__field-inner" :key="isSignUp">
+<!--				<h2 class="form__title">{{ isSignUp ? $t('singInUP.singUpBtn') : $t('singInUP.singInBtn')}}</h2>-->
 				<div v-for="field in filteredFields" :key="field.id" class="form__field">
 					<v-fields
 						:field="field"
@@ -21,29 +30,33 @@
 					:disabled="isSubmitting || !isFormValid"
 				>
 					<span v-if="isSubmitting">Loading...</span>
-					<span v-else> {{ isSignUp ? 'Sign Up' : 'Sign In' }}</span>
+					<span v-else> {{ isSignUp ? $t('singInUP.singUpBtn') : $t('singInUP.singInBtn') }}</span>
 				</button>
 
 				<p class="toggle-text" @click="toggleAuthMode">
-					{{ isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up" }}
+					{{ isSignUp ? $t('singInUP.singIn') : $t('singInUP.singUp') }}
 				</p>
-			</form>
+			</div>
 		</transition>
 	</div>
 </template>
 
 <script setup>
-	import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile} from 'firebase/auth';
+	import {getAuth, onAuthStateChanged} from 'firebase/auth';
 	import VFields from '../src/components/v-fields.vue'
 	import {ref, computed, watch} from 'vue'
 	import {useRouter} from 'vue-router'
 	import {useValidationStore} from '../stores/validationStore.js'
 	import {useAuthStore} from '../stores/authStore.js';
+	import {onMounted} from "../.nuxt/imports";
+
 	const authStore = useAuthStore();
 	const validationStore = useValidationStore()
 	const router = useRouter()
 	const isSignUp = ref(true);
 	const isSubmitting = ref(false);
+	const isAuthenticated = ref(false)
+	const isLoading = ref(true)
 	const data = ref({
 		fields: [
 			{
@@ -75,7 +88,6 @@
 				value: "",
 				error: false,
 				required: true
-
 			},
 			{
 				id: 4,
@@ -89,10 +101,24 @@
 			},
 		],
 	})
-
-
 	const filteredFields = computed(() => isSignUp.value ? data.value.fields : data.value.fields.filter(f => f.name !== 'name' && f.name !== 'confirm'));
 	const isFormValid = computed(() => filteredFields.value.every(f => !f.error && f.value.trim() !== ''));
+
+	onMounted(() => {
+		const auth = getAuth()
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				isAuthenticated.value = true;
+				authStore.name = user.displayName;
+			} else {
+				isAuthenticated.value = false
+			}
+			setTimeout(() => {
+				isLoading.value = false;
+			}, 5000);
+		})
+
+	})
 
 	const toggleAuthMode = () => {
 		isSignUp.value = !isSignUp.value;
@@ -107,22 +133,26 @@
 			email: data.value.fields.find(f => f.name === 'email')?.value.trim() || '',
 			password: data.value.fields.find(f => f.name === 'password')?.value.trim() || '',
 			name: data.value.fields.find(f => f.name === 'name')?.value.trim() || '',
-		}
+		};
 
 		if (!formData.email || !formData.password) return;
+
 		try {
 			isSubmitting.value = true;
+
 			if (isSignUp.value) {
 				await authStore.registerUser(formData);
 			} else {
 				await authStore.loginUser(formData);
 			}
-			router.push('/welcomePage');
+			await authStore.fetchingUser();
+			isAuthenticated.value = true;
 
 		} catch (error) {
 			const errorMessage = validationStore.getFirebaseError(error);
 			const emailField = data.value.fields.find(f => f.name === 'email');
 			const passwordField = data.value.fields.find(f => f.name === 'password');
+
 			if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found') {
 				emailField.error = errorMessage;
 			} else {
@@ -134,14 +164,126 @@
 		}
 	};
 
+
+	const goToMainPage = () => {
+		router.push('/welcomePage');
+	};
+
 </script>
 
 <style>
+	.loader {
+		width: 100%;
+		height: 22px;
+		border-radius: 40px;
+		color: #514b82;
+		border: 2px solid;
+		position: relative;
+	}
+
+	.form__logo-label {
+		font-size: 32px;
+		font-weight: bold;
+		font-family: "Acme", serif;
+	}
+
+	.loader {
+		width: 0;
+		height: 4.8px;
+		display: inline-block;
+		position: relative;
+		background: #FFF;
+		box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+		box-sizing: border-box;
+		animation: animFw 8s linear infinite;
+	}
+	.loader::after,
+	.loader::before {
+		content: '';
+		width: 10px;
+		height: 1px;
+		background: #FFF;
+		position: absolute;
+		top: 9px;
+		right: -2px;
+		opacity: 0;
+		transform: rotate(-45deg) translateX(0px);
+		box-sizing: border-box;
+		animation: coli1 0.3s linear infinite;
+	}
+	.loader::before {
+		top: -4px;
+		transform: rotate(45deg);
+		animation: coli2 0.3s linear infinite;
+	}
+
+	@keyframes animFw {
+		0% {
+			width: 0;
+		}
+		100% {
+			width: 100%;
+		}
+	}
+
+	@keyframes coli1 {
+		0% {
+			transform: rotate(-45deg) translateX(0px);
+			opacity: 0.7;
+		}
+		100% {
+			transform: rotate(-45deg) translateX(-45px);
+			opacity: 0;
+		}
+	}
+
+	@keyframes coli2 {
+		0% {
+			transform: rotate(45deg) translateX(0px);
+			opacity: 1;
+		}
+		100% {
+			transform: rotate(45deg) translateX(-45px);
+			opacity: 0.7;
+		}
+	}
+
+
+	.loading {
+		font-size: 24px;
+		text-align: center;
+		font-weight: bold;
+		color: var(--text-color);
+		font-family: "Acme", serif;
+		margin-bottom: 10px;
+	}
 
 	.form__title {
 		padding: 10px 0;
 		color: var(--text-color);
+		font-size: 24px;
+		font-family: Nunito, serif;
+		text-align: center;
+		font-weight: bold;
+		margin-bottom: 10px;
 	}
+
+	.form__title-name {
+		color: #FF5722;
+		font-size: 2.0rem;
+		font-weight: bold;
+		font-family: "Acme", serif;
+	}
+
+
+	.loading-screen {
+		position: absolute;
+		bottom: 10%;
+		width: 100%;
+		left: 0;
+		padding: 0 20px;
+	}
+
 	.toggle-text {
 		text-align: center;
 		cursor: pointer;
@@ -178,6 +320,7 @@
 		padding: 30px;
 		background: var(--background-color);
 		height: 100vh;
+		position: relative;
 	}
 
 	.form__logo {
@@ -190,8 +333,9 @@
 	}
 
 	.form__logo-icon {
+		margin-top: 60px;
 		padding: 5px;
-		width: 60px;
+		width: 110px;
 	}
 
 	.form__field {
@@ -210,12 +354,13 @@
 		width: 100%;
 		background-color: #4A90E2;
 		color: white;
-		font-size: 18px;
+		font-size: 20px;
 		padding: 12px;
 		border: none;
 		border-radius: 8px;
 		cursor: pointer;
 		transition: background-color 0.3s ease;
+		font-family: "Acme", serif;
 	}
 
 	.form__btn:hover {

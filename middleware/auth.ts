@@ -12,6 +12,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
     const token = useCookie('token') || null; // Проверяем токен в куках
 
     if (!token) {
-        return navigateTo('/singin'); // Если нет токена, перенаправляем на логин
+        return navigateTo('/');
     }
 });

@@ -25,6 +25,12 @@
 		"accoutTitle": "Account",
 		"accountBtn": "Update"
 	},
+	"singInUP": {
+		"singIn": "Already have an account? Sign In",
+		"singUp": "Don't have an account? Sign Up",
+		"singInBtn": "Sing In",
+		"singUpBtn": "Sing Up"
+	},
 	"archieve": {
 		"name": "Your askezas",
 		"achieveTitle": "Ascezas archive",
@@ -36,6 +42,15 @@
 		"title": "Your achievements",
 		"subtitle": "Total achievements received",
 		"achiveDone": "Completed"
+	},
+	"accState": {
+		"greetings": "Welcome",
+		"stateBtn": "Let's go!",
+		"load": "Loading"
+	},
+	"checkedBtns": {
+		"done": "Done",
+		"missed": "Missed"
 	},
 	"achieve": {
 		"1": "Complete the first askeza",
@@ -101,6 +116,10 @@
 				"placeholderConfPassword": "confirm your password"
 			}
 		]
+	},
+	"logOut": {
+		"out": "Logout?",
+		"reject": "Do you want to Logout?"
 	},
 	"homePage": {
 		"greetings": "Hello",

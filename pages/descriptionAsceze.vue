@@ -1,13 +1,12 @@
 <template>
 	<div class="description">
-		<NuxtLink :to="localePath('/singup')">
+		<NuxtLink to="/singup">
 			<button class="next__btn">{{ $t("description.value")}}</button>
 		</NuxtLink>
 	</div>
 </template>
 <script setup>
-	import { useLocalePath } from '#i18n';
-	const localePath = useLocalePath()
+
 	definePageMeta({
 		middleware: ['auth'],
 	})

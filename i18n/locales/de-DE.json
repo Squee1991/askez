@@ -25,6 +25,12 @@
 		"accoutTitle": "Konto",
 		"accountBtn": "Aktualisieren"
 	},
+	"singInUP": {
+		"singIn": "Schon ein Konto? Anmelden",
+		"singUp": "Kein Konto? Registrieren",
+		"singInBtn": "Anmelden",
+		"singUpBtn": "Registrieren"
+	},
 	"archieve": {
 		"name": "Ihre Askesen",
 		"achieveTitle": "Archiv der Askesen",
@@ -36,6 +42,15 @@
 		"title": "Ihre Erfolge",
 		"subtitle": "Insgesamt erhaltene Erfolge",
 		"achiveDone": "Abgeschlossen"
+	},
+	"accState": {
+		"greetings": "Willkommen",
+		"stateBtn": "Los geht’s!",
+		"load": "Laden"
+	},
+	"checkedBtns": {
+		"done": "Erledigt",
+		"missed": "Verpasst"
 	},
 	"achieve": {
 		"1": "Beende die erste Askese",
@@ -101,6 +116,10 @@
 				"placeholderConfPassword": "Bestätigen Sie Ihr Passwort"
 			}
 		]
+	},
+	"logOut": {
+		"out": "Abmelden?",
+		"reject": "Möchten Sie sich abmelden?"
 	},
 	"homePage": {
 		"greetings": "Hallo",
