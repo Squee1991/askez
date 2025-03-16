@@ -35,6 +35,10 @@ onMounted(() => {
 
 <style>
 
+    body {
+        background: var(--background-color);
+    }
+
 * {
     padding: 0;
     margin: 0;
@@ -54,6 +58,7 @@ li {
 .container {
     width: 100%;
     margin: 0 auto;
-
 }
+
+
 </style>

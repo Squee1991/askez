@@ -40,14 +40,13 @@
 		<div class="archive__wrapper">
 			<HeaderWichback :icon="Arrowicon" :title="$t('archieve.achieveTitle')"/>
 			<div class="archive__body">
-				<div class="archive__items">
-					<div class="archive__banner">
-						<div class="archive__header">
-							<div class="archive__name">{{ $t('archieve.name') }}</div>
-						</div>
+				<div class="archive__banner">
+					<div class="archive__header">
+						<div class="archive__name">{{ $t('archieve.name') }}</div>
 					</div>
-					<div
-						:class="{'archive__list--expanded': isScaled[task.id]}"
+				</div>
+				<div class="archive__items">
+					<div :class="{'archive__list--expanded': isScaled[task.id]}"
 						v-for="task in habitStore.archiveTasks"
 						:key="task.id"
 						class="archive__list"
@@ -100,6 +99,13 @@
 </template>
 
 <style scoped>
+
+	.archive__items {
+		max-height: 74vh;
+		height: 100%;
+		overflow-y: auto;
+		padding-right: 5px;
+	}
 
 
 	.archive__wrapper {
