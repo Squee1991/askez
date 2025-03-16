@@ -35,7 +35,7 @@
     "serve": "^14.2.4",
     "v-calendar": "^3.1.2",
     "vue": "latest",
-    "vue-i18n": "^10.0.5",
+    "vue-i18n": "^10.0.6",
     "vuefire": "^3.2.1"
   },
   "devDependencies": {
