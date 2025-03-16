@@ -46,15 +46,15 @@
 		languages.value  = lang || []
 	};
 
-	onMounted( () => {
+	const changeDefaultTypeLanguage = () => {
+		const localStorageLanguage = localStorage.getItem('language');
+		selectedLanguage.value = localStorageLanguage || 'en-US';
+	};
+
+	onMounted(() => {
 		changeDefaultTypeLanguage();
 		loadLanguageData(selectedLanguage.value);
 	});
-
-	const changeDefaultTypeLanguage = () => {
-		const localStorageLanguage = localStorage.getItem('language');
-		selectedLanguage.value = localStorageLanguage || defaultLocale.value || 'en-US';
-	};
 
 	watch(selectedLanguage, (newValue, oldValue) => {
 		if (!oldValue) return;

@@ -5,8 +5,10 @@
 				<div class="confirm__title">{{ $t('delAllDatas.title')}}</div>
 				<div class="confirm_sub-title">{{ $t('delAllDatas.subTitle')}}</div>
 				<div class="btns-wrapper">
-					<button @click="deleteAllDatas" class="btn_del-data --del-data">{{ $t('delAllDatas.acceptBtn')}}</button>
-					<button @click="NotdeleteAllDatas" class="btn_del-data --not-del">{{ $t('delAllDatas.rejectBtn')}}</button>
+					<button @click="deleteAllDatas" class="btn_del-data --del-data">{{ $t('delAllDatas.acceptBtn')}}
+					</button>
+					<button @click="NotdeleteAllDatas" class="btn_del-data --not-del">{{ $t('delAllDatas.rejectBtn')}}
+					</button>
 				</div>
 			</div>
 		</div>
@@ -18,28 +20,31 @@
 			<div class="menu__btn-wrapper" v-for="index in 3" :key="index">
 				<button class="account__settings-btn" @click="SettingsChange($t('setting.' + (index - 1)))">
 					<span class="accoun__text">{{ $t('setting.' + (index - 1)) }}</span>
-					<img v-if="isMounted && ($t('setting.' + (index - 1)).trim() === 'Mode' || $t('setting.' + (index - 1)).trim() === 'Мод')"
-					     class="color__mode-icon"
-					     :src="colorMode.preference === 'dark' ? Light : Dark"
-					     alt="">
+					<img
+						v-if="isMounted && ($t('setting.' + (index - 1)).trim() === 'Mode' || $t('setting.' + (index - 1)).trim() === 'Мод')"
+						class="color__mode-icon"
+						:src="colorMode.preference === 'dark' ? Light : Dark"
+						alt="">
 				</button>
 			</div>
 		</div>
 	</div>
+
 </template>
 
 <script setup>
 	import {ref, onMounted, computed} from 'vue';
-	import { getAuth, signOut, reauthenticateWithCredential, EmailAuthProvider, deleteUser } from 'firebase/auth';
+	import {getAuth, signOut, reauthenticateWithCredential, EmailAuthProvider, deleteUser} from 'firebase/auth';
 	import Light from '../assets/images/light.png';
 	import Dark from '../assets/images/dark.png';
 	import HeaderWithBack from '../src/components/headerWithBack.vue';
 	import Arrowicon from '../assets/images/arrowSvg.svg';
-	import {useRoute , useRouter} from "vue-router";
+	import {useRoute, useRouter} from "vue-router";
 	import {useHabitStore} from "../stores/habitStore.js";
 	import {useAuthStore} from "../stores/authStore.js";
 	import {useI18n} from 'vue-i18n';
-	const { t } = useI18n();
+
+	const {t} = useI18n();
 	const isMounted = ref(false);
 	const habitStore = useHabitStore()
 	const authStore = useAuthStore()
@@ -58,11 +63,6 @@
 		logOutAccept.value = false
 	}
 
-	const singOut = () => {
-		logOutAccept.value = true
-	}
-
-
 	const modeLabel = ['Mode', 'Мод']
 	const deleteLabels = ['Удалить аккаунт', 'Delete account', 'Выдаліць акаунт', 'Konto löschen', 'Eliminar cuenta', 'Supprimer le compte']
 	const {locale, messages} = useI18n();
@@ -71,10 +71,10 @@
 		confirmDeleteDatas.value = false;
 	};
 
-	const deleteAllDatas = () => {
+	const deleteAllDatas = async () => {
 		confirmDeleteDatas.value = false
 		habitStore.clearAlldates()
-		authStore.deleteAccount()
+		await authStore.deleteAccount()
 		router.push("/")
 	}
 
@@ -134,7 +134,7 @@
 		border-radius: 15px;
 		position: absolute;
 		left: 50%;
-		transform: translate(-50% , -50%);
+		transform: translate(-50%, -50%);
 		top: 50%;
 		z-index: 10;
 	}

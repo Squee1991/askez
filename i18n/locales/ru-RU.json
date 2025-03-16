@@ -23,7 +23,8 @@
 	],
 	"account": {
 		"accoutTitle": "Аккаунт",
-		"accountBtn": "Обновить"
+		"accountBtn": "Обновить",
+		"changedName": "Имя изменено"
 	},
 	"singInUP": {
 		"singIn": "Уже есть аккаунт? Войти",
@@ -148,5 +149,9 @@
 	},
 	"EditDeleteMenu": {
 		"delTask": "Delete"
+	},
+	"CheckedProgress": {
+		"checked": "Выполнено дней",
+		"notChecked": "Не выполнено дней"
 	}
 }

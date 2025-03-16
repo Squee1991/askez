@@ -1,22 +1,9 @@
 <template>
 	<div class="account__wrapper">
-		<div class="log__out-overlay" :class="{'overlay': logOutAccept}"></div>
-		<div v-if="logOutAccept" class="logout__confirm">
-			<div class="logout"> {{ $t('logOut.out')}}</div>
-			<div class="log__out-text">{{ $t('logOut.reject')}}</div>
-			<div class="logout__btns">
-				<button @click="confirmLogout" class="logout__btn yes-btn">{{ $t('delAllDatas.acceptBtn')}}</button>
-				<button @click="NotConfirmLogout" class="logout__btn no-btn">{{ $t('delAllDatas.rejectBtn')}}</button>
-			</div>
-		</div>
-		<div class="edit__component">
-			<EditDeleteMenu
-				@click="singOut"
-				:icon="EditIcon"
-			/>
-			<div @click="singOutBtn" v-if="logOutMenu" class="log__out-menu">
-				<span class="log__out-logout">logout</span>
-			</div>
+		<div v-if="logOutAccept" class="overlay"></div>
+		<div v-if="logOutAccept"  class="account__changed">
+			<div class="account__changed--title">{{ $t('account.changedName')}}</div>
+			<button  class="account__change-btn" @click="closeOverlay">{{ $t('success.button')}}</button>
 		</div>
 		<div class="account__content">
 			<HeaderWithback :icon="Arrowicon" :title="$t('account.accoutTitle')"/>
@@ -31,25 +18,28 @@
 					/>
 				</div>
 			</div>
-			<button @click="changeData" class="account__btn">{{ $t('account.accountBtn')}}</button>
+			<button
+				:disabled="!isButtonActive"
+				@click="changeData"
+				class="account__btn">{{ $t('account.accountBtn')}}
+			</button>
 		</div>
 	</div>
 </template>
 <script setup>
+
 	import Arrowicon from '../assets/images/arrowSvg.svg'
 	import HeaderWithback from '../src/components/headerWithBack.vue'
 	import SingOutIcon from '../assets/images/SingOutSvg.svg'
 	import EditIcon from '../assets/images/editIcon.svg'
 	import EditDeleteMenu from '../src/components/EditDeleteMenu.vue'
-	import {ref, onMounted, onUnmounted} from 'vue';
+	import {ref, computed, onMounted} from 'vue';
 	import VFields from '/src/components/v-fields.vue';
 	import {useHabitStore} from '../stores/habitStore.js';
 	import {useAuthStore} from '../stores/authStore.js';
 	import {useRouter} from 'vue-router'
-	import {getAuth, signOut, onAuthStateChanged} from 'firebase/auth';
 
 	const logOutAccept = ref(false)
-	const logOutMenu = ref(false)
 	const habitStore = useHabitStore();
 	const authStore = useAuthStore();
 	const router = useRouter()
@@ -78,47 +68,21 @@
 
 	});
 
-	const singOut = () => {
-		logOutMenu.value = true
-	}
-
-	const singOutBtn = () => {
-		logOutAccept.value = true
-		logOutMenu.value = false
-	}
-
-	const confirmLogout = async () => {
-		const auth = getAuth()
-		await signOut(auth)
+	const closeOverlay = () => {
 		logOutAccept.value = false
 	}
 
-	const NotConfirmLogout = () => {
-		logOutAccept.value = false
-	}
-
-	const handleClickOutside = (event) => {
-		const menu = document.querySelector(".log__out-menu");
-		const button = document.querySelector(".edit__component");
-		if (menu && !menu.contains(event.target) && button && !button.contains(event.target)) {
-			logOutMenu.value = false;
-		}
-	};
-
-	onMounted(() => {
-		document.addEventListener("click", handleClickOutside);
-	});
-
-	onUnmounted(() => {
-		document.removeEventListener("click", handleClickOutside);
+	const isButtonActive = computed(() => {
+		const nameField = data.value.fields.find(field => field.name === "name");
+		return nameField && nameField.value !== authStore.name;
 	});
 
 	const changeData = async () => {
 		const nameField = data.value.fields.find(field => field.name === "name");
 		if (nameField && nameField.value !== authStore.name) {
 			await authStore.UpdateNameDisplayName(nameField.value);
+			logOutAccept.value = true
 		}
-		router.push("/welcomePage");
 	};
 
 	onMounted(() => {
@@ -136,13 +100,21 @@
 		middleware: ['auth'],
 	})
 
-
 </script>
 
 <style scoped>
 
-	.logout__confirm {
+	.account__btn:disabled {
+		opacity: 0.7;
+		cursor: not-allowed;
+	}
+
+	.account__changed {
 		width: 80%;
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
 		background: #34364a;
 		padding: 20px;
 		border-radius: 15px;
@@ -151,37 +123,6 @@
 		transform: translate(-50%, -50%);
 		top: 40%;
 		z-index: 100;
-	}
-
-	.log__out-menu {
-		position: absolute;
-		right: 10px;
-		top: 0px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100px;
-		background: #4FC55C;
-		padding: 10px;
-		border-radius: 5px;
-		font-size: 18px;
-		color: white;
-	}
-
-	.logout__btns {
-		margin-top: 10px;
-		display: flex;
-		justify-content: center;
-	}
-
-	.logout__btn {
-		background: none;
-		border: none;
-		color: #24ba1d;
-		padding: 10px 20px;
-		font-weight: bold;
-		font-size: 19px;
-		font-family: "Acme", serif;
 	}
 
 	.overlay {
@@ -193,18 +134,20 @@
 		z-index: 1;
 	}
 
-	.log__out-text {
-		padding: 5px 0;
-		color: grey;
-		text-align: center;
+	.account__changed--title {
+		color: white;
+		font-size: 26px;
+		padding: 15px;
 	}
 
-	.logout {
-		margin-bottom: 10px;
+	.account__change-btn {
+		border: none;
+		background: none;
+		font-size: 20px;
+		color: #24ba1d;
 		text-align: center;
-		color: white;
-		font-family: "Acme", serif;
-		font-size: 22px;
+		font-weight: bold;
+		padding: 10px;
 	}
 
 	.account__content {
@@ -226,6 +169,7 @@
 	}
 
 	.account__btn {
+		cursor: pointer;
 		margin-top: 20px;
 		width: 100%;
 		border: none;

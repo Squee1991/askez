@@ -1,33 +1,87 @@
 <template>
 	<div class="askeza__menu">
+		<div class="log__out-overlay" :class="{'overlay': logOutAccept}"></div>
+		<div v-if="logOutAccept" class="logout__confirm">
+			<div class="logout"> {{ $t('logOut.out')}}</div>
+			<div class="log__out-text">{{ $t('logOut.reject')}}</div>
+			<div class="logout__btns">
+				<button @click="confirmLogout" class="logout__btn yes-btn">{{ $t('delAllDatas.acceptBtn')}}</button>
+				<button @click="NotConfirmLogout" class="logout__btn no-btn">{{ $t('delAllDatas.rejectBtn')}}</button>
+			</div>
+		</div>
 		<div class="askeza__menu-content">
-			<HeaderwithBack :title="$t('menu.title')"/>
-			<div class="menu__btns">
-				<div class="menu__btn-wrapper" v-for="index in 5" :key="index">
-					<NuxtLink class="account__settings-btn" :to="getMenuPlainLink(t(`meniu.${index - 1}`))">
-						<img
-							:class="{
+			<div>
+				<div class="menu__title">
+					<HeaderwithBack
+						:icon="Arrowicon"
+						:title="$t('menu.title')"/>
+					<div class="log__out-icon" @click="singOutBtn">
+						<img :src="LogoutIcon" alt="">
+					</div>
+				</div>
+				<div class="menu__btns">
+					<div class="menu__btn-wrapper" v-for="index in 5" :key="index">
+						<NuxtLink class="account__settings-btn" :to="getMenuPlainLink(t(`meniu.${index - 1}`))">
+							<img
+								:class="{
                 'acc-bg-blue': accountLabels.includes(t(`meniu.${index - 1}`)),
                 'aboutapp-bg-green': aboutLabels.includes(t(`meniu.${index - 1}`)),
                 'lang-bg-orange': languageLabels.includes(t(`meniu.${index - 1}`)),
                 'settings-bg-fiol': settingsLabels.includes(t(`meniu.${index - 1}`)),
                 'feedback-bg-l-blue': feedback.includes(t(`meniu.${index - 1}`))
               }"
-							class="account__icon"
-							:src="getMenuPlainIcon(t(`meniu.${index - 1}`))"
-							alt=""
-						/>
-						<span class="account__text">{{ t(`meniu.${index - 1}`) }}</span>
-					</NuxtLink>
+								class="account__icon"
+								:src="getMenuPlainIcon(t(`meniu.${index - 1}`))"
+								alt=""
+							/>
+							<span class="account__text">{{ t(`meniu.${index - 1}`) }}</span>
+						</NuxtLink>
+					</div>
 				</div>
 			</div>
+			<div class="askeza__v">Askeza v1.0</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
+	import Footer from '../src/components/footer.vue'
 	import {useI18n} from 'vue-i18n';
+	import LogoutIcon from '../assets/images/logOutSvg.svg'
+	import Arrowicon from '../assets/images/arrowBack.svg'
+	import {onMounted, onUnmounted, ref} from "vue";
+	import {getAuth, signOut} from "firebase/auth";
+
+	const singOutBtn = () => {
+		logOutAccept.value = true
+	}
+
+	const confirmLogout = async () => {
+		const auth = getAuth()
+		await signOut(auth)
+		logOutAccept.value = false
+	}
+
+	const NotConfirmLogout = () => {
+		logOutAccept.value = false
+	}
+
+	const handleClickOutside = (event) => {
+		const menu = document.querySelector(".log__out-menu");
+		const button = document.querySelector(".edit__component");
+		if (menu && !menu.contains(event.target) && button && !button.contains(event.target)) {
+			logOutMenu.value = false;
+		}
+	};
+
+	onMounted(() => {
+		document.addEventListener("click", handleClickOutside);
+	});
+
+	onUnmounted(() => {
+		document.removeEventListener("click", handleClickOutside);
+	});
 
 	const {t} = useI18n();
 	const accountLabels = ['Акаўнт', 'Аккаунт', 'Account', 'Konto', 'Cuenta', 'Compte'];
@@ -35,7 +89,8 @@
 	const languageLabels = ['Мова', 'Язык', 'Languages', 'Sprache', 'Idioma', 'Langue'];
 	const feedback = ['Обратная связь', 'Зваротная сувязь', 'Feedback', 'Feedback', 'Comentarios', 'Commentaires'];
 	const settingsLabels = ['Налады', 'Настройки', 'Settings', 'Einstellungen', 'Configuración', 'Paramètres'];
-
+	const logOutAccept = ref(false)
+	const logOutMenu = ref(false)
 	const getMenuPlainLink = (text) => {
 		if (accountLabels.includes(text)) {
 			return '/account';
@@ -69,12 +124,78 @@
 	};
 
 	definePageMeta({
-		layout: 'footerlayout'
+		middleware: ['auth'],
 	})
 
 </script>
 
-<style>
+<style scoped>
+
+	.askeza__v {
+		color: grey;
+		font-size: 14px;
+		font-weight: 400;
+		text-align: center;
+		margin-bottom: 15px;
+
+	}
+
+	.logout__confirm {
+		width: 80%;
+		background: #34364a;
+		padding: 20px;
+		border-radius: 15px;
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		top: 40%;
+		z-index: 100;
+	}
+
+	.log__out-icon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.logout__btns {
+		margin-top: 10px;
+		display: flex;
+		justify-content: center;
+	}
+
+	.logout__btn {
+		background: none;
+		border: none;
+		color: #24ba1d;
+		padding: 10px 20px;
+		font-weight: bold;
+		font-size: 19px;
+		font-family: "Acme", serif;
+	}
+
+	.overlay {
+		position: absolute;
+		width: 100%;
+		height: 100vh;
+		background: black;
+		opacity: 50%;
+		z-index: 1;
+	}
+
+	.log__out-text {
+		padding: 5px 0;
+		color: grey;
+		text-align: center;
+	}
+
+	.logout {
+		margin-bottom: 10px;
+		text-align: center;
+		color: white;
+		font-family: "Acme", serif;
+		font-size: 22px;
+	}
+
 	* {
 		padding: 0;
 		margin: 0;
@@ -101,6 +222,12 @@
 		background: #00BCD4;
 	}
 
+	.menu__title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
 	.account__icon {
 		width: 40px;
 		height: 40px;
@@ -117,6 +244,9 @@
 	}
 
 	.askeza__menu-content {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 		width: 100%;
 		padding: 15px 6vw;
 		height: 100vh;
@@ -125,6 +255,10 @@
 
 	.menu__btn-wrapper {
 		padding: 5px 0;
+	}
+
+	.askeza__menu {
+		position: relative;
 	}
 
 	.account__settings-btn {

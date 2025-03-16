@@ -22,8 +22,9 @@
 		"Налады"
 	],
 	"account": {
-		"accoutTitle": "Акаўнт",
-		"accountBtn": "Абнавіць"
+		"accoutTitle": "Рахунак",
+		"accountBtn": "Абнавіць",
+		"changedName": "Імя зменена"
 	},
 	"singInUP": {
 		"singIn": "Ужо ёсць уліковы запіс? Увайсці",

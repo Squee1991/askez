@@ -23,7 +23,8 @@
 	],
 	"account": {
 		"accoutTitle": "Cuenta",
-		"accountBtn": "Actualizar"
+		"accountBtn": "Actualizar",
+		"changedName": "Nombre cambiado"
 	},
 	"singInUP": {
 		"singIn": "¿Ya tienes una cuenta? Iniciar sesión",
