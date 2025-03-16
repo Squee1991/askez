@@ -27,10 +27,7 @@
 				</div>
 			</div>
 			<div class="range__date-wrapper">
-				<div class="range__date">
-					<div class="range__date-text">{{ $t('taskDetails.startDate')}}</div>
-					<div class="range__date__data start">{{ formatDate(selectedTask.dateRange.start) }}</div>
-				</div>
+				<div class="range__date">2</div>
 				<div class="range__date">
 					<div class="range__date-text">{{ $t('taskDetails.endDate')}}</div>
 					<div class="range__date__data end">{{ formatDate(selectedTask.dateRange.end) }}</div>
@@ -89,7 +86,7 @@
 	import EditDeleteMenu from '../src/components/EditDeleteMenu.vue';
 	import EditIcon from  '../assets/images/editIcon.svg'
 	const { locale } = useI18n()
-    const editIcon = ref(EditIcon)
+	const editIcon = ref(EditIcon)
 	const editState = ref(false);
 	const isOpen = ref(false);
 	const taskToDelete = ref(null);
