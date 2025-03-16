@@ -2,10 +2,13 @@ console.log(process.env.NODE_ENV)
 
 export default defineNuxtConfig({
     ssr: true,
+    nitro: {
+        preset: "vercel"
+    },
 
     runtimeConfig: {
         public: {
-            apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://default-api.example.com'
+            firebaseAuthDisableSession: true
         }
     },
     compatibilityDate: '2024-11-01',
@@ -25,7 +28,7 @@ export default defineNuxtConfig({
             errorMap: 'debug', // Подробные ошибки в разработке
             popupRedirectResolver: false, // Отключает зависимость всплывающих окон для входа через соцсети
             persistence: ['indexedDBLocal'], // Сохраняет сессию пользователя в IndexedDB
-            sessionCookie: true
+            sessionCookie: false
         },
     },
     i18n: {
@@ -52,10 +55,10 @@ export default defineNuxtConfig({
                 file: 'de-DE.json',
             },
             {
-                code: 'be-BY',
-                iso: 'be-BY',
+                code: 'by-BY',
+                iso: 'by-BY',
                 name: 'Беларускі',
-                file: 'be-BY.json',
+                file: 'by-BY.json',
             },
             {
                 code: 'es-ES',
@@ -70,15 +73,9 @@ export default defineNuxtConfig({
                 file: 'fr-FR.json',
             },
         ],
-        fallbackLocale: "en-US",
-        defaultLocale: 'en-US',
-        detectBrowserLanguage: {
-            useCookie: true,
-            cookieKey: 'i18n_redirected',
-            alwaysRedirect: true,
-            fallbackLocale: 'en-US'
-        }
 
+        defaultLocale: 'en-US',
+        detectBrowserLanguage: false
     },
 
     googleFonts: {
@@ -98,9 +95,4 @@ export default defineNuxtConfig({
         fallback: 'dark',
         classSuffix: '',
     },
-    vite: {
-        build: {
-            sourcemap: true
-        }
-    }
 })

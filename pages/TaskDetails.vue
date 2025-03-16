@@ -91,8 +91,6 @@
 	const isOpen = ref(false);
 	const taskToDelete = ref(null);
 	const router = useRoute();
-	const missedCount = ref(0)
-	const checkedCount = ref(0)
 	const isDateSelected = ref(false);
 	const checkedDates = ref([])
 	const missedDates = ref([])
@@ -100,7 +98,8 @@
 	const selectedTask = computed(() =>
 		habitStore.tasks.find((task) => task.id === Number(router.query.id)) || null
 	);
-
+	const checkedCount = ref(0);
+	const missedCount = ref(0);
 	const onDateSelect = (day) => {
 		if (!day || !day.id || !selectedTask.value) return;
 		const selectedDate = day.id;
@@ -177,7 +176,6 @@
 		checkedDates.value.push(selectedDate);
 		localStorage.setItem(`task_${selectedTask.value.id}_checkedDates`, JSON.stringify(checkedDates.value)
 		);
-		checkedCount.value++;
 
 		const totalDays = Math.max(1, (new Date(selectedTask.value.dateRange.end) - new Date(selectedTask.value.dateRange.start)) / (1000 * 60 * 60 * 24) + 1);
 		const step = (100 / totalDays).toFixed(2);
@@ -223,7 +221,6 @@
 				color: "#FF5C00",
 				percent: Math.min(parseFloat(step), remainingProgress),
 			});
-			missedCount.value++;
 			habitStore.updateProgress(selectedTask.value);
 			habitStore.saveTasks();
 		}
@@ -300,10 +297,12 @@
 		layout: 'footerlayout',
 	});
 
-	watch([checkedCount, missedCount], () => {
-		localStorage.setItem("checkedCount", checkedCount.value);
-		localStorage.setItem("missedCount", missedCount.value);
-	});
+	watch(selectedTask, (newTask) => {
+		if (newTask) {
+			checkedCount.value = newTask.checkedDates?.length || 0;
+			missedCount.value = newTask.missedDates?.length || 0;
+		}
+	}, { deep: true, immediate: true });
 </script>
 <style>
 

@@ -1,5 +1,11 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    setPersistence,
+    browserLocalPersistence
+} from 'firebase/auth';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyBhDly0l8cImq0geDGG7pQdsbH12sPl9CQ',
@@ -10,10 +16,11 @@ const firebaseConfig = {
     measurementId: "G-CMRDWZ7TDP"
 };
 
-// Проверяем, если Firebase не инициализирован, инициализируем
-
+// Инициализируем Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Экспортируем необходимые функции
+// ❗ Отключаем серверные сессии и включаем локальное хранение авторизации
+setPersistence(auth, browserLocalPersistence);
+
 export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword };

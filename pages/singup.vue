@@ -129,6 +129,10 @@
 	}
 
 	const submitForm = async () => {
+		data.value.fields.forEach(field => {
+			field.error = false;
+		});
+
 		const formData = {
 			email: data.value.fields.find(f => f.name === 'email')?.value.trim() || '',
 			password: data.value.fields.find(f => f.name === 'password')?.value.trim() || '',
@@ -145,16 +149,20 @@
 			} else {
 				await authStore.loginUser(formData);
 			}
+
 			await authStore.fetchingUser();
 			isAuthenticated.value = true;
-
 		} catch (error) {
+			console.error("Ошибка входа:", error);
+
 			const errorMessage = validationStore.getFirebaseError(error);
 			const emailField = data.value.fields.find(f => f.name === 'email');
 			const passwordField = data.value.fields.find(f => f.name === 'password');
 
 			if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found') {
 				emailField.error = errorMessage;
+			} else if (error.code === 'auth/wrong-password') {
+				passwordField.error = errorMessage;
 			} else {
 				passwordField.error = errorMessage;
 			}
@@ -164,6 +172,12 @@
 		}
 	};
 
+	watch(() => data.value.fields.map(f => f.value), () => {
+			data.value.fields.forEach(field => {
+				field.error = false;
+			});
+		}
+	);
 
 	const goToMainPage = () => {
 		router.push('/welcomePage');

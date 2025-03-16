@@ -1,9 +1,6 @@
-<template>
-	<div class="back-header">
-		<div v-if="props.icon" @click="goBack" class="back__arrow-icon">
-			<svg fill="currentColor" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-			     width="25px" height="25px" viewBox="0 0 193.266 193.266"
-			     xml:space="preserve">
+<svg fill="currentColor" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+	 width="800px" height="800px" viewBox="0 0 193.266 193.266"
+	 xml:space="preserve">
 <g>
 	<path d="M183.011,111.191c-13.503-36.417-51.753-46.329-86.965-37.976c1.185-8.843,0.875-17.887,0.649-26.781
 		C96.494,38.482,97,29.389,95.584,21.28c-0.005-0.037-0.013-0.071-0.018-0.107c-0.258-1.465-0.56-2.907-0.963-4.292
@@ -42,61 +39,3 @@
 		C186.124,153.768,186.063,161.04,183.474,166.147z"/>
 </g>
 </svg>
-		</div>
-		<div class="header-title">{{ props.title }}</div>
-	</div>
-</template>
-<script setup>
-	import {useRouter} from 'vue-router';
-	import {defineProps} from 'vue';
-
-	const router = useRouter();
-	const props = defineProps({
-		icon: {
-			type: [Object, null, String],
-		},
-		title: {
-			type: String,
-			required: false,
-		}
-	});
-
-	const goBack = () => {
-		if (router.currentRoute.value.path === '/archive' || router.currentRoute.value.path === '/menu' ) {
-			router.push('/welcomePage');
-		}
-		else {
-			router.push('/menu');
-		}
-	};
-
-</script>
-<style>
-	.back-header {
-		display: flex;
-		align-items: center;
-		color: var(--text-color);
-	}
-
-	svg {
-		color: currentColor;
-		width: 100%;
-	}
-
-	.back__arrow-icon {
-		width: 40px;
-
-		margin-right: 10px;
-		padding: 5px;
-		border-radius: 50%;
-		color: var(--text-color);
-	}
-
-	.header-title {
-		font-size: 30px;
-		padding: 15px 0;
-		font-weight: bold;
-		color: var(--text-color);
-		font-family: "Merienda", serif;
-	}
-</style>
