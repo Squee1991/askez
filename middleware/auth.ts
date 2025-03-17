@@ -9,7 +9,7 @@
 //     }
 // })
 export default defineNuxtRouteMiddleware((to, from) => {
-    const token = useCookie('token') || null; // Проверяем токен в куках
+    const token = useCookie('token') || null;
 
     if (!token) {
         return navigateTo('/');

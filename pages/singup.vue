@@ -159,7 +159,7 @@
 			const emailField = data.value.fields.find(f => f.name === 'email');
 			const passwordField = data.value.fields.find(f => f.name === 'password');
 
-			if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found') {
+			if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found' || error.code === 'auth/email-already-in-use') {
 				emailField.error = errorMessage;
 			} else if (error.code === 'auth/wrong-password') {
 				passwordField.error = errorMessage;
@@ -193,12 +193,6 @@
 		color: #514b82;
 		border: 2px solid;
 		position: relative;
-	}
-
-	.form__logo-label {
-		font-size: 32px;
-		font-weight: bold;
-		font-family: "Acme", serif;
 	}
 
 	.loader {
@@ -262,7 +256,6 @@
 		}
 	}
 
-
 	.loading {
 		font-size: 24px;
 		text-align: center;
@@ -321,7 +314,6 @@
 		border-radius: 8px;
 		font-size: 16px;
 		outline: none;
-
 	}
 
 	input:focus {
@@ -347,7 +339,7 @@
 	}
 
 	.form__logo-icon {
-		margin-top: 60px;
+		margin-top: 20px;
 		padding: 5px;
 		width: 110px;
 	}
@@ -361,7 +353,7 @@
 		flex-direction: column;
 		justify-content: center;
 		padding: 20px;
-		margin-bottom: 50px;
+		margin-bottom: 20px;
 	}
 
 	.form__btn {
@@ -402,13 +394,5 @@
 		to {
 			opacity: 1;
 		}
-	}
-
-	.form__label {
-		font-weight: 600;
-		color: var(--text-color);
-		font-size: 13px;
-		font-family: "Nunito", serif;
-		padding-bottom: 5px;
 	}
 </style>

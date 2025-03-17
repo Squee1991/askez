@@ -33,6 +33,7 @@
 		"singUpBtn": "Зарегистрироваться"
 	},
 	"archieve": {
+		"empty": "Архив пуст",
 		"achieveTitle": "Архив аскез",
 		"name": "Ваши аскезы",
 		"totalDays": "Всего дней",

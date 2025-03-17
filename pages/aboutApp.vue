@@ -5,7 +5,7 @@
 			:icon="Arrow"/>
 		<div class="about__content">
 			<div class="about__inner">
-				<img class="about__img" :src="AboutPanda" alt="">
+				<img class="about__img" src="../assets/images/aboutAPP.png" alt="">
 			</div>
 			<div class="about__text">Component under development...</div>
 		</div>
@@ -19,7 +19,6 @@
 </script>
 
 <style scoped>
-
 	.about__wrapper {
 		position: relative;
 		padding: 25px;
@@ -34,7 +33,7 @@
 		border-radius: 50%;
 		background: #d5c4c4;
 		overflow: hidden;
-		border: 3px solid white;
+		border: 3px solid var(--background-color);
 	}
 
 	.about__text {
@@ -53,6 +52,5 @@
 
 	.about__img {
 		width: 100%;
-
 	}
 </style>

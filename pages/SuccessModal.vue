@@ -21,7 +21,6 @@
 </script>
 
 <style scoped>
-
 	.success-modal {
 		position: relative;
 		width: 100vw;
@@ -75,7 +74,6 @@
 	.success__title {
 		font-size: 40px;
 		font-weight: bold;
-		/*color: #5D4037;*/
 		color: var(--text-color);
 	}
 
@@ -88,5 +86,4 @@
 		font-family: "Nunito", serif;
 		letter-spacing: 2px;
 	}
-
 </style>

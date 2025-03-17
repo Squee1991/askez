@@ -11,10 +11,12 @@
 			<div class="progress__inner">
 				<div class="user__greetings">
 					<div class="title"> {{ $t('homePage.greetings') }},<span
-						class="username"> {{ authStore.name}}</span></div>
-					<div v-if="habitStore.archiveTasks.length" :class="{'empty' : !habitStore.archiveTasks.length}"
-					     @click="toArchieve" class="archive__icon">
-						<img :src="Cloud" alt="">
+						class="username"> {{ authStore.name}}</span>
+					</div>
+					<div class="button__add-goal">
+						<button @click="toggleHabitGoal" class="goal__btn">
+							<img src="assets/images/addTask.svg" alt="" class="goal__btn-icon"/>
+						</button>
 					</div>
 				</div>
 				<div class="goals__inner">
@@ -138,6 +140,12 @@
 	const auth = getAuth()
 	const user = auth.currentUser
 
+	// const toggleHabitGoalHandler = () => {
+	// 	isButtonActive.value = true
+	// 	console.log('btn in footer');
+	// 	emit('toggleHabit');
+	// };
+
 	const isNotTask = computed(() => habitStore.tasks.length === 0);
 
 	const openTaskDetails = (task) => {
@@ -148,10 +156,6 @@
 			},
 		});
 	};
-
-	const toArchieve = () => {
-		router.push('/archive')
-	}
 
 	const addTask = (task) => {
 		habitStore.addTask(task);
@@ -192,8 +196,24 @@
 
 <style>
 
-	html, body {
-		overflow-x: hidden;
+	.goal__btn {
+		width: 40px;
+		height: 40px;
+		padding: 10px;
+		border-radius: 50%;
+		border: none;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: #4FC55C;
+		color: white;
+		font-size: 16px;
+		font-family: "Nunito", serif;
+	}
+
+	.goal__btn-icon {
+		width: 40px;
+		height: 40px;
 	}
 
 	.archive__icon {

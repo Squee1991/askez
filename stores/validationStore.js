@@ -20,7 +20,7 @@ export const useValidationStore = defineStore('validation', () => {
             case 'auth/email-already-in-use':
                 return 'Email already exists';
             case 'auth/invalid-email':
-                return 'Invalid email1';
+                return 'Invalid email';
             case 'auth/weak-password':
                 return 'Password too weak';
             case 'auth/user-not-found':

@@ -13,7 +13,6 @@
 			<div>
 				<div class="menu__title">
 					<HeaderwithBack
-						:icon="Arrowicon"
 						:title="$t('menu.title')"/>
 					<div class="log__out-icon" @click="singOutBtn">
 						<img :src="LogoutIcon" alt="">
@@ -38,8 +37,10 @@
 						</NuxtLink>
 					</div>
 				</div>
+				<div class="askeza__v">Askeza v1.0</div>
 			</div>
-			<div class="askeza__v">Askeza v1.0</div>
+
+			<Footer/>
 		</div>
 	</div>
 </template>
@@ -111,13 +112,13 @@
 		if (accountLabels.includes(text)) {
 			return '/images/account.svg';
 		} else if (aboutLabels.includes(text)) {
-			return '/images/aboutApp.svg';
+			return '/images/AboutApp.svg';
 		} else if (languageLabels.includes(text)) {
-			return '/images/language.svg';
+			return '/images/lang.svg';
 		} else if (settingsLabels.includes(text)) {
-			return '/images/settings.svg';
+			return '/images/seting.svg';
 		} else if (feedback.includes(text)) {
-			return '/images/feedbackIcon.svg';
+			return '/images/feedBack.svg';
 		} else {
 			return '';
 		}
@@ -130,14 +131,13 @@
 </script>
 
 <style scoped>
-
 	.askeza__v {
+		margin-top: 10px;
 		color: grey;
 		font-size: 14px;
 		font-weight: 400;
 		text-align: center;
 		margin-bottom: 15px;
-
 	}
 
 	.logout__confirm {
@@ -193,13 +193,7 @@
 		text-align: center;
 		color: white;
 		font-family: "Acme", serif;
-		font-size: 22px;
-	}
-
-	* {
-		padding: 0;
-		margin: 0;
-		box-sizing: border-box;
+			font-size: 22px;
 	}
 
 	.lang-bg-orange {
@@ -229,8 +223,8 @@
 	}
 
 	.account__icon {
-		width: 40px;
-		height: 40px;
+		width: 44px;
+		height: 44px;
 		margin-right: 15px;
 		padding: 8px;
 		border-radius: 15px;
@@ -270,6 +264,8 @@
 		background: var(--menu--btn-bg);
 		border-radius: 12px;
 		transition: background 0.3s ease;
+		outline: none;
+		-webkit-tap-highlight-color: transparent;
 	}
 
 </style>
