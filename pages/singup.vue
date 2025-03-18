@@ -15,7 +15,6 @@
 				<button @click="goToMainPage" class="form__btn">{{ $t('accState.stateBtn')}}</button>
 			</div>
 			<div v-else class="form__field-inner" :key="isSignUp">
-<!--				<h2 class="form__title">{{ isSignUp ? $t('singInUP.singUpBtn') : $t('singInUP.singInBtn')}}</h2>-->
 				<div v-for="field in filteredFields" :key="field.id" class="form__field">
 					<v-fields
 						:field="field"
@@ -138,7 +137,6 @@
 			password: data.value.fields.find(f => f.name === 'password')?.value.trim() || '',
 			name: data.value.fields.find(f => f.name === 'name')?.value.trim() || '',
 		};
-
 		if (!formData.email || !formData.password) return;
 
 		try {
@@ -153,12 +151,11 @@
 			await authStore.fetchingUser();
 			isAuthenticated.value = true;
 		} catch (error) {
-			console.error("Ошибка входа:", error);
+			console.error(error);
 
 			const errorMessage = validationStore.getFirebaseError(error);
 			const emailField = data.value.fields.find(f => f.name === 'email');
 			const passwordField = data.value.fields.find(f => f.name === 'password');
-
 			if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found' || error.code === 'auth/email-already-in-use') {
 				emailField.error = errorMessage;
 			} else if (error.code === 'auth/wrong-password') {

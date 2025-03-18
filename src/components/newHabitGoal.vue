@@ -116,6 +116,7 @@
 	.vc-day,
 	.vc-weekday {
 		color: var(--text-color);
+		font-weight: bold;
 	}
 
 	.create__btn {

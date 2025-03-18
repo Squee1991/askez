@@ -152,7 +152,7 @@
 		"delTask": "Delete"
 	},
 	"CheckedProgress": {
-		"checked": "goal has checked",
-		"notChecked": "goal hasn’t checked"
+		"checked": "days checked",
+		"notChecked": "days missed"
 	}
 }

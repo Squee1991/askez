@@ -15,8 +15,8 @@
 		if (!start || !end) return 0;
 		const startDate = new Date(start);
 		const endDate = new Date(end);
-		const diffInMs = endDate - startDate;
-		const minDays = diffInMs / (1000 * 60 * 60 * 24) + 1;
+		const diffInMs = endDate.setHours(0,0,0,0) - startDate.setHours(0,0,0,0);
+		const minDays = Math.round(diffInMs / (1000 * 60 * 60 * 24)) + 1;
 		return Math.max(minDays, 0);
 	};
 

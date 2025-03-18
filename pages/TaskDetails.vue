@@ -4,10 +4,10 @@
 			<div class="confirm__content-wrapper">
 				<div class="confirm__title">{{ $t('delConfirm.title')}}</div>
 				<div class="confirm__btns">
-					<button @click="cancelDelete" class="btn-green confirm__btn">{{ $t('delConfirm.reject')}}</button>
 					<NuxtLink @click="clearTask(selectedTask.id)" class="confirm__btn" to="/welcomePage">
 						<button class="confirm__btn">{{ $t('delConfirm.accept')}}</button>
 					</NuxtLink>
+					<button @click="cancelDelete" class="btn-green confirm__btn">{{ $t('delConfirm.reject')}}</button>
 				</div>
 			</div>
 		</div>
@@ -81,7 +81,6 @@
 			<div class="date__picker">
 				<v-calendar
 					is-expanded
-					v-if="localDateRange.start && localDateRange.end"
 					:locale="locale"
 					:min-date="localDateRange.start"
 					:max-date="localDateRange.end"
@@ -149,14 +148,22 @@
 
 	const onDateSelect = (day) => {
 		if (!day || !day.id || !selectedTask.value) return;
-		const selectedDate = day.id;
-		if (selectedDate < selectedTask.value.dateRange.start || selectedDate > selectedTask.value.dateRange.end) {
+		const tempSelectedDate = removeTime(day.id);
+		const rangeStart = removeTime(selectedTask.value.dateRange.start);
+		const rangeEnd = removeTime(selectedTask.value.dateRange.end);
+		if (tempSelectedDate < rangeStart || tempSelectedDate > rangeEnd) {
 			console.log("Дата вне диапазона");
 			return;
 		}
 		isDateSelected.value = true;
-		localDateRange.value.start = selectedDate;
-		console.log("Выбрана", selectedDate);
+		localDateRange.value.start = tempSelectedDate;
+
+	};
+
+	const removeTime = (timestamp) => {
+		const date = new Date(timestamp);
+		date.setHours(0, 0, 0, 0);
+		return date.getTime();
 	};
 
 	const disabledDates = computed(() => {
@@ -202,11 +209,12 @@
 	});
 
 	const onCheckClick = () => {
+
 		if (!selectedTask.value) return;
 		const selectedDate = localDateRange.value.start;
 		if (!selectedDate ||
 			new Date(selectedDate) < new Date(selectedTask.value.dateRange.start) ||
-			new Date(selectedDate) > new Date(selectedTask.value.dateRange.end)
+			new Date(selectedDate) >= new Date(selectedTask.value.dateRange.end)
 		) {
 			console.log("дата вне диапазона!");
 			localDateRange.value.start = null;
@@ -348,16 +356,16 @@
 	}, { deep: true, immediate: true });
 
 </script>
-<style scoped>
+<style>
 
 	.vc-highlight-red {
 		background-color: #FF3030 !important;
-		color: white !important;
+		color: black !important;
 	}
 
 	.vc-highlight-green {
 		background-color: #00D100 !important;
-		color: white !important;
+		color: black !important;
 	}
 
 	.vc-highlight-light-bg {

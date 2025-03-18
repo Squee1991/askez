@@ -1,17 +1,20 @@
 <template>
-	<div v-if="state" class="wrapper">
-		<div class="container">
-			<div ref="animationContainer"></div>
+	<Transition name="fade">
+		<div v-if="state" class="wrapper">
+			<div class="container">
+				<div ref="animationContainer"></div>
+			</div>
+			<div class="nuxt__links">
+				<button @click="toDescription" class="btn"> {{ $t("startPage.value")}}</button>
+			</div>
 		</div>
-		<div class="nuxt__links">
-			<button @click="toDescription" class="btn"> {{ $t("startPage.value")}}</button>
+		<div v-else class="description">
+			<NuxtLink to="/singup">
+				<button class="next__btn">{{ $t("description.value")}}</button>
+			</NuxtLink>
 		</div>
-	</div>
-	<div v-else class="description">
-		<NuxtLink to="/singup">
-			<button class="next__btn">{{ $t("description.value")}}</button>
-		</NuxtLink>
-	</div>
+	</Transition>
+
 </template>
 
 <script setup>
@@ -46,6 +49,16 @@
 
 <style scoped>
 
+	.fade-enter-active,
+	.fade-leave-active {
+		transition: opacity 0.5s ease;
+	}
+
+	.fade-enter-from,
+	.fade-leave-to {
+		opacity: 0;
+	}
+
 	.description {
 		background-image: url("../assets/images/bgPandaDescription.png");
 		width: 100%;
@@ -57,21 +70,21 @@
 	}
 
 	.next__btn {
-		opacity: 85%;
+		opacity: 70%;
 		width: 50%;
 		border-radius: 12px;
 		position: absolute;
 		border: none;
 		padding: 10px 15px;
-		bottom: 0;
+		bottom: 15px;
 		left: 50%;
 		transform: translateX(-50%);
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-		background-color: #88c057;
+		background-color: #005F23;
 		font-weight: bold;
 		font-size: 19px;
 		color: #ffffff;
 		margin-bottom: 20px;
+		font-family: "Nunito", serif;
 	}
 
 	.container {
@@ -93,6 +106,7 @@
 		width: 100%;
 		font-size: 22px;
 		font-weight: 600;
+		font-family: "Nunito", serif;
 	}
 
 	.wrapper {

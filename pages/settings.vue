@@ -1,9 +1,103 @@
+<script setup>
+	import {ref, onMounted, computed} from 'vue';
+	import {getAuth, reauthenticateWithCredential, EmailAuthProvider, deleteUser} from 'firebase/auth';
+	import Light from '../assets/images/light.png';
+	import Dark from '../assets/images/dark.png';
+	import HeaderWithBack from '../src/components/headerWithBack.vue';
+	import Arrowicon from '../assets/images/arrowSvg.svg';
+	import {useRoute, useRouter} from "vue-router";
+	import {useHabitStore} from "../stores/habitStore.js";
+	import {useAuthStore} from "../stores/authStore.js";
+	import {useI18n} from 'vue-i18n';
+	import {useValidationStore} from '../stores/validationStore.js'
+
+	const validationStore = useValidationStore()
+	const {t} = useI18n();
+	const isMounted = ref(false);
+	const habitStore = useHabitStore()
+	const authStore = useAuthStore()
+	const confirmDeleteDatas = ref(false)
+	const router = useRouter();
+	const password = ref('');
+	const deleteError = ref('');
+	const colorMode = useColorMode();
+	const passwordInput = ref('');
+
+	const toggleTheme = () => {
+		colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark'
+	};
+
+	const modeLabel = ['Mode', 'Мод']
+	const deleteLabels = ['Удалить аккаунт', 'Delete account', 'Выдаліць акаунт', 'Konto löschen', 'Eliminar cuenta', 'Supprimer le compte']
+	const {locale, messages} = useI18n();
+
+	const cancelDelete = () => {
+		confirmDeleteDatas.value = false;
+	};
+
+	const deleteAllDatas = async () => {
+
+		const auth = getAuth();
+		const user = auth.currentUser;
+
+		if (!passwordInput.value.trim()) {
+			deleteError.value = 'Please enter password before deleting';
+			return;
+		}
+		if (user && user.email) {
+			const credential = EmailAuthProvider.credential(user.email, passwordInput.value);
+			try {
+				await reauthenticateWithCredential(user, credential);
+				await deleteUser(user);
+				confirmDeleteDatas.value = false;
+				habitStore.clearAlldates();
+				router.push('/');
+			} catch (error) {
+				console.error(error);
+				deleteError.value = validationStore.getFirebaseError(error);
+				if (error.code === 'auth/too-many-requests') {
+					deleteError.value = validationStore.getFirebaseError(error);
+				}
+			}
+		}
+	};
+
+	const NotdeleteAllDatas = () => {
+		confirmDeleteDatas.value = false
+	}
+
+	onMounted(() => {
+		const savedMode = localStorage.getItem('nuxt-color-mode') || 'dark';
+		colorMode.preference = savedMode;
+		isMounted.value = true;
+	});
+
+	const SettingsChange = (text) => {
+		const textItem = text.trim();
+		if (modeLabel.includes(textItem)) {
+			toggleTheme();
+		} else if (deleteLabels.includes(textItem)) {
+			confirmDeleteDatas.value = true
+		}
+	};
+
+	onMounted(() => {
+		isMounted.value = true;
+	});
+
+</script>
+
 <template>
 	<div class="settings__wrapper">
-		<div v-show="confirmDeleteDatas" class="overlay">
+		<div v-if="confirmDeleteDatas" class="overlay">
 			<div class="confirm__wrapper">
 				<div class="confirm__title">{{ $t('delAllDatas.title')}}</div>
 				<div class="confirm_sub-title">{{ $t('delAllDatas.subTitle')}}</div>
+				<div class="confirm__label">
+					<input class="confirm__field-password" v-model="passwordInput" type="password"
+					       placeholder="enter password">
+					<span v-if="deleteError" class="error-message">{{ deleteError }}</span>
+				</div>
 				<div class="btns-wrapper">
 					<button @click="deleteAllDatas" class="btn_del-data --del-data">{{ $t('delAllDatas.acceptBtn')}}
 					</button>
@@ -29,84 +123,30 @@
 			</div>
 		</div>
 	</div>
-
 </template>
 
-<script setup>
-	import {ref, onMounted, computed} from 'vue';
-	import {getAuth, signOut, reauthenticateWithCredential, EmailAuthProvider, deleteUser} from 'firebase/auth';
-	import Light from '../assets/images/light.png';
-	import Dark from '../assets/images/dark.png';
-	import HeaderWithBack from '../src/components/headerWithBack.vue';
-	import Arrowicon from '../assets/images/arrowSvg.svg';
-	import {useRoute, useRouter} from "vue-router";
-	import {useHabitStore} from "../stores/habitStore.js";
-	import {useAuthStore} from "../stores/authStore.js";
-	import {useI18n} from 'vue-i18n';
-
-	const {t} = useI18n();
-	const isMounted = ref(false);
-	const habitStore = useHabitStore()
-	const authStore = useAuthStore()
-	const confirmDeleteDatas = ref(false)
-	const router = useRouter();
-
-	const colorMode = useColorMode();
-
-
-	const accept = () => {
-		authStore.logout()
-		logOutAccept.value = false
-	}
-
-	const reject = () => {
-		logOutAccept.value = false
-	}
-
-	const modeLabel = ['Mode', 'Мод']
-	const deleteLabels = ['Удалить аккаунт', 'Delete account', 'Выдаліць акаунт', 'Konto löschen', 'Eliminar cuenta', 'Supprimer le compte']
-	const {locale, messages} = useI18n();
-
-	const cancelDelete = () => {
-		confirmDeleteDatas.value = false;
-	};
-
-	const deleteAllDatas = async () => {
-		confirmDeleteDatas.value = false
-		habitStore.clearAlldates()
-		await authStore.deleteAccount()
-		router.push("/")
-	}
-
-	const NotdeleteAllDatas = () => {
-		confirmDeleteDatas.value = false
-	}
-
-	const toggleTheme = () => {
-		colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark'
-	};
-
-	onMounted(() => {
-		const savedMode = localStorage.getItem('nuxt-color-mode') || 'dark';
-		colorMode.preference = savedMode;
-	});
-
-	const SettingsChange = (text) => {
-		const textItem = text.trim();
-		if (modeLabel.includes(textItem)) {
-			toggleTheme();
-		} else if (deleteLabels.includes(textItem)) {
-			confirmDeleteDatas.value = true
-		}
-	};
-
-	onMounted(() => {
-		isMounted.value = true;
-	});
-
-</script>
-
 <style scoped>
+	.confirm__label {
+		height: 80px;
+	}
+
+	.error-message {
+		color: red;
+		font-size: 14px;
+		height: 20px;
+		font-family: "Acme", serif;
+		font-weight: 600;
+		margin-bottom: 15px;
+	}
+
+	.confirm__field-password {
+		font-size: 14px;
+		margin-bottom: 5px;
+	}
+
+	.confirm__field-password:focus {
+		border: 1px solid #24ba1d;
+	}
 
 	.confirm__title {
 		color: white;
