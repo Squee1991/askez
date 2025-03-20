@@ -140,30 +140,31 @@
 	const missedDates = ref([])
 	const checkedCount = ref(0);
 	const missedCount = ref(0);
-
 	const habitStore = useHabitStore();
+
 	const selectedTask = computed(() =>
 		habitStore.tasks.find((task) => task.id === Number(router.query.id)) || null
 	);
 
 	const onDateSelect = (day) => {
 		if (!day || !day.id || !selectedTask.value) return;
-		const tempSelectedDate = removeTime(day.id);
-		const rangeStart = removeTime(selectedTask.value.dateRange.start);
-		const rangeEnd = removeTime(selectedTask.value.dateRange.end);
+
+		const tempSelectedDate = localTime(day.id);
+		const rangeStart = localTime(selectedTask.value.dateRange.start);
+		const rangeEnd = localTime(selectedTask.value.dateRange.end);
+
 		if (tempSelectedDate < rangeStart || tempSelectedDate > rangeEnd) {
 			console.log("Дата вне диапазона");
 			return;
 		}
+
 		isDateSelected.value = true;
 		localDateRange.value.start = tempSelectedDate;
-
 	};
 
-	const removeTime = (timestamp) => {
+	const localTime = (timestamp) => {
 		const date = new Date(timestamp);
-		date.setHours(0, 0, 0, 0);
-		return date.getTime();
+		return new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
 	};
 
 	const disabledDates = computed(() => {
@@ -209,7 +210,6 @@
 	});
 
 	const onCheckClick = () => {
-
 		if (!selectedTask.value) return;
 		const selectedDate = localDateRange.value.start;
 		if (!selectedDate ||
@@ -299,15 +299,18 @@
 			})),
 		];
 	});
+
 	const isDateMarked = computed(() => {
 		const date = localDateRange.value.start;
 		if (!date) return false;
 		return checkedDates.value.includes(date) || missedDates.value.includes(date);
 	});
+
 	const localDateRange = ref({
 		start: selectedTask.value?.dateRange.start || null,
 		end: selectedTask.value?.dateRange.end || null,
 	});
+
 	const clearTask = (taskId) => {
 		if (!taskId) return;
 		habitStore.removeTask(taskId);
@@ -324,6 +327,7 @@
 		localStorage.setItem("checkedCount", checkedCount.value);
 		localStorage.setItem("missedCount", missedCount.value);
 	};
+
 	const editMenu = () => {
 		isOpen.value = true;
 	};
@@ -360,12 +364,12 @@
 
 	.vc-highlight-red {
 		background-color: #FF3030 !important;
-		color: black !important;
+		color: white !important;
 	}
 
 	.vc-highlight-green {
 		background-color: #00D100 !important;
-		color: black !important;
+		color: white !important;
 	}
 
 	.vc-highlight-light-bg {
