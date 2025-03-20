@@ -27,7 +27,7 @@
 				</div>
 			</div>
 			<div class="range__date-wrapper">
-				<div class="range__date">2</div>
+				<div class="range__date"></div>
 				<div class="range__date">
 					<div class="range__date-text">{{ $t('taskDetails.endDate')}}</div>
 					<div class="range__date__data end">{{ formatDate(selectedTask.dateRange.end) }}</div>
@@ -35,7 +35,7 @@
 			</div>
 			<div class="date__picker">
 				<v-calendar
-					is-expanded
+					is-expandedx
 					v-if="localDateRange.start && localDateRange.end"
 					:locale="locale"
 					:min-date="localDateRange.start"
@@ -100,8 +100,14 @@
 	);
 	const checkedCount = ref(0);
 	const missedCount = ref(0);
+
+	const getCurrentDate = () => {
+		const date = new Date();
+		return date.toISOString().split('T')[0]; // Получаем строку в формате YYYY-MM-DD
+	};
 	const onDateSelect = (day) => {
-		if (!day || !day.id || !selectedTask.value) return;
+		const currentDay = getCurrentDate()
+		if (!day || !day.id || !selectedTask.value || day.id !== currentDay) return;
 		const selectedDate = day.id;
 		if (selectedDate < selectedTask.value.dateRange.start || selectedDate > selectedTask.value.dateRange.end) {
 			console.log("Дата вне диапазона");
@@ -110,6 +116,7 @@
 		isDateSelected.value = true;
 		localDateRange.value.start = selectedDate;
 		console.log("Выбрана", selectedDate);
+		console.log(day)
 	};
 
 	const disabledDates = computed(() => {
@@ -155,6 +162,7 @@
 	});
 
 	const onCheckClick = () => {
+		console.log("Sdfg")
 		if (!selectedTask.value) return;
 		const selectedDate = localDateRange.value.start;
 		if (!selectedDate ||
