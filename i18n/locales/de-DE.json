@@ -33,6 +33,7 @@
 		"singUpBtn": "Registrieren"
 	},
 	"archieve": {
+		"empty": "Archiv ist leer",
 		"name": "Ihre Askesen",
 		"achieveTitle": "Archiv der Askesen",
 		"totalDays": "Gesamttage",

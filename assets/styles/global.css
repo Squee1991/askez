@@ -4,3 +4,15 @@
 	margin: 0;
 }
 
+html, body {
+	overflow-x: hidden;
+	background: var(--background-color);
+}
+
+a {
+	text-decoration: none;
+}
+
+li {
+	list-style-type: none;
+}

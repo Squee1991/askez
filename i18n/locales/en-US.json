@@ -23,7 +23,8 @@
 	],
 	"account": {
 		"accoutTitle": "Account",
-		"accountBtn": "Update"
+		"accountBtn": "Update",
+		"changedName": "Name changed"
 	},
 	"singInUP": {
 		"singIn": "Already have an account? Sign In",
@@ -32,6 +33,7 @@
 		"singUpBtn": "Sing Up"
 	},
 	"archieve": {
+		"empty":  "Archive is empty",
 		"name": "Your askezas",
 		"achieveTitle": "Ascezas archive",
 		"totalDays": "Total days",
@@ -150,7 +152,7 @@
 		"delTask": "Delete"
 	},
 	"CheckedProgress": {
-		"checked": "goal has checked",
-		"notChecked": "goal hasn’t checked"
+		"checked": "days checked",
+		"notChecked": "days missed"
 	}
 }

@@ -33,6 +33,7 @@
 		"singUpBtn": "Regístrate"
 	},
 	"archieve": {
+		"empty": "El archivo está vacío",
 		"name": "Tus ascetismos",
 		"achieveTitle": "Archivo de ascetismos",
 		"totalDays": "Total de días",

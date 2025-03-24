@@ -33,6 +33,7 @@
 		"singUpBtn": "S'inscrire"
 	},
 	"archieve": {
+		"empty": "L'archive est vide",
 		"name": "Vos ascèses",
 		"achieveTitle": "Archive des ascèses",
 		"totalDays": "Total de jours",

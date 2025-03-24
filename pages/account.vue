@@ -27,7 +27,6 @@
 	</div>
 </template>
 <script setup>
-
 	import Arrowicon from '../assets/images/arrowSvg.svg'
 	import HeaderWithback from '../src/components/headerWithBack.vue'
 	import SingOutIcon from '../assets/images/SingOutSvg.svg'

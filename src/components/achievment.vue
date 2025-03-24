@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="achieve__inner">
 		<div class="achiv__text">
 			<div class="archiv__title-sub">
 				<div class="achieve__title">{{$t('achieveTitle.title')}}</div>
@@ -56,6 +56,11 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+	}
+
+	.achieve__inner {
+		max-height: 70vh;
+		overflow-y: auto;
 	}
 
 	.achiv__counter {

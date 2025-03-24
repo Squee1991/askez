@@ -15,8 +15,8 @@
 		if (!start || !end) return 0;
 		const startDate = new Date(start);
 		const endDate = new Date(end);
-		const diffInMs = endDate - startDate;
-		const minDays = diffInMs / (1000 * 60 * 60 * 24) + 1;
+		const diffInMs = endDate.setHours(0,0,0,0) - startDate.setHours(0,0,0,0);
+		const minDays = Math.round(diffInMs / (1000 * 60 * 60 * 24)) + 1;
 		return Math.max(minDays, 0);
 	};
 
@@ -38,12 +38,16 @@
 <template>
 	<div>
 		<div class="archive__wrapper">
-			<HeaderWichback :icon="Arrowicon" :title="$t('archieve.achieveTitle')"/>
+			<HeaderWichback :title="$t('archieve.achieveTitle')"/>
 			<div class="archive__body">
 				<div class="archive__banner">
 					<div class="archive__header">
 						<div class="archive__name">{{ $t('archieve.name') }}</div>
 					</div>
+				</div>
+				<div class="archive__text" v-if="!habitStore.archiveTasks.length">
+					<div class="archiv__folder"><img class="folder__icon" src="../assets/images/folder.svg" alt=""></div>
+					<div class="archiv__empty-text">{{ $t('archieve.empty') }}</div>
 				</div>
 				<div class="archive__items">
 					<div :class="{'archive__list--expanded': isScaled[task.id]}"
@@ -100,11 +104,35 @@
 
 <style scoped>
 
+	.archive__text{
+		color: white;
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50% , -50%);
+	}
+
+	.archiv__empty-text {
+		font-size: 30px;
+		font-weight: bold;
+		text-align: center;
+		color: var(--text-color);
+	}
+
+	.folder__icon {
+		width: 100%;
+	}
+
 	.archive__items {
 		max-height: 74vh;
 		height: 100%;
 		overflow-y: auto;
 		padding-right: 5px;
+	}
+
+	.archiv__folder {
+		width: 70px;
+		margin: 0 auto;
 	}
 
 
@@ -239,5 +267,4 @@
 		font-weight: bold;
 		font-family: "Acme", serif;
 	}
-
 </style>
