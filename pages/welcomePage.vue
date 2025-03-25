@@ -1,13 +1,14 @@
 <template>
 	<div class="welcome">
 		<div class="habbit__page">
-			<div v-if="isHabitGoalVisible" class="overlay">
+			<div v-if="isHabitGoalVisible && !isSuccessModalVisible" class="overlay">
 				<div class="habbit__goal" @click="closeHabitGoal">
 					<div class="habit-goal-wrapper" @click.stop>
-						<HabbitGoal @toggleHabit="toggleHabitGoal" @add="addTask" @close="closeHabitGoal"/>
+						<HabbitGoal @add="handleAddTask" @close="closeHabitGoal"/>
 					</div>
 				</div>
-			</div>
+			</div>>
+			<SuccesModal v-if="isSuccessModalVisible" @close="handleSuccessClose"/>
 			<div class="progress__inner">
 				<div class="user__greetings">
 					<div class="title"> {{ $t('homePage.greetings') }},<span
@@ -69,7 +70,6 @@
 														</div>
 													</div>
 												</div>
-
 											</div>
 										</div>
 										<div class="taks__btns">
@@ -77,15 +77,11 @@
 												<div class="task__progress-value">
 													<div class="task__progress-green">
 														<span>&#9989; </span>
-														<span class="progress-green">{{
-	                                                            habitStore.result(task.id).progress
-	                                                            }}</span>
+														<span class="progress-green">{{ getProgress(task).progress }}</span>
 													</div>
 													<div class="task__progress-green">
 														<span>&#10060;</span>
-														<span class="progress-red"> {{
-	                                                            habitStore.result(task.id).progressMiss
-	                                                            }}</span>
+														<span class="progress-red">{{ getProgress(task).progressMiss }}</span>
 													</div>
 												</div>
 											</div>
@@ -99,7 +95,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="not__task-inner" v-if="isNotTask && activeButton === 'tasks'">
+						<div class="not__task-inner" v-if="isTasksLoaded  && isNotTask && activeButton === 'tasks'">
 							<img class="no__task-icon" src="../assets/images/Memepanda.png" alt="">
 							<span class="no__task-text"> {{ $t('homePage.no_active_goals') }}</span>
 						</div>
@@ -114,9 +110,11 @@
 	import {ref, computed, onMounted, onUnmounted} from "vue";
 	import {useHabitStore} from "../stores/habitStore.js";
 	import {useAuthStore} from "../stores/authStore.js";
+	import {useTaskStore} from '../stores/OfflineTaskStore.js'
 	import Achievment from "../src/components/achievment.vue"
 	import Statistic from "../src/components/statistics.vue"
 	import ProgressCircle from "../src/components/progressBar";
+	import SuccesModal from "../src/components/succesModal.vue";
 	import HabbitGoal from "../src/components/newHabitGoal.vue";
 	import CustomCheckbox from "../src/components/customCheckbox.vue";
 	import Archive from "../assets/images/Archive.svg";
@@ -126,25 +124,54 @@
 	import {useLocalePath} from '#i18n';
 	import {useRouter} from 'vue-router'
 	import {getAuth} from "firebase/auth";
-
+    const isTasksLoaded = ref(false)
+	const taskStore = useTaskStore();
 	const {locale} = useI18n()
 	const localePath = useLocalePath()
 	const router = useRouter()
 	const habitStore = useHabitStore();
 	const authStore = useAuthStore()
-	const tasks = computed(() => habitStore.tasks);
 	const progress = ref({});
 	const isHabitGoalVisible = ref(false);
+	const isSuccessModalVisible = ref(false);
 	const activeButton = ref('tasks');
 	const buttonBackground = ref(null);
 	const auth = getAuth()
 	const user = auth.currentUser
+	const tasks = computed(() => {
+		const habitTasks = habitStore.tasks;
+		const offlineTasks = taskStore.tasks;
+		const filteredOffline = offlineTasks.filter(offlineTask => {
+			return !habitTasks.some(onlineTask =>
+				onlineTask.goal === offlineTask.goal &&
+				JSON.stringify(onlineTask.dateRange) === JSON.stringify(offlineTask.dateRange)
+			);
+		});
 
+		return [...habitTasks, ...filteredOffline];
+	});
 	// const toggleHabitGoalHandler = () => {
 	// 	isButtonActive.value = true
 	// 	console.log('btn in footer');
 	// 	emit('toggleHabit');
 	// };
+	const handleAddTask = (task) => {
+		addTask(task);
+		isSuccessModalVisible.value = true;
+	};
+
+	const handleSuccessClose = () => {
+		isSuccessModalVisible.value = false;
+		isHabitGoalVisible.value = false;
+	};
+
+	const getProgress = (task) => {
+		if (habitStore.tasks.find(t => t.id === task.id)) {
+			return habitStore.result(task.id);
+		} else {
+			return taskStore.result(task.id);
+		}
+	};
 
 	const isNotTask = computed(() => habitStore.tasks.length === 0);
 
@@ -158,8 +185,11 @@
 	};
 
 	const addTask = (task) => {
-		habitStore.addTask(task);
-		console.log(habitStore.tasks);
+		if (navigator.onLine) {
+			habitStore.addTask(task);
+		} else {
+			taskStore.addTask(task);
+		}
 	};
 
 	const toggleHabitGoal = () => {
@@ -177,12 +207,17 @@
 	};
 
 	const formatDate = (date) => {
-		return new Date(date).toLocaleDateString(locale.value, {
+		let newDate;
+		if (date && typeof date.toDate === "function") {
+			newDate = date.toDate();
+		} else {
+			newDate = new Date(date);
+		}
+		return newDate.toLocaleDateString(locale.value, {
 			day: "2-digit",
 			month: "long",
 		});
 	};
-
 
 	const setActive = (buttonName) => {
 		activeButton.value = buttonName;
@@ -191,6 +226,14 @@
 			buttonBackground.value = null
 		}, 200)
 	};
+
+	onMounted(async () => {
+		await taskStore.loadTasksFromLocal();
+		await taskStore.syncTasks();
+		setTimeout(() => {
+			isTasksLoaded.value = true
+		} , 150)
+	});
 
 </script>
 
@@ -263,7 +306,7 @@
 		width: 100%;
 		max-height: 70vh;
 		overflow-y: auto;
-		padding: 0 20px;
+		padding: 0 20px 40px 20px;
 		opacity: 0;
 		transition: .2s;
 	}
@@ -447,6 +490,7 @@
 		font-family: "Acme", serif;
 		color: #4FC55C;
 	}
+
 	.add__goals {
 		flex-grow: 1;
 		overflow-y: auto; /* Добавляет скролл, если элементов много */

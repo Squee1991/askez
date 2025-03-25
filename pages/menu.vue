@@ -49,7 +49,7 @@
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
 	import Footer from '../src/components/footer.vue'
 	import {useI18n} from 'vue-i18n';
-	import LogoutIcon from '../assets/images/logOutSvg.svg'
+	import LogoutIcon from '../assets/images/logout-svgrepo.svg'
 	import Arrowicon from '../assets/images/arrowBack.svg'
 	import {onMounted, onUnmounted, ref} from "vue";
 	import {getAuth, signOut} from "firebase/auth";
@@ -112,7 +112,7 @@
 		if (accountLabels.includes(text)) {
 			return '/images/account.svg';
 		} else if (aboutLabels.includes(text)) {
-			return '/images/AboutApp.svg';
+			return '/images/About.svg';
 		} else if (languageLabels.includes(text)) {
 			return '/images/lang.svg';
 		} else if (settingsLabels.includes(text)) {

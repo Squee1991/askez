@@ -8,9 +8,10 @@
 	import {useRoute, useRouter} from "vue-router";
 	import {useHabitStore} from "../stores/habitStore.js";
 	import {useAuthStore} from "../stores/authStore.js";
+	import {useTaskStore} from '../stores/OfflineTaskStore.js';
 	import {useI18n} from 'vue-i18n';
 	import {useValidationStore} from '../stores/validationStore.js'
-
+	const taskStore = useTaskStore();
 	const validationStore = useValidationStore()
 	const {t} = useI18n();
 	const isMounted = ref(false);
@@ -36,10 +37,8 @@
 	};
 
 	const deleteAllDatas = async () => {
-
 		const auth = getAuth();
 		const user = auth.currentUser;
-
 		if (!passwordInput.value.trim()) {
 			deleteError.value = 'Please enter password before deleting';
 			return;
@@ -48,16 +47,14 @@
 			const credential = EmailAuthProvider.credential(user.email, passwordInput.value);
 			try {
 				await reauthenticateWithCredential(user, credential);
+				await habitStore.clearAlldates();
 				await deleteUser(user);
+				await taskStore.clearLocalTasks()
 				confirmDeleteDatas.value = false;
-				habitStore.clearAlldates();
 				router.push('/');
 			} catch (error) {
 				console.error(error);
 				deleteError.value = validationStore.getFirebaseError(error);
-				if (error.code === 'auth/too-many-requests') {
-					deleteError.value = validationStore.getFirebaseError(error);
-				}
 			}
 		}
 	};

@@ -21,6 +21,14 @@
 		"Feedback",
 		"Settings"
 	],
+	"rank": {
+		"rank": "Rank",
+		"newbie": "Bamboo Apprentice",
+		"pupil": "Zen Panda Disciple",
+		"master": "Master of Asceticism",
+		"legenda": "Lord of the Bamboo Path",
+		"immortal": "Legend of Zen Kung Fu"
+	},
 	"account": {
 		"accoutTitle": "Account",
 		"accountBtn": "Update",

@@ -21,6 +21,14 @@
 		"Comentarios",
 		"Configuración"
 	],
+	"rank": {
+		"rank": "Rango",
+		"newbie": "Aprendiz del Bambú",
+		"pupil": "Discípulo del Panda Zen",
+		"master": "Maestro de la Ascética",
+		"legenda": "Señor del Camino del Bambú",
+		"immortal": "Leyenda del Kung-Fu Zen"
+	},
 	"account": {
 		"accoutTitle": "Cuenta",
 		"accountBtn": "Actualizar",

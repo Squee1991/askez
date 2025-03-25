@@ -1,201 +1,277 @@
-import { defineStore } from "pinia";
-import { computed, ref, watch } from "vue";
-import {
-    getAuth,
-    onAuthStateChanged
-} from 'firebase/auth';
+import {defineStore} from "pinia";
+import {computed, ref, watch} from "vue";
+import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
+import {getFirestore, doc, setDoc, getDoc, deleteDoc} from "firebase/firestore";
 
 export const useHabitStore = defineStore("askezaStore", () => {
-    const tasks = ref([]);
-    const selectedTask = ref(null);
-    const activeColor = ref(null);
-    const achieveCount = ref(0);
-    const achievementThresholds = ref([1, 10, 25, 50, 50, 200]);
-    const archiveTasks = ref([]);
-    const auth = getAuth();
-    const userId = ref(null);
+	const tasks = ref([]);
+	const selectedTask = ref(null);
+	const activeColor = ref(null);
+	const achieveCount = ref(0);
+	const pandaProgressGlobal = ref(0);
+	const pandaLevel = ref(1);
+	const rankMap = ref(['rank.newbie', 'rank.pupil', 'rank.master', 'rank.legenda', 'rank.immortal'])
+	const isLoaded = ref(false);
+	const achievementThresholds = ref([1, 10, 25, 50, 50, 200]);
+	const archiveTasks = ref([]);
+	const skipUpdateAll = ref(false)
+	const auth = getAuth();
+	const db = getFirestore();
+	const userId = ref(null);
 
-    const saveTasks = () => {
-        if (!userId.value) return;
-        localStorage.setItem(`tasks_${userId.value}`, JSON.stringify({
-            tasks: tasks.value,
-            achieveCount: achieveCount.value,
-            archiveTasks: archiveTasks.value,
-        }));
-    };
+	const saveTasks = async () => {
+		if (!userId.value) return;
+		const userDocRef = doc(db, "users", userId.value);
+		try {
+			await setDoc(
+				userDocRef,
+				{
+					tasks: tasks.value,
+					achieveCount: achieveCount.value,
+					archiveTasks: archiveTasks.value,
+					pandaProgressGlobal: pandaProgressGlobal.value,
+					pandaLevel: pandaLevel.value,
+				},
+				{merge: true}
+			);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
-    const loadTasks = () => {
-        if (!userId.value) return;
-        const savedData = localStorage.getItem(`tasks_${userId.value}`);
-        if (savedData) {
-            try {
-                const userData = JSON.parse(savedData);
-                tasks.value = userData.tasks || [];
-                achieveCount.value = userData.achieveCount || 0;
-                archiveTasks.value = userData.archiveTasks || [];
-            } catch (error) {
-                console.error(error);
-            }
-        }
-    };
+	const loadTasks = async () => {
+		if (!userId.value) return;
+		const userDocRef = doc(db, "users", userId.value);
+		try {
+			const docSnap = await getDoc(userDocRef);
+			if (!docSnap.exists()) return;
+
+			const data = docSnap.data();
+			tasks.value = data.tasks || [];
+			achieveCount.value = data.achieveCount || 0;
+			archiveTasks.value = data.archiveTasks || [];
+			pandaProgressGlobal.value = data.pandaProgressGlobal || 0;
+			pandaLevel.value = data.pandaLevel || 1;
+
+			isLoaded.value = true;
+			await updateAllProgress();
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const amountOfTask = computed(() => tasks.value.length);
+	const doneTask = computed(() => tasks.value.filter(task => task.progress === 100 && task.progressMiss === 0));
+	const doneTaskNames = computed(() => tasks.value.filter(task => task.progress === 100).map(task => task.goal));
+	const notdone = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) < 100));
+
+	const result = computed(() => {
+		return (taskId) => {
+			const task = tasks.value.find(task => task.id === taskId);
+			if (!task) return {progress: "0%", progressMiss: "0%"};
+			const progress = Math.round(Number(task.progress) || 0);
+			const progressMiss = Math.round(Number(task.progressMiss) || 0);
+			return {progress: `${progress}%`, progressMiss: `${progressMiss}%`};
+		};
+	});
+
+	const activeAchievements = computed(() => {
+		return achievementThresholds.value.map(
+			threshold => achieveCount.value >= threshold
+		);
+	});
+
+	const completionRate = computed(() => {
+		if (tasks.value.length === 0) return 0;
+		return Math.round((doneTask.value.length / tasks.value.length) * 100);
+	});
+
+	const pandaProgress = computed(() => {
+		if (tasks.value.length === 0) return 0;
+
+		let doneTotal = 0;
+		let missedTotal = 0;
+
+		for (const task of tasks.value) {
+			doneTotal += task.checkedDates?.length || 0;
+			missedTotal += task.missedDates?.length || 0;
+		}
+
+		const total = doneTotal + missedTotal;
+		if (total === 0) return 0;
+
+		let rawProgress = (doneTotal / total) * 100;
+		return Math.max(0, Math.min(100, Math.round(rawProgress)));
+	});
+
+	const addTask = async (task) => {
+		const isDuplicate = tasks.value.some((item) =>
+			item.goal === task.goal &&
+			item.dateRange.start === task.dateRange.start &&
+			item.dateRange.end === task.dateRange.end
+		);
+
+		if (!isDuplicate) {
+			const newTask = {
+				...task,
+				id: Date.now(),
+				progress: 0,
+				progressMiss: 0,
+				history: [],
+				checkedDates: [],
+				missedDates: [],
+				checkedCount: 0,
+				missedCount: 0,
+				isAchieved: false,
+			};
+			tasks.value.push(newTask);
+			await updateProgress(newTask);
+			await saveTasks();
+		}
+	};
+
+	const updateProgress = async (task) => {
+		const startDate = task.dateRange.start && task.dateRange.start.toDate ? task.dateRange.start.toDate() : new Date(task.dateRange.start);
+		const endDate = task.dateRange.end && task.dateRange.end.toDate ? task.dateRange.end.toDate() : new Date(task.dateRange.end);
+
+		const totalDays = Math.max(1, ((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1);
+		const completedDays = task.checkedDates?.length || 0;
+		const missedDays = task.missedDates?.length || 0;
+
+		let progress = (completedDays / totalDays) * 100;
+		let progressMiss = (missedDays / totalDays) * 100;
+		progress = Math.round(progress);
+		progressMiss = Math.round(progressMiss);
+
+		const totalProgress = progress + progressMiss;
+		if (totalProgress > 100) {
+			const factor = 100 / totalProgress;
+			progress = Math.round(progress * factor);
+			progressMiss = Math.round(progressMiss * factor);
+		}
+
+		task.progress = progress;
+		task.progressMiss = progressMiss;
+
+		if (progress === 100 && !task.isAchieved) {
+			task.isAchieved = true;
+			achieveCount.value++;
+		}
+
+		const taskIndex = tasks.value.findIndex((t) => t.id === task.id);
+		if (taskIndex !== -1) {
+			tasks.value.splice(taskIndex, 1, task);
+		}
+
+		let totalChecked = 0;
+		let totalMissed = 0;
+		for (const t of tasks.value) {
+			totalChecked += t.checkedDates?.length || 0;
+			totalMissed += t.missedDates?.length || 0;
+		}
+		let rawProgress = totalChecked - totalMissed;
+		if (rawProgress < 0) {
+
+			rawProgress = totalChecked + Math.abs(rawProgress);
+		}
+		pandaProgressGlobal.value = Math.min(100, rawProgress);
+	};
 
 
+	const loadArchiveTasks = async () => {
+		if (!userId.value) return;
+		await loadTasks();
+	};
 
-    const amountOfTask = computed(() => tasks.value.length);
-    const doneTask = computed(() =>
-        tasks.value.filter(task => task.progress === 100 && task.progressMiss === 0)
-    );
+	const removeTask = async (taskId) => {
+		const taskToRemove = tasks.value.find(task => task.id === taskId);
+		if (taskToRemove) {
+			archiveTasks.value.push(taskToRemove);
+		}
+		tasks.value = tasks.value.filter(task => task.id !== taskId);
 
-    const doneTaskNames = computed(() => tasks.value.filter(task => task.progress === 100).map(task => task.goal));
-    const notdone = computed(() => tasks.value.filter(task => (task.progress + task.progressMiss) < 100));
+		skipUpdateAll.value = true;
+		await saveTasks();
+	};
 
-    const result = computed(() => {
-        return (taskId) => {
-            const task = tasks.value.find(task => task.id === taskId);
-            if (!task) return { progress: "0%", progressMiss: "0%" };
+	const clearAlldates = async () => {
+		if (!userId.value) return;
+		const auth = getAuth();
+		const userDocRef = doc(db, "users", userId.value);
+		try {
+			await deleteDoc(userDocRef);
+			await signOut(auth);
+			tasks.value = [];
+			achieveCount.value = 0;
+			archiveTasks.value = [];
+			userId.value = null;
+		} catch (error) {
+			console.error("ошибка удаления fire base документа", error);
+		}
+	};
 
-            const progress = Math.round(Number(task.progress) || 0);
-            const progressMiss = Math.round(Number(task.progressMiss) || 0);
+	const updateAllProgress = async () => {
+		for (const task of tasks.value) {
+			await updateProgress(task);
+		}
+	};
 
-            return { progress: `${progress}%`, progressMiss: `${progressMiss}%` };
-        };
-    });
+	onAuthStateChanged(auth, async (user) => {
+		if (user) {
+			userId.value = user.uid;
+			await loadTasks();
+		} else {
+			userId.value = null;
+			tasks.value = [];
+			archiveTasks.value = [];
+			achieveCount.value = 0;
+			pandaProgressGlobal.value = 0;
+			pandaLevel.value = 1;
+			isLoaded.value = false;
+		}
+	});
 
-    const activeAchievements = computed(() => {
-        return achievementThresholds.value.map(threshold => achieveCount.value >= threshold);
-    });
+	watch(tasks, async () => {
+		await updateAllProgress();
+		await saveTasks();
+	}, {deep: true});
 
-    const completionRate = computed(() => {
-        if (tasks.value.length === 0) return 0;
-        return Math.round((doneTask.value.length / tasks.value.length) * 100);
-    });
+	watch(pandaProgressGlobal, async (newValue) => {
+		if (newValue >= 100) {
+			pandaLevel.value++;
+			pandaProgressGlobal.value = 0;
+			await saveTasks();
+		}
+	});
 
-    const addTask = (task) => {
-        const isDuplicate = tasks.value.some((item) =>
-            item.goal === task.goal &&
-            item.dateRange.start === task.dateRange.start &&
-            item.dateRange.end === task.dateRange.end
-        );
+	return {
+		tasks,
+		selectedTask,
+		amountOfTask,
+		doneTask,
+		notdone,
+		doneTaskNames,
+		completionRate,
+		activeColor,
+		result,
+		achievementThresholds,
+		activeAchievements,
+		archiveTasks,
+		achieveCount,
+		pandaProgress,
+		pandaProgressGlobal,
+		pandaLevel,
+		isLoaded,
+		skipUpdateAll,
 
-        if (!isDuplicate) {
-            const newTask = {
-                ...task,
-                id: Date.now(),
-                progress: 0,
-                progressMiss: 0,
-                history: [],
-                checkedDates: [],
-                missedDates: [],
-                checkedCount: 0,
-                missedCount: 0,
-                isAchieved: false,
-            };
-            tasks.value.push(newTask);
-            updateProgress(newTask);
-            saveTasks();
-        }
-    };
-
-    const updateProgress = (task) => {
-        const totalDays = Math.max(1, (new Date(task.dateRange.end) - new Date(task.dateRange.start)) / (1000 * 60 * 60 * 24) + 1);
-        const completedDays = task.checkedDates ? task.checkedDates.length : 0;
-        const missedDays = task.missedDates ? task.missedDates.length : 0;
-        let progress = (completedDays / totalDays) * 100;
-        let progressMiss = (missedDays / totalDays) * 100;
-        progress = Math.round(progress);
-        progressMiss = Math.round(progressMiss);
-        const totalProgress = progress + progressMiss;
-        if (totalProgress > 100) {
-            const factor = 100 / totalProgress;
-            progress = Math.round(progress * factor);
-            progressMiss = Math.round(progressMiss * factor);
-        }
-        task.progress = progress;
-        task.progressMiss = progressMiss;
-
-        if (progress === 100 && !task.isAchieved) {
-            task.isAchieved = true;
-            achieveCount.value++;
-            saveTasks();
-        }
-
-        const taskIndex = tasks.value.findIndex((t) => t.id === task.id);
-        if (taskIndex !== -1) {
-            tasks.value.splice(taskIndex, 1, task);
-        }
-        saveTasks();
-    };
-
-
-    const loadArchiveTasks = () => {
-        if (!userId.value) return;
-        const savedArchive = localStorage.getItem(`tasks_${userId.value}`);
-        if (savedArchive) {
-            try {
-                const userData = JSON.parse(savedArchive);
-                archiveTasks.value = userData.archiveTasks || [];
-            } catch (error) {
-                console.error(error);
-            }
-        }
-    };
-
-    const removeTask = (taskId) => {
-        const taskToRemove = tasks.value.find(task => task.id === taskId);
-        if (taskToRemove) {
-            archiveTasks.value.push(taskToRemove);
-        }
-        tasks.value = tasks.value.filter(task => task.id !== taskId);
-        saveTasks();
-    };
-
-    const clearAlldates = () => {
-        tasks.value = [];
-        achieveCount.value = 0;
-        archiveTasks.value = [];
-        localStorage.removeItem(`tasks_${userId.value}`);
-    };
-
-    const updateAllProgress = () => {
-        tasks.value.forEach((task) => updateProgress(task));
-    };
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            userId.value = user.uid;
-            loadTasks();
-        } else {
-            userId.value = null;
-            tasks.value = [];
-            archiveTasks.value = [];
-            achieveCount.value = 0;
-        }
-    });
-
-    watch(tasks, saveTasks, { deep: true });
-
-    return {
-        tasks,
-        selectedTask,
-        amountOfTask,
-        doneTask,
-        notdone,
-        doneTaskNames,
-        completionRate,
-        activeColor,
-        result,
-        achievementThresholds,
-        activeAchievements,
-        archiveTasks,
-        achieveCount,
-
-        clearAlldates,
-        addTask,
-        updateProgress,
-        updateAllProgress,
-        removeTask,
-        loadTasks,
-        saveTasks,
-        loadArchiveTasks
-    };
+		clearAlldates,
+		addTask,
+		updateProgress,
+		updateAllProgress,
+		removeTask,
+		loadTasks,
+		saveTasks,
+		loadArchiveTasks,
+		onAuthStateChanged
+	};
 });

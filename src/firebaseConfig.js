@@ -1,11 +1,6 @@
 import { initializeApp } from 'firebase/app';
-import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    setPersistence,
-    browserLocalPersistence
-} from 'firebase/auth';
+import {getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, setPersistence, browserLocalPersistence} from 'firebase/auth';
+import { getFirestore, updateDoc , deleteField , deleteDoc , } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyBhDly0l8cImq0geDGG7pQdsbH12sPl9CQ',
@@ -19,8 +14,9 @@ const firebaseConfig = {
 // Инициализируем Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 // ❗ Отключаем серверные сессии и включаем локальное хранение авторизации
 setPersistence(auth, browserLocalPersistence);
 
-export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword };
+export { auth, db, deleteField, deleteDoc ,  updateDoc, createUserWithEmailAndPassword, signInWithEmailAndPassword };

@@ -33,7 +33,7 @@
 		border-radius: 50%;
 		background: #d5c4c4;
 		overflow: hidden;
-		border: 3px solid var(--background-color);
+		border: 5px solid var(--background-color);
 	}
 
 	.about__text {

@@ -132,30 +132,48 @@
 			field.error = false;
 		});
 
+		const currentFields = isSignUp.value ? data.value.fields : data.value.fields.filter(f => f.name !== 'name' && f.name !== 'confirm');
+		const errors = validationStore.validateUsers(currentFields);
+		if (Object.keys(errors).length > 0) {
+			currentFields.forEach(field => {
+				if (errors[field.name]) {
+					field.error = errors[field.name];
+				}
+			});
+			return;
+		}
+
 		const formData = {
 			email: data.value.fields.find(f => f.name === 'email')?.value.trim() || '',
 			password: data.value.fields.find(f => f.name === 'password')?.value.trim() || '',
 			name: data.value.fields.find(f => f.name === 'name')?.value.trim() || '',
 		};
+
 		if (!formData.email || !formData.password) return;
 
 		try {
 			isSubmitting.value = true;
-
 			if (isSignUp.value) {
 				await authStore.registerUser(formData);
 			} else {
 				await authStore.loginUser(formData);
 			}
 
-			await authStore.fetchingUser();
-			isAuthenticated.value = true;
+			const auth = getAuth();
+			const user = auth.currentUser;
+
+			if (user) {
+				authStore.name = user.displayName;
+				isAuthenticated.value = true;
+			} else {
+				isAuthenticated.value = false;
+			}
 		} catch (error) {
 			console.error(error);
-
 			const errorMessage = validationStore.getFirebaseError(error);
 			const emailField = data.value.fields.find(f => f.name === 'email');
 			const passwordField = data.value.fields.find(f => f.name === 'password');
+
 			if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found' || error.code === 'auth/email-already-in-use') {
 				emailField.error = errorMessage;
 			} else if (error.code === 'auth/wrong-password') {
@@ -164,6 +182,7 @@
 				passwordField.error = errorMessage;
 			}
 
+			isAuthenticated.value = false;
 		} finally {
 			isSubmitting.value = false;
 		}
@@ -202,6 +221,7 @@
 		box-sizing: border-box;
 		animation: animFw 8s linear infinite;
 	}
+
 	.loader::after,
 	.loader::before {
 		content: '';
@@ -216,6 +236,7 @@
 		box-sizing: border-box;
 		animation: coli1 0.3s linear infinite;
 	}
+
 	.loader::before {
 		top: -4px;
 		transform: rotate(45deg);
@@ -331,7 +352,7 @@
 		justify-content: center;
 		align-items: center;
 		text-align: center;
-		margin-bottom: 20px;
+		margin-bottom: 15px;
 		color: var(--text-color);
 	}
 
@@ -342,7 +363,8 @@
 	}
 
 	.form__field {
-		height: 80px;
+		height: 70px;
+		margin-top: 4px;
 	}
 
 	.form__field-inner {

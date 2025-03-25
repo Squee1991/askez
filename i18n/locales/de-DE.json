@@ -21,6 +21,14 @@
 		"Feedback",
 		"Einstellungen"
 	],
+	"rank": {
+		"rank": "Rang",
+		"newbie": "Bambus-Schüler",
+		"pupil": "Zen-Panda Lehrling",
+		"master": "Meister Askesas",
+		"legenda": "Herr Bambuspfads",
+		"immortal": "Legende Zen-Kung-Fu"
+	},
 	"account": {
 		"accoutTitle": "Konto",
 		"accountBtn": "Aktualisieren",
