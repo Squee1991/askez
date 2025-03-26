@@ -11,6 +11,7 @@
 	import {useTaskStore} from '../stores/OfflineTaskStore.js';
 	import {useI18n} from 'vue-i18n';
 	import {useValidationStore} from '../stores/validationStore.js'
+
 	const taskStore = useTaskStore();
 	const validationStore = useValidationStore()
 	const {t} = useI18n();
@@ -28,8 +29,16 @@
 		colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark'
 	};
 
-	const modeLabel = ['Mode', 'Мод']
-	const deleteLabels = ['Удалить аккаунт', 'Delete account', 'Выдаліць акаунт', 'Konto löschen', 'Eliminar cuenta', 'Supprimer le compte']
+	const modeLabel = ['Mode', 'Мод', 'Режим']
+	const deleteLabels = [
+		'Удалить аккаунт',
+		'Delete account',
+		'Выдаліць акаунт',
+		'Видалити акаунт',
+		'Konto löschen',
+		'Eliminar cuenta',
+		'Supprimer le compte'
+	]
 	const {locale, messages} = useI18n();
 
 	const cancelDelete = () => {
@@ -139,10 +148,14 @@
 	.confirm__field-password {
 		font-size: 14px;
 		margin-bottom: 5px;
+		width: 100%;
+		padding: 10px;
+		border-radius: 10px;
+		border: 2px solid grey;
 	}
 
 	.confirm__field-password:focus {
-		border: 1px solid #24ba1d;
+		border: 2px solid #24ba1d;
 	}
 
 	.confirm__title {

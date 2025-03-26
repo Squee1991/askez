@@ -10,7 +10,6 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	const achieveCount = ref(0);
 	const pandaProgressGlobal = ref(0);
 	const pandaLevel = ref(1);
-	const rankMap = ref(['rank.newbie', 'rank.pupil', 'rank.master', 'rank.legenda', 'rank.immortal'])
 	const isLoaded = ref(false);
 	const achievementThresholds = ref([1, 10, 25, 50, 50, 200]);
 	const archiveTasks = ref([]);
@@ -135,11 +134,33 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		const endDate = task.dateRange.end && task.dateRange.end.toDate ? task.dateRange.end.toDate() : new Date(task.dateRange.end);
 
 		const totalDays = Math.max(1, ((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1);
-		const completedDays = task.checkedDates?.length || 0;
-		const missedDays = task.missedDates?.length || 0;
 
-		let progress = (completedDays / totalDays) * 100;
-		let progressMiss = (missedDays / totalDays) * 100;
+		// Считаем предыдущее количество дней
+		const previousChecked = task.checkedCount || 0;
+		const previousMissed = task.missedCount || 0;
+
+		const currentChecked = task.checkedDates?.length || 0;
+		const currentMissed = task.missedDates?.length || 0;
+
+		// Разница — сколько новых дней появилось
+		const addedChecked = currentChecked - previousChecked;
+		const addedMissed = currentMissed - previousMissed;
+
+		// Обновляем старые значения
+		task.checkedCount = currentChecked;
+		task.missedCount = currentMissed;
+
+		// Обновляем глобальный прогресс
+		pandaProgressGlobal.value += addedChecked;
+		pandaProgressGlobal.value -= addedMissed;
+
+		// Ограничим диапазон от 0 до 100
+		if (pandaProgressGlobal.value < 0) pandaProgressGlobal.value = 0;
+		if (pandaProgressGlobal.value > 100) pandaProgressGlobal.value = 100;
+
+		// Теперь обычный расчёт процентов прогресса по задаче
+		let progress = (currentChecked / totalDays) * 100;
+		let progressMiss = (currentMissed / totalDays) * 100;
 		progress = Math.round(progress);
 		progressMiss = Math.round(progressMiss);
 
@@ -149,10 +170,8 @@ export const useHabitStore = defineStore("askezaStore", () => {
 			progress = Math.round(progress * factor);
 			progressMiss = Math.round(progressMiss * factor);
 		}
-
 		task.progress = progress;
 		task.progressMiss = progressMiss;
-
 		if (progress === 100 && !task.isAchieved) {
 			task.isAchieved = true;
 			achieveCount.value++;
@@ -162,21 +181,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		if (taskIndex !== -1) {
 			tasks.value.splice(taskIndex, 1, task);
 		}
-
-		let totalChecked = 0;
-		let totalMissed = 0;
-		for (const t of tasks.value) {
-			totalChecked += t.checkedDates?.length || 0;
-			totalMissed += t.missedDates?.length || 0;
-		}
-		let rawProgress = totalChecked - totalMissed;
-		if (rawProgress < 0) {
-
-			rawProgress = totalChecked + Math.abs(rawProgress);
-		}
-		pandaProgressGlobal.value = Math.min(100, rawProgress);
 	};
-
 
 	const loadArchiveTasks = async () => {
 		if (!userId.value) return;

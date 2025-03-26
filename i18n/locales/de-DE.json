@@ -35,10 +35,14 @@
 		"changedName": "Name geändert"
 	},
 	"singInUP": {
-		"singIn": "Schon ein Konto? Anmelden",
+		"reset": "Senden",
+		"singIn": "Haben Sie bereits ein Konto? Anmelden",
 		"singUp": "Kein Konto? Registrieren",
 		"singInBtn": "Anmelden",
-		"singUpBtn": "Registrieren"
+		"singUpBtn": "Registrieren",
+		"forgotPassword": "Passwort vergessen?",
+		"backToSing": "Zurück zur Registrierung",
+		"confirm": "Eine E-Mail wurde an Ihre E-Mail-Adresse gesendet"
 	},
 	"archieve": {
 		"empty": "Archiv ist leer",

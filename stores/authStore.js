@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia';
 import {ref} from 'vue';
+import {doc, setDoc, getDoc, getFirestore} from "firebase/firestore";
 import {
 	getAuth,
 	createUserWithEmailAndPassword,
@@ -7,10 +8,12 @@ import {
 	updateProfile,
 	signOut,
 	deleteUser,
-	onAuthStateChanged
+	onAuthStateChanged,
+	sendPasswordResetEmail
 } from 'firebase/auth';
 
 export const useAuthStore = defineStore('auth', () => {
+		const db = getFirestore();
 		const name = ref(null);
 		const email = ref(null);
 		const password = ref(null);
@@ -50,6 +53,11 @@ export const useAuthStore = defineStore('auth', () => {
 			password.value = null;
 		};
 
+		const resetPassword = async (email) => {
+			const auth = getAuth();
+			await sendPasswordResetEmail(auth, email);
+		};
+
 		const deleteAccount = async () => {
 			const auth = getAuth();
 			const user = auth.currentUser;
@@ -71,6 +79,28 @@ export const useAuthStore = defineStore('auth', () => {
 			})
 		}
 
+		const saveLanguageToFirebase = async (lang) => {
+			const auth = getAuth();
+			const user = auth.currentUser;
+			if (!user) return;
+
+			const userDocRef = doc(db, "users", user.uid);
+			await setDoc(userDocRef, {language: lang}, {merge: true});
+		};
+
+		const loadLanguageFromFirebase = async () => {
+			const auth = getAuth();
+			const user = auth.currentUser;
+			if (!user) return null;
+
+			const userDocRef = doc(db, "users", user.uid);
+			const docSnap = await getDoc(userDocRef);
+			if (docSnap.exists()) {
+				return docSnap.data().language || null;
+			}
+			return null;
+		};
+
 		const UpdateNameDisplayName = async (newName) => {
 			const auth = getAuth()
 			const user = auth.currentUser
@@ -87,14 +117,16 @@ export const useAuthStore = defineStore('auth', () => {
 			name,
 			email,
 			password,
-
+			saveLanguageToFirebase,
+			loadLanguageFromFirebase,
 			setUserData,
 			registerUser,
 			loginUser,
 			logout,
 			deleteAccount,
 			fetchingUser,
-			UpdateNameDisplayName
+			UpdateNameDisplayName,
+			resetPassword
 		};
 	}
 );

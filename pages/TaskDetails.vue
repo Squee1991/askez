@@ -228,8 +228,7 @@
 				selectedTask.value.checkedDates = [];
 			}
 			selectedTask.value.checkedDates.push(selDateStr);
-			checkedDates.value.push(selDateStr);
-			localStorage.setItem(`task_${selectedTask.value.id}_checkedDates`, JSON.stringify(checkedDates.value));
+			checkedDates.value = [...selectedTask.value.checkedDates];
 
 			selectedTask.value.history.push({
 				color: "#4FC55C",
@@ -241,8 +240,8 @@
 			}
 			if (!selectedTask.value.missedDates.includes(selDateStr)) {
 				selectedTask.value.missedDates.push(selDateStr);
-				missedDates.value.push(selDateStr);
-				localStorage.setItem(`task_${selectedTask.value.id}_missedDates`, JSON.stringify(missedDates.value));
+				missedDates.value = [...selectedTask.value.missedDates];
+
 				selectedTask.value.history.push({
 					color: "#FF5C00",
 					percent: Math.min(parseFloat(step), remainingProgress),
@@ -400,16 +399,8 @@
 
 	watch(selectedTask, (newTask) => {
 		if (!newTask) return;
-		const savedCheckedDates = localStorage.getItem(`task_${newTask.id}_checkedDates`);
-		if (savedCheckedDates) {
-			checkedDates.value = JSON.parse(savedCheckedDates);
-			newTask.checkedDates = [...checkedDates.value];
-		}
-		const savedMissedDates = localStorage.getItem(`task_${newTask.id}_missedDates`);
-		if (savedMissedDates) {
-			missedDates.value = JSON.parse(savedMissedDates);
-			newTask.missedDates = [...missedDates.value];
-		}
+		checkedDates.value = newTask.checkedDates || [];
+		missedDates.value = newTask.missedDates || [];
 		checkedCount.value = newTask.checkedDates?.length || 0;
 		missedCount.value = newTask.missedDates?.length || 0;
 		if (allowedDateRange.value.start && allowedDateRange.value.end) {

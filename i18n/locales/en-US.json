@@ -35,10 +35,14 @@
 		"changedName": "Name changed"
 	},
 	"singInUP": {
-		"singIn": "Already have an account? Sign In",
-		"singUp": "Don't have an account? Sign Up",
-		"singInBtn": "Sing In",
-		"singUpBtn": "Sing Up"
+		"reset": "Send",
+		"singIn": "Already have an account? Sign in",
+		"singUp": "Don't have an account? Sign up",
+		"singInBtn": "Sign in",
+		"singUpBtn": "Sign up",
+		"forgotPassword": "Forgot password?",
+		"backToSing": "Back to registration",
+		"confirm": "An email has been sent to your email address"
 	},
 	"archieve": {
 		"empty":  "Archive is empty",

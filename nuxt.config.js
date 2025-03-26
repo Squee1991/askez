@@ -57,10 +57,10 @@ export default defineNuxtConfig({
 				file: 'de-DE.json',
 			},
 			{
-				code: 'by-BY',
-				iso: 'by-BY',
+				code: 'be-BY',
+				iso: 'be-BY',
 				name: 'Беларускі',
-				file: 'by-BY.json',
+				file: 'be-BY.json',
 			},
 			{
 				code: 'es-ES',
@@ -74,6 +74,12 @@ export default defineNuxtConfig({
 				name: 'Français',
 				file: 'fr-FR.json',
 			},
+			{
+				code: 'uk-UA',
+				iso: 'uk-UA',
+				name: 'Українська',
+				file: 'uk-UA.json'
+			}
 		],
 
 		defaultLocale: 'en-US',
