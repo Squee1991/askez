@@ -18,6 +18,13 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	const db = getFirestore();
 	const userId = ref(null);
 
+	const updateTask = (updatedTask) => {
+		const index = tasks.value.findIndex(t => t.id === updatedTask.id);
+		if (index !== -1) {
+			tasks.value[index] = { ...updatedTask };
+		}
+	};
+
 	const saveTasks = async () => {
 		if (!userId.value) return;
 		const userDocRef = doc(db, "users", userId.value);
@@ -277,6 +284,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		loadTasks,
 		saveTasks,
 		loadArchiveTasks,
-		onAuthStateChanged
+		onAuthStateChanged,
+		updateTask
 	};
 });

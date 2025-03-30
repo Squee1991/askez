@@ -29,7 +29,14 @@
 		colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark'
 	};
 
-	const modeLabel = ['Mode', 'Мод', 'Режим']
+	const modeLabel = [
+		'Mode',
+		'Мод',
+		'Режим',
+		'Fëapolë',
+		'模式'
+	];
+
 	const deleteLabels = [
 		'Удалить аккаунт',
 		'Delete account',
@@ -37,8 +44,10 @@
 		'Видалити акаунт',
 		'Konto löschen',
 		'Eliminar cuenta',
-		'Supprimer le compte'
-	]
+		'Supprimer le compte',
+		'Account vanwa',
+		'删除账户'
+	];
 	const {locale, messages} = useI18n();
 
 	const cancelDelete = () => {
@@ -121,7 +130,7 @@
 				<button class="account__settings-btn" @click="SettingsChange($t('setting.' + (index - 1)))">
 					<span class="accoun__text">{{ $t('setting.' + (index - 1)) }}</span>
 					<img
-						v-if="isMounted && ($t('setting.' + (index - 1)).trim() === 'Mode' || $t('setting.' + (index - 1)).trim() === 'Мод')"
+						v-if="isMounted && index === 3 "
 						class="color__mode-icon"
 						:src="colorMode.preference === 'dark' ? Light : Dark"
 						alt="">

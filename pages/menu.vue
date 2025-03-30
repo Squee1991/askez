@@ -85,11 +85,17 @@
 	});
 
 	const {t} = useI18n();
-	const accountLabels = ['Акаўнт', 'Аккаунт', 'Account', 'Konto', 'Cuenta', 'Compte', 'Акаунт'];
-	const aboutLabels = ['Пра праграму', 'О программе', 'About App', 'Über die App', 'Sobre la app', "À propos de l'application", 'Про застосунок'];
-	const languageLabels = ['Мова', 'Язык', 'Languages', 'Sprache', 'Idioma', 'Langue', 'Мова'];
-	const feedback = ['Обратная связь', 'Зваротная сувязь', 'Feedback', 'Comentarios', 'Commentaires', 'Зворотний зв\'язок'];
-	const settingsLabels = ['Налады', 'Настройки', 'Settings', 'Einstellungen', 'Configuración', 'Paramètres', 'Налаштування'];
+	const accountLabels = ['Акаўнт', 'Аккаунт', 'Account', 'Konto', 'Cuenta', 'Compte', 'Акаунт', 'Hesto', '账户'];
+
+	const aboutLabels = ['Пра праграму', 'О программе', 'About App', 'Über die App', 'Sobre la app', "À propos de l'application", 'Про застосунок', 'Yassë Apacë', '关于应用'];
+
+	const languageLabels = ['Мова', 'Язык', 'Languages', 'Sprache', 'Idioma', 'Langue', 'Мова', 'Lambë', '语言'];
+
+	const feedback = ['Обратная связь', 'Зваротная сувязь', 'Feedback', 'Comentarios', 'Commentaires', 'Зворотний зв\'язок', 'Anna atsa', '反馈'];
+
+	const settingsLabels = ['Налады', 'Настройки', 'Settings', 'Einstellungen', 'Configuración', 'Paramètres', 'Налаштування', 'Ondo', '设置'];
+
+
 	const logOutAccept = ref(false)
 	const logOutMenu = ref(false)
 	const getMenuPlainLink = (text) => {
@@ -138,6 +144,7 @@
 		font-weight: 400;
 		text-align: center;
 		margin-bottom: 15px;
+		font-family: "Acme", serif;
 	}
 
 	.logout__confirm {
@@ -157,6 +164,7 @@
 		justify-content: center;
 		align-items: center;
 	}
+
 	.logout__btns {
 		margin-top: 10px;
 		display: flex;
@@ -193,7 +201,7 @@
 		text-align: center;
 		color: white;
 		font-family: "Acme", serif;
-			font-size: 22px;
+		font-size: 22px;
 	}
 
 	.lang-bg-orange {
@@ -234,7 +242,7 @@
 		color: var(--text-color);
 		font-size: 18px;
 		font-weight: 600;
-		font-family: "Roboto", serif;
+		font-family: "Acme", serif;
 	}
 
 	.askeza__menu-content {

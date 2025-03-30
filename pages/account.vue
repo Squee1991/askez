@@ -29,7 +29,6 @@
 <script setup>
 	import Arrowicon from '../assets/images/arrowSvg.svg'
 	import HeaderWithback from '../src/components/headerWithBack.vue'
-	import SingOutIcon from '../assets/images/SingOutSvg.svg'
 	import EditIcon from '../assets/images/editIcon.svg'
 	import EditDeleteMenu from '../src/components/EditDeleteMenu.vue'
 	import {ref, computed, onMounted} from 'vue';

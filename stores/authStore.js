@@ -37,6 +37,7 @@ export const useAuthStore = defineStore('auth', () => {
 				setUserData(userData);
 			} catch (error) {
 				console.error(error.message);
+				throw error;
 			}
 		};
 

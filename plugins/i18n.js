@@ -2,19 +2,16 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 export default defineNuxtPlugin(async (nuxtApp) => {
 	const authStore = useAuthStore();
-
 	if (process.server) return;
-
-	// Ждём восстановления сессии Firebase
 	const waitForUser = () =>
 		new Promise(resolve => {
 			const unsub = onAuthStateChanged(getAuth(), (user) => {
-				unsub(); // отпишемся
+				unsub();
 				resolve(user);
 			});
 		});
 
-	await waitForUser(); // ⏳ дождались, пока Firebase подтянет текущего юзера
+	await waitForUser();
 
 	const lang = await authStore.loadLanguageFromFirebase();
 

@@ -204,19 +204,19 @@
 			}
 			return;
 		}
-		const currentFields = isSignUp.value
-			? data.value.fields
-			: data.value.fields.filter(f => f.name !== 'name' && f.name !== 'confirm');
-
-		const errors = validationStore.validateUsers(currentFields, isSignUp.value ? 'signUp' : 'signIn');
-		if (Object.keys(errors).length > 0) {
-			currentFields.forEach(field => {
-				if (errors[field.name]) {
-					field.error = errors[field.name];
-				}
-			});
-			return;
-		}
+		// const currentFields = isSignUp.value
+		// 	? data.value.fields
+		// 	: data.value.fields.filter(f => f.name !== 'name' && f.name !== 'confirm');
+		//
+		// const errors = validationStore.validateUsers(currentFields, isSignUp.value ? 'signUp' : 'signIn');
+		// if (Object.keys(errors).length > 0) {
+		// 	currentFields.forEach(field => {
+		// 		if (errors[field.name]) {
+		// 			field.error = errors[field.name];
+		// 		}
+		// 	});
+		// 	return;
+		// }
 		const formData = {
 			email: data.value.fields.find(f => f.name === 'email')?.value.trim() || '',
 			password: data.value.fields.find(f => f.name === 'password')?.value.trim() || '',
@@ -247,10 +247,10 @@
 			const errorMessage = validationStore.getFirebaseError(error);
 			const emailField = data.value.fields.find(f => f.name === 'email');
 			const passwordField = data.value.fields.find(f => f.name === 'password');
-
 			if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found' || error.code === 'auth/email-already-in-use') {
 				emailField.error = errorMessage;
-			} else if (error.code === 'auth/wrong-password') {
+			}
+			else if (error.code === 'auth/wrong-password') {
 				passwordField.error = errorMessage;
 			} else {
 				passwordField.error = errorMessage;

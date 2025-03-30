@@ -117,10 +117,7 @@
 	import SuccesModal from "../src/components/succesModal.vue";
 	import HabbitGoal from "../src/components/newHabitGoal.vue";
 	import CustomCheckbox from "../src/components/customCheckbox.vue";
-	import Archive from "../assets/images/Archive.svg";
 	import Footer from '../src/components/footer.vue'
-	import NotaskIcon from '../assets/images/NoTask.svg'
-	import Cloud from '../assets/images/CloundIcon.svg'
 	import {useLocalePath} from '#i18n';
 	import {useRouter} from 'vue-router'
 	import {getAuth} from "firebase/auth";
@@ -238,7 +235,6 @@
 </script>
 
 <style>
-
 	.goal__btn {
 		width: 40px;
 		height: 40px;
@@ -371,8 +367,8 @@
 		color: var(--text-color);
 		font-size: 16px;
 		background: none;
-		font-family: "Nunito", serif;
-		font-weight: 600;
+		font-family: "Acme", serif;
+		font-weight: 400;
 		border-radius: 10px;
 	}
 
@@ -393,7 +389,7 @@
 	}
 
 	.task__come-btn {
-		padding: 9px 18px;
+		padding: 9px 12px;
 		border: none;
 		background: #4FC55C;
 		border-radius: 5px;
@@ -427,6 +423,7 @@
 		font-family: "Acme", serif;
 		letter-spacing: 1px;
 		display: flex;
+		text-align: center;
 		font-size: 14px;
 	}
 
@@ -459,7 +456,7 @@
 		display: flex;
 		flex-direction: column;
 		flex-grow: 1;
-		min-height: 0; /* Важно для корректного распределения высоты */
+		min-height: 0;
 	}
 
 	.task__goal-list-inner {
@@ -473,13 +470,14 @@
 	}
 
 	.goal__type {
+		font-size: 13px;
 		font-weight: 300;
 		color: var(--goals-date-color);
 	}
 
 	.arrow__datum {
 		margin: 0 5px;
-		width: 16px;
+		width: 10px;
 	}
 
 	.goals {
@@ -493,7 +491,7 @@
 
 	.add__goals {
 		flex-grow: 1;
-		overflow-y: auto; /* Добавляет скролл, если элементов много */
+		overflow-y: auto;
 	}
 
 	.task__goal-list {

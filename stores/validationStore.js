@@ -8,14 +8,14 @@ export const useValidationStore = defineStore('validation', () => {
 
 	const validateUsers = (fields, mode = 'signUp') => {
 		const errors = {};
-		const emailField = fields.find(f => f.name === 'email');
+		// const emailField = fields.find(f => f.name === 'email');
 		const passwordField = fields.find(f => f.name === 'password');
 		const nameField = fields.find(f => f.name === 'name');
 		const confirmField = fields.find(f => f.name === 'confirm');
 
-		if (emailField && !validateEmail(emailField.value.trim())) {
-			errors.email = 'Wrong format email';
-		}
+		// if (emailField && !validateEmail(emailField.value.trim())) {
+		// 	errors.email = 'Wrong format email';
+		// }
 
 		if (passwordField && mode === 'signUp' && passwordField.value.trim().length < 6) {
 			errors.password = 'Password too weak';
@@ -50,6 +50,8 @@ export const useValidationStore = defineStore('validation', () => {
 				return 'Incorrect password';
 			case 'auth/invalid-credential':
 				return 'Incorrect password';
+			default:
+				return 'Something went wrong. Please try again.';
 		}
 	};
 

@@ -149,8 +149,8 @@
 	const isDateSelected = ref(false);
 	const checkedDates = ref([]);
 	const missedDates = ref([]);
-	const checkedCount = ref(0);
-	const missedCount = ref(0);
+	const checkedCount = computed(() => selectedTask.value?.checkedDates?.length || 0);
+	const missedCount = computed(() => selectedTask.value?.missedDates?.length || 0);
 	const habitStore = useHabitStore();
 	const selectedDate = ref(null);
 	const taskStore = useTaskStore();
@@ -248,7 +248,7 @@
 				});
 			}
 		}
-
+		habitStore.updateTask(selectedTask.value);
 		habitStore.updateProgress(selectedTask.value);
 		habitStore.saveTasks();
 
@@ -319,13 +319,9 @@
 
 	onMounted(() => {
 		loadTask();
-		const savedCheckedCount = localStorage.getItem("checkedCount");
-		if (savedCheckedCount) {
-			checkedCount.value = parseInt(savedCheckedCount, 10);
-		}
-		const savedMissedCount = localStorage.getItem("missedCount");
-		if (savedMissedCount) {
-			missedCount.value = parseInt(savedMissedCount, 10);
+		if (selectedTask.value) {
+			checkedCount.value = selectedTask.value.checkedDates?.length || 0;
+			missedCount.value = selectedTask.value.missedDates?.length || 0;
 		}
 		if (allowedDateRange.value.start && allowedDateRange.value.end) {
 			const today = getLocalDate();
@@ -560,7 +556,7 @@
 	}
 
 	.task__details-btn {
-		margin-top: 10px;
+		margin-top: 5px;
 		width: 47%;
 		padding: 5px;
 	}

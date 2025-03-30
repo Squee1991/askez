@@ -168,7 +168,7 @@
 		text-align: center;
 		margin: 5px 0;
 		font-family: "Nunito", serif;
-		font-size: 14px;
+		font-size: 12px;
 		font-weight: 400;
 	}
 </style>

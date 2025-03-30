@@ -105,5 +105,6 @@
 		color: var(--text-color);
 		padding: 12px 0;
 		font-weight: 600;
+		font-family: "Nunito", serif;
 	}
 </style>
