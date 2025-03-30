@@ -1,19 +1,21 @@
-export default defineNuxtPlugin((nuxtApp) => {
-	const i18n = nuxtApp.$i18n;
-	if (process.client && i18n) {
-		i18n.locale.value = 'en-US';
-	}
-	// const i18n = nuxtApp.$i18n;
-	//
-	// if (process.client && i18n) {
-	// 	let savedLang = localStorage.getItem('language');
-	// 	if (!savedLang) {
-	// 		savedLang = 'en-US';
-	// 		localStorage.setItem('language', savedLang);
-	// 	}
-	// 	if (i18n) {
-	// 		i18n.setLocale(savedLang);
-	// 	}
-	// }
-});
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
+export default defineNuxtPlugin(async (nuxtApp) => {
+	const authStore = useAuthStore();
+	if (process.server) return;
+	const waitForUser = () =>
+		new Promise(resolve => {
+			const unsub = onAuthStateChanged(getAuth(), (user) => {
+				unsub();
+				resolve(user);
+			});
+		});
+
+	await waitForUser();
+
+	const lang = await authStore.loadLanguageFromFirebase();
+
+	if (lang && nuxtApp.$i18n) {
+		nuxtApp.$i18n.locale.value = lang;
+	}
+});

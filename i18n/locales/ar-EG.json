@@ -1,0 +1,170 @@
+{
+	"languages": {
+		"mode": "بدون مسافة",
+		"title": "اللغة"
+	},
+	"settings": {
+		"title": "الإعدادات"
+	},
+	"setting": [
+		"حذف الحساب",
+		"سياسة الخصوصية",
+		"الوضع"
+	],
+	"menu": {
+		"title": "القائمة"
+	},
+	"meniu": [
+		"الحساب",
+		"حول التطبيق",
+		"اللغات",
+		"التعليقات",
+		"الإعدادات"
+	],
+	"rank": {
+		"rank": "الرتبة",
+		"newbie": "متدرب الخيزران",
+		"pupil": "تلميذ الباندا زن",
+		"master": "سيد التقشف",
+		"legenda": "سيد طريق الخيزران",
+		"immortal": "أسطورة زن كونغ فو"
+	},
+	"account": {
+		"accoutTitle": "الحساب",
+		"accountBtn": "تحديث",
+		"changedName": "تم تغيير الاسم"
+	},
+	"singInUP": {
+		"reset": "إرسال",
+		"singIn": "هل لديك حساب؟ تسجيل الدخول",
+		"singUp": "ليس لديك حساب؟ اشترك",
+		"singInBtn": "تسجيل الدخول",
+		"singUpBtn": "اشترك",
+		"forgotPassword": "هل نسيت كلمة المرور؟",
+		"backToSing": "العودة إلى التسجيل",
+		"confirm": "تم إرسال بريد إلكتروني إلى عنوان بريدك الإلكتروني"
+	},
+	"archieve": {
+		"empty": "الأرشيف فارغ",
+		"name": "أسكازاتك",
+		"achieveTitle": "أرشيف الأسكازات",
+		"totalDays": "إجمالي الأيام",
+		"checkedDays": "تم التحقق",
+		"notChecked": "لم يتم التحقق"
+	},
+	"achieveTitle": {
+		"title": "إنجازاتك",
+		"subtitle": "إجمالي الإنجازات المستلمة",
+		"achiveDone": "مكتمل"
+	},
+	"accState": {
+		"greetings": "مرحبًا",
+		"stateBtn": "لنبدأ!",
+		"load": "جار التحميل"
+	},
+	"checkedBtns": {
+		"done": "تم",
+		"missed": "فات"
+	},
+	"achieve": {
+		"1": "أكمل أول أسكازا",
+		"2": "أكمل 10 أسكازات",
+		"3": "أكمل 25 أسكازا",
+		"4": "أكمل 50 أسكازا",
+		"5": "أكمل 100 أسكازا",
+		"6": "أكمل 200 أسكازا"
+	},
+	"feedBack": {
+		"title": "التعليقات",
+		"placeholder": "اترك مراجعة أو اقتراح",
+		"button": "إرسال",
+		"overlayBtn": "حسنًا",
+		"overlayTitle": "شكرًا لتعليقاتك"
+	},
+	"startPage": {
+		"value": "ابدأ"
+	},
+	"description": {
+		"value": "الخطوة التالية"
+	},
+	"navTop": {
+		"achiv": "الإنجازات",
+		"askez": "كل الأسكازات",
+		"stats": "الإحصائيات"
+	},
+	"statslable": {
+		"total": "إجمالي الأسكازات المُنشأة",
+		"doneTotal": "إجمالي المكتمل",
+		"InProgressTotal": "قيد التقدم"
+	},
+	"hasNotAskez": {
+		"value": "لا توجد أسكازات مُنشأة"
+	},
+	"infoLabels": {
+		"name": "الاسم",
+		"status": "الحالة"
+	},
+	"delAllDatas": {
+		"title": "حذف جميع البيانات؟",
+		"subTitle": "هل أنت متأكد أنك تريد حذف جميع البيانات؟",
+		"acceptBtn": "نعم",
+		"rejectBtn": "لا"
+	},
+	"register": {
+		"btnValue": "تسجيل",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "أدخل اسمك"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "أدخل بريدك الإلكتروني"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "أدخل كلمة المرور"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "تأكيد كلمة المرور"
+			}
+		]
+	},
+	"logOut": {
+		"out": "تسجيل الخروج؟",
+		"reject": "هل تريد تسجيل الخروج؟"
+	},
+	"homePage": {
+		"greetings": "مرحبًا",
+		"btn": "افتح",
+		"no_active_goals": "لا توجد أهداف نشطة"
+	},
+	"createTask": {
+		"title": "إنشاء هدف جديد",
+		"btn": "إنشاء جديد",
+		"task": "هدفك",
+		"datum": "حدد نطاق التاريخ"
+	},
+	"success": {
+		"title": "تم!!",
+		"article": "لنقم ببذل قصارى جهدنا لتحقيق هدفك",
+		"button": "حسنًا"
+	},
+	"taskDetails": {
+		"startDate": "تاريخ البدء",
+		"endDate": "تاريخ الانتهاء"
+	},
+	"delConfirm": {
+		"title": "حذف الهدف؟",
+		"accept": "نعم",
+		"reject": "لا"
+	},
+	"EditDeleteMenu": {
+		"delTask": "حذف"
+	},
+	"CheckedProgress": {
+		"checked": "الأيام التي تم التحقق منها",
+		"notChecked": "الأيام الفائتة"
+	}
+}

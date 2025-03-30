@@ -19,7 +19,7 @@
 <script setup>
 	import { ref } from 'vue'
 
-	const letters = ref('ABCDEFGHIJKLMNOPQRSTUVWXYZабвгдежзиклмнопрстуфхцчöóç'.split(''))
+	const letters = ref('ABCDEFGHIJKLMNOPQRSTUVWXYZ于абвгдежзиклмнопр关стуфхцчöóç'.split(''))
 
 	function getStyle(index) {
 		const angle = Math.random() * 360

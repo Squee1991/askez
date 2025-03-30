@@ -4,9 +4,11 @@
 			<div class="container">
 				<div ref="animationContainer"></div>
 			</div>
-			<div class="nuxt__links">
-				<button @click="toDescription" class="btn"> {{ $t("startPage.value")}}</button>
-			</div>
+			<Transition name="fade">
+				<div v-if="showButton" class="nuxt__links">
+					<button @click="toDescription" class="btn"> {{ $t("startPage.value")}}</button>
+				</div>
+			</Transition>
 		</div>
 		<div v-else class="description">
 			<NuxtLink to="/singup">
@@ -26,7 +28,7 @@
 	const animationContainer = ref(null)
 	const config = useRuntimeConfig()
 	const apiBase = config.public.apiBase;
-
+	const showButton = ref(false)
 	const toDescription = () => {
 		state.value = false
 	}
@@ -40,6 +42,9 @@
 				animationData: Panda
 			})
 		}
+		setTimeout(() => {
+			showButton.value = true
+		}, 300)
 	})
 
 	definePageMeta({

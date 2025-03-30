@@ -149,8 +149,8 @@
 	const isDateSelected = ref(false);
 	const checkedDates = ref([]);
 	const missedDates = ref([]);
-	const checkedCount = ref(0);
-	const missedCount = ref(0);
+	const checkedCount = computed(() => selectedTask.value?.checkedDates?.length || 0);
+	const missedCount = computed(() => selectedTask.value?.missedDates?.length || 0);
 	const habitStore = useHabitStore();
 	const selectedDate = ref(null);
 	const taskStore = useTaskStore();
@@ -228,8 +228,7 @@
 				selectedTask.value.checkedDates = [];
 			}
 			selectedTask.value.checkedDates.push(selDateStr);
-			checkedDates.value.push(selDateStr);
-			localStorage.setItem(`task_${selectedTask.value.id}_checkedDates`, JSON.stringify(checkedDates.value));
+			checkedDates.value = [...selectedTask.value.checkedDates];
 
 			selectedTask.value.history.push({
 				color: "#4FC55C",
@@ -241,15 +240,15 @@
 			}
 			if (!selectedTask.value.missedDates.includes(selDateStr)) {
 				selectedTask.value.missedDates.push(selDateStr);
-				missedDates.value.push(selDateStr);
-				localStorage.setItem(`task_${selectedTask.value.id}_missedDates`, JSON.stringify(missedDates.value));
+				missedDates.value = [...selectedTask.value.missedDates];
+
 				selectedTask.value.history.push({
 					color: "#FF5C00",
 					percent: Math.min(parseFloat(step), remainingProgress),
 				});
 			}
 		}
-
+		habitStore.updateTask(selectedTask.value);
 		habitStore.updateProgress(selectedTask.value);
 		habitStore.saveTasks();
 
@@ -320,13 +319,9 @@
 
 	onMounted(() => {
 		loadTask();
-		const savedCheckedCount = localStorage.getItem("checkedCount");
-		if (savedCheckedCount) {
-			checkedCount.value = parseInt(savedCheckedCount, 10);
-		}
-		const savedMissedCount = localStorage.getItem("missedCount");
-		if (savedMissedCount) {
-			missedCount.value = parseInt(savedMissedCount, 10);
+		if (selectedTask.value) {
+			checkedCount.value = selectedTask.value.checkedDates?.length || 0;
+			missedCount.value = selectedTask.value.missedDates?.length || 0;
 		}
 		if (allowedDateRange.value.start && allowedDateRange.value.end) {
 			const today = getLocalDate();
@@ -400,16 +395,8 @@
 
 	watch(selectedTask, (newTask) => {
 		if (!newTask) return;
-		const savedCheckedDates = localStorage.getItem(`task_${newTask.id}_checkedDates`);
-		if (savedCheckedDates) {
-			checkedDates.value = JSON.parse(savedCheckedDates);
-			newTask.checkedDates = [...checkedDates.value];
-		}
-		const savedMissedDates = localStorage.getItem(`task_${newTask.id}_missedDates`);
-		if (savedMissedDates) {
-			missedDates.value = JSON.parse(savedMissedDates);
-			newTask.missedDates = [...missedDates.value];
-		}
+		checkedDates.value = newTask.checkedDates || [];
+		missedDates.value = newTask.missedDates || [];
 		checkedCount.value = newTask.checkedDates?.length || 0;
 		missedCount.value = newTask.missedDates?.length || 0;
 		if (allowedDateRange.value.start && allowedDateRange.value.end) {
@@ -569,7 +556,7 @@
 	}
 
 	.task__details-btn {
-		margin-top: 10px;
+		margin-top: 5px;
 		width: 47%;
 		padding: 5px;
 	}

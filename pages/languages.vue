@@ -28,10 +28,12 @@
 	import SelectedIcon from '../assets/images/checkIcon.svg';
 	import Arrowicon from '../assets/images/arrowSvg.svg?url';
 	import Reloader from '../src/components/preloader.vue'
+	import {useAuthStore} from '../stores/authStore'
+
 	const languages = ref({});
 	const preloader = ref(false)
-
-	const { locales, local , defaultLocale , setLocale  } = useI18n()
+	const authStore = useAuthStore()
+	const {locales, local, defaultLocale, setLocale} = useI18n()
 	const selectedLanguage = ref(null);
 	const computedClassNames = computed(() => {
 		if (languages.value) {
@@ -43,8 +45,8 @@
 		return {};
 	});
 
-	const loadLanguageData =  (lang) => {
-		languages.value  = lang || []
+	const loadLanguageData = (lang) => {
+		languages.value = lang || []
 	};
 
 	const changeDefaultTypeLanguage = () => {
@@ -58,15 +60,15 @@
 		setLocale(selectedLanguage.value);
 	});
 
-	watch(selectedLanguage, (newValue, oldValue) => {
+	watch(selectedLanguage, async (newValue, oldValue) => {
 		if (!oldValue) return;
-			preloader.value = true;
-			setTimeout(() => {
-				localStorage.setItem('language', newValue);
-				loadLanguageData(newValue);
-				setLocale(newValue)
-				preloader.value = false;
-			}, 5000);
+		preloader.value = true;
+		setTimeout(async () => {
+			await authStore.saveLanguageToFirebase(newValue);
+			loadLanguageData(newValue);
+			setLocale(newValue);
+			preloader.value = false;
+		}, 4000);
 	});
 
 </script>

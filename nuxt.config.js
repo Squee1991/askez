@@ -57,10 +57,16 @@ export default defineNuxtConfig({
 				file: 'de-DE.json',
 			},
 			{
-				code: 'by-BY',
-				iso: 'by-BY',
+				code: 'be-BY',
+				iso: 'be-BY',
 				name: 'Беларускі',
-				file: 'by-BY.json',
+				file: 'be-BY.json',
+			},
+			{
+				code: 'uk-UA',
+				iso: 'uk-UA',
+				name: 'Українська',
+				file: 'uk-UA.json'
 			},
 			{
 				code: 'es-ES',
@@ -74,6 +80,25 @@ export default defineNuxtConfig({
 				name: 'Français',
 				file: 'fr-FR.json',
 			},
+			{
+				code: 'ar',
+				iso: 'ar-EG',
+				name: 'العربية',
+				file: 'ar-EG.json'
+			},
+			{
+				code: 'zh-CN',
+				iso: 'zh-CN',
+				name: '中文',
+				file: 'zh-CN.json'
+			},
+			{
+				code: 'el-EL',
+				iso: 'el-EL',
+				name: 'Elvish',
+				file: 'el-EL.json'
+			},
+
 		],
 
 		defaultLocale: 'en-US',
@@ -90,7 +115,8 @@ export default defineNuxtConfig({
 			Merienda: true,
 			Itim: true,
 			Roboto: true,
-			'Noto Serif JP': true
+			'ZCOOL KuaiLe': true,
+			'Ma Shan Zheng': true
 		}
 	},
 	colorMode: {

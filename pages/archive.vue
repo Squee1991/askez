@@ -1,6 +1,5 @@
 <script setup>
 	import {ref, onMounted} from 'vue'
-	import Arrowicon from '../assets/images/arrowSvg.svg'
 	import HeaderWichback from '../src/components/headerWithBack.vue'
 	import {useHabitStore} from '../stores/habitStore.js'
 	import Arrow from '../assets/images/ArrowTask.svg'
@@ -61,7 +60,7 @@
 				</div>
 				<div class="archive__text" v-if="!habitStore.archiveTasks.length">
 					<div class="archiv__folder">
-						<img class="folder__icon" src="../assets/images/archive-svgrepo.svg" alt="">
+						<img class="folder__icon" src="../assets/images/parchment.svg" alt="">
 					</div>
 					<div class="archiv__empty-text">{{ $t('archieve.empty') }}</div>
 				</div>

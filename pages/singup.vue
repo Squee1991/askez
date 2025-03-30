@@ -1,18 +1,26 @@
 <template>
 	<div class="form">
+		<div class="log__out-overlay" :class="{'overlay': confirmOverlay}"></div>
+		<div v-if="confirmOverlay" class="logout__confirm">
+			<div class="log__out-text">{{ $t('singInUP.confirm')}}</div>
+			<div class="logout__btns">
+				<button class="logout__btn yes-btn" @click="handleConfirm">OK</button>
+			</div>
+		</div>
 		<div class="form__logo">
-			<img class="form__logo-icon" src="../assets/images/logo.png" alt="Logo"/>
+			<img class="form__logo-icon" src="../assets/images/logo.png" alt="Logo" />
 		</div>
 		<transition name="fade-slide" mode="out-in">
 			<div v-if="isLoading" class="loading-screen">
-				<div class="loading"> {{ $t('accState.load')}}</div>
+				<div class="loading">{{ $t('accState.load') }}</div>
 				<div class="loader"></div>
 			</div>
 			<div v-else-if="isAuthenticated" class="welcome-screen">
-				<div class="form__title">{{ $t('accState.greetings')}}
+				<div class="form__title">
+					{{ $t('accState.greetings') }}
 					<span class="form__title-name">{{ authStore.name }}</span>
 				</div>
-				<button @click="goToMainPage" class="form__btn">{{ $t('accState.stateBtn')}}</button>
+				<button @click="goToMainPage" class="form__btn">{{ $t('accState.stateBtn') }}</button>
 			</div>
 			<div v-else class="form__field-inner" :key="isSignUp">
 				<div v-for="field in filteredFields" :key="field.id" class="form__field">
@@ -28,34 +36,52 @@
 					class="form__btn"
 					:disabled="isSubmitting || !isFormValid"
 				>
-					<span v-if="isSubmitting">Loading...</span>
-					<span v-else> {{ isSignUp ? $t('singInUP.singUpBtn') : $t('singInUP.singInBtn') }}</span>
+					<span>
+						{{ forgotPassword
+							? $t('singInUP.reset')
+							: isSignUp
+								? $t('singInUP.singUpBtn')
+								: $t('singInUP.singInBtn') }}
+					</span>
 				</button>
-
 				<p class="toggle-text" @click="toggleAuthMode">
-					{{ isSignUp ? $t('singInUP.singIn') : $t('singInUP.singUp') }}
+					{{ forgotPassword
+					? $t('singInUP.backToSing')
+					: isSignUp
+					? $t('singInUP.singIn')
+					: $t('singInUP.singUp') }}
+				</p>
+				<p
+					v-if="!isSignUp && !forgotPassword"
+					class="toggle-text"
+					@click="enterForgotPasswordMode"
+				>
+					{{ $t('singInUP.forgotPassword') }}
 				</p>
 			</div>
 		</transition>
 	</div>
 </template>
 
+
 <script setup>
 	import {getAuth, onAuthStateChanged} from 'firebase/auth';
-	import VFields from '../src/components/v-fields.vue'
-	import {ref, computed, watch} from 'vue'
-	import {useRouter} from 'vue-router'
-	import {useValidationStore} from '../stores/validationStore.js'
+	import VFields from '../src/components/v-fields.vue';
+	import {ref, computed, watch} from 'vue';
+	import {useRouter} from 'vue-router';
+	import {useValidationStore} from '../stores/validationStore.js';
 	import {useAuthStore} from '../stores/authStore.js';
 	import {onMounted} from "../.nuxt/imports";
 
 	const authStore = useAuthStore();
-	const validationStore = useValidationStore()
-	const router = useRouter()
+	const validationStore = useValidationStore();
+	const router = useRouter();
 	const isSignUp = ref(true);
 	const isSubmitting = ref(false);
-	const isAuthenticated = ref(false)
-	const isLoading = ref(true)
+	const isAuthenticated = ref(false);
+	const isLoading = ref(true);
+	const confirmOverlay = ref(false)
+	const forgotPassword = ref(false);
 	const data = ref({
 		fields: [
 			{
@@ -98,59 +124,99 @@
 				error: false,
 				required: true
 			},
-		],
-	})
-	const filteredFields = computed(() => isSignUp.value ? data.value.fields : data.value.fields.filter(f => f.name !== 'name' && f.name !== 'confirm'));
+		]
+	});
+
+	const filteredFields = computed(() => {
+		if (forgotPassword.value) {
+			return data.value.fields.filter(f => f.name === 'email');
+		}
+		if (isSignUp.value) {
+			return data.value.fields;
+		}
+		return data.value.fields.filter(f => f.name !== 'name' && f.name !== 'confirm');
+	});
+
 	const isFormValid = computed(() => filteredFields.value.every(f => !f.error && f.value.trim() !== ''));
 
-	// onMounted(() => {
-	// 	const auth = getAuth()
-	// 	onAuthStateChanged(auth, (user) => {
-	// 		if (user) {
-	// 			isAuthenticated.value = true;
-	// 			authStore.name = user.displayName;
-	// 		} else {
-	// 			isAuthenticated.value = false
-	// 		}
-	// 		setTimeout(() => {
-	// 			isLoading.value = false;
-	// 		}, 5000);
-	// 	})
-	//
-	// })
 	onMounted(() => {
 		const auth = getAuth();
 		onAuthStateChanged(auth, (user) => {
-			isAuthenticated.value = !!user;
-			authStore.name = user?.displayName || '';
-			isLoading.value = false;
+			if (user) {
+				isAuthenticated.value = true;
+				authStore.name = user.displayName;
+			} else {
+				isAuthenticated.value = false;
+			}
+			setTimeout(() => {
+				isLoading.value = false;
+			}, 5000);
 		});
 	});
 
+	const handleConfirm = () => {
+		confirmOverlay.value = false;
+		isSignUp.value = false;
+		forgotPassword.value = false;
+		data.value.fields.forEach(field => {
+			field.value = '';
+			field.error = false;
+		});
+	};
+
+	const enterForgotPasswordMode = () => {
+		forgotPassword.value = true;
+		isSignUp.value = false;
+		data.value.fields.forEach(field => {
+			field.value = '';
+			field.error = false;
+		});
+	};
+
 	const toggleAuthMode = () => {
+		forgotPassword.value = false;
 		isSignUp.value = !isSignUp.value;
 		data.value.fields.forEach(field => {
-			field.error = false
-			field.value = ""
-		})
-	}
+			field.value = '';
+			field.error = false;
+		});
+	};
 
 	const submitForm = async () => {
 		data.value.fields.forEach(field => {
 			field.error = false;
 		});
 
-		const currentFields = isSignUp.value ? data.value.fields : data.value.fields.filter(f => f.name !== 'name' && f.name !== 'confirm');
-		const errors = validationStore.validateUsers(currentFields);
-		if (Object.keys(errors).length > 0) {
-			currentFields.forEach(field => {
-				if (errors[field.name]) {
-					field.error = errors[field.name];
-				}
-			});
+		if (forgotPassword.value) {
+			const emailField = data.value.fields.find(f => f.name === 'email');
+			if (!emailField?.value.trim()) return;
+
+			try {
+				isSubmitting.value = true;
+				await authStore.resetPassword(emailField.value.trim());
+				confirmOverlay.value = true;
+
+			} catch (error) {
+				const errorMessage = validationStore.getFirebaseError(error);
+				emailField.error = errorMessage;
+			} finally {
+				isSubmitting.value = false;
+			}
 			return;
 		}
-
+		// const currentFields = isSignUp.value
+		// 	? data.value.fields
+		// 	: data.value.fields.filter(f => f.name !== 'name' && f.name !== 'confirm');
+		//
+		// const errors = validationStore.validateUsers(currentFields, isSignUp.value ? 'signUp' : 'signIn');
+		// if (Object.keys(errors).length > 0) {
+		// 	currentFields.forEach(field => {
+		// 		if (errors[field.name]) {
+		// 			field.error = errors[field.name];
+		// 		}
+		// 	});
+		// 	return;
+		// }
 		const formData = {
 			email: data.value.fields.find(f => f.name === 'email')?.value.trim() || '',
 			password: data.value.fields.find(f => f.name === 'password')?.value.trim() || '',
@@ -181,10 +247,10 @@
 			const errorMessage = validationStore.getFirebaseError(error);
 			const emailField = data.value.fields.find(f => f.name === 'email');
 			const passwordField = data.value.fields.find(f => f.name === 'password');
-
 			if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found' || error.code === 'auth/email-already-in-use') {
 				emailField.error = errorMessage;
-			} else if (error.code === 'auth/wrong-password') {
+			}
+			else if (error.code === 'auth/wrong-password') {
 				passwordField.error = errorMessage;
 			} else {
 				passwordField.error = errorMessage;
@@ -197,19 +263,61 @@
 	};
 
 	watch(() => data.value.fields.map(f => f.value), () => {
-			data.value.fields.forEach(field => {
-				field.error = false;
-			});
-		}
-	);
+		data.value.fields.forEach(field => {
+			field.error = false;
+		});
+	});
 
 	const goToMainPage = () => {
 		router.push('/welcomePage');
 	};
 
 </script>
+<style scoped>
 
-<style>
+	.logout__btns {
+		margin-top: 10px;
+		display: flex;
+		justify-content: center;
+	}
+
+	.logout__btn {
+		background: none;
+		border: none;
+		color: #24ba1d;
+		padding: 10px 20px;
+		font-weight: bold;
+		font-size: 19px;
+		font-family: "Acme", serif;
+	}
+
+	.overlay {
+		position: absolute;
+		width: 100%;
+		height: 100vh;
+		background: black;
+		opacity: 50%;
+		z-index: 1;
+	}
+
+	.log__out-text {
+		padding: 5px 0;
+		color: #efe8e8;
+		text-align: center;
+	}
+
+	.logout__confirm {
+		width: 80%;
+		background: #34364a;
+		padding: 20px;
+		border-radius: 15px;
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		top: 40%;
+		z-index: 100;
+	}
+
 	.loader {
 		width: 100%;
 		height: 22px;
@@ -321,7 +429,7 @@
 		text-align: center;
 		cursor: pointer;
 		color: #7eb1ea;
-		margin-top: 15px;
+		margin: 10px 0;
 	}
 
 	.fade-slide-enter-active, .fade-slide-leave-active {
