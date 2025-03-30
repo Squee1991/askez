@@ -6,18 +6,21 @@
 			</div>
 			<div class="success__title">{{$t('success.title')}}</div>
 			<div class="success__text">{{$t('success.article')}}!</div>
-			<NuxtLink to="/welcomePage">
-				<button class="success__btn">{{$t('success.button')}}</button>
-			</NuxtLink>
+			<button @click="cloeWindow" class="success__btn">{{$t('success.button')}}</button>
 		</div>
 	</div>
 </template>
 
 <script setup>
-	import SuccessPanda from '/assets/images/successS.png';
-	import { useRoute } from 'vue-router';
+	import SuccessPanda from '../../assets/images/succesPanda.png';
+	import {useRoute, useRouter } from 'vue-router';
+	import { defineEmits } from 'vue'
 	const route = useRoute();
 	const username = route.query.username
+	const emit = defineEmits(['close'])
+	const cloeWindow = () => {
+		emit('close')
+	}
 </script>
 
 <style scoped>
@@ -63,12 +66,6 @@
 		cursor: pointer;
 		font-weight: bold;
 		font-family: "Nunito", serif;
-	}
-
-	* {
-		padding: 0;
-		margin: 0;
-		box-sizing: border-box;
 	}
 
 	.success__title {

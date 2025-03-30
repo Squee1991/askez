@@ -30,7 +30,8 @@
 	import Reloader from '../src/components/preloader.vue'
 	const languages = ref({});
 	const preloader = ref(false)
-	const { locales, local , defaultLocale } = useI18n()
+
+	const { locales, local , defaultLocale , setLocale  } = useI18n()
 	const selectedLanguage = ref(null);
 	const computedClassNames = computed(() => {
 		if (languages.value) {
@@ -54,16 +55,18 @@
 	onMounted(() => {
 		changeDefaultTypeLanguage();
 		loadLanguageData(selectedLanguage.value);
+		setLocale(selectedLanguage.value);
 	});
 
 	watch(selectedLanguage, (newValue, oldValue) => {
 		if (!oldValue) return;
-		preloader.value = true;
-		setTimeout(() => {
-			localStorage.setItem('language', newValue);
-			loadLanguageData(newValue);
-			preloader.value = false;
-		}, 2000);
+			preloader.value = true;
+			setTimeout(() => {
+				localStorage.setItem('language', newValue);
+				loadLanguageData(newValue);
+				setLocale(newValue)
+				preloader.value = false;
+			}, 5000);
 	});
 
 </script>

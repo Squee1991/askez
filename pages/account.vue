@@ -178,6 +178,7 @@
 		background-color: var(--button-bg);
 		color: var(--button-text-color);
 		font-family: "Acme", serif;
+		font-weight: 600;
 	}
 
 	.field__label {

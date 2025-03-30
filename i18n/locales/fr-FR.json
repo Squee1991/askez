@@ -21,6 +21,14 @@
 		"Commentaires",
 		"Paramètres"
 	],
+	"rank": {
+		"rank": "rang",
+		"newbie": "Apprenti du Bambou",
+		"pupil": "Disciple du Panda Zen",
+		"master": "Maître de l’ascèse",
+		"legenda": "Seigneur de la voie du bambou",
+		"immortal": "Légende du kung-fu zen"
+	},
 	"account": {
 		"accoutTitle": "Compte",
 		"accountBtn": "Mettre à jour",

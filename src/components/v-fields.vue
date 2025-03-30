@@ -55,7 +55,7 @@
 
 <style scoped>
 	.v-field-wrapper {
-		margin: 3px 0 10px 0;
+		margin: 3px 0 5px 0;
 		position: relative;
 	}
 

@@ -1,23 +1,23 @@
 <template>
 	<div class="update__date-wrapper">
-		<div :class="{'show__confirm': editState}" class="confirm__window">
+		<div ref="animationBlock" class="animation__block"></div>
+		<div :class="{'show__confirm': isOpen}" class="confirm__window">
 			<div class="confirm__content-wrapper">
-				<div class="confirm__title">{{ $t('delConfirm.title')}}</div>
+				<div class="confirm__title">{{ $t('delConfirm.title') }}</div>
 				<div class="confirm__btns">
 					<NuxtLink @click="clearTask(selectedTask.id)" class="confirm__btn" to="/welcomePage">
-						<button class="confirm__btn">{{ $t('delConfirm.accept')}}</button>
+						<button class="confirm__btn">{{ $t('delConfirm.accept') }}</button>
 					</NuxtLink>
-					<button @click="cancelDelete" class="btn-green confirm__btn">{{ $t('delConfirm.reject')}}</button>
+					<button @click="cancelDelete" class="btn-green confirm__btn">{{ $t('delConfirm.reject') }}</button>
 				</div>
 			</div>
 		</div>
 		<div v-if="selectedTask">
 			<div class="task__name">
-				<NuxtLink to="/welcomePage">
-					<div class="task__icon-back">
-						<svg fill="currentColor" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-						     width="30px" height="30px" viewBox="0 0 193.266 193.266"
-						     xml:space="preserve">
+				<NuxtLink class="task__icon-back" to="/welcomePage">
+					<svg fill="currentColor" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+					     width="35px" height="35px" viewBox="0 0 193.266 193.266"
+					     xml:space="preserve">
 <g>
 	<path d="M183.011,111.191c-13.503-36.417-51.753-46.329-86.965-37.976c1.185-8.843,0.875-17.887,0.649-26.781
 		C96.494,38.482,97,29.389,95.584,21.28c-0.005-0.037-0.013-0.071-0.018-0.107c-0.258-1.465-0.56-2.907-0.963-4.292
@@ -56,46 +56,51 @@
 		C186.124,153.768,186.063,161.04,183.474,166.147z"/>
 </g>
 </svg>
-					</div>
+
 				</NuxtLink>
 				<span class="task__goal-name">{{ selectedTask.goal }}</span>
 				<div class="edit__menu-wrapper">
-					<EditDeleteMenu
-						:icon="editIcon"
-						@click="editMenu"/>
-					<ul v-if="isOpen" class="edit__menu-list">
-						<li @click="openConfirmWindow(selectedTask.id)" class="edit__menu-item">{{ $t('EditDeleteMenu.delTask')}}</li>
-					</ul>
+					<EditDeleteMenu :icon="editIcon" @click="editMenu"/>
+<!--					<ul v-if="isOpen" class="edit__menu-list">-->
+<!--						<li @click="openConfirmWindow(selectedTask.id)" class="edit__menu-item">-->
+<!--							{{ $t('EditDeleteMenu.delTask') }}-->
+<!--						</li>-->
+<!--					</ul>-->
 				</div>
 			</div>
 			<div class="range__date-wrapper">
 				<div class="range__date">
-					<div class="range__date-text">{{ $t('taskDetails.startDate')}}</div>
+					<div class="range__date-text">{{ $t('taskDetails.startDate') }}</div>
 					<div class="range__date__data start">{{ formatDate(selectedTask.dateRange.start) }}</div>
 				</div>
 				<div class="range__date">
-					<div class="range__date-text">{{ $t('taskDetails.endDate')}}</div>
+					<div class="range__date-text">{{ $t('taskDetails.endDate') }}</div>
 					<div class="range__date__data end">{{ formatDate(selectedTask.dateRange.end) }}</div>
 				</div>
 			</div>
 			<div class="date__picker">
 				<v-calendar
 					is-expanded
+					v-if="allowedDateRange.start && allowedDateRange.end"
 					:locale="locale"
-					:min-date="localDateRange.start"
-					:max-date="localDateRange.end"
+					:min-date="allowedDateRange.start"
+					:max-date="allowedDateRange.end"
 					:disabled-dates="disabledDates"
-					v-model.range="localDateRange"
+					v-model="selectedDate"
 					@dayclick="onDateSelect"
 					:attributes="checkedDatesAttributes"
 				/>
 			</div>
 			<div class="task__details-btns">
-				<div class="task__details-btn check">
-					<button @click="onCheckClick" :disabled="isDateMarked" class="update__task-btn check">{{ $t('checkedBtns.done')}}</button>
-				</div>
-				<div class="task__details-btn">
-					<button @click="onMissClick" :disabled="isDateMarked" class="update__task-btn">{{ $t('checkedBtns.missed')}}</button>
+				<div v-for="(btn, index) in ['done', 'missed']" :key="index" class="task__details-btn" :class="btn === 'done' ? 'check' : ''">
+					<button
+						@click="misscCheckClick(btn)"
+						:disabled="isDateMarked"
+						class="update__task-btn"
+						:class="btn === 'done' ? 'check' : ''"
+					>
+						{{ $t(`checkedBtns.${btn}`) }}
+					</button>
 				</div>
 			</div>
 			<div class="progress__container-details">
@@ -110,60 +115,187 @@
 			<div class="checked-progress">
 				<div class="checked__progress-wrapper">
 					<div class="checked__wrapper">
-						<img src="../assets/images/checkIcon.svg" alt="" class="checked__icon">
-						<span class="checked__text checked__green">{{ checkedCount }} {{ $t('CheckedProgress.checked')}}</span>
+						<img src="../assets/images/checkIcon.svg" alt="" class="checked__icon" />
+						<span class="checked__text checked__green">{{ checkedCount }} {{ $t('CheckedProgress.checked') }}</span>
 					</div>
 					<div class="checked__wrapper">
-						<img src="../assets/images/noyChecked.svg" alt="" class="checked__icon">
-						<span class="checked__text"> {{ missedCount }} {{ $t('CheckedProgress.notChecked')}}</span>
+						<img src="../assets/images/noyChecked.svg" alt="" class="checked__icon" />
+						<span class="checked__text">{{ missedCount }} {{ $t('CheckedProgress.notChecked') }}</span>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
+
 <script setup>
-	import {ref, computed, onMounted} from "vue";
-	import {useRoute} from "vue-router";
-	import {useHabitStore} from "../stores/habitStore.js";
+	import { ref, computed, onMounted, watch } from "vue";
+	import { useRoute } from "vue-router";
+	import { useHabitStore } from "../stores/habitStore.js";
 	import ProgressBar from "../src/components/progressBar.vue";
-	import EditDeleteMenu from '../src/components/EditDeleteMenu.vue';
-	import EditIcon from  '../assets/images/editIcon.svg'
-	const { locale } = useI18n()
-	const editIcon = ref(EditIcon)
+	import EditDeleteMenu from "../src/components/EditDeleteMenu.vue";
+	import EditIcon from '../assets/images/rubbish-bin.svg';
+	const { locale } = useI18n();
+	import Lottie from 'lottie-web';
+	import CongratsAmination from '../assets/animations/GratsAnimation.json'
+	import { useTaskStore } from '../stores/OfflineTaskStore.js'
+
+	const animationBlock = ref(null)
+	const editIcon = ref(EditIcon);
 	const editState = ref(false);
 	const isOpen = ref(false);
 	const taskToDelete = ref(null);
 	const router = useRoute();
 	const isDateSelected = ref(false);
-	const checkedDates = ref([])
-	const missedDates = ref([])
+	const checkedDates = ref([]);
+	const missedDates = ref([]);
 	const checkedCount = ref(0);
 	const missedCount = ref(0);
-
 	const habitStore = useHabitStore();
-	const selectedTask = computed(() =>
-		habitStore.tasks.find((task) => task.id === Number(router.query.id)) || null
-	);
+	const selectedDate = ref(null);
+	const taskStore = useTaskStore();
+
+	const applausAudio = () => {
+		const audio = new Audio('/sounds/sound.mp3')
+		audio.play()
+	}
+
+	const selectedTask = computed(() => {
+		const id = router.query.id;
+		const allTasks = [...habitStore.tasks, ...taskStore.tasks];
+		return allTasks.find(task => task.id == id) || null;
+	});
+
+	const convertToDate = (date) => {
+		return date && typeof date.toDate === "function" ? date.toDate() : new Date(date);
+	};
+
+	const getLocalDate = () => {
+		const now = new Date();
+		now.setHours(0, 0, 0, 0);
+		return now.toISOString().split("T")[0];
+	};
+
+	const formatDateLocal = (date) => {
+		const d = new Date(date);
+		const year = d.getFullYear();
+		const month = (d.getMonth() + 1).toString().padStart(2, '0');
+		const day = d.getDate().toString().padStart(2, '0');
+		return `${year}-${month}-${day}`;
+	};
+
+	const getCurrentDate = () => {
+		const d = new Date();
+		d.setHours(0, 0, 0, 0);
+		return d.toLocaleDateString('en-CA');
+	};
+
+	const misscCheckClick = (btn) => {
+		if (!selectedTask.value) return;
+		if (selectedDate.value !== getCurrentDate()) {
+			console.log("Отмечается только карент дата:", getCurrentDate());
+			return;
+		}
+
+		const selDateStr = selectedDate.value;
+		const taskStartStr = convertToDate(selectedTask.value.dateRange.start).toLocaleDateString('en-CA');
+		const taskEndStr = convertToDate(selectedTask.value.dateRange.end).toLocaleDateString('en-CA');
+		console.log("диапозон:", selDateStr, taskStartStr, taskEndStr);
+		if (!selDateStr || selDateStr < taskStartStr || selDateStr > taskEndStr) {
+			console.log("Дата вне диапазона!", selDateStr);
+			selectedDate.value = null;
+			return;
+		}
+
+		if (checkedDates.value.includes(selDateStr) || missedDates.value.includes(selDateStr)) {
+			console.log("Дата уже отмечена", selDateStr);
+			return;
+		}
+
+		const totalDays = Math.max(1, (new Date(taskEndStr) - new Date(taskStartStr)) / (1000 * 60 * 60 * 24) + 1);
+		const step = (100 / totalDays).toFixed(2);
+
+		if (!selectedTask.value.history) {
+			selectedTask.value.history = [];
+		}
+
+		const currentProgress = selectedTask.value.progress || 0;
+		const currentProgressMiss = selectedTask.value.progressMiss || 0;
+		const remainingProgress = 100 - currentProgress - currentProgressMiss;
+		if (remainingProgress <= 0) return;
+		if (btn === "done") {
+			if (!selectedTask.value.checkedDates) {
+				selectedTask.value.checkedDates = [];
+			}
+			selectedTask.value.checkedDates.push(selDateStr);
+			checkedDates.value.push(selDateStr);
+			localStorage.setItem(`task_${selectedTask.value.id}_checkedDates`, JSON.stringify(checkedDates.value));
+
+			selectedTask.value.history.push({
+				color: "#4FC55C",
+				percent: Math.min(parseFloat(step), remainingProgress),
+			});
+		} else if (btn === "missed") {
+			if (!selectedTask.value.missedDates) {
+				selectedTask.value.missedDates = [];
+			}
+			if (!selectedTask.value.missedDates.includes(selDateStr)) {
+				selectedTask.value.missedDates.push(selDateStr);
+				missedDates.value.push(selDateStr);
+				localStorage.setItem(`task_${selectedTask.value.id}_missedDates`, JSON.stringify(missedDates.value));
+				selectedTask.value.history.push({
+					color: "#FF5C00",
+					percent: Math.min(parseFloat(step), remainingProgress),
+				});
+			}
+		}
+
+		habitStore.updateProgress(selectedTask.value);
+		habitStore.saveTasks();
+
+		if (selectedTask.value.progress === 100) {
+			setTimeout(() => {
+				if (animationBlock.value) {
+					const animSpeed = Lottie.loadAnimation({
+						container: animationBlock.value,
+						loop: true,
+						animationData: CongratsAmination,
+					});
+					animSpeed.setSpeed(0.4);
+					applausAudio()
+				}
+			}, 400);
+		}
+	};
+
+	const allowedDateRange = computed(() => {
+		if (selectedTask.value) {
+			const start = convertToDate(selectedTask.value.dateRange.start);
+			const end = convertToDate(selectedTask.value.dateRange.end);
+			return {
+				start: start.toLocaleDateString('en-CA'),
+				end: end.toLocaleDateString('en-CA')
+			};
+		}
+		return { start: null, end: null };
+	});
 
 	const onDateSelect = (day) => {
 		if (!day || !day.id || !selectedTask.value) return;
-		const tempSelectedDate = removeTime(day.id);
-		const rangeStart = removeTime(selectedTask.value.dateRange.start);
-		const rangeEnd = removeTime(selectedTask.value.dateRange.end);
-		if (tempSelectedDate < rangeStart || tempSelectedDate > rangeEnd) {
-			console.log("Дата вне диапазона");
+		const selDate = new Date(day.id);
+		selDate.setHours(0, 0, 0, 0);
+		const taskStart = new Date(convertToDate(selectedTask.value.dateRange.start));
+		taskStart.setHours(0, 0, 0, 0);
+		const taskEnd = new Date(convertToDate(selectedTask.value.dateRange.end));
+		taskEnd.setHours(0, 0, 0, 0);
+
+		if (selDate < taskStart || selDate > taskEnd) {
+			console.log("Дата вне диапазона", formatDateLocal(selDate));
 			return;
 		}
 		isDateSelected.value = true;
-		localDateRange.value.start = tempSelectedDate;
-
-	};
-
-	const removeTime = (timestamp) => {
-		const date = new Date(timestamp);
-		date.setHours(0, 0, 0, 0);
-		return date.getTime();
+		selectedDate.value = formatDateLocal(selDate);
+		console.log("Выбрана", selectedDate.value);
 	};
 
 	const disabledDates = computed(() => {
@@ -173,21 +305,11 @@
 	const loadTask = () => {
 		habitStore.loadTasks();
 		if (selectedTask.value) {
-			const savedDateRange = localStorage.getItem(`task_${selectedTask.value.id}_dateRange`);
-			if (savedDateRange) {
-				localDateRange.value = JSON.parse(savedDateRange);
-			} else {
-				localDateRange.value = {
-					start: selectedTask.value.dateRange.start,
-					end: selectedTask.value.dateRange.end,
-				};
-			}
 			const savedCheckedDates = localStorage.getItem(`task_${selectedTask.value.id}_checkedDates`);
 			if (savedCheckedDates) {
 				checkedDates.value = JSON.parse(savedCheckedDates);
 				selectedTask.value.checkedDates = [...checkedDates.value];
 			}
-
 			const savedMissedDates = localStorage.getItem(`task_${selectedTask.value.id}_missedDates`);
 			if (savedMissedDates) {
 				missedDates.value = JSON.parse(savedMissedDates);
@@ -206,132 +328,59 @@
 		if (savedMissedCount) {
 			missedCount.value = parseInt(savedMissedCount, 10);
 		}
-	});
-
-	const onCheckClick = () => {
-
-		if (!selectedTask.value) return;
-		const selectedDate = localDateRange.value.start;
-		if (!selectedDate ||
-			new Date(selectedDate) < new Date(selectedTask.value.dateRange.start) ||
-			new Date(selectedDate) >= new Date(selectedTask.value.dateRange.end)
-		) {
-			console.log("дата вне диапазона!");
-			localDateRange.value.start = null;
-			return;
-		}
-		if (checkedDates.value.includes(selectedDate) || missedDates.value.includes(selectedDate)) {
-			console.log("Дата уже отмечена");
-			return;
-		}
-		if (!selectedTask.value.checkedDates) {
-			selectedTask.value.checkedDates = [];
-		}
-		selectedTask.value.checkedDates.push(selectedDate);
-		checkedDates.value.push(selectedDate);
-		localStorage.setItem(`task_${selectedTask.value.id}_checkedDates`, JSON.stringify(checkedDates.value)
-		);
-
-		const totalDays = Math.max(1, (new Date(selectedTask.value.dateRange.end) - new Date(selectedTask.value.dateRange.start)) / (1000 * 60 * 60 * 24) + 1);
-		const step = (100 / totalDays).toFixed(2);
-		if (!selectedTask.value.history) {
-			selectedTask.value.history = [];
-		}
-
-		const remainingProgress = 100 - selectedTask.value.progressMiss - selectedTask.value.progress;
-		if (remainingProgress <= 0) return;
-		selectedTask.value.history.push({
-			color: "#4FC55C",
-			percent: Math.min(parseFloat(step), remainingProgress),
-		});
-
-		habitStore.updateProgress(selectedTask.value);
-		habitStore.saveTasks();
-	};
-
-	const onMissClick = () => {
-		if (!selectedTask.value) return;
-		const selectedDate = localDateRange.value.start;
-		if (!selectedDate || checkedDates.value.includes(selectedDate) || missedDates.value.includes(selectedDate)) {
-			console.log("Дата уже отмечена или не выбрана");
-			return;
-		}
-		if (!selectedTask.value.missedDates) {
-			selectedTask.value.missedDates = [];
-		}
-		if (!selectedTask.value.missedDates.includes(selectedDate)) {
-			selectedTask.value.missedDates.push(selectedDate);
-			missedDates.value.push(selectedDate);
-			localStorage.setItem(`task_${selectedTask.value.id}_missedDates`, JSON.stringify(missedDates.value)
-			);
-
-			const totalDays = Math.max(1, (new Date(selectedTask.value.dateRange.end) - new Date(selectedTask.value.dateRange.start)) / (1000 * 60 * 60 * 24) + 1);
-			const step = (100 / totalDays).toFixed(2);
-			if (!selectedTask.value.history) {
-				selectedTask.value.history = [];
+		if (allowedDateRange.value.start && allowedDateRange.value.end) {
+			const today = getLocalDate();
+			if (new Date(today) >= new Date(allowedDateRange.value.start) && new Date(today) <= new Date(allowedDateRange.value.end)) {
+				selectedDate.value = today;
+			} else {
+				selectedDate.value = allowedDateRange.value.start;
 			}
-			const remainingProgress = 100 - selectedTask.value.progressMiss - selectedTask.value.progress;
-			if (remainingProgress <= 0) return;
-			selectedTask.value.history.push({
-				color: "#FF5C00",
-				percent: Math.min(parseFloat(step), remainingProgress),
-			});
-			habitStore.updateProgress(selectedTask.value);
-			habitStore.saveTasks();
 		}
-	};
+	});
 
 	const checkedDatesAttributes = computed(() => {
 		return [
 			...checkedDates.value.map(date => ({
 				key: `checked-${date}`,
 				dates: [new Date(date)],
-				highlight: {
-					contentClass: "vc-highlight-green",
-				},
+				highlight: { contentClass: "vc-highlight-green" },
 			})),
 			...missedDates.value.map(date => ({
 				key: `missed-${date}`,
 				dates: [new Date(date)],
-				highlight: {
-					contentClass: "vc-highlight-red",
-				},
+				highlight: { contentClass: "vc-highlight-red" },
 			})),
 		];
 	});
+
 	const isDateMarked = computed(() => {
-		const date = localDateRange.value.start;
+		const date = selectedDate.value;
 		if (!date) return false;
 		return checkedDates.value.includes(date) || missedDates.value.includes(date);
 	});
-	const localDateRange = ref({
-		start: selectedTask.value?.dateRange.start || null,
-		end: selectedTask.value?.dateRange.end || null,
-	});
-	const clearTask = (taskId) => {
-		if (!taskId) return;
-		habitStore.removeTask(taskId);
-		editState.value = false;
 
-		if (habitStore.tasks.length === 0) {
-			checkedCount.value = 0;
-			missedCount.value = 0;
+	const clearTask = async (taskId) => {
+		if (!taskId) return;
+
+		if (habitStore.tasks.find(t => t.id === taskId)) {
+			habitStore.removeTask(taskId);
 		} else {
-			checkedCount.value = habitStore.tasks.reduce((sum, task) => sum + (task.checkedDates?.length || 0), 0);
-			missedCount.value = habitStore.tasks.reduce((sum, task) => sum + (task.missedDates?.length || 0), 0);
+			await taskStore.archiveTask(taskId);
 		}
 
-		localStorage.setItem("checkedCount", checkedCount.value);
-		localStorage.setItem("missedCount", missedCount.value);
-	};
-	const editMenu = () => {
-		isOpen.value = true;
+		const allTasks = [...habitStore.tasks, ...taskStore.tasks];
+		checkedCount.value = allTasks.reduce((sum, task) => sum + (task.checkedDates?.length || 0), 0);
+		missedCount.value = allTasks.reduce((sum, task) => sum + (task.missedDates?.length || 0), 0);
 	};
 
 	const cancelDelete = () => {
 		taskToDelete.value = null;
 		isOpen.value = false;
 		editState.value = false;
+	};
+
+	const editMenu = () => {
+		isOpen.value = true;
 	};
 
 	const openConfirmWindow = (taskId) => {
@@ -341,7 +390,8 @@
 	};
 
 	const formatDate = (date) => {
-		return new Date(date).toLocaleDateString("en-US", {
+		const d = convertToDate(date);
+		return d.toLocaleDateString("en-US", {
 			day: "2-digit",
 			month: "2-digit",
 			year: "numeric",
@@ -349,23 +399,49 @@
 	};
 
 	watch(selectedTask, (newTask) => {
-		if (newTask) {
-			checkedCount.value = newTask.checkedDates?.length || 0;
-			missedCount.value = newTask.missedDates?.length || 0;
+		if (!newTask) return;
+		const savedCheckedDates = localStorage.getItem(`task_${newTask.id}_checkedDates`);
+		if (savedCheckedDates) {
+			checkedDates.value = JSON.parse(savedCheckedDates);
+			newTask.checkedDates = [...checkedDates.value];
 		}
-	}, { deep: true, immediate: true });
+		const savedMissedDates = localStorage.getItem(`task_${newTask.id}_missedDates`);
+		if (savedMissedDates) {
+			missedDates.value = JSON.parse(savedMissedDates);
+			newTask.missedDates = [...missedDates.value];
+		}
+		checkedCount.value = newTask.checkedDates?.length || 0;
+		missedCount.value = newTask.missedDates?.length || 0;
+		if (allowedDateRange.value.start && allowedDateRange.value.end) {
+			const today = getLocalDate();
+			if (
+				new Date(today) >= new Date(allowedDateRange.value.start) &&
+				new Date(today) <= new Date(allowedDateRange.value.end)
+			) {
+				selectedDate.value = today;
+			} else {
+				selectedDate.value = allowedDateRange.value.start;
+			}
+		}
+	}, { immediate: true });
 
 </script>
 <style>
-
+	.animation__block{
+		position: absolute;
+		top: 50%;
+		left: 0;
+		z-index: 10;
+		transform: translateY(-50%);
+	}
 	.vc-highlight-red {
 		background-color: #FF3030 !important;
-		color: black !important;
+		color: white !important;
 	}
 
 	.vc-highlight-green {
 		background-color: #00D100 !important;
-		color: black !important;
+		color: white !important;
 	}
 
 	.vc-highlight-light-bg {
@@ -439,6 +515,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		margin-bottom: 15px;
 	}
 
 	.progress__container-details {

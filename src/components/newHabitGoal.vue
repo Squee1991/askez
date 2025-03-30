@@ -31,11 +31,13 @@
 <script setup>
 	import {ref, defineEmits} from "vue";
 	import CloseIcon from "/assets/images/close.svg";
-	import SuccessModal from "../../pages/SuccessModal.vue";
+
 	import SelectComponent from '/src/components/selectComponent.vue'
+	import SuccesModal from '/src/components/succesModal.vue'
 	import {useHabitStore} from '../../stores/habitStore.js'
+
 	const habitStore = useHabitStore()
-	const { locale } = useI18n()
+	const {locale} = useI18n()
 	const inputValueGoal = ref("");
 	const emit = defineEmits(["close", "add"]);
 	const router = useRouter()
@@ -59,7 +61,6 @@
 		habitStore.addTask(newTask);
 		emit("add", newTask);
 		clearFields([inputValueGoal]);
-		router.push('/SuccessModal')
 	};
 
 	watch(localDateRange, (newVal) => {
@@ -72,6 +73,11 @@
 
 </script>
 <style>
+
+	.success-modal {
+
+	}
+
 	.vc-highlight-light-bg {
 		background: white;
 	}

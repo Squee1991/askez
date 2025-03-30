@@ -4,18 +4,25 @@
 	import HeaderWichback from '../src/components/headerWithBack.vue'
 	import {useHabitStore} from '../stores/habitStore.js'
 	import Arrow from '../assets/images/ArrowTask.svg'
-
+	import { useTaskStore } from '../stores/OfflineTaskStore.js'
+	const taskStore = useTaskStore()
 	const habitStore = useHabitStore()
 	const isScaled = ref({})
 	const openTask = (id) => {
 		isScaled.value[id] = !isScaled.value[id]
 	}
 
+	const convertToDate = (date) => {
+		return date && typeof date.toDate === 'function' ? date.toDate() : new Date(date);
+	};
+
 	const calculateDaysBetweenRange = (start, end) => {
 		if (!start || !end) return 0;
-		const startDate = new Date(start);
-		const endDate = new Date(end);
-		const diffInMs = endDate.setHours(0,0,0,0) - startDate.setHours(0,0,0,0);
+		const startDate = convertToDate(start);
+		const endDate = convertToDate(end);
+		startDate.setHours(0, 0, 0, 0);
+		endDate.setHours(0, 0, 0, 0);
+		const diffInMs = endDate - startDate;
 		const minDays = Math.round(diffInMs / (1000 * 60 * 60 * 24)) + 1;
 		return Math.max(minDays, 0);
 	};
@@ -29,10 +36,17 @@
 	})
 
 	const formatDate = (date) => {
-		return new Date(date).toLocaleDateString({
-			day: "2-digit", month: "long"
+		const d = convertToDate(date);
+		return d.toLocaleDateString("en-US", {
+			day: "2-digit",
+			month: "long",
+			year: "numeric"
 		});
 	};
+
+	onMounted(() => {
+		taskStore.loadTasksFromLocal();
+	});
 </script>
 
 <template>
@@ -46,7 +60,9 @@
 					</div>
 				</div>
 				<div class="archive__text" v-if="!habitStore.archiveTasks.length">
-					<div class="archiv__folder"><img class="folder__icon" src="../assets/images/folder.svg" alt=""></div>
+					<div class="archiv__folder">
+						<img class="folder__icon" src="../assets/images/archive-svgrepo.svg" alt="">
+					</div>
 					<div class="archiv__empty-text">{{ $t('archieve.empty') }}</div>
 				</div>
 				<div class="archive__items">
@@ -56,7 +72,10 @@
 						class="archive__list"
 					>
 						<div class="archive__list-inner">
-							<div class="archive__list-goal">{{ task.goal }}</div>
+							<div
+								:class="{'archive__list-goal--full': isScaled[task.id]}"
+								class="archive__list-goal"
+							>{{ task.goal }}</div>
 							<div @click="openTask(task.id)" :class="{'archive__icon--rotated': isScaled[task.id]}"
 							     class="archive__icon">
 								<svg width="25px" height="25px" viewBox="0 0 24 24" fill="none"
@@ -128,11 +147,16 @@
 		height: 100%;
 		overflow-y: auto;
 		padding-right: 5px;
+		padding-bottom: 30px;
 	}
 
 	.archiv__folder {
 		width: 70px;
 		margin: 0 auto;
+	}
+
+	.archive__body {
+
 	}
 
 
@@ -155,7 +179,7 @@
 		color: #a597a7;
 		font-family: "Nunito", serif;
 		font-weight: 600;
-		font-size: 17px;
+		font-size: 16px;
 	}
 
 	.archive__banner {
@@ -187,7 +211,7 @@
 	}
 
 	.archive__list--expanded {
-		height: 190px;
+		height: 200px;
 		transition: .3s;
 	}
 
@@ -199,8 +223,17 @@
 
 	.archive__list-goal {
 		color: #4FC55C;
-		font-size: 20px;
+		font-size: 18px;
 		font-weight: 600;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.archive__list-goal--full {
+		white-space: normal;
+		overflow: visible;
+		text-overflow: unset;
 	}
 
 	.archive__icon {

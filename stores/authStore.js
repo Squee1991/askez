@@ -14,7 +14,6 @@ export const useAuthStore = defineStore('auth', () => {
 		const name = ref(null);
 		const email = ref(null);
 		const password = ref(null);
-
 		const setUserData = (data) => {
 			name.value = data.name;
 			email.value = data.email;
@@ -22,16 +21,20 @@ export const useAuthStore = defineStore('auth', () => {
 		};
 
 		const registerUser = async (userData) => {
-			const auth = getAuth();
-			const userCredential = await createUserWithEmailAndPassword(
-				auth,
-				userData.email,
-				userData.password
-			);
-			await updateProfile(userCredential.user, {
-				displayName: userData.name
-			});
-			setUserData(userData);
+			try {
+				const auth = getAuth();
+				const userCredential = await createUserWithEmailAndPassword(
+					auth,
+					userData.email,
+					userData.password
+				);
+				await updateProfile(userCredential.user, {
+					displayName: userData.name
+				});
+				setUserData(userData);
+			} catch (error) {
+				console.error(error.message);
+			}
 		};
 
 		const loginUser = async ({email, password}) => {
@@ -63,7 +66,12 @@ export const useAuthStore = defineStore('auth', () => {
 					setUserData({
 						name: user.displayName,
 						email: user.email
-					})
+					});
+					const lastRoute = localStorage.getItem('lastRoute');
+					if (lastRoute) {
+						window.location.href = lastRoute; // Переход на сохраненный маршрут
+						localStorage.removeItem('lastRoute'); // Удаляем, чтобы не зацикливалось
+					}
 				}
 			})
 		}
@@ -84,6 +92,7 @@ export const useAuthStore = defineStore('auth', () => {
 			name,
 			email,
 			password,
+
 			setUserData,
 			registerUser,
 			loginUser,
