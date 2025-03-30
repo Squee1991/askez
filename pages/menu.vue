@@ -244,6 +244,7 @@
 		font-size: 18px;
 		font-weight: 600;
 		font-family: "Acme", serif;
+		letter-spacing: 1px;
 	}
 
 	.askeza__menu-content {

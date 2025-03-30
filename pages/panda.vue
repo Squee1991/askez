@@ -2,7 +2,6 @@
 	<div class="acc">
 		<button class="circle"
 		        :class="{'clicked': clicked}"
-		        @click="handleClick"
 		        v-if="isButtonVisible">
 			<svg fill="CurrentColor" width="60px" height="60px" viewBox="0 0 32 32" version="1.1"
 			     xmlns="http://www.w3.org/2000/svg">
@@ -252,18 +251,27 @@
 		return '/images/33.png'
 	})
 
-	function handleClick() {
-		clicked.value = true
+	// function handleClick() {
+	// 	clicked.value = true
+	// 	setTimeout(() => {
+	// 		isButtonVisible.value = false
+	// 		setTimeout(() => {
+	// 			isOpen.value = true
+	// 		}, 500)
+	// 	}, 2000)
+	// }
+
+	onMounted(() => {
+		store.updateAllProgress()
+		setTimeout(() => {
+			clicked.value = true
+		}, 500)
 		setTimeout(() => {
 			isButtonVisible.value = false
 			setTimeout(() => {
 				isOpen.value = true
 			}, 500)
-		}, 2000)
-	}
-
-	onMounted(() => {
-		store.updateAllProgress()
+		}, 2300)
 	})
 
 	definePageMeta({

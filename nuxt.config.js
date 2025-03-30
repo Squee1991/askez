@@ -1,9 +1,9 @@
 console.log(process.env.NODE_ENV)
 
 export default defineNuxtConfig({
-	ssr: true,
+	sssr: false,
 	nitro: {
-		preset: "vercel"
+		preset: "static"
 	},
 
 	runtimeConfig: {

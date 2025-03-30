@@ -111,7 +111,7 @@
 
 	.stats__banner-content {
 		padding: 8px 15px 8px 20px;
-		background: #4CAF50;
+		background: #5ab75e;
 		border-radius: 10px;
 		display: flex;
 		justify-content: space-between;
