@@ -81,6 +81,12 @@ export default defineNuxtConfig({
 				file: 'fr-FR.json',
 			},
 			{
+				code: 'ar',
+				iso: 'ar-EG',
+				name: 'العربية',
+				file: 'ar-EG.json'
+			},
+			{
 				code: 'zh-CN',
 				iso: 'zh-CN',
 				name: '中文',

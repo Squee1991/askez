@@ -34,7 +34,8 @@
 		'Мод',
 		'Режим',
 		'Fëapolë',
-		'模式'
+		'模式',
+		'الوضع'
 	];
 
 	const deleteLabels = [
@@ -46,7 +47,8 @@
 		'Eliminar cuenta',
 		'Supprimer le compte',
 		'Account vanwa',
-		'删除账户'
+		'删除账户',
+		'حذف الحساب'
 	];
 	const {locale, messages} = useI18n();
 
