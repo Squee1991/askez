@@ -73,27 +73,25 @@
 		transition: background-color 0.3s ease, transform 0.2s ease;
 		position: relative;
 		overflow: hidden;
-		z-index: 1;
-		-webkit-tap-highlight-color: transparent;
 	}
-
 	.reconnect::after {
 		content: '';
 		position: absolute;
 		left: 50%;
 		top: 50%;
 		transform: translate(-50%, -50%) scale(0);
-		width: 120px;
-		height: 120px;
-		background: rgba(255, 255, 255, 0.4);
+		width: 200%;
+		height: 200%;
+		background: rgba(255, 255, 255, 0.3);
 		border-radius: 50%;
 		opacity: 0;
 		pointer-events: none;
-		transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+		transition: transform 0.4s ease, opacity 0.4s ease;
 	}
 
 	.reconnect:active::after {
-		transform: translate(-50%, -50%) scale(4);
+		transform: translate(-50%, -50%) scale(1);
 		opacity: 1;
+		transition: transform 0s, opacity 0s;
 	}
 </style>

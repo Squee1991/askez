@@ -6,12 +6,33 @@
 	"settings": {
 		"title": "Configuración"
 	},
+	"buyPremium": {
+		"buy": "Mensual",
+		"plus": "Ventajas"
+	},
 	"setting": [
 		"Eliminar cuenta",
 		"Política de privacidad",
-		"Mode",
-		"Чат"
+		"Modo",
+		"Chat"
 	],
+	"premiumValues": [
+		"Sin anuncios",
+		"Mejora del panda",
+		"Acceso a logros",
+		"Apoyo a los desarrolladores",
+		"Cambio de datos permitido",
+		"Objetivos ilimitados",
+		"Acceso al asistente virtual",
+		"Acceso a funciones próximas (muy pronto)"
+	],
+	"privacy": {
+		"page": "Política de privacidad"
+	},
+	"googlePlay": {
+		"pay": "La suscripción se renueva automáticamente a través de Google Play, a menos que la canceles manualmente.Si cancelas la suscripción antes de que finalice el período de facturación actual, no se reembolsará el importe de ese período, pero el acceso Premium seguirá activo hasta el final del período pagado. La cancelación será efectiva una vez finalizado el período actual."
+	},
+
 	"chat": {
 		"title": "Volver",
 		"btn": "Enviar",

@@ -1,4 +1,5 @@
 import {defineStore} from "pinia";
+import {useAuthStore} from './authStore.js';
 import {computed, ref, watch} from "vue";
 import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
 import {getFirestore, doc, setDoc, getDoc, deleteDoc} from "firebase/firestore";
@@ -17,7 +18,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	const auth = getAuth();
 	const db = getFirestore();
 	const userId = ref(null);
-
+	const authStore = useAuthStore();
 	const updateTask = (updatedTask) => {
 		const index = tasks.value.findIndex(t => t.id === updatedTask.id);
 		if (index !== -1) {
@@ -142,30 +143,27 @@ export const useHabitStore = defineStore("askezaStore", () => {
 
 		const totalDays = Math.max(1, ((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1);
 
-		// Считаем предыдущее количество дней
 		const previousChecked = task.checkedCount || 0;
 		const previousMissed = task.missedCount || 0;
 
 		const currentChecked = task.checkedDates?.length || 0;
 		const currentMissed = task.missedDates?.length || 0;
 
-		// Разница — сколько новых дней появилось
 		const addedChecked = currentChecked - previousChecked;
 		const addedMissed = currentMissed - previousMissed;
 
-		// Обновляем старые значения
 		task.checkedCount = currentChecked;
 		task.missedCount = currentMissed;
 
-		// Обновляем глобальный прогресс
-		pandaProgressGlobal.value += addedChecked;
-		pandaProgressGlobal.value -= addedMissed;
+		if (authStore.isPremium) {
+			pandaProgressGlobal.value += addedChecked;
+			pandaProgressGlobal.value -= addedMissed;
 
-		// Ограничим диапазон от 0 до 100
-		if (pandaProgressGlobal.value < 0) pandaProgressGlobal.value = 0;
-		if (pandaProgressGlobal.value > 100) pandaProgressGlobal.value = 100;
+			if (pandaProgressGlobal.value < 0) pandaProgressGlobal.value = 0;
+			if (pandaProgressGlobal.value > 100) pandaProgressGlobal.value = 100;
+		}
 
-		// Теперь обычный расчёт процентов прогресса по задаче
+
 		let progress = (currentChecked / totalDays) * 100;
 		let progressMiss = (currentMissed / totalDays) * 100;
 		progress = Math.round(progress);
@@ -180,8 +178,10 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		task.progress = progress;
 		task.progressMiss = progressMiss;
 		if (progress === 100 && !task.isAchieved) {
-			task.isAchieved = true;
-			achieveCount.value++;
+			if (authStore.isPremium || achieveCount.value < 1) {
+				task.isAchieved = true;
+				achieveCount.value++;
+			}
 		}
 
 		const taskIndex = tasks.value.findIndex((t) => t.id === task.id);

@@ -163,7 +163,7 @@
 	}
 
 	.stats__left {
-		min-height: 128px;
+		min-height: 135px;
 	}
 
 	.select__wrapper {
@@ -211,8 +211,8 @@
 	.not__active-askez {
 		color: #666060;
 		font-size: 16px;
-		font-family: "Acme", serif;
-		font-weight: 600;
+		font-family: "Nunito", sans-serif;
+		font-weight: 400;
 		margin-top: 10px;
 	}
 
@@ -241,7 +241,7 @@
 		display: flex;
 		flex-direction: column;
 		height: 100%;
-		padding: 0 20px;
+		padding: 0 10px;
 	}
 
 	.stats__header {

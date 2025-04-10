@@ -1,7 +1,7 @@
 <script setup>
 	import {ref, onMounted} from 'vue';
 	import {getAuth, reauthenticateWithCredential, EmailAuthProvider, deleteUser} from 'firebase/auth';
-	import PremiumOverlay from '../src/components/premiumWindow.vue'
+	import PremiumWindow from '../src/components/premiumWindow.vue'
 	import Light from '../assets/images/sun-2.svg';
 	import Dark from '../assets/images/moon.svg';
 	import HeaderWithBack from '../src/components/headerWithBack.vue';
@@ -60,6 +60,16 @@
 		clickToggleBot();
 	}
 
+	const handleClick = (index) => {
+		if (index === 3) {
+			clickToggle();
+		} else if (index === 4) {
+			clickPremiumButton();
+		} else {
+			SettingsChange(t(`setting.${index - 1}`));
+		}
+	};
+
 
 	const deleteAllDatas = async () => {
 		const auth = getAuth();
@@ -87,14 +97,14 @@
 	const SettingsChange = (text) => {
 		const textItem = text
 		if ([
-			'Mode', 'Мод', 'Режим', 'Fëapolë', '模式', 'الوضع'
+			'Mode', 'Мод', 'Режим', 'Fëapolë', '模式', 'الوضع' , 'Tryb'
 		].includes(textItem)) {
 			clickToggle();
 		} else if (["Privacy Policy", "سياسة الخصوصية",
 			"Палітыка прыватнасці", "Datenschutzbestimmungen", "Násië", "Политика конфиденциальности",
-			"Політика конфіденційності", "隐私政策", "Politique de confidentialité", "Política de privacidad",].includes(textItem)) {
+			"Політика конфіденційності", "隐私政策", "Politique de confidentialité", "Polityka prywatności" , "Política de privacidad",].includes(textItem)) {
 			router.push('/policyPrivacy')
-		} else if (['Удалить аккаунт', 'Delete account', 'Выдаліць акаунт', 'Видалити акаунт', 'Konto löschen', 'Eliminar cuenta',
+		} else if (['Удалить аккаунт', 'Delete account', 'Выдаліць акаунт', 'Видалити акаунт', 'Konto löschen', 'Usuń konto' , 'Eliminar cuenta',
 			'Supprimer le compte', 'Account vanwa', '删除账户', 'حذف الحساب'].includes(textItem)) {
 			confirmDeleteDatas.value = true;
 		}
@@ -115,9 +125,14 @@
 </script>
 
 <template>
-
+	<div v-if="isOverlayVisible" class="premium__window">
+		<PremiumWindow
+			:text="$t('premiumWindow.bot')"
+			:subtext="$t('premiumWindow.subtext')"
+			@close="isOverlayVisible = false"
+		/>
+	</div>
 	<div class="settings__wrapper">
-
 		<div v-if="confirmDeleteDatas" class="overlay">
 			<div class="confirm__wrapper">
 				<div class="confirm__title">{{ $t('delAllDatas.title') }}</div>
@@ -143,7 +158,7 @@
 					class="account__settings-btn"
 					:class="{ 'disabled-premium': index === 4 && !authStore.isPremium }"
 
-					@click="index === 3? clickToggle(): index === 4? clickPremiumButton() : SettingsChange($t('setting.' + (index - 1)))"
+					@click="handleClick(index)"
 				>
 					<span class="accoun__text">{{ $t('setting.' + (index - 1)) }}</span>
 					<span v-if="index === 3" class="toggle-bar" :class="{ 'dark-mode': isToggle }">
@@ -157,23 +172,22 @@
 				</button>
 			</div>
 		</div>
-
-			<PremiumOverlay
-				v-if="isOverlayVisible"
-				:text="$t('premiumWindow.taskText')"
-				:subtext="$t('premiumWindow.subtext')"
-			/>
-
 	</div>
 </template>
 
 
 <style scoped>
 
+	.premium__window {
+		position: absolute;
+		width: 100%;
+		height: 100vh;
+		z-index: 100;
+	}
+
 	.disabled-premium {
 		opacity: 0.5;
-		cursor: not-allowed;
-		pointer-events: none;
+		cursor: pointer;
 	}
 
 	.toggle-bar {

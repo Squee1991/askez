@@ -1,14 +1,14 @@
 <template>
-	<div class="premium__window-overlay">
-		<div class="premium__window">
-			<img @click="closePremiumWindow"  class="close__img" :src="Close" alt="">
+	<div class="premium__window-overlay" @click="handleOverlayClick">
+		<div class="premium__window" @click.stop>
+			<img @click="closePremiumWindow" class="close__img" :src="Close" alt="">
 			<img class="premium__window-icon" :src="LickPanda" alt="">
 			<div>
-				<div class="premium__window-text"> {{ props.text}}</div>
-				<div class="premium__window-subtext"> {{ props.subtext}}</div>
+				<div class="premium__window-text">{{ props.text }}</div>
+				<div class="premium__window-subtext">{{ props.subtext }}</div>
 			</div>
 			<NuxtLink to="/premium" class="premium__premium__window-btn">
-				{{ $t('premiumWindow.btnPremium')}}
+				{{ $t('premiumWindow.btnPremium') }}
 			</NuxtLink>
 		</div>
 	</div>
@@ -31,6 +31,10 @@
 	})
 
 	const emit = defineEmits(['close'])
+
+	const handleOverlayClick = () => {
+		emit('close')
+	}
 
 	const closePremiumWindow = () => {
 

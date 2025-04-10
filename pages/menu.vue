@@ -11,15 +11,15 @@
 					</button>
 				</div>
 			</div>
+			<div class="menu__title">
+				<HeaderwithBack
+					:title="$t('menu.title')"/>
+				<div class="log__out-icon" @click="singOutBtn">
+					<img :src="LogoutIcon" alt="">
+				</div>
+			</div>
 			<div class="askeza__menu-content">
-				<div>
-					<div class="menu__title">
-						<HeaderwithBack
-							:title="$t('menu.title')"/>
-						<div class="log__out-icon" @click="singOutBtn">
-							<img :src="LogoutIcon" alt="">
-						</div>
-					</div>
+				<div class="askez__menu__scroll">
 					<div class="menu__btns">
 						<div class="menu__btn-wrapper" v-for="index in 5" :key="index">
 							<NuxtLink class="account__settings-btn" :to="getMenuPlainLink(t(`meniu.${index - 1}`))">
@@ -107,13 +107,13 @@
 	const {t} = useI18n();
 	const accountLabels = ['Акаўнт', 'Аккаунт', 'Account', 'Konto', 'Cuenta', 'Compte', 'Акаунт', 'Hesto', '账户', 'الحساب'];
 
-	const aboutLabels = ['Пра праграму', 'О программе', 'About App', 'Über die App', 'Sobre la app', "À propos de l'application", 'Про застосунок', 'Yassë Apacë', '关于应用', 'حول التطبيق'];
+	const aboutLabels = ['Пра праграму', 'О программе', 'About App', 'Über die App', 'Sobre la app', "À propos de l'application", 'Про застосунок', 'Yassë Apacë', '关于应用', 'حول التطبيق', 'O aplikacji'];
 
-	const languageLabels = ['Мова', 'Язык', 'Languages', 'Sprache', 'Idioma', 'Langue', 'Мова', 'Lambë', '语言', 'اللغات'];
+	const languageLabels = ['Мова', 'Язык', 'Languages', 'Sprache', 'Idioma', 'Langue', 'Мова', 'Lambë', '语言', 'اللغات', 'Język'];
 
-	const feedback = ['Обратная связь', 'Зваротная сувязь', 'Feedback', 'Comentarios', 'Commentaires', 'Зворотний зв\'язок', 'Anna atsa', '反馈', 'التعليقات'];
+	const feedback = ['Обратная связь', 'Зваротная сувязь', 'Feedback', 'Comentarios', 'Commentaires', 'Зворотний зв\'язок', 'Anna atsa', '反馈', 'التعليقات', 'Opinie'];
 
-	const settingsLabels = ['Налады', 'Настройки', 'Settings', 'Einstellungen', 'Configuración', 'Paramètres', 'Налаштування', 'Ondo', '设置', 'الإعدادات'];
+	const settingsLabels = ['Налады', 'Настройки', 'Settings', 'Einstellungen', 'Configuración', 'Paramètres', 'Налаштування', 'Ondo', '设置', 'الإعدادات', 'Ustawienia'];
 
 
 	const logOutAccept = ref(false)
@@ -167,6 +167,10 @@
 		padding: 2px;
 		border-radius: 10px;
 		margin-right: 15px;
+	}
+
+	.askez__menu__scroll {
+		padding-bottom: 85px;
 	}
 
 	.premium__img {
@@ -286,6 +290,7 @@
 	}
 
 	.menu__title {
+		padding: 0 6vw;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -303,7 +308,7 @@
 		color: var(--text-color);
 		font-size: 18px;
 		font-weight: 600;
-		font-family: "Acme", serif;
+		font-family: "Nunito", sans-serif;
 		letter-spacing: 1px;
 	}
 
@@ -313,8 +318,10 @@
 		justify-content: space-between;
 		width: 100%;
 		padding: 15px 6vw;
-		height: 100vh;
+
 		background-color: var(--background-color);
+		overflow-y: auto;
+
 	}
 
 	.menu__btn-wrapper {

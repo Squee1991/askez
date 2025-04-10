@@ -21,7 +21,6 @@
 				<div class="profile__icon-wrapper">
 					<div class="plus__icon-border">
 						<button class="footer__nav-btn__plus"
-						        :class="{ 'active-effect': activeIcon === 1 , 'active-color' : activeColor === 1 }"
 						        @click="toggleHabitGoalHandler">
 							<img src="assets/images/addTask.svg" alt="" class="goal__btn-icon"/>
 						</button>
@@ -109,8 +108,8 @@
 		/*background-color: var(--footer-bg);*/
 		background: #6378e1;
 		border: none;
-		width: 50px;
-		height: 50px;
+		width: 55px;
+		height: 55px;
 		border-radius: 50%;
 	}
 
@@ -122,8 +121,8 @@
 		transform: translateX(-50%);
 		background: var(--background-color);
 		border-radius: 50%;
-		width: 58px;
-		height: 58px;
+		width: 62px;
+		height: 62px;
 	}
 
 	.footer__nav-btn {
@@ -134,6 +133,10 @@
 		flex-direction: column;
 		align-items: center;
 		padding: 10px;
+	}
+
+	.goal__btn-icon {
+		width: 35px;
 	}
 
 	.profile__icon-wrapper {

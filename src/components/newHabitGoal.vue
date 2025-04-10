@@ -230,7 +230,7 @@
 		width: 100%;
 		top: 70px;
 		border-radius: 10px;
-		padding: 15px;
+		padding: 5px 15px;
 		font-family: Arial, sans-serif;
 	}
 

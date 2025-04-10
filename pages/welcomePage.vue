@@ -293,13 +293,6 @@
 	});
 
 	onMounted(() => {
-		if (route.query.open === 'true') {
-			isHabitGoalVisible.value = true;
-		}
-	});
-
-
-	onMounted(() => {
 		if (!authStore.isBotEnabled) return;
 
 		if (!aiGreetedOnce) {
@@ -317,6 +310,14 @@
 			aiGreetedOnce = true
 		}
 	})
+
+	onMounted(() => {
+		if (route.query.open === 'true') {
+			isHabitGoalVisible.value = true;
+			router.replace({ path: route.path });
+		}
+	});
+
 
 </script>
 
@@ -344,8 +345,6 @@
 		cursor: pointer;
 		transition: all 0.3s ease;
 	}
-
-
 
 	.chat__icon {
 		position: absolute;
@@ -388,7 +387,6 @@
 		font-family: "Nunito", serif;
 	}
 
-
 	.goal__selector {
 		position: relative;
 		display: flex;
@@ -399,8 +397,8 @@
 	}
 
 	.goal__btn-icon {
-		width: 50px;
-		height: 50px;
+		width:35px;
+		height: 35px;
 	}
 
 	.archive__icon {
@@ -445,17 +443,14 @@
 	}
 
 	.task__goal-content {
-		position: absolute;
 		left: 0;
 		width: 100%;
-		height: 100%;
 		opacity: 0;
 		transform: translateX(-100%);
-		overflow-y: auto;
-		padding: 0 20px 40px 20px;
 		pointer-events: none;
 		visibility: hidden;
 		transition: none;
+		overflow-y: auto;
 	}
 
 	.task__goal-content.visible {
@@ -516,7 +511,7 @@
 
 	.goals__btns-inner {
 		/*margin: 0 -10px;*/
-		border-radius: 10px;
+		border-radius: 12px;
 		display: flex;
 		justify-content: space-between;
 		background-color: var(--slider-bg);
@@ -541,7 +536,7 @@
 		flex: 1;
 		color: white;
 		font-family: Nunito, serif;
-		font-size: 16px;
+		font-size: 15px;
 		padding: 10px 0;
 		border: none;
 		background: none;
@@ -560,16 +555,16 @@
 	}
 
 	.goals__content {
+		display: flex;
+		flex-direction: column;
 		flex-grow: 1;
-		overflow-y: auto;
-		padding: 10px;
-		border-radius: 10px;
+		overflow: hidden;
 	}
 
 	.task__come-btn {
+		min-width: 90px;
 		padding: 10px 19px;
 		border: none;
-		/*background-color: var(--footer-bg);*/
 		background: #6378e1;
 		border-radius: 5px;
 		color: white;
@@ -629,7 +624,7 @@
 		font-family: "Nunito", serif;
 		font-weight: bold;
 		font-size: 18px;
-		color: #aed7ae;
+		color: var(--text-color);
 		text-align: center;
 	}
 
@@ -678,7 +673,7 @@
 
 	.task__goal-list {
 		background-color: var(--menu--btn-bg);
-		margin: 7px 0;
+		margin: 10px 0;
 		border-radius: 10px;
 		padding: 10px;
 	}
@@ -695,16 +690,16 @@
 	}
 
 	.add__goals {
-		margin-bottom: 40px;
+		margin-bottom: 70px;
 		padding: 10px 0;
 		overflow: auto;
 	}
 
 	.progress__inner {
-		width: 100%;
+		display: flex;
+		flex-direction: column;
 		height: 100vh;
-		/*padding: 10px;*/
-
+		overflow: hidden;
 	}
 
 	.welcome {
@@ -736,5 +731,4 @@
 		align-items: center;
 		padding: 20px 20px 8px 20px;
 	}
-
 </style>

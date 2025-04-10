@@ -6,12 +6,33 @@
 	"settings": {
 		"title": "Settings"
 	},
+	"buyPremium": {
+		"buy": "Monthly",
+		"plus": "Benefits"
+	},
 	"setting": [
 		"Delete account",
 		"Privacy Policy",
 		"Mode",
-		"Чат"
+		"Chat"
 	],
+	"premiumValues": [
+		"No advertising",
+		"Support the developers",
+		"Access to achievements",
+		"Panda leveling",
+		"Ability to change data",
+		"Unlimited number of goals",
+		"Access to virtual assistant",
+		"Access to upcoming features (coming soon)"
+	],
+	"privacy": {
+		"page": "Privacy Policy"
+	},
+	"googlePlay": {
+		"pay": "The subscription is automatically renewed via Google Play unless you cancel it manually. If you cancel the subscription before the end of the current billing period, you will not receive a refund for this period, but Premium access will remain active until the end of the paid time. The cancellation will take effect after the current period ends."
+	},
+
 	"chat": {
 		"title": "Back",
 		"btn": "Send",
@@ -62,7 +83,7 @@
 		"confirm": "An email has been sent to your email address"
 	},
 	"archieve": {
-		"empty":  "Archive is empty",
+		"empty": "Archive is empty",
 		"name": "Your askezas",
 		"achieveTitle": "Ascezas archive",
 		"totalDays": "Total days",

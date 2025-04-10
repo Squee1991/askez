@@ -9,9 +9,30 @@
 	"setting": [
 		"Konto löschen",
 		"Datenschutzbestimmungen",
-		"Mode",
-		"Чат"
+		"Modus",
+		"Chat"
 	],
+	"buyPremium": {
+		"buy": "Monatlich",
+		"plus": "Vorteile"
+	},
+	"premiumValues": [
+		"Keine Werbung",
+		"Panda-Entwicklung",
+		"Zugang zu Erfolgen",
+		"Unterstützung der Entwickler",
+		"Möglichkeit zur Datenänderung",
+		"Unbegrenzte Anzahl an Zielen",
+		"Zugang zum virtuellen Assistenten",
+		"Zugriff auf kommende Funktionen (bald verfügbar)"
+	],
+	"privacy": {
+		"page": "Datenschutzrichtlinie"
+	},
+	"googlePlay": {
+		"pay": "Das Abonnement wird automatisch über Google Play verlängert, sofern es nicht manuell gekündigt wird. Wenn Sie das Abonnement vor Ablauf des aktuellen Abrechnungszeitraums kündigen, erfolgt keine Rückerstattung für diesen Zeitraum, aber der Premium-Zugang bleibt bis zum Ende des bezahlten Zeitraums aktiv. Die Kündigung wird nach Ablauf des aktuellen Zeitraums wirksam."
+	},
+
 	"chat": {
 		"title": "Zurück",
 		"btn": "Absenden",

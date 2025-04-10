@@ -6,12 +6,29 @@
 	"settings": {
 		"title": "Paramètres"
 	},
+	"buyPremium": {
+		"buy": "Mensuel",
+		"plus": "Avantages"
+	},
 	"setting": [
 		"Supprimer le compte",
 		"Politique de confidentialité",
 		"Mode",
-		"Чат"
+		"Discussion"
 	],
+	"premiumValues": [
+		"Sans publicité",
+		"Amélioration du panda",
+		"Accès aux succès",
+		"Soutien aux développeurs",
+		"Possibilité de modifier les données",
+		"Nombre illimité d’objectifs",
+		"Accès à l’assistant virtuel",
+		"Accès aux fonctionnalités à venir (bientôt disponible)"
+	],
+	"privacy": {
+		"page": "Politique de confidentialité"
+	},
 	"chat": {
 		"title": "Retour",
 		"btn": "Envoyer",

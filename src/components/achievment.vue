@@ -124,7 +124,7 @@
 		padding: 20px;
 		font-size: 24px;
 		color: var(--text-color);
-		font-family: "Acme", serif;
+		font-family: "Nunito", sans-serif;
 		font-weight: 600;
 		letter-spacing: 1px;
 	}
@@ -139,7 +139,7 @@
 		align-items: center;
 		justify-content: space-between;
 		background: var(--menu--btn-bg);
-		margin: 10px 15px;
+		margin: 10px;
 		border-radius: 10px;
 		font-family: 'Nunito', serif;
 	}
@@ -152,7 +152,7 @@
 
 	.achiv__list-wrapper {
 		background: var(--menu--btn-bg);
-		margin: 15px ;
+		margin: 10px;
 		border-radius: 10px;
 		padding: 0 0 10px 0;
 	}

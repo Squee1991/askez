@@ -69,6 +69,12 @@ export default defineNuxtConfig({
 				file: 'uk-UA.json'
 			},
 			{
+				code: 'pl-PL',
+				iso: 'pl-PL',
+				name: 'Polski',
+				file: 'pl-PL.json'
+			},
+			{
 				code: 'es-ES',
 				iso: 'es-ES',
 				name: 'Español',
@@ -92,13 +98,6 @@ export default defineNuxtConfig({
 				name: '中文',
 				file: 'zh-CN.json'
 			},
-			{
-				code: 'el-EL',
-				iso: 'el-EL',
-				name: 'Elvish',
-				file: 'el-EL.json'
-			},
-
 		],
 
 		defaultLocale: 'en-US',

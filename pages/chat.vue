@@ -1,15 +1,15 @@
 <script setup>
 	import HeaderWithback from '../src/components/headerWithBack.vue'
-	import { ref, onMounted, watch } from 'vue'
-	import { useI18n } from 'vue-i18n'
-	import { useHabitStore } from '../stores/habitStore.js'
-	import { useAuthStore } from '../stores/authStore.js'
+	import {ref, onMounted, watch} from 'vue'
+	import {useI18n} from 'vue-i18n'
+	import {useHabitStore} from '../stores/habitStore.js'
+	import {useAuthStore} from '../stores/authStore.js'
 	import Backicon from '../assets/images/undo.svg'
 
 
 	const habitStore = useHabitStore()
 	const authStore = useAuthStore()
-	const { locale } = useI18n()
+	const {locale} = useI18n()
 	const userLang = ref('en')
 	const messages = ref([])
 	const userInput = ref('')
@@ -113,7 +113,7 @@
 		const lang = locale.value.split('-')[0] || 'en'
 		const langGreetings = greetings[lang] || greetings['en']
 		const randomGreeting = langGreetings[Math.floor(Math.random() * langGreetings.length)]
-		messages.value = [{ role: 'assistant', text: randomGreeting }]
+		messages.value = [{role: 'assistant', text: randomGreeting}]
 	})
 
 	watch(locale, (newLocale) => {
@@ -154,46 +154,77 @@
 			return isInRange && isMissed
 		}).map(t => t.goal)
 
-		return { doneToday, missedToday }
+		return {doneToday, missedToday}
 	}
 
 	const sendMessage = async () => {
 		if (!authStore.isBotEnabled) return;
-		if (!userInput.value.trim() || isLoading.value) return
-		const userText = userInput.value.trim()
-		messages.value.push({ role: 'user', text: userText })
-		userInput.value = ''
-		isLoading.value = true
-
-		const thinkingIndex = messages.value.push({ role: 'assistant', text: '...' }) - 1
-
-		const today = new Date().toISOString().split('T')[0]
-
-		const completedToday = habitStore.tasks
-		.filter(task => task.checkedDates?.includes(today))
-		.map(task => task.goal)
-
-		const missedToday = habitStore.tasks
-		.filter(task => task.missedDates?.includes(today))
-		.map(task => task.goal)
-
+		if (!userInput.value.trim() || isLoading.value) return;
+		const userText = userInput.value.trim();
+		messages.value.push({role: 'user', text: userText});
+		userInput.value = '';
+		isLoading.value = true;
+		const thinkingIndex = messages.value.push({role: 'assistant', text: '...'}) - 1;
+		const today = new Date().toISOString().split('T')[0];
+		const { doneToday: completedToday, missedToday } = getTodayInfo();
 		const progressMissTasks = habitStore.tasks
 		.filter(task => task.progressMiss > 0)
-		.map(task => `${task.goal} (${task.progressMiss}%)`)
+		.map(task => `${task.goal} (${task.progressMiss}%)`);
 
-		const systemPrompt = `
-You are a mindful panda mentor 🐼 in a self-discipline app.
-Today is ${today}.
-User completed today: ${completedToday.length > 0 ? completedToday.join(', ') : 'nothing'}.
-User missed today: ${missedToday.length > 0 ? missedToday.join(', ') : 'nothing'}.
-Miss progress: ${progressMissTasks.length > 0 ? progressMissTasks.join(', ') : 'none'}.
-Panda level: ${habitStore.pandaLevel}, overall progress: ${habitStore.pandaProgressGlobal}%.
-Always reply **only** in ${userLang.value}.
-DO NOT mix any words from other languages in your responses.
-Be consistent with the language, and do not use foreign words or slang.
-Use simple and natural language. Keep replies short, friendly, and supportive.
-Use emojis sometimes.
-`
+		const nextThreshold = habitStore.achievementThresholds.find(th => th > habitStore.achieveCount) || null;
+		const toNextAchieve = typeof nextThreshold === 'number' ? nextThreshold - habitStore.achieveCount : 0;
+
+		let extraMotivation = '';
+		if (toNextAchieve > 0 && toNextAchieve <= 3) {
+			extraMotivation = {
+				en: `You're so close to your next achievement! Just ${toNextAchieve} task${toNextAchieve > 1 ? 's' : ''} left! 🎉`,
+				ru: `Ты почти у цели! Осталось всего ${toNextAchieve} задач${toNextAchieve === 1 ? 'а' : 'и'} до следующего достижения! 🎯`,
+				de: `Nur noch ${toNextAchieve} Aufgabe${toNextAchieve === 1 ? '' : 'n'} bis zum nächsten Erfolg! 🏆`,
+				fr: `Encore ${toNextAchieve} tâche${toNextAchieve > 1 ? 's' : ''} avant ton prochain succès ! ✨`,
+				es: `¡Solo te faltan ${toNextAchieve} tarea${toNextAchieve > 1 ? 's' : ''} para tu próximo logro! 🔥`,
+				be: `Засталося ўсяго ${toNextAchieve} задання${toNextAchieve === 1 ? '' : 'і'} да новага дасягнення! 🚀`,
+				uk: `Ще ${toNextAchieve} завдан${toNextAchieve === 1 ? 'ня' : 'ь'} — і буде досягнення! 🥇`,
+				zh: `距离下一个成就还差 ${toNextAchieve} 个任务，加油！🏅`,
+				ar: `تبقّى فقط ${toNextAchieve} مهمة للوصول إلى الإنجاز التالي! ✨`
+			}[userLang.value] || ''
+		}
+		const systemPrompt = `You are a mindful panda mentor 🐼 in a self-discipline app.Today is ${today}.
+User statistics:
+- Level: ${habitStore.pandaLevel}
+- Global progress: ${habitStore.pandaProgressGlobal}%
+- Completed achievements: ${habitStore.achieveCount}
+- Active achievements: ${habitStore.activeAchievements.join(', ')}
+- Next achievement at: ${typeof nextThreshold === 'number' ? nextThreshold : '🎉 all achievements unlocked!'}
+- Tasks to next achievement: ${toNextAchieve}
+- You gain experience (XP) for each day you complete a task.
+- Each completed day = +1 XP (adds to your global panda progress).
+
+Tasks:
+- Total: ${habitStore.tasks.length}
+- Done: ${habitStore.doneTask.length}
+- Not done: ${habitStore.notdone.length}
+- Completion rate: ${habitStore.completionRate}%
+
+Today's status:
+- Done today: ${completedToday.length > 0 ? completedToday.join(', ') : 'nothing'}
+- Missed today: ${missedToday.length > 0 ? missedToday.join(', ') : 'nothing'}
+- Miss progress: ${progressMissTasks.length > 0 ? progressMissTasks.join(', ') : 'none'}
+
+Always reply only in ${userLang.value}.
+Never use any words from other languages — not even single ones.
+Do not mix languages under any circumstances.
+Use simple and natural phrases only in ${userLang.value}.
+Be supportive, friendly, short and clear. Use emojis sometimes.
+
+Task creation and completion guide:
+1. To create a task, press the round ➕ button in the footer.
+2. Select a single date or a date range from the calendar.
+3. Press the “Create” button — your task will appear in “All Tasks”.
+4. Click the task to open the task detail view.
+5. In the task view, select today's date and mark it as done or missed.
+6. Repeat this daily until the task is completed.
+7. Each completed day adds 1 XP. When enough XP is collected, the panda levels up.
+`;
 
 		try {
 			const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -205,40 +236,41 @@ Use emojis sometimes.
 				body: JSON.stringify({
 					model: 'llama3-8b-8192',
 					messages: [
-						{ role: 'system', content: systemPrompt },
+						{role: 'system', content: systemPrompt},
 						...messages.value
 						.filter((m, i) => i !== thinkingIndex)
-						.map(m => ({ role: m.role, content: m.text })),
-						{ role: 'user', content: userText }
+						.map(m => ({role: m.role, content: m.text})),
+						{role: 'user', content: userText}
 					]
 				})
-			})
+			});
 
-			const data = await res.json()
-			messages.value.splice(thinkingIndex, 1)
+			const data = await res.json();
+			messages.value.splice(thinkingIndex, 1);
 
 			if (data.choices?.[0]?.message?.content) {
 				messages.value.push({
 					role: 'assistant',
-					text: data.choices[0].message.content
-				})
+					text: data.choices[0].message.content + (extraMotivation ? `\n\n${extraMotivation}` : '')
+				});
 			} else {
 				messages.value.push({
 					role: 'assistant',
 					text: errorMessages[userLang.value] || errorMessages['en']
-				})
+				});
 			}
 		} catch (e) {
-			console.error(e)
-			messages.value.splice(thinkingIndex, 1)
+			console.error(e);
+			messages.value.splice(thinkingIndex, 1);
 			messages.value.push({
 				role: 'assistant',
 				text: errorMessages[userLang.value] || errorMessages['en']
-			})
+			});
 		} finally {
-			isLoading.value = false
+			isLoading.value = false;
 		}
 	}
+
 </script>
 
 <template>
@@ -273,7 +305,7 @@ Use emojis sometimes.
 		height: 100vh;
 		display: flex;
 		flex-direction: column;
-		background: linear-gradient(to bottom right, #f0f4f8, #dbe8f3);
+		background: var(--background-color);
 		font-family: 'Segoe UI', sans-serif;
 		padding: 20px;
 		box-sizing: border-box;

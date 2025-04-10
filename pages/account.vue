@@ -1,9 +1,16 @@
 <template>
 	<div class="account__wrapper">
+		<div v-if="!authStore.isPremium && isPremiumOverlayVisible" class="premium__window">
+			<PremiumWindow
+				:text="$t('premiumWindow.taskText')"
+				:subtext="$t('premiumWindow.subtext')"
+				@close="isPremiumOverlayVisible = false"
+			/>
+		</div>
 		<div v-if="logOutAccept" class="overlay"></div>
-		<div v-if="logOutAccept"  class="account__changed">
+		<div v-if="logOutAccept" class="account__changed">
 			<div class="account__changed--title">{{ $t('account.changedName')}}</div>
-			<button  class="account__change-btn" @click="closeOverlay">{{ $t('success.button')}}</button>
+			<button class="account__change-btn" @click="closeOverlay">{{ $t('success.button')}}</button>
 		</div>
 		<div class="account__content">
 			<HeaderWithback :icon="Arrowicon" :title="$t('account.accoutTitle')"/>
@@ -27,6 +34,8 @@
 	</div>
 </template>
 <script setup>
+	import {useTaskStore} from '../stores/OfflineTaskStore.js'
+	import PremiumWindow from '../src/components/premiumWindow.vue'
 	import Arrowicon from '../assets/images/arrowSvg.svg'
 	import HeaderWithback from '../src/components/headerWithBack.vue'
 	import EditIcon from '../assets/images/editIcon.svg'
@@ -36,7 +45,7 @@
 	import {useHabitStore} from '../stores/habitStore.js';
 	import {useAuthStore} from '../stores/authStore.js';
 	import {useRouter} from 'vue-router'
-
+	const isPremiumOverlayVisible = ref(false)
 	const logOutAccept = ref(false)
 	const habitStore = useHabitStore();
 	const authStore = useAuthStore();
@@ -76,10 +85,14 @@
 	});
 
 	const changeData = async () => {
+		if (!authStore.isPremium) {
+			isPremiumOverlayVisible.value = true;
+			return;
+		}
 		const nameField = data.value.fields.find(field => field.name === "name");
 		if (nameField && nameField.value !== authStore.name) {
 			await authStore.UpdateNameDisplayName(nameField.value);
-			logOutAccept.value = true
+			logOutAccept.value = true;
 		}
 	};
 
@@ -101,6 +114,12 @@
 </script>
 
 <style scoped>
+
+	.premium__window {
+		position: absolute;
+		width: 100%;
+		height: 100vh;
+	}
 
 	.account__btn:disabled {
 		opacity: 0.7;

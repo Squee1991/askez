@@ -1,0 +1,199 @@
+{
+	"languages": {
+		"mode": "no-space",
+		"title": "Język"
+	},
+	"settings": {
+		"title": "Ustawienia"
+	},
+	"setting": [
+		"Usuń konto",
+		"Polityka prywatności",
+		"Tryb",
+		"Czat"
+	],
+	"chat": {
+		"title": "Wstecz",
+		"btn": "Wyślij",
+		"placeholder": "Napisz swoją wiadomość"
+	},
+	"menu": {
+		"title": "Menu"
+	},
+	"premiumWindow": {
+		"bot": "Aby móc korzystać z wirtualnego asystenta, musisz przejść na plan Premium.",
+		"taskText": "Niestety osiągnąłeś limit liczby nawyków w darmowym planie. Aby móc dodawać nieograniczoną liczbę nawyków, musisz przejść na plan Premium.",
+		"subtext": "Subskrybując plan Premium, uzyskasz pełny dostęp do wszystkich funkcji aplikacji.",
+		"btnPremium": "Uzyskaj Premium"
+	},
+	"noConnetction": {
+		"off": "Brak połączenia z internetem",
+		"on": "Połączenie przywrócone",
+		"btn": "Spróbuj ponownie"
+	},
+	"meniu": [
+		"Konto",
+		"O aplikacji",
+		"Język",
+		"Opinie",
+		"Ustawienia"
+	],
+	"rank": {
+		"rank": "Ranga",
+		"newbie": "Uczeń Bambusa",
+		"pupil": "Uczeń Pandy Zen",
+		"master": "Mistrz Ascezy",
+		"legenda": "Władca Bambusa",
+		"immortal": "Legenda Zen-Kung-Fu"
+	},
+	"account": {
+		"accoutTitle": "Konto",
+		"accountBtn": "Aktualizuj",
+		"changedName": "Imię zostało zmienione"
+	},
+	"singInUP": {
+		"reset": "Wyślij",
+		"singIn": "Masz już konto? Zaloguj się",
+		"singUp": "Nie masz konta? Zarejestruj się",
+		"singInBtn": "Zaloguj się",
+		"singUpBtn": "Zarejestruj się",
+		"forgotPassword": "Zapomniałeś hasła?",
+		"backToSing": "Powrót do rejestracji",
+		"confirm": "Wiadomość została wysłana na Twój adres e-mail"
+	},
+	"archieve": {
+		"empty": "Archiwum jest puste",
+		"achieveTitle": "Archiwum ascez",
+		"name": "Twoje ascezy",
+		"totalDays": "Łącznie dni",
+		"checkedDays": "Zaznaczone",
+		"notChecked": "Nie zaznaczone"
+	},
+	"achieveTitle": {
+		"title": "Twoje osiągnięcia",
+		"subtitle": "Łączna liczba zdobytych osiągnięć",
+		"achiveDone": "Zakończone"
+	},
+	"accState": {
+		"greetings": "Witamy",
+		"stateBtn": "Zaczynamy!",
+		"load": "Ładowanie"
+	},
+	"checkedBtns": {
+		"done": "Wykonano",
+		"missed": "Pominięto"
+	},
+	"achieve": {
+		"1": "Ukończ 1. ascezę",
+		"2": "Ukończ ascezę 10 razy",
+		"3": "Ukończ ascezę 20 razy",
+		"4": "Ukończ ascezę 50 razy",
+		"5": "Ukończ ascezę 100 razy",
+		"6": "Ukończ ascezę 200 razy"
+	},
+	"feedBack": {
+		"title": "Opinie",
+		"placeholder": "Zostaw opinię lub sugestię",
+		"button": "Wyślij",
+		"overlayBtn": "OK",
+		"overlayTitle": "Dziękujemy za opinię"
+	},
+	"startPage": {
+		"value": "Start"
+	},
+	"description": {
+		"value": "Następny krok"
+	},
+	"navTop": {
+		"achiv": "Osiągnięcia",
+		"askez": "Wszystkie ascezy",
+		"stats": "Statystyki"
+	},
+	"statslable": {
+		"total": "Łączna liczba celów",
+		"doneTotal": "Wykonano ogółem",
+		"InProgressTotal": "W trakcie",
+		"notCompleted": "Nie wykonano",
+		"active": "Aktywne zadania",
+		"archieve": "Zarchiwizowane zadania"
+	},
+	"hasNotAskez": {
+		"value": "Brak utworzonych ascez"
+	},
+	"infoLabels": {
+		"name": "Nazwa",
+		"status": "Status"
+	},
+	"delAllDatas": {
+		"title": "Usunąć wszystkie dane?",
+		"subTitle": "Czy na pewno chcesz usunąć wszystkie dane?",
+		"acceptBtn": "Tak",
+		"rejectBtn": "Nie"
+	},
+	"register": {
+		"btnValue": "Zarejestruj się",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "Wpisz swoje imię"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "Wpisz swój e-mail"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "Wpisz swoje hasło"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "Potwierdź swoje hasło"
+			}
+		]
+	},
+	"logOut": {
+		"out": "Wylogować się?",
+		"reject": "Czy na pewno chcesz się wylogować?"
+	},
+	"homePage": {
+		"greetings": "Cześć",
+		"btn": "Otwórz",
+		"no_active_goals": "Brak aktywnych celów"
+	},
+	"createTask": {
+		"title": "Utwórz nowy cel",
+		"btn": "Utwórz nowy",
+		"task": "Twój cel",
+		"datum": "Wybierz zakres dat"
+	},
+	"success": {
+		"title": "Gotowe!!",
+		"article": "Zróbmy wszystko, by osiągnąć Twój cel",
+		"button": "OK"
+	},
+	"taskDetails": {
+		"startDate": "Data rozpoczęcia",
+		"endDate": "Data zakończenia"
+	},
+	"delConfirm": {
+		"title": "Usunąć ascezę?",
+		"accept": "Tak",
+		"reject": "Nie"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Usuń"
+	},
+	"CheckedProgress": {
+		"checked": "Dni wykonane",
+		"notChecked": "Dni niewykonane"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Wpisz nazwę ascezy"
+	},
+	"footerBtnText": {
+		"menu": "Menu",
+		"archieve": "Archiwum",
+		"panda": "Panda",
+		"tasks": "Zadania"
+	}
+}

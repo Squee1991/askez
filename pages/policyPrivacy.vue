@@ -40,9 +40,9 @@
 					For questions or concerns about this Privacy Policy, feel free to contact us at:
 					<a href="mailto:asketic-email@gmail.com?subject=Question about Privacy Policy">
 						asketic-email@gmail.com
-					</a>nn
+					</a>
 				</p>
-				<p><strong>Last updated:</strong> April 1, 2025</p>
+				<p><strong>Last updated:</strong> April 10, 2025</p>
 			</div>
 		</div>
 	</div>
@@ -78,6 +78,7 @@
 		font-size: 20px;
 		margin-top: 30px;
 		margin-bottom: 10px;
+		color: var(--text-color);
 
 	}
 
