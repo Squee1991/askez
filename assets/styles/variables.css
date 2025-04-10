@@ -1,35 +1,39 @@
 :root {
-	--background-color: #ffffff;
+	--active-text: #3a2a3d;
+	--background-color: white;
+	--indicator-bg: #6A4CAF;
 	--text-color: #3a2a3d;
 	--button-bg: #2e2e2e;
 	--button-text-color: #ffffff;
-	--calendar--bg: #FBFBFB;
+	--calendar--bg: #F9F6FF;;
 	--calendar-d-color: #ffffff;
 	--calendar-border-color: #ffffff;
 	--title-c: black;
-	--footer-bg: #DFF4E4;
-	--task-bg: #F2F8F6F6;
-	--goals-name: #2F2F2F;
 	--goals-date-color: #2F2F2F;
 	--background-new-goal: #f8f4f4;
 	--vc-arrow-cal: #FF5C00;
 	--vc-highlight-bg: #c7ffde;
 	--bg-arrow-icon: #c7ffde;
-  --menu--btn-bg: #f3f6f3;
+  --menu--btn-bg: #F9F6FF;
+	--slider-bg: #711eefb0;
+	--footer-bg: #7E61C7;
+	--task-bg: #F2F8F6F6;
+	--goals-name: #2F2F2F;
 }
 
 .dark {
+	--active-text: white;
 	--menu--btn-bg:  #FFFFFF0F;
 	--bg-arrow-icon: #b7b8d0;
 	--background-color: #3b3d52;
 	--text-color: #ffffff;
 	--button-bg: #FBFBFB;
 	--button-text-color: #2F2F2F;
-	--calendar--bg: rgba(57, 214, 219, 0.27);
+	--calendar--bg: #3b3d52;
 	--calendar--d-color: black;
 	--calendar-border-color: black;
 	--title-c: #ffffff;
-	/*--footer-bg: #3C3F47;*/
+	--indicator-bg: #ffffff2b;
 	--footer-bg: #525766;
 	--task-bg: #3C3F47;
 	--goals-name: #F2F8F6F6;

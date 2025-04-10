@@ -5,15 +5,15 @@ export default defineNuxtConfig({
 	nitro: {
 		preset: "static"
 	},
-
 	runtimeConfig: {
 		public: {
 			firebaseAuthDisableSession: true
 		}
 	},
+
 	compatibilityDate: '2024-11-01',
 	devtools: {enabled: true},
-	modules: [ '@vite-pwa/nuxt', '@pinia/nuxt', '@nuxtjs/google-fonts', '@nuxtjs/color-mode', '@nuxtjs/i18n', 'nuxt-vuefire'],
+	modules: ['@pinia/nuxt', '@nuxtjs/google-fonts', '@nuxtjs/color-mode', '@nuxtjs/i18n', 'nuxt-vuefire'],
 	css: ['@/assets/styles/global.css',],
 	vuefire: {
 		config: {
@@ -69,6 +69,12 @@ export default defineNuxtConfig({
 				file: 'uk-UA.json'
 			},
 			{
+				code: 'pl-PL',
+				iso: 'pl-PL',
+				name: 'Polski',
+				file: 'pl-PL.json'
+			},
+			{
 				code: 'es-ES',
 				iso: 'es-ES',
 				name: 'Español',
@@ -92,13 +98,6 @@ export default defineNuxtConfig({
 				name: '中文',
 				file: 'zh-CN.json'
 			},
-			{
-				code: 'el-EL',
-				iso: 'el-EL',
-				name: 'Elvish',
-				file: 'el-EL.json'
-			},
-
 		],
 
 		defaultLocale: 'en-US',
@@ -127,4 +126,5 @@ export default defineNuxtConfig({
 		fallback: 'dark',
 		classSuffix: '',
 	},
+
 })

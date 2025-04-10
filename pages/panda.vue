@@ -265,13 +265,13 @@
 		store.updateAllProgress()
 		setTimeout(() => {
 			clicked.value = true
-		}, 500)
+		}, 100)
 		setTimeout(() => {
 			isButtonVisible.value = false
 			setTimeout(() => {
 				isOpen.value = true
-			}, 500)
-		}, 2300)
+			}, 100)
+		}, 2000)
 	})
 
 	definePageMeta({
@@ -459,8 +459,9 @@
 		display: flex;
 		overflow: hidden;
 		justify-content: center;
-		background: radial-gradient(circle at center, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.05) 40%, transparent 70%),
-		linear-gradient(160deg, #1e1e2f, #2c2c3f);
+		/*background: radial-gradient(circle at center, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.05) 40%, transparent 70%),*/
+		/*linear-gradient(160deg, #1e1e2f, #2c2c3f);*/
+		background: var(--background-color);
 	}
 
 	.circle {

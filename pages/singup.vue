@@ -1,41 +1,46 @@
 <template>
-	<div class="form">
-		<div class="log__out-overlay" :class="{'overlay': confirmOverlay}"></div>
-		<div v-if="confirmOverlay" class="logout__confirm">
-			<div class="log__out-text">{{ $t('singInUP.confirm')}}</div>
-			<div class="logout__btns">
-				<button class="logout__btn yes-btn" @click="handleConfirm">OK</button>
-			</div>
+	<Transition name="network-fade" mode="out-in">
+		<div v-if="!isOnline" key="offline" class="error__network">
+			{{ $t('noConnetction.off') }}
 		</div>
-		<div class="form__logo">
-			<img class="form__logo-icon" src="../assets/images/logo.png" alt="Logo" />
+		<div v-else-if="isBackOnline" key="online" class="online__network">
+			{{ $t('noConnetction.on') }}
 		</div>
-		<transition name="fade-slide" mode="out-in">
-			<div v-if="isLoading" class="loading-screen">
-				<div class="loading">{{ $t('accState.load') }}</div>
-				<div class="loader"></div>
-			</div>
-			<div v-else-if="isAuthenticated" class="welcome-screen">
-				<div class="form__title">
-					{{ $t('accState.greetings') }}
-					<span class="form__title-name">{{ authStore.name }}</span>
+	</Transition>
+	<Transition name="fade-slide">
+		<div v-if="isReady" class="form">
+			<div class="log__out-overlay" :class="{'overlay': confirmOverlay}"></div>
+			<div v-if="confirmOverlay" class="logout__confirm">
+				<div class="log__out-text">{{ $t('singInUP.confirm')}}</div>
+				<div class="logout__btns">
+					<button class="logout__btn yes-btn" @click="handleConfirm">OK</button>
 				</div>
-				<button @click="goToMainPage" class="form__btn">{{ $t('accState.stateBtn') }}</button>
 			</div>
-			<div v-else class="form__field-inner" :key="isSignUp">
-				<div v-for="field in filteredFields" :key="field.id" class="form__field">
-					<v-fields
-						:field="field"
-						v-model="field.value"
-						:placeholder="field.placeholder"
-					/>
-					<p v-if="field.error" class="form__error">{{ field.error }}</p>
+			<div class="form__logo">
+				<img class="form__logo-icon" src="../assets/images/logo.png" alt="Logo"/>
+			</div>
+			<transition name="fade-slide" mode="out-in">
+				<div v-if="isAuthenticated" class="welcome-screen">
+					<div class="form__title">
+						{{ $t('accState.greetings') }}
+						<span class="form__title-name">{{ authStore.name }}</span>
+					</div>
+					<button @click="goToMainPage" class="form__btn">{{ $t('accState.stateBtn') }}</button>
 				</div>
-				<button
-					@click.prevent="submitForm"
-					class="form__btn"
-					:disabled="isSubmitting || !isFormValid"
-				>
+				<div v-else class="form__field-inner" :key="isSignUp">
+					<div v-for="field in filteredFields" :key="field.id" class="form__field">
+						<v-fields
+							:field="field"
+							v-model="field.value"
+							:placeholder="field.placeholder"
+						/>
+						<p v-if="field.error" class="form__error">{{ field.error }}</p>
+					</div>
+					<button
+						@click.prevent="submitForm"
+						class="form__btn"
+						:disabled="isSubmitting || !isFormValid"
+					>
 					<span>
 						{{ forgotPassword
 							? $t('singInUP.reset')
@@ -43,24 +48,25 @@
 								? $t('singInUP.singUpBtn')
 								: $t('singInUP.singInBtn') }}
 					</span>
-				</button>
-				<p class="toggle-text" @click="toggleAuthMode">
-					{{ forgotPassword
-					? $t('singInUP.backToSing')
-					: isSignUp
-					? $t('singInUP.singIn')
-					: $t('singInUP.singUp') }}
-				</p>
-				<p
-					v-if="!isSignUp && !forgotPassword"
-					class="toggle-text"
-					@click="enterForgotPasswordMode"
-				>
-					{{ $t('singInUP.forgotPassword') }}
-				</p>
-			</div>
-		</transition>
-	</div>
+					</button>
+					<p class="toggle-text" @click="toggleAuthMode">
+						{{ forgotPassword
+						? $t('singInUP.backToSing')
+						: isSignUp
+						? $t('singInUP.singIn')
+						: $t('singInUP.singUp') }}
+					</p>
+					<p
+						v-if="!isSignUp && !forgotPassword"
+						class="toggle-text"
+						@click="enterForgotPasswordMode"
+					>
+						{{ $t('singInUP.forgotPassword') }}
+					</p>
+				</div>
+			</transition>
+		</div>
+	</Transition>
 </template>
 
 
@@ -72,16 +78,16 @@
 	import {useValidationStore} from '../stores/validationStore.js';
 	import {useAuthStore} from '../stores/authStore.js';
 	import {onMounted} from "../.nuxt/imports";
-
+	const isBackOnline = ref(false)
 	const authStore = useAuthStore();
 	const validationStore = useValidationStore();
 	const router = useRouter();
 	const isSignUp = ref(true);
 	const isSubmitting = ref(false);
 	const isAuthenticated = ref(false);
-	const isLoading = ref(true);
 	const confirmOverlay = ref(false)
 	const forgotPassword = ref(false);
+	const isReady = ref(false)
 	const data = ref({
 		fields: [
 			{
@@ -139,20 +145,54 @@
 
 	const isFormValid = computed(() => filteredFields.value.every(f => !f.error && f.value.trim() !== ''));
 
-	onMounted(() => {
-		const auth = getAuth();
-		onAuthStateChanged(auth, (user) => {
-			if (user) {
-				isAuthenticated.value = true;
-				authStore.name = user.displayName;
-			} else {
-				isAuthenticated.value = false;
+	const isOnline = ref(true)
+
+	const checkRealInternet = async () => {
+		const wasOffline = !isOnline.value;
+
+		if (!navigator.onLine) {
+			isOnline.value = false;
+			return;
+		}
+
+		try {
+			await fetch('https://www.gstatic.com/generate_204', {
+				method: 'GET',
+				cache: 'no-cache',
+				mode: 'no-cors',
+			});
+
+			if (wasOffline) {
+				handleOnline();
 			}
+
+			isOnline.value = true;
+		} catch (e) {
+			isOnline.value = false;
+		}
+	};
+
+	const handleOnline = () => {
+		isOnline.value = true;
+
+		setTimeout(() => {
+			isBackOnline.value = true;
+
 			setTimeout(() => {
-				isLoading.value = false;
-			}, 5000);
-		});
+				isBackOnline.value = false;
+			}, 2500);
+		}, 300);
+	};
+
+	window.addEventListener('online', handleOnline);
+
+	window.addEventListener('offline', () => {
+		isOnline.value = false;
 	});
+
+	const goToMainPage = () => {
+		router.push('/welcomePage');
+	};
 
 	const handleConfirm = () => {
 		confirmOverlay.value = false;
@@ -249,8 +289,7 @@
 			const passwordField = data.value.fields.find(f => f.name === 'password');
 			if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found' || error.code === 'auth/email-already-in-use') {
 				emailField.error = errorMessage;
-			}
-			else if (error.code === 'auth/wrong-password') {
+			} else if (error.code === 'auth/wrong-password') {
 				passwordField.error = errorMessage;
 			} else {
 				passwordField.error = errorMessage;
@@ -262,18 +301,76 @@
 		}
 	};
 
+	onMounted(() => {
+		setTimeout(() => {
+			isReady.value = true
+		}, 200)
+		const auth = getAuth();
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				isAuthenticated.value = true;
+				authStore.name = user.displayName;
+			} else {
+				isAuthenticated.value = false;
+			}
+		});
+	});
+
+
+	onMounted(() => {
+		checkRealInternet()
+		setInterval(checkRealInternet, 5000)
+	})
+
 	watch(() => data.value.fields.map(f => f.value), () => {
 		data.value.fields.forEach(field => {
 			field.error = false;
 		});
 	});
 
-	const goToMainPage = () => {
-		router.push('/welcomePage');
-	};
 
 </script>
 <style scoped>
+	.network-fade-enter-active,
+	.network-fade-leave-active {
+		transition: opacity 0.5s ease, transform 0.5s ease;
+	}
+
+	.network-fade-enter-from,
+	.network-fade-leave-to {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+
+	.error__network {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		margin-top: 15px;
+		color: red;
+		z-index: 100;
+		font-size: 16px;
+		text-align: center;
+		font-weight: bold;
+		margin-bottom: 10px;
+		font-family: "Nunito", sans-serif;
+	}
+
+	.online__network {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 100;
+		margin-top: 15px;
+		color: #7bd44a;
+		font-size: 16px;
+		text-align: center;
+		font-weight: bold;
+		margin-bottom: 10px;
+		font-family: "Nunito", sans-serif;
+	}
 
 	.logout__btns {
 		margin-top: 10px;
@@ -294,6 +391,8 @@
 	.overlay {
 		position: absolute;
 		width: 100%;
+		left: 0;
+		top: 0;
 		height: 100vh;
 		background: black;
 		opacity: 50%;
@@ -416,7 +515,6 @@
 		font-family: "Acme", serif;
 	}
 
-
 	.loading-screen {
 		position: absolute;
 		bottom: 10%;
@@ -493,7 +591,7 @@
 
 	.form__btn {
 		width: 100%;
-		background-color: #4A90E2;
+		background: var(--indicator-bg);
 		color: white;
 		font-size: 20px;
 		padding: 12px;
@@ -504,7 +602,7 @@
 		font-family: "Acme", serif;
 	}
 
-	.form__btn:hover {
+	.form__btn:active {
 		background-color: #357ABD;
 	}
 

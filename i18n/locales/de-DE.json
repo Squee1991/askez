@@ -9,10 +9,48 @@
 	"setting": [
 		"Konto löschen",
 		"Datenschutzbestimmungen",
-		"Mode"
+		"Modus",
+		"Chat"
 	],
+	"buyPremium": {
+		"buy": "Monatlich",
+		"plus": "Vorteile"
+	},
+	"premiumValues": [
+		"Keine Werbung",
+		"Panda-Entwicklung",
+		"Zugang zu Erfolgen",
+		"Unterstützung der Entwickler",
+		"Möglichkeit zur Datenänderung",
+		"Unbegrenzte Anzahl an Zielen",
+		"Zugang zum virtuellen Assistenten",
+		"Zugriff auf kommende Funktionen (bald verfügbar)"
+	],
+	"privacy": {
+		"page": "Datenschutzrichtlinie"
+	},
+	"googlePlay": {
+		"pay": "Das Abonnement wird automatisch über Google Play verlängert, sofern es nicht manuell gekündigt wird. Wenn Sie das Abonnement vor Ablauf des aktuellen Abrechnungszeitraums kündigen, erfolgt keine Rückerstattung für diesen Zeitraum, aber der Premium-Zugang bleibt bis zum Ende des bezahlten Zeitraums aktiv. Die Kündigung wird nach Ablauf des aktuellen Zeitraums wirksam."
+	},
+
+	"chat": {
+		"title": "Zurück",
+		"btn": "Absenden",
+		"placeholder": "Schreiben Sie Ihre Nachricht"
+	},
+	"noConnetction": {
+		"off": "Keine Internetverbindung",
+		"on": "Verbindung wiederhergestellt",
+		"btn": "Повторить"
+	},
 	"menu": {
 		"title": "Menü"
+	},
+	"premiumWindow": {
+		"bot": "Um den virtuellen Assistenten zu nutzen, musst du auf den Premium-Plan upgraden.",
+		"taskText": "Du hast das Limit der Gewohnheiten im kostenlosen Plan erreicht. Um unbegrenzt Gewohnheiten hinzuzufügen, wechsle zu Premium.",
+		"subtext": "Mit einem Premium-Abonnement erhältst du vollen Zugriff auf alle Funktionen der App.",
+		"btnPremium": "Premium erhalten"
 	},
 	"meniu": [
 		"Konto",
@@ -25,7 +63,7 @@
 		"rank": "Rang",
 		"newbie": "Bambus-Schüler",
 		"pupil": "Zen-Panda Lehrling",
-		"master": "Meister Askesas",
+		"master": "Meister Zielen",
 		"legenda": "Herr Bambuspfads",
 		"immortal": "Legende Zen-Kung-Fu"
 	},
@@ -46,7 +84,7 @@
 	},
 	"archieve": {
 		"empty": "Archiv ist leer",
-		"name": "Ihre Askesen",
+		"name": "Ihre Ziele",
 		"achieveTitle": "Archiv der Askesen",
 		"totalDays": "Gesamttage",
 		"checkedDays": "Markiert",
@@ -89,13 +127,16 @@
 	},
 	"navTop": {
 		"achiv": "Erfolge",
-		"askez": "Alle Askesen",
+		"askez": "Alle Zielen",
 		"stats": "Statistik"
 	},
 	"statslable": {
-		"total": "Insgesamt erstellte Askesen",
-		"doneTotal": "Insgesamt abgeschlossen",
-		"InProgressTotal": "In Bearbeitung"
+		"total": "Gesamtziele",
+		"doneTotal": "Insgesamt erledigt",
+		"InProgressTotal": "In Bearbeitung",
+		"notCompleted": "Nicht erledigt",
+		"active": "Aktive Aufgaben",
+		"archieve": "Archivierte Aufgaben"
 	},
 	"hasNotAskez": {
 		"value": "Keine erstellten Askezas"
@@ -166,5 +207,14 @@
 	"CheckedProgress": {
 		"checked": "Ziel ist erledigt",
 		"notChecked": "Ziel ist nicht erledigt"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Geben Sie den Namen der Ziele"
+	},
+	"footerBtnText": {
+		"menu": "Menü",
+		"archieve": "Archiv",
+		"panda": "Panda",
+		"tasks": "Aufgaben"
 	}
 }

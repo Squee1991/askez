@@ -5,7 +5,10 @@
 				<div class="achieve__title">{{$t('achieveTitle.title')}}</div>
 				<div class="achiv-text-item">{{$t('achieveTitle.subtitle')}}</div>
 			</div>
-			<div class="achiv__counter"> {{ activeAchievementCount }}</div>
+			<div class="ring-wrapper" :style="{ '--progress': progressValue }">
+				<div class="ring-progress"></div>
+				<div class="ring-text">{{ activeAchievementCount }} / {{ totalAchievements }}</div>
+			</div>
 		</div>
 		<div class="achiv__list-wrapper">
 			<div class="achiv__list-title">{{$t('achieveTitle.achiveDone')}}</div>
@@ -36,8 +39,11 @@
 	import panda2 from '../../assets/images/panda2.png'
 	import pandaa from '../../assets/images/pandaa.png'
 
-	const activeAchievementCount = computed(() => habitStore.activeAchievements.filter(ach => ach).length);
-	const habitStore = useHabitStore();
+	const habitStore = useHabitStore()
+	const activeAchievementCount = computed(() => habitStore.activeAchievements.filter(a => a).length)
+	const totalAchievements = computed(() => habitStore.achievementThresholds.length)
+	const progressValue = computed(() => `${(activeAchievementCount.value / totalAchievements.value) * 360}deg`)
+
 
 	const data = ref([
 		{id: 1, src: Kimano, alt: 'Kimano'},
@@ -50,6 +56,37 @@
 </script>
 
 <style scoped>
+
+	.ring-wrapper {
+		position: relative;
+		width: 70px;
+		height: 70px;
+	}
+
+	.ring-progress {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		background: conic-gradient(#0028f3 var(--progress), #dddde4  var(--progress));
+		mask: radial-gradient(farthest-side, transparent 70%, black 71%);
+		-webkit-mask: radial-gradient(farthest-side, transparent 70%, black 71%);
+	}
+
+	.ring-text {
+		display: flex;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		font-family: "Acme", serif;
+		font-size: 16px;
+		color: var(--text-color);
+		font-weight: bold;
+	}
+
 	.badge__wrapper {
 		padding: 10px;
 		display: flex;
@@ -63,18 +100,18 @@
 		overflow-y: auto;
 	}
 
-	.achiv__counter {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 45px;
-		height: 45px;
-        margin-right: 15px;
-		border: 3px solid green;
-		padding: 10px;
-		border-radius: 50%;
-		font-family: "Acme", serif;
-	}
+	/*.achiv__counter {*/
+	/*	display: flex;*/
+	/*	justify-content: center;*/
+	/*	align-items: center;*/
+	/*	width: 45px;*/
+	/*	height: 45px;*/
+    /*    margin-right: 15px;*/
+	/*	border: 3px solid green;*/
+	/*	padding: 10px;*/
+	/*	border-radius: 50%;*/
+	/*	font-family: "Acme", serif;*/
+	/*}*/
 
 	.archiv__title-sub {
 		text-align: start;
@@ -87,7 +124,7 @@
 		padding: 20px;
 		font-size: 24px;
 		color: var(--text-color);
-		font-family: "Acme", serif;
+		font-family: "Nunito", sans-serif;
 		font-weight: 600;
 		letter-spacing: 1px;
 	}
@@ -102,7 +139,7 @@
 		align-items: center;
 		justify-content: space-between;
 		background: var(--menu--btn-bg);
-		margin: 10px 15px;
+		margin: 10px;
 		border-radius: 10px;
 		font-family: 'Nunito', serif;
 	}
@@ -115,7 +152,7 @@
 
 	.achiv__list-wrapper {
 		background: var(--menu--btn-bg);
-		margin: 15px ;
+		margin: 10px;
 		border-radius: 10px;
 		padding: 0 0 10px 0;
 	}

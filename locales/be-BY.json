@@ -1,0 +1,187 @@
+{
+	"languages": {
+		"mode": "no-space",
+		"title": "Мова"
+	},
+	"settings": {
+		"title": "Налады"
+	},
+	"setting": [
+		"Выдаліць акаунт",
+		"Палітыка прыватнасці",
+		"Мод"
+	],
+	"chat": {
+		"title": "Вярнуцца",
+		"btn": "Адправіць",
+		"placeholder": "напішыце ваша паведамленне"
+	},
+	"menu": {
+		"title": "Меню"
+	},
+	"meniu": [
+		"Акаўнт",
+		"Пра праграму",
+		"Мова",
+		"Зваротная сувязь",
+		"Налады"
+	],
+	"rank": {
+		"rank": "Званне",
+		"newbie": "Вучань Бамбука",
+		"pupil": "Паслядоўнік Дзен-панды",
+		"master": "Майстар Аскезы",
+		"legenda": "Уладар Бамбуковага Шляху",
+		"immortal": "Легенда Дзен-Кунг-фу"
+	},
+	"account": {
+		"accoutTitle": "Акаўнт",
+		"accountBtn": "Абнавіць",
+		"changedName": "Імя зменена"
+	},
+	"singInUP": {
+		"reset": "Адправіць",
+		"singIn": "Ужо ёсць акаунт? Увайсці",
+		"singUp": "Няма акаунта? Зарэгістравацца",
+		"singInBtn": "Увайсці",
+		"singUpBtn": "Зарэгістравацца",
+		"forgotPassword": "Забылі пароль?",
+		"backToSing": "Назад да рэгістрацыі",
+		"confirm": "Ліст быў адпраўлены на ваш электронны адрас"
+	},
+	"archieve": {
+		"empty": "Архіў пусты",
+		"name": "Вашы аскезы",
+		"achieveTitle": "Архіў аскез",
+		"totalDays": "Усяго дзён",
+		"checkedDays": "Адзначана",
+		"notChecked": "Не адзначана"
+	},
+	"achieveTitle": {
+		"title": "Вашы дасягненні",
+		"subtitle": "Усяго атрымана дасягненняў",
+		"achiveDone": "Завершаныя"
+	},
+	"accState": {
+		"greetings": "Сардэчна запрашаем",
+		"stateBtn": "Паехалі!",
+		"load": "Загрузка"
+	},
+	"checkedBtns": {
+		"done": "Зроблена",
+		"missed": "Прапусціў"
+	},
+	"achieve": {
+		"1": "Завяршыць 1-ю аскезу",
+		"2": "Завяршыць 10 аскез",
+		"3": "Завяршыць 25 аскез",
+		"4": "Завяршыць 50 аскез",
+		"5": "Завяршыць 100 аскез",
+		"6": "Завяршыць 200 аскез"
+	},
+	"feedBack": {
+		"title": "Зваротная сувязь",
+		"placeholder": "Пакіньце водгук або прапанову",
+		"button": "Адправіць",
+		"overlayBtn": "OK",
+		"overlayTitle": "Дзякуй за зваротную сувязь"
+	},
+	"startPage": {
+		"value": "Пачаць"
+	},
+	"description": {
+		"value": "Наступны крок"
+	},
+	"navTop": {
+		"achiv": "Дасціжэнні",
+		"askez": "Усе аскезы",
+		"stats": "Статыстыка"
+	},
+	"statslable": {
+		"total": "Усяго аскезаў",
+		"doneTotal": "Усяго выканана",
+		"InProgressTotal": "У працэсе",
+		"notCompleted": "Не выканана",
+		"active": "Актыўныя аскезы",
+		"archieve": "Архіўныя аскезы"
+	},
+	"hasNotAskez": {
+		"value": "Няма створаных аскез"
+	},
+	"delAllDatas": {
+		"title": "Выдаліць усе дадзеныя?",
+		"subTitle": "Вы сапраўды хочаце выдаліць усе дадзеныя?",
+		"acceptBtn": "Так",
+		"rejectBtn": "Не"
+	},
+	"infoLabels": {
+		"name": "Назва",
+		"status": "Статус"
+	},
+	"register": {
+		"btnValue": "зарэгістравацца",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "увядзіце сваё імя"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "увядзіце свой email"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "увядзіце свой пароль"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "пацвердзіце свой пароль"
+			}
+		]
+	},
+	"logOut": {
+		"out": "Выйсці?",
+		"reject": "Вы сапраўды хочаце выйсці?"
+	},
+	"homePage": {
+		"greetings": "Вітаем",
+		"btn": "Адкрыць",
+		"no_active_goals": "Няма актыўных аскез"
+	},
+	"createTask": {
+		"title": "Стварыць новую аскезу",
+		"btn": "Стварыць новую",
+		"task": "Ваша мэта",
+		"datum": "Выберыце перыяд дат"
+	},
+	"success": {
+		"title": "Гатова!!",
+		"article": "Давай зробім усё магчымае, каб дасягнуць тваёй мэты",
+		"button": "ОК"
+	},
+	"taskDetails": {
+		"startDate": "Дата пачатку",
+		"endDate": "Дата заканчэння"
+	},
+	"delConfirm": {
+		"title": "Выдаліць аскезу?",
+		"accept": "Так",
+		"reject": "Не"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Выдаліць"
+	},
+	"CheckedProgress": {
+		"checked": " Выканана",
+		"notChecked": "Не выканана"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Увядзіце назву Аскезы"
+	},
+	"footerBtnText": {
+		"menu": "Меню",
+		"archieve": "Архіў",
+		"panda": "Панда",
+		"tasks": "Задачы"
+	}
+}

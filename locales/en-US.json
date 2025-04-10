@@ -1,0 +1,187 @@
+{
+	"languages": {
+		"mode": "no-space",
+		"title": "Language"
+	},
+	"settings": {
+		"title": "Settings"
+	},
+	"setting": [
+		"Delete account",
+		"Privacy Policy",
+		"Mode"
+	],
+	"chat": {
+		"title": "Back",
+		"btn": "Send",
+		"placeholder": "Type your message"
+	},
+	"menu": {
+		"title": "Menu"
+	},
+	"meniu": [
+		"Account",
+		"About App",
+		"Languages",
+		"Feedback",
+		"Settings"
+	],
+	"rank": {
+		"rank": "Rank",
+		"newbie": "Bamboo Apprentice",
+		"pupil": "Zen Panda Disciple",
+		"master": "Master of Asceticism",
+		"legenda": "Lord of the Bamboo Path",
+		"immortal": "Legend of Zen Kung Fu"
+	},
+	"account": {
+		"accoutTitle": "Account",
+		"accountBtn": "Update",
+		"changedName": "Name changed"
+	},
+	"singInUP": {
+		"reset": "Send",
+		"singIn": "Already have an account? Sign in",
+		"singUp": "Don't have an account? Sign up",
+		"singInBtn": "Sign in",
+		"singUpBtn": "Sign up",
+		"forgotPassword": "Forgot password?",
+		"backToSing": "Back to registration",
+		"confirm": "An email has been sent to your email address"
+	},
+	"archieve": {
+		"empty":  "Archive is empty",
+		"name": "Your askezas",
+		"achieveTitle": "Ascezas archive",
+		"totalDays": "Total days",
+		"checkedDays": "Checked",
+		"notChecked": "Not checked"
+	},
+	"achieveTitle": {
+		"title": "Your achievements",
+		"subtitle": "Total achievements received",
+		"achiveDone": "Completed"
+	},
+	"accState": {
+		"greetings": "Welcome",
+		"stateBtn": "Let's go!",
+		"load": "Loading"
+	},
+	"checkedBtns": {
+		"done": "Done",
+		"missed": "Missed"
+	},
+	"achieve": {
+		"1": "Complete the first askeza",
+		"2": "Complete 10 askezas",
+		"3": "Complete 25 askezas",
+		"4": "Complete 50 askezas",
+		"5": "Complete 100 askezas",
+		"6": "Complete 200 askezas"
+	},
+	"feedBack": {
+		"title": "Feedback",
+		"placeholder": "Leave a review or suggestion",
+		"button": "Send",
+		"overlayBtn": "OK",
+		"overlayTitle": "Thank you for your feedback"
+	},
+	"startPage": {
+		"value": "get started"
+	},
+	"description": {
+		"value": "Next step"
+	},
+	"navTop": {
+		"achiv": "Achievements",
+		"askez": "All askeza",
+		"stats": "Statistics"
+	},
+	"statslable": {
+		"total": "Total goals",
+		"doneTotal": "Total completed",
+		"InProgressTotal": "In progress",
+		"notCompleted": "Not completed",
+		"active": "Active tasks",
+		"archieve": "Archieve tasks"
+	},
+	"hasNotAskez": {
+		"value": "No created askezas"
+	},
+	"infoLabels": {
+		"name": "Name",
+		"status": "Status"
+	},
+	"delAllDatas": {
+		"title": "Delete all data?",
+		"subTitle": "Are you sure you want to delete all data?",
+		"acceptBtn": "Yes",
+		"rejectBtn": "No"
+	},
+	"register": {
+		"btnValue": "register",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "enter your name"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "enter your email"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "enter your password"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "confirm your password"
+			}
+		]
+	},
+	"logOut": {
+		"out": "Logout?",
+		"reject": "Do you want to Logout?"
+	},
+	"homePage": {
+		"greetings": "Hello",
+		"btn": "Open",
+		"no_active_goals": "No active goals"
+	},
+	"createTask": {
+		"title": "Create new Goal",
+		"btn": "Create new",
+		"task": "Your goal",
+		"datum": "Select a date range"
+	},
+	"success": {
+		"title": "Done!!",
+		"article": "Let's do the best to achieve your goal",
+		"button": "OK"
+	},
+	"taskDetails": {
+		"startDate": "Start date",
+		"endDate": "End date"
+	},
+	"delConfirm": {
+		"title": "Delete goal?",
+		"accept": "Yes",
+		"reject": "No"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Delete"
+	},
+	"CheckedProgress": {
+		"checked": "days checked",
+		"notChecked": "days missed"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Enter the name of the Askesis"
+	},
+	"footerBtnText": {
+		"menu": "Menu",
+		"archieve": "Archieve",
+		"panda": "Panda",
+		"tasks": "Tasks"
+	}
+}

@@ -6,13 +6,51 @@
 	"settings": {
 		"title": "Configuración"
 	},
+	"buyPremium": {
+		"buy": "Mensual",
+		"plus": "Ventajas"
+	},
 	"setting": [
 		"Eliminar cuenta",
 		"Política de privacidad",
-		"Mode"
+		"Modo",
+		"Chat"
 	],
+	"premiumValues": [
+		"Sin anuncios",
+		"Mejora del panda",
+		"Acceso a logros",
+		"Apoyo a los desarrolladores",
+		"Cambio de datos permitido",
+		"Objetivos ilimitados",
+		"Acceso al asistente virtual",
+		"Acceso a funciones próximas (muy pronto)"
+	],
+	"privacy": {
+		"page": "Política de privacidad"
+	},
+	"googlePlay": {
+		"pay": "La suscripción se renueva automáticamente a través de Google Play, a menos que la canceles manualmente.Si cancelas la suscripción antes de que finalice el período de facturación actual, no se reembolsará el importe de ese período, pero el acceso Premium seguirá activo hasta el final del período pagado. La cancelación será efectiva una vez finalizado el período actual."
+	},
+
+	"chat": {
+		"title": "Volver",
+		"btn": "Enviar",
+		"placeholder": "Escriba su mensaje"
+	},
 	"menu": {
 		"title": "Menú"
+	},
+	"noConnetction": {
+		"off": "¡Sin conexión a Internet",
+		"on": "¡Conexión restablecida",
+		"btn": "Повторить"
+	},
+	"premiumWindow": {
+		"bot": "Para usar el asistente virtual, necesitas pasarte al plan Premium.",
+		"taskText": "Lamentablemente, has alcanzado el límite de hábitos del plan gratuito. Para añadir hábitos ilimitados, actualiza al plan Premium.",
+		"subtext": "Al suscribirte a Premium obtendrás acceso completo a todas las funciones de la aplicación.",
+		"btnPremium": "Obtener Premium"
 	},
 	"meniu": [
 		"Cuenta",
@@ -93,9 +131,12 @@
 		"stats": "Estadísticas"
 	},
 	"statslable": {
-		"total": "Total de ascesis creadas",
+		"total": "Objetivos totales",
 		"doneTotal": "Total completado",
-		"InProgressTotal": "En proceso de ejecución"
+		"InProgressTotal": "En progreso",
+		"notCompleted": "No completado",
+		"active": "Tareas activas",
+		"archieve": "Tareas archivadas"
 	},
 	"hasNotAskez": {
 		"value": "No hay askezas creadas"
@@ -166,5 +207,14 @@
 	"CheckedProgress": {
 		"checked": "Objetivo completado",
 		"notChecked": "Objetivo no completado"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Ingrese el nombre de la ascesis"
+	},
+	"footerBtnText": {
+		"menu": "Menú",
+		"archieve": "Archivo",
+		"panda": "Panda",
+		"tasks": "Tareas"
 	}
 }

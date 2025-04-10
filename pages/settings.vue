@@ -1,60 +1,75 @@
 <script setup>
-	import {ref, onMounted, computed} from 'vue';
+	import {ref, onMounted} from 'vue';
 	import {getAuth, reauthenticateWithCredential, EmailAuthProvider, deleteUser} from 'firebase/auth';
-	import Light from '../assets/images/light.png';
-	import Dark from '../assets/images/dark.png';
+	import PremiumWindow from '../src/components/premiumWindow.vue'
+	import Light from '../assets/images/sun-2.svg';
+	import Dark from '../assets/images/moon.svg';
 	import HeaderWithBack from '../src/components/headerWithBack.vue';
 	import Arrowicon from '../assets/images/arrowSvg.svg';
-	import {useRoute, useRouter} from "vue-router";
+	import {useRouter} from "vue-router";
 	import {useHabitStore} from "../stores/habitStore.js";
 	import {useAuthStore} from "../stores/authStore.js";
 	import {useTaskStore} from '../stores/OfflineTaskStore.js';
 	import {useI18n} from 'vue-i18n';
-	import {useValidationStore} from '../stores/validationStore.js'
+	import {useValidationStore} from '../stores/validationStore.js';
 
 	const taskStore = useTaskStore();
-	const validationStore = useValidationStore()
+	const validationStore = useValidationStore();
 	const {t} = useI18n();
-	const isMounted = ref(false);
-	const habitStore = useHabitStore()
-	const authStore = useAuthStore()
-	const confirmDeleteDatas = ref(false)
+	const habitStore = useHabitStore();
+	const authStore = useAuthStore();
 	const router = useRouter();
-	const password = ref('');
-	const deleteError = ref('');
-	const colorMode = useColorMode();
+	let confirmDeleteDatas = ref(false);
+	const isOverlayVisible = ref(false)
 	const passwordInput = ref('');
-
-	const toggleTheme = () => {
-		colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark'
+	const deleteError = ref('');
+	const activeAnim = ref(false);
+	const isToggle = ref(false);
+	const colorMode = useColorMode();
+	const localBotToggle = ref(false);
+	const activeBotAnim = ref(false)
+	const clickToggle = () => {
+		activeAnim.value = true;
+		setTimeout(() => {
+			activeAnim.value = false;
+		}, 200);
+		isToggle.value = !isToggle.value;
+		colorMode.preference = isToggle.value ? 'dark' : 'light';
 	};
 
-	const modeLabel = [
-		'Mode',
-		'Мод',
-		'Режим',
-		'Fëapolë',
-		'模式',
-		'الوضع'
-	];
+	const clickToggleBot = async () => {
+		if (!authStore.isPremium) return;
 
-	const deleteLabels = [
-		'Удалить аккаунт',
-		'Delete account',
-		'Выдаліць акаунт',
-		'Видалити акаунт',
-		'Konto löschen',
-		'Eliminar cuenta',
-		'Supprimer le compte',
-		'Account vanwa',
-		'删除账户',
-		'حذف الحساب'
-	];
-	const {locale, messages} = useI18n();
+		activeBotAnim.value = true;
+		setTimeout(() => {
+			activeBotAnim.value = false;
+		}, 200);
 
-	const cancelDelete = () => {
-		confirmDeleteDatas.value = false;
+		localBotToggle.value = !localBotToggle.value;
+		authStore.isBotEnabled = localBotToggle.value;
+
+		await authStore.saveBotStateToFirebase(localBotToggle.value);
+		authStore.saveBotStateToLocal(localBotToggle.value);
 	};
+
+	const clickPremiumButton = () => {
+		if (!authStore.isPremium) {
+			isOverlayVisible.value = true;
+			return;
+		}
+		clickToggleBot();
+	}
+
+	const handleClick = (index) => {
+		if (index === 3) {
+			clickToggle();
+		} else if (index === 4) {
+			clickPremiumButton();
+		} else {
+			SettingsChange(t(`setting.${index - 1}`));
+		}
+	};
+
 
 	const deleteAllDatas = async () => {
 		const auth = getAuth();
@@ -69,7 +84,7 @@
 				await reauthenticateWithCredential(user, credential);
 				await habitStore.clearAlldates();
 				await deleteUser(user);
-				await taskStore.clearLocalTasks()
+				await taskStore.clearLocalTasks();
 				confirmDeleteDatas.value = false;
 				router.push('/');
 			} catch (error) {
@@ -79,70 +94,162 @@
 		}
 	};
 
-	const NotdeleteAllDatas = () => {
-		confirmDeleteDatas.value = false
-	}
-
-	onMounted(() => {
-		const savedMode = localStorage.getItem('nuxt-color-mode') || 'dark';
-		colorMode.preference = savedMode;
-		isMounted.value = true;
-	});
-
 	const SettingsChange = (text) => {
-		const textItem = text.trim();
-		if (modeLabel.includes(textItem)) {
-			toggleTheme();
-		} else if (deleteLabels.includes(textItem)) {
-			confirmDeleteDatas.value = true
+		const textItem = text
+		if ([
+			'Mode', 'Мод', 'Режим', 'Fëapolë', '模式', 'الوضع' , 'Tryb'
+		].includes(textItem)) {
+			clickToggle();
+		} else if (["Privacy Policy", "سياسة الخصوصية",
+			"Палітыка прыватнасці", "Datenschutzbestimmungen", "Násië", "Политика конфиденциальности",
+			"Політика конфіденційності", "隐私政策", "Politique de confidentialité", "Polityka prywatności" , "Política de privacidad",].includes(textItem)) {
+			router.push('/policyPrivacy')
+		} else if (['Удалить аккаунт', 'Delete account', 'Выдаліць акаунт', 'Видалити акаунт', 'Konto löschen', 'Usuń konto' , 'Eliminar cuenta',
+			'Supprimer le compte', 'Account vanwa', '删除账户', 'حذف الحساب'].includes(textItem)) {
+			confirmDeleteDatas.value = true;
 		}
 	};
 
 	onMounted(() => {
-		isMounted.value = true;
+		const savedMode = localStorage.getItem('nuxt-color-mode') || 'dark';
+		colorMode.preference = savedMode;
+		isToggle.value = savedMode === 'dark';
+
+		localBotToggle.value = authStore.isBotEnabled;
 	});
+
+	const show = () => {
+		activeAnim.value = true
+	}
 
 </script>
 
 <template>
+	<div v-if="isOverlayVisible" class="premium__window">
+		<PremiumWindow
+			:text="$t('premiumWindow.bot')"
+			:subtext="$t('premiumWindow.subtext')"
+			@close="isOverlayVisible = false"
+		/>
+	</div>
 	<div class="settings__wrapper">
 		<div v-if="confirmDeleteDatas" class="overlay">
 			<div class="confirm__wrapper">
-				<div class="confirm__title">{{ $t('delAllDatas.title')}}</div>
-				<div class="confirm_sub-title">{{ $t('delAllDatas.subTitle')}}</div>
+				<div class="confirm__title">{{ $t('delAllDatas.title') }}</div>
+				<div class="confirm_sub-title">{{ $t('delAllDatas.subTitle') }}</div>
 				<div class="confirm__label">
 					<input class="confirm__field-password" v-model="passwordInput" type="password"
-					       placeholder="enter password">
+					       placeholder="enter password"/>
 					<span v-if="deleteError" class="error-message">{{ deleteError }}</span>
 				</div>
 				<div class="btns-wrapper">
-					<button @click="deleteAllDatas" class="btn_del-data --del-data">{{ $t('delAllDatas.acceptBtn')}}
+					<button @click="deleteAllDatas" class="btn_del-data --del-data">{{ $t('delAllDatas.acceptBtn') }}
 					</button>
-					<button @click="NotdeleteAllDatas" class="btn_del-data --not-del">{{ $t('delAllDatas.rejectBtn')}}
+					<button @click="confirmDeleteDatas = false" class="btn_del-data --not-del">{{
+						$t('delAllDatas.rejectBtn') }}
 					</button>
 				</div>
 			</div>
 		</div>
-		<HeaderWithBack
-			:icon="Arrowicon"
-			:title="$t('settings.title')"
-		/>
+		<HeaderWithBack :icon="Arrowicon" :title="$t('settings.title')"/>
 		<div class="settings__btns">
-			<div class="menu__btn-wrapper" v-for="index in 3" :key="index">
-				<button class="account__settings-btn" @click="SettingsChange($t('setting.' + (index - 1)))">
+			<div class="menu__btn-wrapper" v-for="index in 4" :key="index">
+				<button
+					class="account__settings-btn"
+					:class="{ 'disabled-premium': index === 4 && !authStore.isPremium }"
+
+					@click="handleClick(index)"
+				>
 					<span class="accoun__text">{{ $t('setting.' + (index - 1)) }}</span>
-					<img
-						v-if="isMounted && index === 3 "
-						class="color__mode-icon"
-						:src="colorMode.preference === 'dark' ? Light : Dark"
-						alt="">
+					<span v-if="index === 3" class="toggle-bar" :class="{ 'dark-mode': isToggle }">
+						<img :src="Light" alt="Light" class="toggle-icon left"/>
+						<span class="toggle-thumb" :class="{ 'active-anim': activeAnim }"/>
+						<img :src="Dark" alt="Dark" class="toggle-icon right"/>
+					</span>
+					<span v-if="index === 4" class="toggle-bar" :class="{ 'bot-disabled': !localBotToggle }">
+						<span class="toggle-thumb"/>
+					</span>
 				</button>
 			</div>
 		</div>
 	</div>
 </template>
 
+
 <style scoped>
+
+	.premium__window {
+		position: absolute;
+		width: 100%;
+		height: 100vh;
+		z-index: 100;
+	}
+
+	.disabled-premium {
+		opacity: 0.5;
+		cursor: pointer;
+	}
+
+	.toggle-bar {
+		width: 68px;
+		height: 33px;
+		background-color: #ccc;
+		border-radius: 20px;
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 6px;
+		box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+		cursor: pointer;
+		transition: background-color 0.3s ease;
+	}
+
+	.toggle-bar.dark-mode {
+		background-color: #222;
+	}
+
+	.toggle-bar.bot-disabled {
+		background-color: #666;
+	}
+
+	.toggle-thumb {
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		width: 28px;
+		height: 28px;
+		background-color: orange;
+		border-radius: 50%;
+		transition: left 0.5s ease, background-color 0.3s ease;
+		z-index: 0;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	}
+
+	.toggle-bar.dark-mode .toggle-thumb {
+		left: 38px;
+		background-color: grey;
+	}
+
+	.toggle-bar.bot-disabled .toggle-thumb {
+		left: 38px;
+		background-color: grey;
+	}
+
+	.toggle-icon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 2;
+		pointer-events: none;
+	}
+
+
+	.toggle-thumb.active-anim {
+		transform: scaleX(1.4);
+	}
+
+
 	.confirm__label {
 		height: 80px;
 	}

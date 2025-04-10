@@ -1,0 +1,187 @@
+{
+	"languages": {
+		"mode": "无空格",
+		"title": "语言"
+	},
+	"settings": {
+		"title": "设置"
+	},
+	"setting": [
+		"删除账户",
+		"隐私政策",
+		"模式"
+	],
+	"chat": {
+		"title": "返回",
+		"btn": "发送",
+		"placeholder": "输入您的消息"
+	},
+	"menu": {
+		"title": "菜单"
+	},
+	"meniu": [
+		"账户",
+		"关于应用",
+		"语言",
+		"反馈",
+		"设置"
+	],
+	"rank": {
+		"rank": "等级",
+		"newbie": "竹子学徒",
+		"pupil": "禅熊猫修行者",
+		"master": "修行大师",
+		"legenda": "竹道之王",
+		"immortal": "禅功夫传奇"
+	},
+	"account": {
+		"accoutTitle": "账户",
+		"accountBtn": "更新",
+		"changedName": "名称已更改"
+	},
+	"singInUP": {
+		"reset": "发送",
+		"singIn": "已有账户？登录",
+		"singUp": "没有账户？注册",
+		"singInBtn": "登录",
+		"singUpBtn": "注册",
+		"forgotPassword": "忘记密码？",
+		"backToSing": "返回注册",
+		"confirm": "邮件已发送到您的邮箱"
+	},
+	"archieve": {
+		"empty": "档案为空",
+		"name": "你的修行",
+		"achieveTitle": "修行档案",
+		"totalDays": "总天数",
+		"checkedDays": "已完成",
+		"notChecked": "未完成"
+	},
+	"achieveTitle": {
+		"title": "你的成就",
+		"subtitle": "已获得成就总数",
+		"achiveDone": "已完成"
+	},
+	"accState": {
+		"greetings": "欢迎",
+		"stateBtn": "开始！",
+		"load": "加载中"
+	},
+	"checkedBtns": {
+		"done": "完成",
+		"missed": "错过"
+	},
+	"achieve": {
+		"1": "完成第一个修行",
+		"2": "完成10个修行",
+		"3": "完成25个修行",
+		"4": "完成50个修行",
+		"5": "完成100个修行",
+		"6": "完成200个修行"
+	},
+	"feedBack": {
+		"title": "反馈",
+		"placeholder": "留下反馈或建议",
+		"button": "发送",
+		"overlayBtn": "好的",
+		"overlayTitle": "感谢您的反馈"
+	},
+	"startPage": {
+		"value": "开始"
+	},
+	"description": {
+		"value": "下一步"
+	},
+	"navTop": {
+		"achiv": "成就",
+		"askez": "所有修行",
+		"stats": "统计"
+	},
+	"statslable": {
+		"total": "总目标",
+		"doneTotal": "已完成总数",
+		"InProgressTotal": "进行中",
+		"notCompleted": "未完成",
+		"active": "活动任务",
+		"archieve": "归档任务"
+	},
+	"hasNotAskez": {
+		"value": "尚未创建修行"
+	},
+	"delAllDatas": {
+		"title": "删除所有数据？",
+		"subTitle": "你确定要删除所有数据吗？",
+		"acceptBtn": "是",
+		"rejectBtn": "否"
+	},
+	"infoLabels": {
+		"name": "名称",
+		"status": "状态"
+	},
+	"register": {
+		"btnValue": "注册",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "请输入你的名字"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "请输入你的邮箱"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "请输入你的密码"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "请确认你的密码"
+			}
+		]
+	},
+	"logOut": {
+		"out": "退出？",
+		"reject": "你确定要退出吗？"
+	},
+	"homePage": {
+		"greetings": "欢迎",
+		"btn": "打开",
+		"no_active_goals": "没有活跃的目标"
+	},
+	"createTask": {
+		"title": "创建新目标",
+		"btn": "新建目标",
+		"task": "你的目标",
+		"datum": "选择日期范围"
+	},
+	"success": {
+		"title": "完成！",
+		"article": "让我们全力以赴实现你的目标",
+		"button": "好的"
+	},
+	"taskDetails": {
+		"startDate": "开始日期",
+		"endDate": "结束日期"
+	},
+	"delConfirm": {
+		"title": "删除此修行？",
+		"accept": "是",
+		"reject": "否"
+	},
+	"EditDeleteMenu": {
+		"delTask": "删除"
+	},
+	"CheckedProgress": {
+		"checked": "已完成",
+		"notChecked": "未完成"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "输入修行的名称"
+	},
+	"footerBtnText": {
+		"menu": "菜单",
+		"archieve": "档案",
+		"panda": "熊猫",
+		"tasks": "任务"
+	}
+}

@@ -1,0 +1,187 @@
+{
+	"languages": {
+		"mode": "pas d'espace",
+		"title": "Langue"
+	},
+	"settings": {
+		"title": "Paramètres"
+	},
+	"setting": [
+		"Supprimer le compte",
+		"Politique de confidentialité",
+		"Mode"
+	],
+	"chat": {
+		"title": "Retour",
+		"btn": "Envoyer",
+		"placeholder": "Écrivez votre message"
+	},
+	"menu": {
+		"title": "Menu"
+	},
+	"meniu": [
+		"Compte",
+		"À propos de l'application",
+		"Langue",
+		"Commentaires",
+		"Paramètres"
+	],
+	"rank": {
+		"rank": "rang",
+		"newbie": "Apprenti du Bambou",
+		"pupil": "Disciple du Panda Zen",
+		"master": "Maître de l’ascèse",
+		"legenda": "Seigneur de la voie du bambou",
+		"immortal": "Légende du kung-fu zen"
+	},
+	"account": {
+		"accoutTitle": "Compte",
+		"accountBtn": "Mettre à jour",
+		"changedName": "Nom modifié"
+	},
+	"singInUP": {
+		"reset": "Envoyer",
+		"singIn": "Vous avez déjà un compte ? Connectez-vous",
+		"singUp": "Pas de compte ? Inscrivez-vous",
+		"singInBtn": "Connexion",
+		"singUpBtn": "Inscription",
+		"forgotPassword": "Mot de passe oublié ?",
+		"backToSing": "Retour à l'inscription",
+		"confirm": "Un email a été envoyé à votre adresse électronique"
+	},
+	"archieve": {
+		"empty": "L'archive est vide",
+		"name": "Vos ascèses",
+		"achieveTitle": "Archive des ascèses",
+		"totalDays": "Total de jours",
+		"checkedDays": "Marqué",
+		"notChecked": "Non marqué"
+	},
+	"achieveTitle": {
+		"title": "Vos réussites",
+		"subtitle": "Total des réussites obtenues",
+		"achiveDone": "Terminé"
+	},
+	"accState": {
+		"greetings": "Bienvenue",
+		"stateBtn": "C'est parti!",
+		"load": "Chargement"
+	},
+	"checkedBtns": {
+		"done": "Terminé",
+		"missed": "Manqué"
+	},
+	"achieve": {
+		"1": "Terminer la première askeza",
+		"2": "Terminer 10 askezas",
+		"3": "Terminer 25 askezas",
+		"4": "Terminer 50 askezas",
+		"5": "Terminer 100 askezas",
+		"6": "Terminer 200 askezas"
+	},
+	"feedBack": {
+		"title": "Commentaires",
+		"placeholder": "Laissez un commentaire ou une suggestion",
+		"button": "Envoyer",
+		"overlayBtn": "OK",
+		"overlayTitle": "Merci pour votre retour"
+	},
+	"startPage": {
+		"value": "commencer"
+	},
+	"description": {
+		"value": "étape suivante"
+	},
+	"navTop": {
+		"achiv": "Succès",
+		"askez": "Toutes les ascèses",
+		"stats": "Statistiques"
+	},
+	"statslable": {
+		"total": "Objectifs totaux",
+		"doneTotal": "Total accompli",
+		"InProgressTotal": "En cours",
+		"notCompleted": "Non accompli",
+		"active": "Tâches actives",
+		"archieve": "Tâches archivées"
+	},
+	"hasNotAskez": {
+		"value": "Aucune Askeza créée"
+	},
+	"infoLabels": {
+		"name": "Nom",
+		"status": "Statut"
+	},
+	"delAllDatas": {
+		"title": "Supprimer toutes les données ?",
+		"subTitle": "Êtes-vous sûr de vouloir supprimer toutes les données ?",
+		"acceptBtn": "Oui",
+		"rejectBtn": "Non"
+	},
+	"register": {
+		"btnValue": "s'inscrire",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "entrez votre nom"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "entrez votre email"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "entrez votre mot de passe"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "confirmez votre mot de passe"
+			}
+		]
+	},
+	"logOut": {
+		"out": "Déconnexion?",
+		"reject": "Voulez-vous vous déconnecter?"
+	},
+	"homePage": {
+		"greetings": "Salut",
+		"btn": "Ouvrir",
+		"no_active_goals": "Aucun objectif actif"
+	},
+	"createTask": {
+		"title": "Créer un nouvel objectif",
+		"btn": "Créer nouveau",
+		"task": "Votre objectif",
+		"datum": "Sélectionnez une période de dates"
+	},
+	"success": {
+		"title": "Fait !!",
+		"article": "Faisons de notre mieux pour atteindre votre objectif",
+		"button": "OK"
+	},
+	"taskDetails": {
+		"startDate": "Date de début",
+		"endDate": "Date de fin"
+	},
+	"delConfirm": {
+		"title": "Supprimer l'objectif?",
+		"accept": "Oui",
+		"reject": "Non"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Supprimer"
+	},
+	"CheckedProgress": {
+		"checked": "Objectif atteint",
+		"notChecked": "Objectif non atteint"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Entrez le nom de l'ascèse"
+	},
+	"footerBtnText": {
+		"menu": "Menu",
+		"archieve": "Archive",
+		"panda": "Panda",
+		"tasks": "Tâches"
+	}
+}

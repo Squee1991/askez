@@ -6,13 +6,51 @@
 	"settings": {
 		"title": "Settings"
 	},
+	"buyPremium": {
+		"buy": "Monthly",
+		"plus": "Benefits"
+	},
 	"setting": [
 		"Delete account",
 		"Privacy Policy",
-		"Mode"
+		"Mode",
+		"Chat"
 	],
+	"premiumValues": [
+		"No advertising",
+		"Support the developers",
+		"Access to achievements",
+		"Panda leveling",
+		"Ability to change data",
+		"Unlimited number of goals",
+		"Access to virtual assistant",
+		"Access to upcoming features (coming soon)"
+	],
+	"privacy": {
+		"page": "Privacy Policy"
+	},
+	"googlePlay": {
+		"pay": "The subscription is automatically renewed via Google Play unless you cancel it manually. If you cancel the subscription before the end of the current billing period, you will not receive a refund for this period, but Premium access will remain active until the end of the paid time. The cancellation will take effect after the current period ends."
+	},
+
+	"chat": {
+		"title": "Back",
+		"btn": "Send",
+		"placeholder": "Type your message"
+	},
 	"menu": {
 		"title": "Menu"
+	},
+	"noConnetction": {
+		"off": "No internet connection",
+		"on": "Connection restored",
+		"btn": "Повторить"
+	},
+	"premiumWindow": {
+		"bot": "To use the virtual assistant, you need to upgrade to the Premium plan.",
+		"taskText": "Unfortunately, you've reached the habit limit on the free plan. To add unlimited habits, please upgrade to Premium.",
+		"subtext": "By subscribing to Premium, you'll get full access to all app features.",
+		"btnPremium": "Get Premium"
 	},
 	"meniu": [
 		"Account",
@@ -45,7 +83,7 @@
 		"confirm": "An email has been sent to your email address"
 	},
 	"archieve": {
-		"empty":  "Archive is empty",
+		"empty": "Archive is empty",
 		"name": "Your askezas",
 		"achieveTitle": "Ascezas archive",
 		"totalDays": "Total days",
@@ -93,9 +131,12 @@
 		"stats": "Statistics"
 	},
 	"statslable": {
-		"total": "Total created askeses",
+		"total": "Total goals",
 		"doneTotal": "Total completed",
-		"InProgressTotal": "In progress"
+		"InProgressTotal": "In progress",
+		"notCompleted": "Not completed",
+		"active": "Active tasks",
+		"archieve": "Archieve tasks"
 	},
 	"hasNotAskez": {
 		"value": "No created askezas"
@@ -167,8 +208,13 @@
 		"checked": "days checked",
 		"notChecked": "days missed"
 	},
-	"msg": {
-		"onlyToday": "You can only mark today's date.",
-		"alreadyMarked": "You already marked today."
+	"bublingWindows": {
+		"fieldEmpty": "Enter the name of the Askesis"
+	},
+	"footerBtnText": {
+		"menu": "Menu",
+		"archieve": "Archieve",
+		"panda": "Panda",
+		"tasks": "Tasks"
 	}
 }

@@ -1,6 +1,17 @@
 <template>
 	<div class="wrapper">
-		<div class="habit-goal-modal">
+		<div class="empty" :class="{'is-empty' : IsEmpty}">
+			<div class="empty__text">
+				{{ $t('bublingWindows.fieldEmpty')}}
+			</div>
+		</div>
+		<PremiumOverlay
+			v-if="!authStore.isPremium && isOverlayVisible"
+			:text="$t('premiumWindow.taskText')"
+			:subtext="$t('premiumWindow.subtext')"
+			@close="isOverlayVisible = false"
+		/>
+		<div v-if="!isOverlayVisible" class="habit-goal-modal">
 			<div class="input__fields-wrapper">
 				<div class="close__wrapper">
 					<div class="close__title"> {{ $t('createTask.title')}}</div>
@@ -11,7 +22,12 @@
 				<div class="input__fields-inner">
 					<div class="input__fields">
 						<span class="input__label label">{{ $t('createTask.task')}}</span>
-						<input class="input__goal" v-model="inputValueGoal" type="text"/>
+						<input
+							class="input__goal"
+							v-model="inputValueGoal"
+							type="text"
+							maxlength="35"
+						/>
 					</div>
 				</div>
 				<div class="date__picker-inenr">
@@ -30,18 +46,21 @@
 </template>
 <script setup>
 	import {ref, defineEmits} from "vue";
+	import PremiumOverlay from '/src/components/premiumWindow.vue'
 	import CloseIcon from "/assets/images/close.svg";
-
 	import SelectComponent from '/src/components/selectComponent.vue'
 	import SuccesModal from '/src/components/succesModal.vue'
 	import {useHabitStore} from '../../stores/habitStore.js'
-
+	import {useAuthStore} from '../../stores/authStore.js'
+	import {useRouter} from 'vue-router'
+    const authStore = useAuthStore()
+	const IsEmpty = ref(false)
 	const habitStore = useHabitStore()
 	const {locale} = useI18n()
 	const inputValueGoal = ref("");
 	const emit = defineEmits(["close", "add"]);
 	const router = useRouter()
-	import {useRouter} from 'vue-router'
+	const isOverlayVisible = ref(false)
 	const localDateRange = ref({
 		start: new Date(),
 		end: new Date()
@@ -49,9 +68,19 @@
 
 	const clearFields = (fields) => fields.forEach(field => field.value = "")
 	const addValue = () => {
+		if (!authStore.isPremium && habitStore.tasks.length >= 1) {
+			isOverlayVisible.value = true;
+			return;
+		}
 		const isInputValid = [inputValueGoal.value].every((value) => value.trim?.());
 		const isDateRangeValid = localDateRange.value.start && localDateRange.value.end;
-		if (!isInputValid || !isDateRangeValid) return;
+		if (!isInputValid || !isDateRangeValid) {
+			IsEmpty.value = true;
+			setTimeout(() => {
+				IsEmpty.value = false;
+			}, 1300);
+			return;
+		}
 
 		const newTask = {
 			goal: inputValueGoal.value,
@@ -74,8 +103,38 @@
 </script>
 <style>
 
-	.success-modal {
+	.empty {
+		position: absolute;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		top: 0;
+		left: 0;
+		z-index: 200;
+		background: var(--indicator-bg);
+		width: 100%;
+		text-align: center;
+		height: 0;
+		font-size: 16px;
+		border-bottom-left-radius: 15px;
+		border-bottom-right-radius: 15px;
+		overflow: hidden;
+		transition: 0.3s;
+	}
 
+	.empty__text {
+		color: white;
+		font-size: 16px;
+		font-family: sans-serif;
+	}
+
+	.is-empty {
+		height: 42px;
+		transition: 0.3s;
+	}
+
+	.vc-base-icon {
+		stroke: blue;
 	}
 
 	.vc-highlight-light-bg {
@@ -103,6 +162,7 @@
 		border: none;
 		background: var(--background-color);
 		padding: 10px;
+		margin-top: 3px;
 	}
 
 	.vc-header .vc-title {
@@ -125,6 +185,7 @@
 		font-weight: bold;
 	}
 
+
 	.create__btn {
 		margin-top: 10px;
 		display: flex;
@@ -133,7 +194,7 @@
 		width: 100%;
 		padding: 18px;
 		border: none;
-		background-color: #48e37e;
+		background-color: var(--footer-bg);
 		color: white;
 		font-size: 16px;
 		font-weight: bold;
@@ -153,19 +214,23 @@
 
 	.wrapper {
 		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.input__fields-wrapper {
 		padding: 20px;
-		background-color: var(--background-color);
+		background-color: var(--calendar--bg);
 		border-radius: 10px;
 	}
 
 	.habit-goal-modal {
 		position: absolute;
 		width: 100%;
+		top: 70px;
 		border-radius: 10px;
-		padding: 20px;
+		padding: 5px 15px;
 		font-family: Arial, sans-serif;
 	}
 
@@ -211,4 +276,5 @@
 	.input__goal:focus {
 		border: 1px solid #47b7c1;
 	}
+
 </style>

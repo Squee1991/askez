@@ -1,0 +1,187 @@
+{
+	"languages": {
+		"mode": "no-space",
+		"title": "Idioma"
+	},
+	"settings": {
+		"title": "Configuración"
+	},
+	"setting": [
+		"Eliminar cuenta",
+		"Política de privacidad",
+		"Mode"
+	],
+	"chat": {
+		"title": "Volver",
+		"btn": "Enviar",
+		"placeholder": "Escriba su mensaje"
+	},
+	"menu": {
+		"title": "Menú"
+	},
+	"meniu": [
+		"Cuenta",
+		"Sobre la app",
+		"Idioma",
+		"Comentarios",
+		"Configuración"
+	],
+	"rank": {
+		"rank": "Rango",
+		"newbie": "Aprendiz del Bambú",
+		"pupil": "Discípulo del Panda Zen",
+		"master": "Maestro de la Ascética",
+		"legenda": "Señor del Camino del Bambú",
+		"immortal": "Leyenda del Kung-Fu Zen"
+	},
+	"account": {
+		"accoutTitle": "Cuenta",
+		"accountBtn": "Actualizar",
+		"changedName": "Nombre cambiado"
+	},
+	"singInUP": {
+		"reset": "Enviar",
+		"singIn": "¿Ya tienes una cuenta? Iniciar sesión",
+		"singUp": "¿No tienes una cuenta? Regístrate",
+		"singInBtn": "Iniciar sesión",
+		"singUpBtn": "Registrarse",
+		"forgotPassword": "¿Olvidaste tu contraseña?",
+		"backToSing": "Volver al registro",
+		"confirm": "Se ha enviado un correo electrónico a tu dirección"
+	},
+	"archieve": {
+		"empty": "El archivo está vacío",
+		"name": "Tus ascetismos",
+		"achieveTitle": "Archivo de ascetismos",
+		"totalDays": "Total de días",
+		"checkedDays": "Marcado",
+		"notChecked": "No marcado"
+	},
+	"achieveTitle": {
+		"title": "Tus logros",
+		"subtitle": "Total de logros obtenidos",
+		"achiveDone": "Completado"
+	},
+	"accState": {
+		"greetings": "Bienvenido",
+		"stateBtn": "¡Vamos!",
+		"load": "Cargando"
+	},
+	"checkedBtns": {
+		"done": "Hecho",
+		"missed": "Perdido"
+	},
+	"achieve": {
+		"1": "Completa la primera askeza",
+		"2": "Completa 10 askezas",
+		"3": "Completa 25 askezas",
+		"4": "Completa 50 askezas",
+		"5": "Completa 100 askezas",
+		"6": "Completa 200 askezas"
+	},
+	"feedBack": {
+		"title": "Comentarios",
+		"placeholder": "Deja un comentario o sugerencia",
+		"button": "Enviar",
+		"overlayBtn": "OK",
+		"overlayTitle": "Gracias por tu retroalimentación"
+	},
+	"startPage": {
+		"value": "comenzar"
+	},
+	"description": {
+		"value": "siguiente paso"
+	},
+	"navTop": {
+		"achiv": "Logros",
+		"askez": "Todas las ascesis",
+		"stats": "Estadísticas"
+	},
+	"statslable": {
+		"total": "Objetivos totales",
+		"doneTotal": "Total completado",
+		"InProgressTotal": "En progreso",
+		"notCompleted": "No completado",
+		"active": "Tareas activas",
+		"archieve": "Tareas archivadas"
+	},
+	"hasNotAskez": {
+		"value": "No hay askezas creadas"
+	},
+	"delAllDatas": {
+		"title": "¿Eliminar todos los datos?",
+		"subTitle": "¿Estás seguro de que quieres eliminar todos los datos?",
+		"acceptBtn": "Sí",
+		"rejectBtn": "No"
+	},
+	"infoLabels": {
+		"name": "Nombre",
+		"status": "Estado"
+	},
+	"register": {
+		"btnValue": "registrarse",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "introduce tu nombre"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "introduce tu email"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "introduce tu contraseña"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "confirma tu contraseña"
+			}
+		]
+	},
+	"logOut": {
+		"out": "Cerrar sesión?",
+		"reject": "¿Quieres cerrar sesión?"
+	},
+	"homePage": {
+		"greetings": "Hola",
+		"btn": "Abrir",
+		"no_active_goals": "No hay objetivos activos"
+	},
+	"createTask": {
+		"title": "Crear un nuevo objetivo",
+		"btn": "Crear nuevo",
+		"task": "Tu objetivo",
+		"datum": "Selecciona un período de fechas"
+	},
+	"success": {
+		"title": "Hecho!!",
+		"article": "Hagamos lo mejor para alcanzar tu objetivo",
+		"button": "OK"
+	},
+	"taskDetails": {
+		"startDate": "Fecha de inicio",
+		"endDate": "Fecha de finalización"
+	},
+	"delConfirm": {
+		"title": "¿Eliminar meta?",
+		"accept": "Sí",
+		"reject": "No"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Eliminar"
+	},
+	"CheckedProgress": {
+		"checked": "Objetivo completado",
+		"notChecked": "Objetivo no completado"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Ingrese el nombre de la ascesis"
+	},
+	"footerBtnText": {
+		"menu": "Menú",
+		"archieve": "Archivo",
+		"panda": "Panda",
+		"tasks": "Tareas"
+	}
+}

@@ -154,11 +154,6 @@
 		margin: 0 auto;
 	}
 
-	.archive__body {
-
-	}
-
-
 	.archive__wrapper {
 		width: 100%;
 		background: var(--background-color);

@@ -17,10 +17,62 @@ export const useAuthStore = defineStore('auth', () => {
 		const name = ref(null);
 		const email = ref(null);
 		const password = ref(null);
+		const isPremium = ref(false)
+		const isBotEnabled = ref(false);
 		const setUserData = (data) => {
 			name.value = data.name;
 			email.value = data.email;
 			password.value = data.password;
+		};
+
+		const activatePremium = async () => {
+			const auth = getAuth();
+			const user = auth.currentUser;
+			if (!user) return;
+
+			const userDocRef = doc(db, "users", user.uid);
+			await setDoc(userDocRef, {isPremium: true}, {merge: true});
+			isPremium.value = true;
+		};
+
+
+		const saveBotStateToLocal = (enabled) => {
+			isBotEnabled.value = enabled;
+			localStorage.setItem('isBotEnabled', enabled);
+
+		};
+
+		const loadBotStateFromLocal = () => {
+
+			const saved = localStorage.getItem('isBotEnabled');
+			isBotEnabled.value = saved !== 'false';
+
+		};
+
+		const loadBotStateFromFirebase = async () => {
+			if (!navigator.onLine) return;
+
+			const auth = getAuth();
+			const user = auth.currentUser;
+			if (!user) return;
+
+			const userDocRef = doc(db, "users", user.uid);
+			const docSnap = await getDoc(userDocRef);
+			if (docSnap.exists()) {
+				const data = docSnap.data();
+				isBotEnabled.value = data.isBotEnabled ?? true;
+				isPremium.value = data.isPremium ?? false;
+			}
+		};
+
+		const saveBotStateToFirebase = async (enabled) => {
+			const auth = getAuth();
+			const user = auth.currentUser;
+			if (!user) return;
+
+			const userDocRef = doc(db, "users", user.uid);
+			await setDoc(userDocRef, {isBotEnabled: enabled}, {merge: true});
+			isBotEnabled.value = enabled;
 		};
 
 		const registerUser = async (userData) => {
@@ -35,6 +87,8 @@ export const useAuthStore = defineStore('auth', () => {
 					displayName: userData.name
 				});
 				setUserData(userData);
+				isPremium.value = false;
+				isBotEnabled.value = false;
 			} catch (error) {
 				console.error(error.message);
 				throw error;
@@ -44,6 +98,9 @@ export const useAuthStore = defineStore('auth', () => {
 		const loginUser = async ({email, password}) => {
 			const auth = getAuth();
 			await signInWithEmailAndPassword(auth, email, password);
+
+			await loadBotStateFromFirebase();
+			loadBotStateFromLocal();
 		};
 
 		const logout = async () => {
@@ -52,6 +109,8 @@ export const useAuthStore = defineStore('auth', () => {
 			name.value = null;
 			email.value = null;
 			password.value = null;
+			isPremium.value = false;
+			isBotEnabled.value = false;
 		};
 
 		const resetPassword = async (email) => {
@@ -68,22 +127,36 @@ export const useAuthStore = defineStore('auth', () => {
 			email.value = null;
 		};
 
+		const loadPremiumStatus = async () => {
+			if (!navigator.onLine) return;
+
+			const auth = getAuth();
+			const user = auth.currentUser;
+			if (!user) return;
+
+			const userDocRef = doc(db, "users", user.uid);
+			const docSnap = await getDoc(userDocRef);
+			if (docSnap.exists()) {
+				isPremium.value = docSnap.data().isPremium ?? false;
+			}
+		};
+
+
 		const fetchingUser = () => {
 			const auth = getAuth();
-			onAuthStateChanged(auth, (user) => {
+			onAuthStateChanged(auth, async (user) => {
 				if (user) {
 					setUserData({
 						name: user.displayName,
 						email: user.email
 					});
-					const lastRoute = localStorage.getItem('lastRoute');
-					if (lastRoute) {
-						window.location.href = lastRoute; // Переход на сохраненный маршрут
-						localStorage.removeItem('lastRoute'); // Удаляем, чтобы не зацикливалось
+
+					if (navigator.onLine) {
+						await loadPremiumStatus();
 					}
 				}
-			})
-		}
+			});
+		};
 
 		const saveLanguageToFirebase = async (lang) => {
 			const auth = getAuth();
@@ -98,7 +171,6 @@ export const useAuthStore = defineStore('auth', () => {
 			const auth = getAuth();
 			const user = auth.currentUser;
 			if (!user) return null;
-
 			const userDocRef = doc(db, "users", user.uid);
 			const docSnap = await getDoc(userDocRef);
 			if (docSnap.exists()) {
@@ -123,6 +195,10 @@ export const useAuthStore = defineStore('auth', () => {
 			name,
 			email,
 			password,
+			isPremium,
+			isBotEnabled,
+			saveBotStateToFirebase,
+			loadBotStateFromFirebase,
 			saveLanguageToFirebase,
 			loadLanguageFromFirebase,
 			setUserData,
@@ -132,7 +208,10 @@ export const useAuthStore = defineStore('auth', () => {
 			deleteAccount,
 			fetchingUser,
 			UpdateNameDisplayName,
-			resetPassword
+			resetPassword,
+			activatePremium,
+			saveBotStateToLocal,
+			loadBotStateFromLocal
 		};
 	}
 );
