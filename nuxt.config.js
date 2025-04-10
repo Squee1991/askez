@@ -1,19 +1,19 @@
 console.log(process.env.NODE_ENV)
 
 export default defineNuxtConfig({
-	sssr: false,
+	ssr: false,
 	nitro: {
 		preset: "static"
 	},
-
 	runtimeConfig: {
 		public: {
 			firebaseAuthDisableSession: true
 		}
 	},
+
 	compatibilityDate: '2024-11-01',
 	devtools: {enabled: true},
-	modules: [ '@vite-pwa/nuxt', '@pinia/nuxt', '@nuxtjs/google-fonts', '@nuxtjs/color-mode', '@nuxtjs/i18n', 'nuxt-vuefire'],
+	modules: ['@pinia/nuxt', '@nuxtjs/google-fonts', '@nuxtjs/color-mode', '@nuxtjs/i18n', 'nuxt-vuefire'],
 	css: ['@/assets/styles/global.css',],
 	vuefire: {
 		config: {
@@ -124,4 +124,5 @@ export default defineNuxtConfig({
 		fallback: 'dark',
 		classSuffix: '',
 	},
+
 })

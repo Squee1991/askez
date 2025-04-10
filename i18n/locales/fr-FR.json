@@ -9,10 +9,27 @@
 	"setting": [
 		"Supprimer le compte",
 		"Politique de confidentialité",
-		"Mode"
+		"Mode",
+		"Чат"
 	],
+	"chat": {
+		"title": "Retour",
+		"btn": "Envoyer",
+		"placeholder": "Écrivez votre message"
+	},
+	"noConnetction": {
+		"off": "Pas de connexion Internet",
+		"on": "Connexion rétablie",
+		"btn": "Повторить"
+	},
 	"menu": {
 		"title": "Menu"
+	},
+	"premiumWindow": {
+		"bot": "Pour utiliser l’assistant virtuel, vous devez passer au plan Premium.",
+		"taskText": "Malheureusement, vous avez atteint la limite d’habitudes dans le plan gratuit. Pour ajouter un nombre illimité d’habitudes, passez au plan Premium.",
+		"subtext": "En vous abonnant à Premium, vous aurez un accès complet à toutes les fonctionnalités de l'application.",
+		"btnPremium": "Obtenir Premium"
 	},
 	"meniu": [
 		"Compte",
@@ -93,9 +110,12 @@
 		"stats": "Statistiques"
 	},
 	"statslable": {
-		"total": "Total des ascèses créées",
-		"doneTotal": "Total complété",
-		"InProgressTotal": "En cours"
+		"total": "Objectifs totaux",
+		"doneTotal": "Total accompli",
+		"InProgressTotal": "En cours",
+		"notCompleted": "Non accompli",
+		"active": "Tâches actives",
+		"archieve": "Tâches archivées"
 	},
 	"hasNotAskez": {
 		"value": "Aucune Askeza créée"
@@ -166,5 +186,14 @@
 	"CheckedProgress": {
 		"checked": "Objectif atteint",
 		"notChecked": "Objectif non atteint"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Entrez le nom de l'ascèse"
+	},
+	"footerBtnText": {
+		"menu": "Menu",
+		"archieve": "Archive",
+		"panda": "Panda",
+		"tasks": "Tâches"
 	}
 }

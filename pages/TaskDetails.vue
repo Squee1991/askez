@@ -56,7 +56,6 @@
 		C186.124,153.768,186.063,161.04,183.474,166.147z"/>
 </g>
 </svg>
-
 				</NuxtLink>
 				<span class="task__goal-name">{{ selectedTask.goal }}</span>
 				<div class="edit__menu-wrapper">
@@ -91,6 +90,7 @@
 					:attributes="checkedDatesAttributes"
 				/>
 			</div>
+
 			<div class="task__details-btns">
 				<div v-for="(btn, index) in ['done', 'missed']" :key="index" class="task__details-btn" :class="btn === 'done' ? 'check' : ''">
 					<button
@@ -115,11 +115,13 @@
 			<div class="checked-progress">
 				<div class="checked__progress-wrapper">
 					<div class="checked__wrapper">
-						<img src="../assets/images/checkIcon.svg" alt="" class="checked__icon" />
-						<span class="checked__text checked__green">{{ checkedCount }} {{ $t('CheckedProgress.checked') }}</span>
+						<img src="../assets/images/checkIcon.svg" alt="" class="checked__icon"/>
+						<span class="checked__text checked__green">{{ checkedCount }} {{
+                            $t('CheckedProgress.checked')
+                            }}</span>
 					</div>
 					<div class="checked__wrapper">
-						<img src="../assets/images/noyChecked.svg" alt="" class="checked__icon" />
+						<img src="../assets/images/noyChecked.svg" alt="" class="checked__icon"/>
 						<span class="checked__text">{{ missedCount }} {{ $t('CheckedProgress.notChecked') }}</span>
 					</div>
 				</div>
@@ -483,6 +485,11 @@
 	.checked__wrapper {
 		display: flex;
 		align-items: center;
+		background: grey;
+		width: 100%;
+		padding: 10px;
+		border-radius: 15px;
+		margin-bottom: 10px;
 	}
 
 	.checked__text {
@@ -496,6 +503,7 @@
 
 	.checked__progress-wrapper {
 		margin-top: 10px;
+		width: 100%;
 	}
 
 	.checked-progress {
@@ -549,6 +557,11 @@
 	.task__goal-name {
 		font-size: 18px;
 		color: var(--text-color);
+		text-align: center;
+		padding: 0 10px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	.edit__menu-wrapper {

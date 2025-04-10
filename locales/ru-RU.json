@@ -1,0 +1,187 @@
+{
+	"languages": {
+		"mode": "no-space",
+		"title": "Язык"
+	},
+	"settings": {
+		"title": "Настройки"
+	},
+	"setting": [
+		"Удалить аккаунт",
+		"Политика конфиденциальности",
+		"Мод"
+	],
+	"chat": {
+		"title": "Назад",
+		"btn": "отправить",
+		"placeholder": "напишите ваше сообщение"
+	},
+	"menu": {
+		"title": "Меню"
+	},
+	"meniu": [
+		"Аккаунт",
+		"О программе",
+		"Язык",
+		"Обратная связь",
+		"Настройки"
+	],
+	"rank": {
+		"rank": "Звание",
+		"newbie": "Падаван Бамбука",
+		"pupil": "Ученик Дзен-панды",
+		"master": "Мастер Аскезы",
+		"legenda": "Владыка Бамбука",
+		"immortal": "Легенда Дзен-Кунг-фу"
+	},
+	"account": {
+		"accoutTitle": "Аккаунт",
+		"accountBtn": "Обновить",
+		"changedName": "Имя изменено"
+	},
+	"singInUP": {
+		"reset": "Отправить",
+		"singIn": "Уже есть аккаунт? Войти",
+		"singUp": "Нет аккаунта? Зарегистрироваться",
+		"singInBtn": "Войти",
+		"singUpBtn": "Зарегистрироваться",
+		"forgotPassword": "Забыли пароль?",
+		"backToSing": "Назад к регистрации",
+		"confirm": "Письмо было отправлено на ваш электронный адрес"
+	},
+	"archieve": {
+		"empty": "Архив пуст",
+		"achieveTitle": "Архив аскез",
+		"name": "Ваши аскезы",
+		"totalDays": "Всего дней",
+		"checkedDays": "Отмечено",
+		"notChecked": "Не отмечено"
+	},
+	"achieveTitle": {
+		"title": "Ваши достижения",
+		"subtitle": "Всего получено достижений",
+		"achiveDone": "Завершенные"
+	},
+	"accState": {
+		"greetings": "Добро пожаловать",
+		"stateBtn": "Поехали!",
+		"load": "Загрузка"
+	},
+	"checkedBtns": {
+		"done": "Сделано",
+		"missed": "Пропустил"
+	},
+	"achieve": {
+		"1": "Завершить 1-ю аскезу",
+		"2": "Завершить аскезу 10 раз ",
+		"3": "Завершить аскезу 20 раз ",
+		"4": "Завершить аскезу 50 раз ",
+		"5": "Завершить аскезу 100 раз ",
+		"6": "Завершить аскезу 200 раз "
+	},
+	"feedBack": {
+		"title": "Обратная связь",
+		"placeholder": "Оставьте отзыв или предложение",
+		"button": "Отправить",
+		"overlayBtn": "OK",
+		"overlayTitle": "Cпасибо за обратную связь"
+	},
+	"startPage": {
+		"value": "Начать"
+	},
+	"description": {
+		"value": "Следующий шаг"
+	},
+	"navTop": {
+		"achiv": "Достижения",
+		"askez": "Все аскезы",
+		"stats": "Статистика"
+	},
+	"statslable": {
+		"total": "Всего целей",
+		"doneTotal": "Всего выполнено",
+		"InProgressTotal": "В процессе",
+		"notCompleted": "Не выполнено",
+		"active": "Активные задачи",
+		"archieve": "Архивные задачи"
+	},
+	"hasNotAskez": {
+		"value": "Нет созданных аскез"
+	},
+	"infoLabels": {
+		"name": "Название",
+		"status": "Статус"
+	},
+	"delAllDatas": {
+		"title": "Удалить все данные?",
+		"subTitle": "Вы действительно хотите удалить все данные?",
+		"acceptBtn": "Да",
+		"rejectBtn": "Нет"
+	},
+	"register": {
+		"btnValue": "зарегистрироваться",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "введите ваше имя"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "введите ваш email"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "введите ваш пароль"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "подтвердите ваш пароль"
+			}
+		]
+	},
+	"logOut": {
+		"out": "Выйти?",
+		"reject": "Вы действительно хотите выйти?"
+	},
+	"homePage": {
+		"greetings": "Привет",
+		"btn": "Открыть",
+		"no_active_goals": "Нет активных целей"
+	},
+	"createTask": {
+		"title": "Создать новую цель",
+		"btn": "Создать новую",
+		"task": "Ваша цель",
+		"datum": "Выберите период дат"
+	},
+	"success": {
+		"title": "Готово!!",
+		"article": "Давай сделаем всё возможное, чтобы достичь твоей цели",
+		"button": "ОK"
+	},
+	"taskDetails": {
+		"startDate": "Дата начала",
+		"endDate": "Дата окончания"
+	},
+	"delConfirm": {
+		"title": "Удалить аскезу?",
+		"accept": "Да",
+		"reject": "Нет"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Delete"
+	},
+	"CheckedProgress": {
+		"checked": "Выполнено дней",
+		"notChecked": "Не выполнено дней"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Введите название Аскезы"
+	},
+	"footerBtnText": {
+		"menu": "Меню",
+		"archieve": "Архив",
+		"panda": "Панда",
+		"tasks": "Задачи"
+	}
+}

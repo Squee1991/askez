@@ -1,0 +1,187 @@
+{
+	"languages": {
+		"mode": "no-space",
+		"title": "Sprache"
+	},
+	"settings": {
+		"title": "Einstellungen"
+	},
+	"setting": [
+		"Konto löschen",
+		"Datenschutzbestimmungen",
+		"Mode"
+	],
+	"chat": {
+		"title": "Zurück",
+		"btn": "Absenden",
+		"placeholder": "Schreiben Sie Ihre Nachricht"
+	},
+	"menu": {
+		"title": "Menü"
+	},
+	"meniu": [
+		"Konto",
+		"Über die App",
+		"Sprache",
+		"Feedback",
+		"Einstellungen"
+	],
+	"rank": {
+		"rank": "Rang",
+		"newbie": "Bambus-Schüler",
+		"pupil": "Zen-Panda Lehrling",
+		"master": "Meister Zielen",
+		"legenda": "Herr Bambuspfads",
+		"immortal": "Legende Zen-Kung-Fu"
+	},
+	"account": {
+		"accoutTitle": "Konto",
+		"accountBtn": "Aktualisieren",
+		"changedName": "Name geändert"
+	},
+	"singInUP": {
+		"reset": "Senden",
+		"singIn": "Haben Sie bereits ein Konto? Anmelden",
+		"singUp": "Kein Konto? Registrieren",
+		"singInBtn": "Anmelden",
+		"singUpBtn": "Registrieren",
+		"forgotPassword": "Passwort vergessen?",
+		"backToSing": "Zurück zur Registrierung",
+		"confirm": "Eine E-Mail wurde an Ihre E-Mail-Adresse gesendet"
+	},
+	"archieve": {
+		"empty": "Archiv ist leer",
+		"name": "Ihre Ziele",
+		"achieveTitle": "Archiv der Askesen",
+		"totalDays": "Gesamttage",
+		"checkedDays": "Markiert",
+		"notChecked": "Nicht markiert"
+	},
+	"achieveTitle": {
+		"title": "Ihre Erfolge",
+		"subtitle": "Insgesamt erhaltene Erfolge",
+		"achiveDone": "Abgeschlossen"
+	},
+	"accState": {
+		"greetings": "Willkommen",
+		"stateBtn": "Los geht’s!",
+		"load": "Laden"
+	},
+	"checkedBtns": {
+		"done": "Erledigt",
+		"missed": "Verpasst"
+	},
+	"achieve": {
+		"1": "Beende die erste Askese",
+		"2": "Beende 10 Askesen",
+		"3": "Beende 25 Askesen",
+		"4": "Beende 50 Askesen",
+		"5": "Beende 100 Askesen",
+		"6": "Beende 200 Askesen"
+	},
+	"feedBack": {
+		"title": "Feedback",
+		"placeholder": "Hinterlassen Sie eine Bewertung oder einen Vorschlag",
+		"button": "Senden",
+		"overlayBtn": "OK",
+		"overlayTitle": "Danke für dein Feedback"
+	},
+	"startPage": {
+		"value": "Los"
+	},
+	"description": {
+		"value": "Nächster Schritt"
+	},
+	"navTop": {
+		"achiv": "Erfolge",
+		"askez": "Alle Zielen",
+		"stats": "Statistik"
+	},
+	"statslable": {
+		"total": "Gesamtziele",
+		"doneTotal": "Insgesamt erledigt",
+		"InProgressTotal": "In Bearbeitung",
+		"notCompleted": "Nicht erledigt",
+		"active": "Aktive Aufgaben",
+		"archieve": "Archivierte Aufgaben"
+	},
+	"hasNotAskez": {
+		"value": "Keine erstellten Askezas"
+	},
+	"infoLabels": {
+		"name": "Name",
+		"status": "Status"
+	},
+	"delAllDatas": {
+		"title": "Alle Daten löschen?",
+		"subTitle": "Sind Sie sicher, dass Sie alle Daten löschen möchten?",
+		"acceptBtn": "Ja",
+		"rejectBtn": "Nein"
+	},
+	"register": {
+		"btnValue": "registrieren",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "Geben Sie Ihren Namen ein"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "Geben Sie Ihre E-Mail ein"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "Geben Sie Ihr Passwort ein"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "Bestätigen Sie Ihr Passwort"
+			}
+		]
+	},
+	"logOut": {
+		"out": "Abmelden?",
+		"reject": "Möchten Sie sich abmelden?"
+	},
+	"homePage": {
+		"greetings": "Hallo",
+		"btn": "öffnen",
+		"no_active_goals": "Keine aktiven Ziele"
+	},
+	"createTask": {
+		"title": "Neues Ziel erstellen",
+		"btn": "Neu erstellen",
+		"task": "Dein Ziel",
+		"datum": "Wählen Sie einen Datumsbereich"
+	},
+	"success": {
+		"title": "Fertig!!",
+		"article": "Lass uns unser Bestes geben, um dein Ziel zu erreichen",
+		"button": "OK"
+	},
+	"taskDetails": {
+		"startDate": "Startdatum",
+		"endDate": "Enddatum"
+	},
+	"delConfirm": {
+		"title": "Ziel löschen?",
+		"accept": "Ja",
+		"reject": "Nein"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Löschen"
+	},
+	"CheckedProgress": {
+		"checked": "Ziel ist erledigt",
+		"notChecked": "Ziel ist nicht erledigt"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Geben Sie den Namen der Ziele"
+	},
+	"footerBtnText": {
+		"menu": "Menü",
+		"archieve": "Archiv",
+		"panda": "Panda",
+		"tasks": "Aufgaben"
+	}
+}

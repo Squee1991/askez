@@ -46,7 +46,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	};
 
 	const loadTasks = async () => {
-		if (!userId.value) return;
+		if (!userId.value || !navigator.onLine) return;
 		const userDocRef = doc(db, "users", userId.value);
 		try {
 			const docSnap = await getDoc(userDocRef);
@@ -218,7 +218,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
 			archiveTasks.value = [];
 			userId.value = null;
 		} catch (error) {
-			console.error("ошибка удаления fire base документа", error);
+			console.error(error);
 		}
 	};
 
@@ -231,7 +231,9 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	onAuthStateChanged(auth, async (user) => {
 		if (user) {
 			userId.value = user.uid;
-			await loadTasks();
+			if (navigator.onLine) {
+				await loadTasks();
+			}
 		} else {
 			userId.value = null;
 			tasks.value = [];

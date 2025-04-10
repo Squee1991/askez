@@ -1,58 +1,77 @@
 <template>
-	<div class="askeza__menu">
-		<div class="log__out-overlay" :class="{'overlay': logOutAccept}"></div>
-		<div v-if="logOutAccept" class="logout__confirm">
-			<div class="logout"> {{ $t('logOut.out')}}</div>
-			<div class="log__out-text">{{ $t('logOut.reject')}}</div>
-			<div class="logout__btns">
-				<button @click="confirmLogout" class="logout__btn yes-btn">{{ $t('delAllDatas.acceptBtn')}}</button>
-				<button @click="NotConfirmLogout" class="logout__btn no-btn">{{ $t('delAllDatas.rejectBtn')}}</button>
-			</div>
-		</div>
-		<div class="askeza__menu-content">
-			<div>
-				<div class="menu__title">
-					<HeaderwithBack
-						:title="$t('menu.title')"/>
-					<div class="log__out-icon" @click="singOutBtn">
-						<img :src="LogoutIcon" alt="">
-					</div>
+	<Transition name="fade">
+		<div class="askeza__menu">
+			<div class="log__out-overlay" :class="{'overlay': logOutAccept}"></div>
+			<div v-if="logOutAccept" class="logout__confirm">
+				<div class="logout"> {{ $t('logOut.out')}}</div>
+				<div class="log__out-text">{{ $t('logOut.reject')}}</div>
+				<div class="logout__btns">
+					<button @click="confirmLogout" class="logout__btn yes-btn">{{ $t('delAllDatas.acceptBtn')}}</button>
+					<button @click="NotConfirmLogout" class="logout__btn no-btn">{{ $t('delAllDatas.rejectBtn')}}
+					</button>
 				</div>
-				<div class="menu__btns">
-					<div class="menu__btn-wrapper" v-for="index in 5" :key="index">
-						<NuxtLink class="account__settings-btn" :to="getMenuPlainLink(t(`meniu.${index - 1}`))">
-							<img
-								:class="{
+			</div>
+			<div class="askeza__menu-content">
+				<div>
+					<div class="menu__title">
+						<HeaderwithBack
+							:title="$t('menu.title')"/>
+						<div class="log__out-icon" @click="singOutBtn">
+							<img :src="LogoutIcon" alt="">
+						</div>
+					</div>
+					<div class="menu__btns">
+						<div class="menu__btn-wrapper" v-for="index in 5" :key="index">
+							<NuxtLink class="account__settings-btn" :to="getMenuPlainLink(t(`meniu.${index - 1}`))">
+								<img
+									:class="{
                 'acc-bg-blue': accountLabels.includes(t(`meniu.${index - 1}`)),
                 'aboutapp-bg-green': aboutLabels.includes(t(`meniu.${index - 1}`)),
                 'lang-bg-orange': languageLabels.includes(t(`meniu.${index - 1}`)),
                 'settings-bg-fiol': settingsLabels.includes(t(`meniu.${index - 1}`)),
                 'feedback-bg-l-blue': feedback.includes(t(`meniu.${index - 1}`))
               }"
-								class="account__icon"
-								:src="getMenuPlainIcon(t(`meniu.${index - 1}`))"
-								alt=""
-							/>
-							<span class="account__text">{{ t(`meniu.${index - 1}`) }}</span>
-						</NuxtLink>
+									class="account__icon"
+									:src="getMenuPlainIcon(t(`meniu.${index - 1}`))"
+									alt=""
+								/>
+								<span class="account__text">{{ t(`meniu.${index - 1}`) }}</span>
+							</NuxtLink>
+
+						</div>
+					</div>
+					<div class="askeza__v">Askeza v1.0</div>
+					<div>
+						<button class="premium_btn" @click="toPremium">
+							<span class="premium__icon">
+								<img class="premium__img" src="../assets/images/premium.png" alt="">
+							</span>
+							<span class="account__text"> Get premium</span>
+						</button>
 					</div>
 				</div>
-				<div class="askeza__v">Askeza v1.0</div>
+				<Footer/>
 			</div>
-
-			<Footer/>
 		</div>
-	</div>
+	</Transition>
 </template>
-
 <script setup>
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
 	import Footer from '../src/components/footer.vue'
 	import {useI18n} from 'vue-i18n';
-	import LogoutIcon from '../assets/images/logout-svgrepo.svg'
+	import LogoutIcon from '../assets/images/logout.svg'
 	import Arrowicon from '../assets/images/arrowBack.svg'
 	import {onMounted, onUnmounted, ref} from "vue";
 	import {getAuth, signOut} from "firebase/auth";
+	import {useRouter, useRoute} from 'vue-router'
+
+	const router = useRouter()
+	const premium = ref(false)
+
+
+	const toPremium = () => {
+		router.push('premium')
+	}
 
 	const singOutBtn = () => {
 		logOutAccept.value = true
@@ -84,6 +103,7 @@
 		document.removeEventListener("click", handleClickOutside);
 	});
 
+
 	const {t} = useI18n();
 	const accountLabels = ['Акаўнт', 'Аккаунт', 'Account', 'Konto', 'Cuenta', 'Compte', 'Акаунт', 'Hesto', '账户', 'الحساب'];
 
@@ -94,7 +114,6 @@
 	const feedback = ['Обратная связь', 'Зваротная сувязь', 'Feedback', 'Comentarios', 'Commentaires', 'Зворотний зв\'язок', 'Anna atsa', '反馈', 'التعليقات'];
 
 	const settingsLabels = ['Налады', 'Настройки', 'Settings', 'Einstellungen', 'Configuración', 'Paramètres', 'Налаштування', 'Ondo', '设置', 'الإعدادات'];
-
 
 
 	const logOutAccept = ref(false)
@@ -138,6 +157,47 @@
 </script>
 
 <style scoped>
+
+	.premium__icon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 44px;
+		height: 44px;
+		padding: 2px;
+		border-radius: 10px;
+		margin-right: 15px;
+	}
+
+	.premium__img {
+		width: 100%;
+	}
+
+	.premium_btn {
+		display: flex;
+		align-items: center;
+		padding: 15px;
+		font-weight: 400;
+		text-decoration: none;
+		background: var(--menu--btn-bg);
+		border-radius: 12px;
+		transition: background 0.3s ease;
+		outline: none;
+		-webkit-tap-highlight-color: transparent;
+		border: none;
+		width: 100%;
+	}
+
+	.fade-enter-active,
+	.fade-leave-active {
+		transition: opacity 2s ease;
+	}
+
+	.fade-enter-from,
+	.fade-leave-to {
+		opacity: 0;
+	}
+
 	.askeza__v {
 		margin-top: 10px;
 		color: grey;
@@ -201,7 +261,7 @@
 		margin-bottom: 10px;
 		text-align: center;
 		color: white;
-		font-family: "Acme", serif;
+		font-family: "Nunito", serif;
 		font-size: 22px;
 	}
 

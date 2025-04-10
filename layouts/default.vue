@@ -7,7 +7,9 @@
 </template>
 
 <script setup>
-	import { onMounted } from 'vue'
+	import {onMounted} from 'vue'
+
+	import {useRouter} from 'vue-router'
 	// export default {
 	// 	components: {
 	// 		Header , Footer
@@ -18,7 +20,6 @@
 	const router = useRouter()
 	const route = useRoute()
 
-	// Запускаем код только на клиенте (не на сервере)
 	onMounted(() => {
 		watch(user, (user, prevUser) => {
 			if (prevUser && !user) {
@@ -30,6 +31,7 @@
 			}
 		})
 	})
+
 </script>
 
 
@@ -60,6 +62,7 @@
 	.container {
 		width: 100%;
 		margin: 0 auto;
+		height: 100vh;
 	}
 
 

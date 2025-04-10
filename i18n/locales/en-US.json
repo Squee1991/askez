@@ -9,10 +9,27 @@
 	"setting": [
 		"Delete account",
 		"Privacy Policy",
-		"Mode"
+		"Mode",
+		"Чат"
 	],
+	"chat": {
+		"title": "Back",
+		"btn": "Send",
+		"placeholder": "Type your message"
+	},
 	"menu": {
 		"title": "Menu"
+	},
+	"noConnetction": {
+		"off": "No internet connection",
+		"on": "Connection restored",
+		"btn": "Повторить"
+	},
+	"premiumWindow": {
+		"bot": "To use the virtual assistant, you need to upgrade to the Premium plan.",
+		"taskText": "Unfortunately, you've reached the habit limit on the free plan. To add unlimited habits, please upgrade to Premium.",
+		"subtext": "By subscribing to Premium, you'll get full access to all app features.",
+		"btnPremium": "Get Premium"
 	},
 	"meniu": [
 		"Account",
@@ -93,9 +110,12 @@
 		"stats": "Statistics"
 	},
 	"statslable": {
-		"total": "Total created askeses",
+		"total": "Total goals",
 		"doneTotal": "Total completed",
-		"InProgressTotal": "In progress"
+		"InProgressTotal": "In progress",
+		"notCompleted": "Not completed",
+		"active": "Active tasks",
+		"archieve": "Archieve tasks"
 	},
 	"hasNotAskez": {
 		"value": "No created askezas"
@@ -166,5 +186,14 @@
 	"CheckedProgress": {
 		"checked": "days checked",
 		"notChecked": "days missed"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Enter the name of the Askesis"
+	},
+	"footerBtnText": {
+		"menu": "Menu",
+		"archieve": "Archieve",
+		"panda": "Panda",
+		"tasks": "Tasks"
 	}
 }

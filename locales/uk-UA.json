@@ -1,0 +1,187 @@
+{
+	"languages": {
+		"mode": "no-space",
+		"title": "Мова"
+	},
+	"settings": {
+		"title": "Налаштування"
+	},
+	"setting": [
+		"Видалити акаунт",
+		"Політика конфіденційності",
+		"Режим"
+	],
+	"chat": {
+		"title": "Повернутися",
+		"btn": "Надіслати",
+		"placeholder": "напишіть ваше повідомлення"
+	},
+	"menu": {
+		"title": "Меню"
+	},
+	"meniu": [
+		"Акаунт",
+		"Про застосунок",
+		"Мова",
+		"Зворотний зв'язок",
+		"Налаштування"
+	],
+	"rank": {
+		"rank": "Звання",
+		"newbie": "Учень Бамбука",
+		"pupil": "Послідовник Дзен-панди",
+		"master": "Майстер Аскези",
+		"legenda": "Володар Бамбукового Шляху",
+		"immortal": "Легенда Дзен-Кунг-фу"
+	},
+	"account": {
+		"accoutTitle": "Акаунт",
+		"accountBtn": "Оновити",
+		"changedName": "Ім’я змінено"
+	},
+	"singInUP": {
+		"reset": "Відправити",
+		"singIn": "Вже маєте акаунт? Увійти",
+		"singUp": "Немає акаунта? Зареєструватися",
+		"singInBtn": "Увійти",
+		"singUpBtn": "Зареєструватися",
+		"forgotPassword": "Забули пароль?",
+		"backToSing": "Назад до реєстрації",
+		"confirm": "Лист було надіслано на вашу електронну адресу"
+	},
+	"archieve": {
+		"empty": "Архів порожній",
+		"name": "Ваші аскези",
+		"achieveTitle": "Архів аскез",
+		"totalDays": "Всього днів",
+		"checkedDays": "Позначено",
+		"notChecked": "Не позначено"
+	},
+	"achieveTitle": {
+		"title": "Ваші досягнення",
+		"subtitle": "Усього отримано досягнень",
+		"achiveDone": "Завершені"
+	},
+	"accState": {
+		"greetings": "Ласкаво просимо",
+		"stateBtn": "Поїхали!",
+		"load": "Завантаження"
+	},
+	"checkedBtns": {
+		"done": "Зроблено",
+		"missed": "Пропущено"
+	},
+	"achieve": {
+		"1": "Завершити 1-шу аскезу",
+		"2": "Завершити 10 аскез",
+		"3": "Завершити 25 аскез",
+		"4": "Завершити 50 аскез",
+		"5": "Завершити 100 аскез",
+		"6": "Завершити 200 аскез"
+	},
+	"feedBack": {
+		"title": "Зворотний зв'язок",
+		"placeholder": "Залиште відгук або пропозицію",
+		"button": "Надіслати",
+		"overlayBtn": "ОК",
+		"overlayTitle": "Дякуємо за зворотний зв'язок"
+	},
+	"startPage": {
+		"value": "Почати"
+	},
+	"description": {
+		"value": "Наступний крок"
+	},
+	"navTop": {
+		"achiv": "Досягнення",
+		"askez": "Всі аскези",
+		"stats": "Статистика"
+	},
+	"statslable": {
+		"total": "Усього цілей",
+		"doneTotal": "Всього виконано",
+		"InProgressTotal": "У процесі",
+		"notCompleted": "Не виконано",
+		"active": "Активні завдання",
+		"archieve": "Архівні завдання"
+	},
+	"hasNotAskez": {
+		"value": "Немає створених аскез"
+	},
+	"delAllDatas": {
+		"title": "Видалити всі дані?",
+		"subTitle": "Ви дійсно хочете видалити всі дані?",
+		"acceptBtn": "Так",
+		"rejectBtn": "Ні"
+	},
+	"infoLabels": {
+		"name": "Назва",
+		"status": "Статус"
+	},
+	"register": {
+		"btnValue": "зареєструватися",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "введіть своє ім’я"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "введіть свій email"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "введіть свій пароль"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "підтвердіть свій пароль"
+			}
+		]
+	},
+	"logOut": {
+		"out": "Вийти?",
+		"reject": "Ви дійсно хочете вийти?"
+	},
+	"homePage": {
+		"greetings": "Вітаємо",
+		"btn": "Відкрити",
+		"no_active_goals": "Немає активних цілей"
+	},
+	"createTask": {
+		"title": "Створити нову мету",
+		"btn": "Створити нову",
+		"task": "Ваша мета",
+		"datum": "Виберіть період дат"
+	},
+	"success": {
+		"title": "Готово!!",
+		"article": "Давайте зробимо все можливе, щоб досягти вашої мети",
+		"button": "ОК"
+	},
+	"taskDetails": {
+		"startDate": "Дата початку",
+		"endDate": "Дата завершення"
+	},
+	"delConfirm": {
+		"title": "Видалити аскезу?",
+		"accept": "Так",
+		"reject": "Ні"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Видалити"
+	},
+	"CheckedProgress": {
+		"checked": " Виконано",
+		"notChecked": "Не виконано"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Введіть назву Аскези"
+	},
+	"footerBtnText": {
+		"menu": "Меню",
+		"archieve": "Архів",
+		"panda": "Панда",
+		"tasks": "Завдання"
+	}
+}

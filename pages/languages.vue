@@ -22,6 +22,7 @@
 </template>
 
 <script setup>
+	import { App as CapacitorApp } from '@capacitor/app'
 	import {ref, onMounted, computed, watch} from 'vue';
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
 	import ListComponent from '../src/components/ListComponent.vue';
@@ -68,7 +69,7 @@
 			loadLanguageData(newValue);
 			setLocale(newValue);
 			preloader.value = false;
-		}, 4000);
+		}, 2000);
 	});
 
 </script>

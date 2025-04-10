@@ -9,10 +9,27 @@
 	"setting": [
 		"Eliminar cuenta",
 		"Política de privacidad",
-		"Mode"
+		"Mode",
+		"Чат"
 	],
+	"chat": {
+		"title": "Volver",
+		"btn": "Enviar",
+		"placeholder": "Escriba su mensaje"
+	},
 	"menu": {
 		"title": "Menú"
+	},
+	"noConnetction": {
+		"off": "¡Sin conexión a Internet",
+		"on": "¡Conexión restablecida",
+		"btn": "Повторить"
+	},
+	"premiumWindow": {
+		"bot": "Para usar el asistente virtual, necesitas pasarte al plan Premium.",
+		"taskText": "Lamentablemente, has alcanzado el límite de hábitos del plan gratuito. Para añadir hábitos ilimitados, actualiza al plan Premium.",
+		"subtext": "Al suscribirte a Premium obtendrás acceso completo a todas las funciones de la aplicación.",
+		"btnPremium": "Obtener Premium"
 	},
 	"meniu": [
 		"Cuenta",
@@ -93,9 +110,12 @@
 		"stats": "Estadísticas"
 	},
 	"statslable": {
-		"total": "Total de ascesis creadas",
+		"total": "Objetivos totales",
 		"doneTotal": "Total completado",
-		"InProgressTotal": "En proceso de ejecución"
+		"InProgressTotal": "En progreso",
+		"notCompleted": "No completado",
+		"active": "Tareas activas",
+		"archieve": "Tareas archivadas"
 	},
 	"hasNotAskez": {
 		"value": "No hay askezas creadas"
@@ -166,5 +186,14 @@
 	"CheckedProgress": {
 		"checked": "Objetivo completado",
 		"notChecked": "Objetivo no completado"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Ingrese el nombre de la ascesis"
+	},
+	"footerBtnText": {
+		"menu": "Menú",
+		"archieve": "Archivo",
+		"panda": "Panda",
+		"tasks": "Tareas"
 	}
 }

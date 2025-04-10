@@ -9,10 +9,27 @@
 	"setting": [
 		"删除账户",
 		"隐私政策",
-		"模式"
+		"模式",
+		"Чат"
 	],
+	"chat": {
+		"title": "返回",
+		"btn": "发送",
+		"placeholder": "输入您的消息"
+	},
+	"noConnetction": {
+		"off": "无网络连接",
+		"on": "连接已恢复",
+		"btn": "Повторить"
+	},
 	"menu": {
 		"title": "菜单"
+	},
+	"premiumWindow": {
+		"bot": "要使用虚拟助手，您需要升级到高级计划。",
+		"taskText": "很遗憾，您已达到免费计划中的习惯数量上限。如需添加无限数量的习惯，请升级到高级版。",
+		"subtext": "订阅高级版可解锁应用的所有功能。",
+		"btnPremium": "获取高级版"
 	},
 	"meniu": [
 		"账户",
@@ -93,9 +110,12 @@
 		"stats": "统计"
 	},
 	"statslable": {
-		"total": "创建的修行总数",
-		"doneTotal": "完成的总数",
-		"InProgressTotal": "进行中的"
+		"total": "总目标",
+		"doneTotal": "已完成总数",
+		"InProgressTotal": "进行中",
+		"notCompleted": "未完成",
+		"active": "活动任务",
+		"archieve": "归档任务"
 	},
 	"hasNotAskez": {
 		"value": "尚未创建修行"
@@ -166,5 +186,14 @@
 	"CheckedProgress": {
 		"checked": "已完成",
 		"notChecked": "未完成"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "输入修行的名称"
+	},
+	"footerBtnText": {
+		"menu": "菜单",
+		"archieve": "档案",
+		"panda": "熊猫",
+		"tasks": "任务"
 	}
 }

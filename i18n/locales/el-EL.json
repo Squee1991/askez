@@ -9,10 +9,17 @@
 	"setting": [
 		"Account vanwa",
 		"Fëapolë",
-		"Násië"
+		"Násië",
+		"Чат"
 	],
 	"menu": {
 		"title": "Lestanë"
+	},
+	"premiumWindow": {
+		"bot": "Чтобы еиметь возможность польщзоваться виртуальным помощником Вам необходимо перейти на Premium план.",
+		"taskText": "К сожалению, вы достигли предела кол-ва привычек в бесплатном плане. Чтобы еиметь возможность добавлять неограниченное количество привычек Вам необходимо перейти на Premium план.",
+		"subtext": "Подписавшись на Premium Вы получите полный доступ ко всем функциям приложения.",
+		"btnPremium": "Получить премиум"
 	},
 	"meniu": [
 		"Hesto",
@@ -93,9 +100,12 @@
 		"stats": "Numbarië"
 	},
 	"statslable": {
-		"total": "Randa carina askevar",
-		"doneTotal": "Randa naita",
-		"InProgressTotal": "Na cárë"
+		"total": "Minno i narn",
+		"doneTotal": "Carna i erin",
+		"InProgressTotal": "Mi lend",
+		"notCompleted": "Úcarna",
+		"active": "Tirnad gwaith",
+		"archieve": "Gwaith dan gweriad"
 	},
 	"hasNotAskez": {
 		"value": "Ú carina askevar"
@@ -166,6 +176,15 @@
 	"CheckedProgress": {
 		"checked": "aurë cenina",
 		"notChecked": "aurë ú-cenina"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Minna i essë i Askesis"
+	},
+	"footerBtnText": {
+		"menu": "Lenda",
+		"archieve": "Yávea",
+		"panda": "Panda",
+		"tasks": "Tassëa"
 	}
 }
 
