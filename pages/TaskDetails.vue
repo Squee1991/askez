@@ -97,12 +97,10 @@
                      :class="btn === 'done' ? 'check' : '' ">
 
                     <button
-                            v-tooltip="'Отметьте выполнение задачи'"
                             :disabled="isDateMarked"
                             @click="misscCheckClick(btn)"
                             class="update__task-btn"
                             :class="btn === 'done' ? 'check' : ''"
-
                     >
                         {{ $t(`checkedBtns.${btn}`) }}
                     </button>
@@ -150,7 +148,6 @@ import EditDeleteMenu from "../src/components/EditDeleteMenu.vue";
 import EditIcon from '../assets/images/rubbish-bin.svg';
 
 
-
 const {locale} = useI18n();
 import Lottie from 'lottie-web';
 import CongratsAmination from '../assets/animations/GratsAnimation.json'
@@ -160,12 +157,12 @@ import StepHint from '../src/components/StepHint.vue'
 const showHints = ref(true)
 
 const hintSteps = [
-    { selector: '.task__icon-back', text: 'Нажмите, чтобы вернуться на главный экран' },
-    { selector: '.task__goal-name', text: 'Это название вашей цели' },
-    { selector: '.range__date-wrapper', text: 'Здесь отображаются даты начала и конца' },
-    { selector: '.vc-container', text: 'Выберите дату в этом календаре' },
-    { selector: '.task__details-btns', text: 'Отметьте выполнение задачи за выбранную дату' },
-    { selector: '.progress__container-details', text: 'Прогресс задачи отображается здесь' },
+    {selector: '.task__icon-back', text: 'Нажмите, чтобы вернуться на главный экран'},
+    {selector: '.task__goal-name', text: 'Это название вашей цели'},
+    {selector: '.range__date-wrapper', text: 'Здесь отображаются даты начала и конца'},
+    {selector: '.vc-container', text: 'Выберите дату в этом календаре'},
+    {selector: '.task__details-btns', text: 'Отметьте выполнение задачи за выбранную дату'},
+    {selector: '.progress__container-details', text: 'Прогресс задачи отображается здесь'},
 ]
 
 const animationBlock = ref(null)
@@ -229,13 +226,12 @@ const getCurrentDate = () => {
     return d.toLocaleDateString('en-CA');
 };
 
-const misscCheckClick = async (btn) => {
+const misscCheckClick = (btn) => {
     if (!selectedTask.value) return;
     if (!selectedDate.value) {
         console.log("Выберите дату перед отметкой!");
         return;
     }
-    await Haptics.impact({ style: ImpactStyle.Medium });
     const selDateStr = selectedDate.value;
     const taskStartStr = convertToDate(selectedTask.value.dateRange.start)
         .toLocaleDateString('en-CA');
@@ -266,7 +262,6 @@ const misscCheckClick = async (btn) => {
         selectedTask.value.missedDates.push(selDateStr);
         missedDates.value = [...selectedTask.value.missedDates];
     }
-    await Haptics.impact({ style: ImpactStyle.Medium });
 
     console.log(`Дата ${selDateStr} отмечена как ${btn}`);
 
