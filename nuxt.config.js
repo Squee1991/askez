@@ -1,9 +1,9 @@
 console.log(process.env.NODE_ENV)
 
 export default defineNuxtConfig({
-	ssr: true,
+	ssr: false,
 	nitro: {
-		preset: "vercel"
+		preset: "static"
 	},
 
 	runtimeConfig: {
@@ -104,7 +104,10 @@ export default defineNuxtConfig({
 		defaultLocale: 'en-US',
 		detectBrowserLanguage: false
 	},
+	plugins: [
+		{ src: '~/plugins/floating-vue.client.js', ssr: false }
 
+	],
 	googleFonts: {
 		families: {
 			Nunito: true,

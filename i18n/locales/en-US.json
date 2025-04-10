@@ -166,5 +166,9 @@
 	"CheckedProgress": {
 		"checked": "days checked",
 		"notChecked": "days missed"
+	},
+	"msg": {
+		"onlyToday": "You can only mark today's date.",
+		"alreadyMarked": "You already marked today."
 	}
 }

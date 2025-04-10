@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.pandarius.ascetic"
+    namespace "com.yourname.askeza"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.pandarius.ascetic"
+        applicationId "com.yourname.askeza"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

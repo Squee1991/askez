@@ -7,7 +7,7 @@
 						<HabbitGoal @add="handleAddTask" @close="closeHabitGoal"/>
 					</div>
 				</div>
-			</div>>
+			</div>
 			<SuccesModal v-if="isSuccessModalVisible" @close="handleSuccessClose"/>
 			<div class="progress__inner">
 				<div class="user__greetings">
@@ -76,12 +76,12 @@
 											<div class="task__progress-wrapper">
 												<div class="task__progress-value">
 													<div class="task__progress-green">
-														<span>&#9989; </span>
-														<span class="progress-green">{{ getProgress(task).progress }}</span>
+														<span class="emoji">&#9989; </span>
+														<span class="progress-green percent__progress">{{ getProgress(task).progress }}</span>
 													</div>
 													<div class="task__progress-green">
-														<span>&#10060;</span>
-														<span class="progress-red">{{ getProgress(task).progressMiss }}</span>
+														<span class="emoji">&#10060;</span>
+														<span class="progress-red percent__progress">{{ getProgress(task).progressMiss }}</span>
 													</div>
 												</div>
 											</div>
@@ -235,6 +235,10 @@
 </script>
 
 <style>
+
+	.emoji {
+		font-size: 16px;
+	}
 	.goal__btn {
 		width: 40px;
 		height: 40px;
@@ -285,7 +289,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 14px;
+		font-size: 15px;
 		color: #94ea97;
 		font-weight: bold;
 		font-family: "Nunito", serif;
@@ -389,11 +393,12 @@
 	}
 
 	.task__come-btn {
-		padding: 9px 12px;
+		padding: 10px 22px;
 		border: none;
 		background: #4FC55C;
 		border-radius: 5px;
 		color: white;
+		font-size: 16px;
 		font-family: "Acme", serif;
 	}
 
