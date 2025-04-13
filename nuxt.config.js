@@ -10,9 +10,6 @@ export default defineNuxtConfig({
 			firebaseAuthDisableSession: true
 		}
 	},
-	// plugins: [
-	// 	'~/plugins/purchases.client.js' // ✅ Перенесли сюда
-	// ],
 
 	compatibilityDate: '2024-11-01',
 	devtools: {enabled: true},

@@ -140,7 +140,6 @@
 
 	.color-picker {
 		display: flex;
-
 		gap: 8px;
 		margin: 5px 0 12px 0;
 		background: var(--background-color);
