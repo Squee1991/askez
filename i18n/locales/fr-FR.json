@@ -13,9 +13,14 @@
 	"setting": [
 		"Supprimer le compte",
 		"Politique de confidentialité",
+		"Attribution",
+		"Son de célébration",
 		"Mode",
-		"Discussion"
+		"Chat"
 	],
+	"attr": {
+		"value": "Attribution"
+	},
 	"premiumValues": [
 		"Sans publicité",
 		"Amélioration du panda",

@@ -11,7 +11,7 @@
 	import { useRouter } from 'vue-router'
 	import { App as CapacitorApp } from '@capacitor/app'
 	const router = useRouter()
-
+	const authStore = useAuthStore();
 	if (process.client) {
 		if (!navigator.onLine) {
 			router.replace('/error')
@@ -33,9 +33,9 @@
 			router.back()
 		}
 	}
+
 	onMounted(async () => {
-		const authStore = useAuthStore();
-		await authStore.loadBotStateFromLocal();
+		// await authStore.loadBotStateFromLocal();
 		authStore.fetchingUser()
 	});
 

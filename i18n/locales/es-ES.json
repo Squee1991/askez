@@ -13,9 +13,14 @@
 	"setting": [
 		"Eliminar cuenta",
 		"Política de privacidad",
+		"Atribución",
+		"Sonido de celebración",
 		"Modo",
 		"Chat"
 	],
+	"attr": {
+		"value": "Atribución"
+	},
 	"premiumValues": [
 		"Sin anuncios",
 		"Mejora del panda",

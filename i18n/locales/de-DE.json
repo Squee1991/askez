@@ -8,10 +8,15 @@
 	},
 	"setting": [
 		"Konto löschen",
-		"Datenschutzbestimmungen",
+		"Datenschutzrichtlinie",
+		"Urheberrecht",
+		"Feierlicher Ton",
 		"Modus",
 		"Chat"
 	],
+	"attr": {
+		"value": "Urheberrechtshinweis"
+	},
 	"buyPremium": {
 		"buy": "Monatlich",
 		"plus": "Vorteile"

@@ -30,6 +30,19 @@
 						/>
 					</div>
 				</div>
+				<div class="border__underline-wrapper">
+					<div @click="toogleColor" class="title__underline">Выберите цвет</div>
+					<div class="color-picker">
+						<div
+							v-for="color in colors"
+							:key="color"
+							class="color-circle"
+							:style="{ backgroundColor: color,  }"
+							:class="{ selected: selectedColor === color }"
+							@click="selectedColor = color"
+						/>
+					</div>
+				</div>
 				<div class="date__picker-inenr">
 					<span class="date__picke-label label">{{ $t('createTask.datum')}}</span>
 					<VDatePicker
@@ -53,7 +66,8 @@
 	import {useHabitStore} from '../../stores/habitStore.js'
 	import {useAuthStore} from '../../stores/authStore.js'
 	import {useRouter} from 'vue-router'
-    const authStore = useAuthStore()
+
+	const authStore = useAuthStore()
 	const IsEmpty = ref(false)
 	const habitStore = useHabitStore()
 	const {locale} = useI18n()
@@ -61,10 +75,25 @@
 	const emit = defineEmits(["close", "add"]);
 	const router = useRouter()
 	const isOverlayVisible = ref(false)
+	const accordion = ref(false)
 	const localDateRange = ref({
 		start: new Date(),
 		end: new Date()
 	})
+	const colors = [
+		'#FF6B6B',
+		'#4D96FF',
+		'#FFD93D',
+		'#845EC2',
+		'#FF9671',
+		'#00C9A7',
+		'#FF61A6',
+		'#c782a1',
+		'#61d2ff',
+		'#bb6634',
+		'#61d2ff',
+	];
+	let selectedColor = ref(colors[0])
 
 	const clearFields = (fields) => fields.forEach(field => field.value = "")
 	const addValue = () => {
@@ -85,16 +114,22 @@
 		const newTask = {
 			goal: inputValueGoal.value,
 			dateRange: localDateRange.value,
+			color: selectedColor.value,
 			checked: false,
 		};
 		habitStore.addTask(newTask);
 		emit("add", newTask);
 		clearFields([inputValueGoal]);
+		selectedColor.value = colors[0];
 	};
 
 	watch(localDateRange, (newVal) => {
 		console.log("Выбраны даты:", newVal);
 	});
+
+	const toogleColor = () => {
+		accordion.value = !accordion.value
+	}
 
 	const closeWindow = () => {
 		emit("close");
@@ -102,6 +137,55 @@
 
 </script>
 <style>
+
+	.color-picker {
+		display: flex;
+
+		gap: 8px;
+		margin: 5px 0 12px 0;
+		background: var(--background-color);
+		padding: 10px;
+		border-radius: 10px;
+		align-items: center;
+		overflow-x: auto;
+	}
+
+	.title__underline {
+		color: var(--text-color);
+		font-size: 14px;
+		font-family: "Nunito", sans-serif;
+		font-weight: 600;
+	}
+
+	.color-circle {
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+		cursor: pointer;
+		transition: transform 0.2s;
+		border: 2px solid transparent;
+		flex: 0 0 auto;
+	}
+
+	.color-circle.selected {
+		transform: scale(1.1);
+		border-color: grey;
+	}
+
+	.border__underline-wrapper {
+		padding: 5px 0 10px 0;
+	}
+
+	.border__underline {
+		width: 40px;
+		height: 40px;
+		background: #3bff81;
+		border-radius: 50%;
+	}
+
+	.border__underline:hover {
+		border: 2px solid black;
+	}
 
 	.empty {
 		position: absolute;

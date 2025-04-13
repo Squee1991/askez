@@ -190,7 +190,7 @@
 
 	.select__inner {
 		margin: 10px 0;
-		padding: 5px;
+		padding: 3px;
 		background-color: var(--slider-bg);
 		border-radius: 10px;
 	}

@@ -13,9 +13,14 @@
 	"setting": [
 		"Usuń konto",
 		"Polityka prywatności",
+		"Atrybucja",
+		"Торжественный звук",
 		"Tryb",
 		"Czat"
 	],
+	"attr": {
+		"value": "Atrybucja"
+	},
 	"premiumValues": [
 		"Brak reklam",
 		"Rozwój pandy",

@@ -64,7 +64,7 @@
 	import {onMounted, onUnmounted, ref} from "vue";
 	import {getAuth, signOut} from "firebase/auth";
 	import {useRouter, useRoute} from 'vue-router'
-
+	const {t} = useI18n();
 	const router = useRouter()
 	const premium = ref(false)
 
@@ -103,8 +103,16 @@
 		document.removeEventListener("click", handleClickOutside);
 	});
 
+	const languages = [
+		{ display: 'Русский', code: 'RU' },
+		{ display: 'Польский', code: 'PL' },
+		{ display: 'Белорусский', code: 'BY' },
+		// Можно добавить другие языки по необходимости:
+		{ display: 'English', code: 'EN' },
+		{ display: 'Deutsch', code: 'DE' },
+		{ display: 'Español', code: 'ES' }
+	];
 
-	const {t} = useI18n();
 	const accountLabels = ['Акаўнт', 'Аккаунт', 'Account', 'Konto', 'Cuenta', 'Compte', 'Акаунт', 'Hesto', '账户', 'الحساب'];
 
 	const aboutLabels = ['Пра праграму', 'О программе', 'About App', 'Über die App', 'Sobre la app', "À propos de l'application", 'Про застосунок', 'Yassë Apacë', '关于应用', 'حول التطبيق', 'O aplikacji'];

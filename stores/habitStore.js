@@ -1,9 +1,10 @@
 import {defineStore} from "pinia";
 import {useAuthStore} from './authStore.js';
 import {computed, ref, watch} from "vue";
+import { useI18n } from 'vue-i18n';
 import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
 import {getFirestore, doc, setDoc, getDoc, deleteDoc} from "firebase/firestore";
-
+import { eventMessages } from '../src/ai/messageBot.js';
 export const useHabitStore = defineStore("askezaStore", () => {
 	const tasks = ref([]);
 	const selectedTask = ref(null);
@@ -11,20 +12,61 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	const achieveCount = ref(0);
 	const pandaProgressGlobal = ref(0);
 	const pandaLevel = ref(1);
+	const taskCompletedCount = ref(0);
+	const isAudioEnabled = ref(false)
 	const isLoaded = ref(false);
+	const previousAchieveCount = ref(0);
+	const isAnimationEnabled = ref(false)
+
+	const notifiedEvents = ref({
+		levelUp: false,
+		goalCompleted: false,
+		achievementUnlocked: false
+	});
 	const achievementThresholds = ref([1, 10, 25, 50, 50, 200]);
 	const archiveTasks = ref([]);
-	const skipUpdateAll = ref(false)
+	const skipUpdateAll = ref(false);
 	const auth = getAuth();
 	const db = getFirestore();
 	const userId = ref(null);
 	const authStore = useAuthStore();
+
+
+	const setAudioEnabled = (value) => {
+		isAudioEnabled.value = value;
+		localStorage.setItem('audioEnabled', JSON.stringify(value));
+	};
+
+	const toggleAudio = () => {
+		isAudioEnabled.value = !isAudioEnabled.value;
+		localStorage.setItem('audioEnabled', JSON.stringify(isAudioEnabled.value));
+	};
+
 	const updateTask = (updatedTask) => {
 		const index = tasks.value.findIndex(t => t.id === updatedTask.id);
 		if (index !== -1) {
 			tasks.value[index] = { ...updatedTask };
 		}
 	};
+
+	const eventToShow = computed(() => {
+		if (!notifiedEvents.value.goalCompleted && tasks.value.some(t => t.isAchieved && t.progress === 100)) {
+			const message = eventMessages.goalCompleted[locale.value] || eventMessages.goalCompleted.en;
+			return { type: 'goalCompleted', message: message };
+		}
+
+		if (!notifiedEvents.value.levelUp && pandaProgressGlobal.value === 0) {
+			const message = eventMessages.levelUp[locale.value] || eventMessages.levelUp.en;
+			return { type: 'levelUp', value: pandaLevel.value, message: message.replace('{{level}}', pandaLevel.value) };
+		}
+
+		if (!notifiedEvents.value.achievementUnlocked && achieveCount.value > previousAchieveCount.value) {
+			const message = eventMessages.achievementUnlocked[locale.value] || eventMessages.achievementUnlocked.en;
+			return { type: 'achievementUnlocked', message: message };
+		}
+
+		return null;
+	});
 
 	const saveTasks = async () => {
 		if (!userId.value) return;
@@ -38,6 +80,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
 					archiveTasks: archiveTasks.value,
 					pandaProgressGlobal: pandaProgressGlobal.value,
 					pandaLevel: pandaLevel.value,
+					taskCompletedCount: taskCompletedCount.value
 				},
 				{merge: true}
 			);
@@ -59,6 +102,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
 			archiveTasks.value = data.archiveTasks || [];
 			pandaProgressGlobal.value = data.pandaProgressGlobal || 0;
 			pandaLevel.value = data.pandaLevel || 1;
+			taskCompletedCount.value = data.taskCompletedCount || 0;
 
 			isLoaded.value = true;
 			await updateAllProgress();
@@ -130,6 +174,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
 				checkedCount: 0,
 				missedCount: 0,
 				isAchieved: false,
+				isCounted: false
 			};
 			tasks.value.push(newTask);
 			await updateProgress(newTask);
@@ -158,11 +203,9 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		if (authStore.isPremium) {
 			pandaProgressGlobal.value += addedChecked;
 			pandaProgressGlobal.value -= addedMissed;
-
 			if (pandaProgressGlobal.value < 0) pandaProgressGlobal.value = 0;
 			if (pandaProgressGlobal.value > 100) pandaProgressGlobal.value = 100;
 		}
-
 
 		let progress = (currentChecked / totalDays) * 100;
 		let progressMiss = (currentMissed / totalDays) * 100;
@@ -177,10 +220,12 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		}
 		task.progress = progress;
 		task.progressMiss = progressMiss;
+
 		if (progress === 100 && !task.isAchieved) {
 			if (authStore.isPremium || achieveCount.value < 1) {
 				task.isAchieved = true;
 				achieveCount.value++;
+				notifiedEvents.value.achievementUnlocked = false;
 			}
 		}
 
@@ -201,7 +246,6 @@ export const useHabitStore = defineStore("askezaStore", () => {
 			archiveTasks.value.push(taskToRemove);
 		}
 		tasks.value = tasks.value.filter(task => task.id !== taskId);
-
 		skipUpdateAll.value = true;
 		await saveTasks();
 	};
@@ -277,6 +321,11 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		pandaLevel,
 		isLoaded,
 		skipUpdateAll,
+		eventToShow,
+		notifiedEvents,
+		taskCompletedCount,
+		isAudioEnabled,
+		isAnimationEnabled,
 
 		clearAlldates,
 		addTask,
@@ -287,6 +336,8 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		saveTasks,
 		loadArchiveTasks,
 		onAuthStateChanged,
-		updateTask
+		updateTask,
+		setAudioEnabled,
+		toggleAudio
 	};
 });

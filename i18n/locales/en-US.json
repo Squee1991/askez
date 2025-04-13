@@ -11,11 +11,16 @@
 		"plus": "Benefits"
 	},
 	"setting": [
-		"Delete account",
-		"Privacy Policy",
-		"Mode",
-		"Chat"
+		"Eliminar cuenta",
+		"Política de privacidad",
+		"Atribución",
+		"Торжественный звук",
+		"Modo",
+		"Chat",
 	],
+	"attr": {
+		"value": "Attribution"
+	},
 	"premiumValues": [
 		"No advertising",
 		"Support the developers",

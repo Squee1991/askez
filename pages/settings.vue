@@ -24,22 +24,25 @@
 	const passwordInput = ref('');
 	const deleteError = ref('');
 	const activeAnim = ref(false);
-	const isToggle = ref(false);
 	const colorMode = useColorMode();
 	const localBotToggle = ref(false);
 	const activeBotAnim = ref(false)
+	const isAudioEnabled = computed(() => habitStore.isAudioEnabled);
+	const isToggle = ref(colorMode.preference === 'dark');
+
 	const clickToggle = () => {
 		activeAnim.value = true;
 		setTimeout(() => {
 			activeAnim.value = false;
 		}, 200);
-		isToggle.value = !isToggle.value;
-		colorMode.preference = isToggle.value ? 'dark' : 'light';
+		colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark';
+		isToggle.value = colorMode.preference === 'dark';
 	};
+
+
 
 	const clickToggleBot = async () => {
 		if (!authStore.isPremium) return;
-
 		activeBotAnim.value = true;
 		setTimeout(() => {
 			activeBotAnim.value = false;
@@ -49,7 +52,7 @@
 		authStore.isBotEnabled = localBotToggle.value;
 
 		await authStore.saveBotStateToFirebase(localBotToggle.value);
-		authStore.saveBotStateToLocal(localBotToggle.value);
+		// authStore.saveBotStateToLocal(localBotToggle.value);
 	};
 
 	const clickPremiumButton = () => {
@@ -62,8 +65,12 @@
 
 	const handleClick = (index) => {
 		if (index === 3) {
-			clickToggle();
+			router.push('/attribution');
 		} else if (index === 4) {
+			habitStore.toggleAudio();
+		} else if (index === 5) {
+			clickToggle();
+		} else if (index === 6) {
 			clickPremiumButton();
 		} else {
 			SettingsChange(t(`setting.${index - 1}`));
@@ -97,30 +104,35 @@
 	const SettingsChange = (text) => {
 		const textItem = text
 		if ([
-			'Mode', 'Мод', 'Режим', 'Fëapolë', '模式', 'الوضع' , 'Tryb'
+			'Mode', 'Мод', 'Режим', 'Fëapolë', '模式', 'الوضع', 'Tryb'
 		].includes(textItem)) {
 			clickToggle();
 		} else if (["Privacy Policy", "سياسة الخصوصية",
 			"Палітыка прыватнасці", "Datenschutzbestimmungen", "Násië", "Политика конфиденциальности",
-			"Політика конфіденційності", "隐私政策", "Politique de confidentialité", "Polityka prywatności" , "Política de privacidad",].includes(textItem)) {
+			"Політика конфіденційності", "隐私政策", "Politique de confidentialité", "Polityka prywatności", "Política de privacidad",].includes(textItem)) {
 			router.push('/policyPrivacy')
-		} else if (['Удалить аккаунт', 'Delete account', 'Выдаліць акаунт', 'Видалити акаунт', 'Konto löschen', 'Usuń konto' , 'Eliminar cuenta',
+		} else if (['Удалить аккаунт', 'Delete account', 'Выдаліць акаунт', 'Видалити акаунт', 'Konto löschen', 'Usuń konto', 'Eliminar cuenta',
 			'Supprimer le compte', 'Account vanwa', '删除账户', 'حذف الحساب'].includes(textItem)) {
 			confirmDeleteDatas.value = true;
 		}
 	};
 
 	onMounted(() => {
-		const savedMode = localStorage.getItem('nuxt-color-mode') || 'dark';
+		const savedMode = localStorage.getItem('nuxt-color-mode') || 'light';
 		colorMode.preference = savedMode;
-		isToggle.value = savedMode === 'dark';
-
+		isToggle.value = savedMode === 'light';
 		localBotToggle.value = authStore.isBotEnabled;
+		const audioSetting = localStorage.getItem('audioEnabled');
+		isAudioEnabled.value = audioSetting ? JSON.parse(audioSetting) : true;
 	});
 
 	const show = () => {
 		activeAnim.value = true
 	}
+
+	watch(() => colorMode.preference, (val) => {
+		isToggle.value = val === 'light';
+	});
 
 </script>
 
@@ -132,6 +144,7 @@
 			@close="isOverlayVisible = false"
 		/>
 	</div>
+
 	<div class="settings__wrapper">
 		<div v-if="confirmDeleteDatas" class="overlay">
 			<div class="confirm__wrapper">
@@ -143,31 +156,36 @@
 					<span v-if="deleteError" class="error-message">{{ deleteError }}</span>
 				</div>
 				<div class="btns-wrapper">
-					<button @click="deleteAllDatas" class="btn_del-data --del-data">{{ $t('delAllDatas.acceptBtn') }}
-					</button>
-					<button @click="confirmDeleteDatas = false" class="btn_del-data --not-del">{{
-						$t('delAllDatas.rejectBtn') }}
-					</button>
+					<button @click="deleteAllDatas" class="btn_del-data --del-data">{{ $t('delAllDatas.acceptBtn') }}</button>
+					<button @click="confirmDeleteDatas = false" class="btn_del-data --not-del">{{ $t('delAllDatas.rejectBtn') }}</button>
 				</div>
 			</div>
 		</div>
-		<HeaderWithBack :icon="Arrowicon" :title="$t('settings.title')"/>
+
+		<HeaderWithBack :icon="Arrowicon" :title="$t('settings.title')" />
+
 		<div class="settings__btns">
-			<div class="menu__btn-wrapper" v-for="index in 4" :key="index">
+			<div class="menu__btn-wrapper" v-for="index in 6" :key="index">
 				<button
 					class="account__settings-btn"
-					:class="{ 'disabled-premium': index === 4 && !authStore.isPremium }"
-
+					:class="{ 'disabled-premium': index === 6 && !authStore.isPremium }"
 					@click="handleClick(index)"
 				>
 					<span class="accoun__text">{{ $t('setting.' + (index - 1)) }}</span>
-					<span v-if="index === 3" class="toggle-bar" :class="{ 'dark-mode': isToggle }">
-						<img :src="Light" alt="Light" class="toggle-icon left"/>
-						<span class="toggle-thumb" :class="{ 'active-anim': activeAnim }"/>
-						<img :src="Dark" alt="Dark" class="toggle-icon right"/>
+
+
+					<span v-if="index === 4" class="toggle-bar" :class="{ 'toggle-active': !isAudioEnabled }">
+						<span class="toggle-thumb" :style="{ left: isAudioEnabled ? '38px' : '2px', backgroundColor: isAudioEnabled ? 'orange' : 'grey' }"/>
 					</span>
-					<span v-if="index === 4" class="toggle-bar" :class="{ 'bot-disabled': !localBotToggle }">
-						<span class="toggle-thumb"/>
+
+					<span v-if="index === 5" class="toggle-bar" :class="{ 'toggle-active': isToggle }">
+						<img :src="Dark" alt="Dark" class="toggle-icon left"/>
+						<span class="toggle-thumb" :style="{ left: isToggle ? '38px' : '2px', backgroundColor: isToggle ? 'orange' : 'grey' }"/>
+						<img :src="Light" alt="Light" class="toggle-icon right"/>
+					</span>
+
+					<span v-if="index === 6" class="toggle-bar" :class="{ 'toggle-active': localBotToggle }">
+						<span class="toggle-thumb" :style="{ left: localBotToggle ? '38px' : '2px', backgroundColor: localBotToggle ? 'orange' : 'grey' }"/>
 					</span>
 				</button>
 			</div>
@@ -292,7 +310,7 @@
 		padding: 20px;
 		top: 0;
 		left: 0;
-		z-index: 1;
+		z-index: 999;
 	}
 
 	.confirm__wrapper {
@@ -303,7 +321,7 @@
 		position: absolute;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		top: 50%;
+		top: 40%;
 		z-index: 10;
 	}
 

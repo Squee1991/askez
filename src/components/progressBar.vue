@@ -71,6 +71,8 @@
 		justify-content: center;
 		align-items: center;
 		position: relative;
+		padding: 10px;
+
 	}
 
 	.progress-circle {
@@ -104,10 +106,10 @@
 	}
 
 	.progress-text.bottom {
-		bottom: 37%;
+		bottom: 38%;
 		transform: translateY(50%);
-		color: #bfbfbf;
-		font-size: 12px;
+		color: #e37b7b;
+		font-size: 18px;
 	}
 </style>
 

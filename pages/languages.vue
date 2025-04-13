@@ -27,7 +27,7 @@
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
 	import ListComponent from '../src/components/ListComponent.vue';
 	import SelectedIcon from '../assets/images/checkIcon.svg';
-	import Arrowicon from '../assets/images/arrowSvg.svg?url';
+	import Arrowicon from '../assets/images/arrowSvg.svg';
 	import Reloader from '../src/components/preloader.vue'
 	import {useAuthStore} from '../stores/authStore'
 

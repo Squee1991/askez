@@ -58,8 +58,12 @@
 									<Statistic/>
 								</div>
 								<div :class="{ 'visible': activeButton === 'tasks' }" class="task__goal-content">
-									<div class="task__goal-list"
-									     v-for="task in tasks" :key="task.id">
+									<div
+										class="task__goal-list"
+										v-for="task in tasks"
+										:key="task.id"
+										:style="{ borderBottomColor: task.color }"
+									>
 										<div class="task__goal-list-inner">
 											<div class="taks__progress__date-wrapper">
 												<div class="task__datum-wrapper">
@@ -138,6 +142,7 @@
 	import {useLocalePath} from '#i18n';
 	import {useRouter, useRoute} from 'vue-router'
 	import {getAuth} from "firebase/auth";
+	import { App } from '@capacitor/app';
 	let aiGreetedOnce = false
 	const route = useRoute();
 	const isTasksLoaded = ref(false)
@@ -205,7 +210,7 @@
 	}
 
 	const goToBot = () => {
-		router.push('/chat') // путь к твоему компоненту с ботом
+		router.push('/chat')
 	}
 	// const toggleHabitGoalHandler = () => {
 	// 	isButtonActive.value = true
@@ -292,24 +297,36 @@
 		}, 220)
 	});
 
-	onMounted(() => {
-		if (!authStore.isBotEnabled) return;
+	function getRandomGreeting(locale) {
+		const lang = locale.split('-')[0] || 'en';
+		const greetings = pandaGreetings[lang] || pandaGreetings['en'];
+		return greetings[Math.floor(Math.random() * greetings.length)];
+	}
 
-		if (!aiGreetedOnce) {
-			const lang = locale.value.split('-')[0] || 'en'
-			const greetings = pandaGreetings[lang] || pandaGreetings['en']
-			const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)]
+	let hasGreeted = false;
 
-			greetingMessage.value = randomGreeting
-			showAIGreeting.value = true
+	const showGreeting = () => {
+		if (!hasGreeted) {
+			const currentLocale = locale.value;
+			greetingMessage.value = getRandomGreeting(currentLocale);
+			showAIGreeting.value = true;
 
 			setTimeout(() => {
-				showAIGreeting.value = false
-			}, 1500)
+				showAIGreeting.value = false;
+			}, 2000);
 
-			aiGreetedOnce = true
+			hasGreeted = true;
 		}
-	})
+	};
+
+	onMounted(() => {
+		showGreeting();
+
+		App.addListener('resume', () => {
+			hasGreeted = false;
+			showGreeting();
+		});
+	});
 
 	onMounted(() => {
 		if (route.query.open === 'true') {
@@ -661,7 +678,7 @@
 		margin-bottom: 5px;
 		font-size: 17px;
 		font-weight: 600;
-		font-family: "Acme", serif;
+		font-family: "Nunito", sans-serif;
 		color: var(--text-color);
 		max-width: 160px;
 	}
@@ -676,6 +693,10 @@
 		margin: 10px 0;
 		border-radius: 10px;
 		padding: 10px;
+
+		border-bottom-width: 4px;
+		border-bottom-style: solid;
+		border-bottom-color: transparent;
 	}
 
 	.habbit__goal {
@@ -714,7 +735,7 @@
 	.title {
 		font-size: 2.0rem;
 		color: var(--title-c);
-		font-family: "Acme", serif;
+		font-family: "Nunito", sans-serif;
 	}
 
 	.username {

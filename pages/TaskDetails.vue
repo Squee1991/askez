@@ -1,14 +1,17 @@
 <template>
 	<div class="update__date-wrapper">
 		<div ref="animationBlock" class="animation__block"></div>
-		<div :class="{'show__confirm': isOpen}" class="confirm__window">
-			<div class="confirm__content-wrapper">
-				<div class="confirm__title">{{ $t('delConfirm.title') }}</div>
-				<div class="confirm__btns">
-					<NuxtLink @click="clearTask(selectedTask.id)" class="confirm__btn" to="/welcomePage">
-						<button class="confirm__btn">{{ $t('delConfirm.accept') }}</button>
-					</NuxtLink>
-					<button @click="cancelDelete" class="btn-green confirm__btn">{{ $t('delConfirm.reject') }}</button>
+		<div v-if="isOpen" class="confirm__content-wrapper-overlay" @click="cancelDelete">
+			<div :class="{'show__confirm': isOpen}" class="confirm__window" @click.stop>
+				<div class="confirm__content-wrapper">
+					<div class="confirm__title">{{ $t('delConfirm.title') }}</div>
+					<div class="confirm__text"> При удалении задача попадает в архив</div>
+					<div class="confirm__btns">
+						<NuxtLink @click="clearTask(selectedTask.id)" class="confirm__btn" to="/welcomePage">
+							<button class="confirm__btn">{{ $t('delConfirm.accept') }}</button>
+						</NuxtLink>
+						<button @click="cancelDelete" class="btn-green confirm__btn">{{ $t('delConfirm.reject') }}</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -103,29 +106,32 @@
 					</button>
 				</div>
 			</div>
+			<div class="checked-progress">
+				<div class="checked__progress-wrapper">
+					<div class="checked__wrapper">
+						<img src="../assets/images/checked.svg" alt="" class="checked__icon"/>
+						<span class="checked__count">{{ checkedCount }}</span>
+						<span class="checked__text checked__green"> {{
+                            $t('CheckedProgress.checked')
+                            }}</span>
+					</div>
+					<div class="checked__wrapper">
+						<img src="../assets/images/cancel.svg" alt="" class="checked__icon"/>
+						<span class="checked__count">{{ missedCount }}</span>
+						<span class="checked__text"> {{ $t('CheckedProgress.notChecked') }}</span>
+					</div>
+				</div>
+			</div>
 			<div class="progress__container-details">
 				<ProgressBar
 					:progress="selectedTask.progress"
 					:progressMiss="selectedTask.progressMiss"
 					:history="selectedTask.history"
-					:size="190"
-					:padding="25"
+					:size="140"
+					:padding="20"
 				/>
 			</div>
-			<div class="checked-progress">
-				<div class="checked__progress-wrapper">
-					<div class="checked__wrapper">
-						<img src="../assets/images/checkIcon.svg" alt="" class="checked__icon"/>
-						<span class="checked__text checked__green">{{ checkedCount }} {{
-                            $t('CheckedProgress.checked')
-                            }}</span>
-					</div>
-					<div class="checked__wrapper">
-						<img src="../assets/images/noyChecked.svg" alt="" class="checked__icon"/>
-						<span class="checked__text">{{ missedCount }} {{ $t('CheckedProgress.notChecked') }}</span>
-					</div>
-				</div>
-			</div>
+
 		</div>
 	</div>
 </template>
@@ -141,7 +147,7 @@
 	import Lottie from 'lottie-web';
 	import CongratsAmination from '../assets/animations/GratsAnimation.json'
 	import { useTaskStore } from '../stores/OfflineTaskStore.js'
-
+	const disableAudio = ref(false);
     const animationBlock = ref(null)
 	const editIcon = ref(EditIcon);
 	const editState = ref(false);
@@ -158,9 +164,9 @@
 	const taskStore = useTaskStore();
 
 	const applausAudio = () => {
-		const audio = new Audio('/sounds/sound.mp3')
-		audio.play()
-	}
+		if (!habitStore.isAudioEnabled) return;
+		new Audio('/sounds/sound.mp3').play();
+	};
 
 	const selectedTask = computed(() => {
 		const id = router.query.id;
@@ -255,6 +261,7 @@
 		habitStore.saveTasks();
 
 		if (selectedTask.value.progress === 100) {
+			if (!habitStore.isAudioEnabled) return;
 			setTimeout(() => {
 				if (animationBlock.value) {
 					const animSpeed = Lottie.loadAnimation({
@@ -416,6 +423,17 @@
 
 </script>
 <style>
+
+	.checked__icon {
+		width: 40px;
+	}
+
+	.checked__count {
+		font-size: 20px;
+		padding-top: 10px;
+		font-family: "Acme", serif;
+	}
+
 	.animation__block{
 		position: absolute;
 		top: 50%;
@@ -485,25 +503,30 @@
 	.checked__wrapper {
 		display: flex;
 		align-items: center;
-		background: grey;
+		flex-direction: column;
+		background: var(--menu--btn-bg);
 		width: 100%;
 		padding: 10px;
 		border-radius: 15px;
-		margin-bottom: 10px;
+		margin: 5px;
 	}
 
 	.checked__text {
-		text-align: start;
-		font-size: 16px;
+		max-width: 110px;
+		text-align: center;
+		font-size: 14px;
 		font-family: "Nunito", serif;
 		line-height: 21.82px;
 		padding: 3px;
 		color: var(--text-color);
+		margin: 5px;
+
 	}
 
 	.checked__progress-wrapper {
 		margin-top: 10px;
 		width: 100%;
+		display: flex;
 	}
 
 	.checked-progress {
@@ -515,6 +538,9 @@
 
 	.progress__container-details {
 		margin-top: 14px;
+		background: var(--menu--btn-bg);
+		padding: 5px;
+		border-radius: 15px;
 	}
 
 	.task__details-btns {
@@ -570,8 +596,18 @@
 
 	.task__details-btn {
 		margin-top: 5px;
-		width: 47%;
+		width: 48%;
 		padding: 5px;
+	}
+
+	.confirm__text {
+		color: white;
+		text-align: center;
+		max-width: 200px;
+		margin: 0 auto;
+		padding: 10px;
+		font-size: 12px;
+		font-family: "Nunito", sans-serif;
 	}
 
 	.update__date-wrapper {
@@ -622,35 +658,44 @@
 		background: #4FC55C;
 	}
 
-	.confirm__window.show__confirm {
-		height: 125px;
-		border-bottom-left-radius: 25px;
-		border-bottom-right-radius: 25px;
+	/*.confirm__window.show__confirm {*/
+	/*	height: 170px;*/
+	/*	border-radius: 15px;*/
+	/*}*/
+
+	.confirm__content-wrapper-overlay {
+		width: 100%;
+		position: fixed;
+		height: 100vh;
+		background: rgba(0, 0, 0, 0.5);
+		top: 0;
+		left: 0;
+		z-index: 10;
 	}
 
 	.confirm__window {
-		width: 100%;
-		top: 0;
-		left: 0;
+		width: 80%;
+		top: 40%;
+		left: 50%;
+		transform: translateX(-50%);
 		z-index: 2;
 		position: absolute;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		height: 0;
-		overflow: hidden;
 		transition: height 0.3s ease;
 	}
 
 	.confirm__content-wrapper {
-		background: var(--footer-bg);
+		background: #34364a;;
 		width: 100%;
 		height: 100%;
+		border-radius: 15px;
 	}
 
 	.confirm__title {
 		padding: 15px;
-		color: var(--text-color);
+		color: white;
 		text-align: center;
 		font-size: 24px;
 		font-family: "Nunito", serif;
@@ -658,26 +703,29 @@
 	}
 
 	.confirm__btns {
+		padding: 10px 0;
 		display: flex;
 		justify-content: center;
 	}
 
-	.confirm__btn.btn-green {
-		background: #4FC55C;
-	}
+	/*.confirm__btn.btn-green {*/
+	/*	background: #4FC55C;*/
+	/*}*/
 
 	.confirm__btn {
+		background: none;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		width: 30%;
 		margin: 0 5px;
 		font-size: 18px;
+		font-weight: 600;
 		padding: 5px;
 		border-radius: 10px;
 		border: none;
-		background: #FF5C00;
-		color: var(--text-color);
+		/*background: #FF5C00;*/
+		color: #24ba1d;;
 		font-family: "Nunito", serif;
 	}
 </style>

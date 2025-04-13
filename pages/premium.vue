@@ -107,11 +107,11 @@
 <style scoped>
 
 	.play__info {
-		font-size: 12px;
+		font-size: 10px;
 		color: var(--text-color);
 		padding: 5px 10px 10px 5px;
 		max-width: 370px;
-		margin-bottom: 10px;
+		margin-bottom: 5px;
 	}
 
 	.policy__btn {
@@ -147,34 +147,32 @@
 	}
 
 	.premium__icons {
-		width: 43px;
+		width: 40px;
 		margin-right: 10px;
 	}
 
 	.premium-info {
-		position: fixed;
+		position:fixed;
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: 100vh;
 		background: var(--background-color);
 		padding: 20px;
 		text-align: center;
 		z-index: 1000;
-		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 		display: flex;
 		flex-direction: column;
 	}
 
 	.premium-content {
-		border-radius: 20px;
-		width: 100%;
 		flex-direction: column;
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		justify-content: flex-start;
 		margin: 0 auto;
 		overflow-y: auto;
+		max-height: calc(100vh - 80px);
+		padding: 5px 0 12px 0
 	}
 
 	.premium-title {
@@ -182,7 +180,7 @@
 		font-size: 26px;
 		color: #a887fc;
 		font-family: "Nunito", sans-serif;
-		padding: 15px 0 10px 0;
+		padding: 10px 0 4px 0;
 	}
 
 	.premium-title:after {
@@ -205,7 +203,7 @@
 	}
 
 	.premium-button {
-		margin-bottom: 15px;
+		margin-bottom: 10px;
 		width: 80%;
 		background-color: #7E61C7;
 		color: white;
