@@ -10,10 +10,10 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@capacitor/android": "^6.2.0",
-    "@capacitor/app": "^6.0.2",
-    "@capacitor/cli": "^6.2.0",
-    "@capacitor/core": "^6.2.0",
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/app": "^7.0.0",
+    "@capacitor/cli": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
     "@firebase/app-types": "^0.9.3",
     "@ionic/core": "^8.4.3",
     "@ionic/vue": "^8.4.3",
