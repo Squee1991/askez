@@ -63,11 +63,6 @@
 				<span class="task__goal-name">{{ selectedTask.goal }}</span>
 				<div class="edit__menu-wrapper">
 					<EditDeleteMenu :icon="editIcon" @click="editMenu"/>
-<!--					<ul v-if="isOpen" class="edit__menu-list">-->
-<!--						<li @click="openConfirmWindow(selectedTask.id)" class="edit__menu-item">-->
-<!--							{{ $t('EditDeleteMenu.delTask') }}-->
-<!--						</li>-->
-<!--					</ul>-->
 				</div>
 			</div>
 			<div class="range__date-wrapper">
@@ -131,7 +126,6 @@
 					:padding="20"
 				/>
 			</div>
-
 		</div>
 	</div>
 </template>
