@@ -1,26 +1,37 @@
 <template>
-	<div class="update__date-wrapper">
-		<div ref="animationBlock" class="animation__block"></div>
-		<div v-if="isOpen" class="confirm__content-wrapper-overlay" @click="cancelDelete">
-			<div :class="{'show__confirm': isOpen}" class="confirm__window" @click.stop>
-				<div class="confirm__content-wrapper">
-					<div class="confirm__title">{{ $t('delConfirm.title') }}</div>
-					<div class="confirm__text"> При удалении задача попадает в архив</div>
-					<div class="confirm__btns">
-						<NuxtLink @click="clearTask(selectedTask.id)" class="confirm__btn" to="/welcomePage">
-							<button class="confirm__btn">{{ $t('delConfirm.accept') }}</button>
-						</NuxtLink>
-						<button @click="cancelDelete" class="btn-green confirm__btn">{{ $t('delConfirm.reject') }}</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div v-if="selectedTask">
-			<div class="task__name">
-				<NuxtLink class="task__icon-back" to="/welcomePage">
-					<svg fill="currentColor" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-					     width="35px" height="35px" viewBox="0 0 193.266 193.266"
-					     xml:space="preserve">
+    <div class="update__date-wrapper">
+        <div ref="animationBlock" class="animation__block"></div>
+
+        <!-- Уведомления и сообщения -->
+        <div v-if="notification.show" :class="['notification', notification.type]" @click="closeNotification">
+            <div class="notification__icon">
+                <span v-if="notification.type === 'success'">✓</span>
+                <span v-else-if="notification.type === 'error'">!</span>
+                <span v-else-if="notification.type === 'info'">i</span>
+            </div>
+            <div class="notification__message">{{ notification.message }}</div>
+            <button class="notification__close" @click.stop="closeNotification">×</button>
+        </div>
+
+        <div :class="{'show__confirm': isOpen}" class="confirm__window">
+            <div class="confirm__content-wrapper">
+                <div class="confirm__title">{{ t('delConfirm.title') }}</div>
+                <div class="confirm__description">{{ t('delConfirm.description') }}</div>
+                <div class="confirm__btns">
+                    <NuxtLink @click="clearTask(selectedTask.id)" class="confirm__btn" to="/welcomePage">
+                        <button class="confirm__btn">{{ t('delConfirm.accept') }}</button>
+                    </NuxtLink>
+                    <button @click="cancelDelete" class="btn-green confirm__btn">{{ t('delConfirm.reject') }}</button>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="selectedTask">
+            <div class="task__name">
+                <NuxtLink class="task__icon-back" to="/welcomePage" aria-label="Вернуться на главный экран">
+                    <svg fill="currentColor" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                         width="35px" height="35px" viewBox="0 0 193.266 193.266"
+                         xml:space="preserve">
 <g>
 	<path d="M183.011,111.191c-13.503-36.417-51.753-46.329-86.965-37.976c1.185-8.843,0.875-17.887,0.649-26.781
 		C96.494,38.482,97,29.389,95.584,21.28c-0.005-0.037-0.013-0.071-0.018-0.107c-0.258-1.465-0.56-2.907-0.963-4.292
@@ -59,362 +70,548 @@
 		C186.124,153.768,186.063,161.04,183.474,166.147z"/>
 </g>
 </svg>
-				</NuxtLink>
-				<span class="task__goal-name">{{ selectedTask.goal }}</span>
-				<div class="edit__menu-wrapper">
-					<EditDeleteMenu :icon="editIcon" @click="editMenu"/>
-				</div>
-			</div>
-			<div class="range__date-wrapper">
-				<div class="range__date">
-					<div class="range__date-text">{{ $t('taskDetails.startDate') }}</div>
-					<div class="range__date__data start">{{ formatDate(selectedTask.dateRange.start) }}</div>
-				</div>
-				<div class="range__date">
-					<div class="range__date-text">{{ $t('taskDetails.endDate') }}</div>
-					<div class="range__date__data end">{{ formatDate(selectedTask.dateRange.end) }}</div>
-				</div>
-			</div>
-			<div class="date__picker">
-				<v-calendar
-					is-expanded
-					v-if="allowedDateRange.start && allowedDateRange.end"
-					:locale="locale"
-					:min-date="allowedDateRange.start"
-					:max-date="allowedDateRange.end"
-					:disabled-dates="disabledDates"
-					v-model="selectedDate"
-					@dayclick="onDateSelect"
-					:attributes="checkedDatesAttributes"
-				/>
-			</div>
 
-			<div class="task__details-btns">
-				<div v-for="(btn, index) in ['done', 'missed']" :key="index" class="task__details-btn" :class="btn === 'done' ? 'check' : ''">
-					<button
-						@click="misscCheckClick(btn)"
-						:disabled="isDateMarked"
-						class="update__task-btn"
-						:class="btn === 'done' ? 'check' : ''"
-					>
-						{{ $t(`checkedBtns.${btn}`) }}
-					</button>
-				</div>
-			</div>
-			<div class="checked-progress">
-				<div class="checked__progress-wrapper">
-					<div class="checked__wrapper">
-						<img src="../assets/images/checked.svg" alt="" class="checked__icon"/>
-						<span class="checked__count">{{ checkedCount }}</span>
-						<span class="checked__text checked__green"> {{
-                            $t('CheckedProgress.checked')
+                </NuxtLink>
+                <span class="task__goal-name">{{ selectedTask.goal }}</span>
+                <div class="edit__menu-wrapper">
+                    <EditDeleteMenu :icon="editIcon" @click="editMenu" aria-label="Меню редактирования"/>
+                </div>
+            </div>
+            <div class="range__date-wrapper">
+                <div class="range__date">
+                    <div class="range__date-text">{{ t('taskDetails.startDate') }}</div>
+                    <div class="range__date__data start">{{ formatDate(selectedTask.dateRange.start) }}</div>
+                </div>
+                <div class="range__date">
+                    <div class="range__date-text">{{ t('taskDetails.endDate') }}</div>
+                    <div class="range__date__data end">{{ formatDate(selectedTask.dateRange.end) }}</div>
+                </div>
+            </div>
+
+            <div class="date__picker">
+                <v-calendar
+                        is-expanded
+                        v-if="allowedDateRange.start && allowedDateRange.end"
+                        :locale="locale"
+                        :min-date="allowedDateRange.start"
+                        :max-date="allowedDateRange.end"
+                        :disabled-dates="disabledDates"
+                        v-model="selectedDate"
+                        @dayclick="onDateSelect"
+                        :attributes="[...checkedDatesAttributes, ...activeDateAttributes]"
+                />
+            </div>
+
+            <div class="task__details-btns">
+                <div v-for="(btn, index) in ['done', 'missed']" :key="index" class="task__details-btn"
+                     :class="[btn === 'done' ? 'check' : '', isDateMarked ? 'disabled' : '']">
+                    <button
+                            :disabled="isDateMarked"
+                            @click="misscCheckClick(btn)"
+                            class="update__task-btn"
+                            :class="btn === 'done' ? 'check' : ''"
+                            :aria-label="t(`checkedBtns.${btn}`)"
+                    >
+                        {{ t(`checkedBtns.${btn}`) }}
+                    </button>
+                    <div v-if="isDateMarked && selectedDate" class="btn__hint">
+                        {{ t('taskDetails.dateAlreadyMarked') }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Кнопка для добавления заметок к выбранной дате -->
+            <div v-if="selectedDate && (isDateMarked || hasDateNotes)" class="notes__btn-container">
+                <button class="notes__btn" @click="openNotesModal">
+                    <span class="notes__btn-icon">📝</span>
+                    {{ hasDateNotes ? t('taskDetails.editNotes') : t('taskDetails.addNotes') }}
+                </button>
+            </div>
+
+            <div class="progress__container-details">
+                <ProgressBar
+                        :progress="selectedTask.progress"
+                        :progressMiss="selectedTask.progressMiss"
+                        :history="selectedTask.history"
+                        :size="190"
+                        :padding="25"
+                />
+                <div class="progress__info">
+                    <div class="progress__text">{{ t('taskDetails.progress') }}: {{ selectedTask.progress }}%</div>
+                    <div class="progress__text">{{ t('taskDetails.missed') }}: {{ selectedTask.progressMiss }}%</div>
+                </div>
+            </div>
+
+            <div class="checked-progress">
+                <div class="checked__progress-wrapper">
+                    <div class="checked__wrapper">
+                        <img src="../assets/images/checkIcon.svg" alt="" class="checked__icon"/>
+                        <span class="checked__text checked__green">{{ checkedCount }} {{
+                            t('CheckedProgress.checked')
                             }}</span>
-					</div>
-					<div class="checked__wrapper">
-						<img src="../assets/images/cancel.svg" alt="" class="checked__icon"/>
-						<span class="checked__count">{{ missedCount }}</span>
-						<span class="checked__text"> {{ $t('CheckedProgress.notChecked') }}</span>
-					</div>
-				</div>
-			</div>
-			<div class="progress__container-details">
-				<ProgressBar
-					:progress="selectedTask.progress"
-					:progressMiss="selectedTask.progressMiss"
-					:history="selectedTask.history"
-					:size="140"
-					:padding="20"
-				/>
-			</div>
-		</div>
-	</div>
+                    </div>
+	                <div class="checked__wrapper">
+		                <img src="../assets/images/cancel.svg" alt="" class="checked__icon"/>
+		                <span class="checked__count">{{ missedCount }}</span>
+		                <span class="checked__text"> {{ $t('CheckedProgress.notChecked') }}</span>
+	                </div>
+                </div>
+            </div>
+            <!-- Заметки к задаче -->
+            <div v-if="selectedTask.notes" class="task__notes">
+                <div class="task__notes-title">{{ t('taskDetails.taskNotes') }}</div>
+                <div class="task__notes-content">{{ selectedTask.notes }}</div>
+            </div>
+        </div>
+    </div>
+    <StepHint
+            :steps="hintSteps"
+            :show="showHints"
+            @close="showHints = false"
+    />
 </template>
 
 <script setup>
-	import { ref, computed, onMounted, watch } from "vue";
-	import { useRoute } from "vue-router";
-	import { useHabitStore } from "../stores/habitStore.js";
-	import ProgressBar from "../src/components/progressBar.vue";
-	import EditDeleteMenu from "../src/components/EditDeleteMenu.vue";
-	import EditIcon from '../assets/images/rubbish-bin.svg';
-	const { locale } = useI18n();
-	import Lottie from 'lottie-web';
-	import CongratsAmination from '../assets/animations/GratsAnimation.json'
-	import { useTaskStore } from '../stores/OfflineTaskStore.js'
-	const disableAudio = ref(false);
-    const animationBlock = ref(null)
-	const editIcon = ref(EditIcon);
-	const editState = ref(false);
-	const isOpen = ref(false);
-	const taskToDelete = ref(null);
-	const router = useRoute();
-	const isDateSelected = ref(false);
-	const checkedDates = ref([]);
-	const missedDates = ref([]);
-	const checkedCount = computed(() => selectedTask.value?.checkedDates?.length || 0);
-	const missedCount = computed(() => selectedTask.value?.missedDates?.length || 0);
-	const habitStore = useHabitStore();
-	const selectedDate = ref(null);
-	const taskStore = useTaskStore();
+import {ref, computed, onMounted, watch} from "vue";
+import {useRoute} from "vue-router";
+import {useHabitStore} from "../stores/habitStore.js";
+import ProgressBar from "../src/components/progressBar.vue";
+import EditDeleteMenu from "../src/components/EditDeleteMenu.vue";
+import EditIcon from '../assets/images/rubbish-bin.svg';
+import {useI18n} from 'vue-i18n';
+import Lottie from 'lottie-web';
+import CongratsAmination from '../assets/animations/GratsAnimation.json'
+import {useTaskStore} from '../stores/OfflineTaskStore.js'
+import StepHint from '../src/components/StepHint.vue'
+
+const {locale, t, te} = useI18n();
+
+const showHints = ref(true);
+
+// const hintSteps = [
+//     {selector: '.task__icon-back', text: 'Нажмите, чтобы вернуться на главный экран'},
+//     {selector: '.task__goal-name', text: 'Это название вашей цели'},
+//     {selector: '.range__date-wrapper', text: 'Здесь отображаются даты начала и конца'},
+//     {selector: '.vc-container', text: 'Выберите дату в этом календаре'},
+//     {selector: '.task__details-btns', text: 'Отметьте выполнение задачи за выбранную дату'},
+//     {selector: '.progress__container-details', text: 'Прогресс задачи отображается здесь'},
+// ];
+
+const animationBlock = ref(null);
+const editIcon = ref(EditIcon);
+const editState = ref(false);
+const isOpen = ref(false);
+const taskToDelete = ref(null);
+const router = useRoute();
+const isDateSelected = ref(false);
+const checkedDates = ref([]);
+const missedDates = ref([]);
+const checkedCount = ref(0);
+const missedCount = ref(0);
+const habitStore = useHabitStore();
+const selectedDate = ref(null);
+const taskStore = useTaskStore();
 
 	const applausAudio = () => {
 		if (!habitStore.isAudioEnabled) return;
 		new Audio('/sounds/sound.mp3').play();
 	};
+const activeDateAttributes = computed(() => {
+    if (!selectedDate.value) return [];
+    return [{
+        key: 'active-date',
+        dates: [new Date(selectedDate.value + 'T00:00:00')],
+        customData: {active: true}
+    }];
+});
 
-	const selectedTask = computed(() => {
-		const id = router.query.id;
-		const allTasks = [...habitStore.tasks, ...taskStore.tasks];
-		return allTasks.find(task => task.id == id) || null;
-	});
+const applausAudio = () => {
+    const audio = new Audio('/sounds/cry.wav')
+    audio.play()
+}
 
-	const convertToDate = (date) => {
-		return date && typeof date.toDate === "function" ? date.toDate() : new Date(date);
-	};
+const selectedTask = computed(() => {
+    const id = router.query.id;
+    const allTasks = [...habitStore.tasks, ...taskStore.tasks];
+    return allTasks.find(task => task.id == id) || null;
+});
 
-	const getLocalDate = () => {
-		const now = new Date();
-		now.setHours(0, 0, 0, 0);
-		return now.toISOString().split("T")[0];
-	};
+const convertToDate = (date) => {
+    return date && typeof date.toDate === "function" ? date.toDate() : new Date(date);
+};
 
-	const formatDateLocal = (date) => {
-		const d = new Date(date);
-		const year = d.getFullYear();
-		const month = (d.getMonth() + 1).toString().padStart(2, '0');
-		const day = d.getDate().toString().padStart(2, '0');
-		return `${year}-${month}-${day}`;
-	};
+const getLocalDate = () => {
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = (d.getMonth() + 1).toString().padStart(2, '0');
+    const day = d.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+};
 
-	const getCurrentDate = () => {
-		const d = new Date();
-		d.setHours(0, 0, 0, 0);
-		return d.toLocaleDateString('en-CA');
-	};
+const formatDateLocal = (date) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = (d.getMonth() + 1).toString().padStart(2, '0');
+    const day = d.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+};
 
-	const misscCheckClick = (btn) => {
-		if (!selectedTask.value) return;
-		if (selectedDate.value !== getCurrentDate()) {
-			console.log("Отмечается только карент дата:", getCurrentDate());
-			return;
-		}
+const getCurrentDate = () => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d.toLocaleDateString('en-CA');
+};
 
-		const selDateStr = selectedDate.value;
-		const taskStartStr = convertToDate(selectedTask.value.dateRange.start).toLocaleDateString('en-CA');
-		const taskEndStr = convertToDate(selectedTask.value.dateRange.end).toLocaleDateString('en-CA');
-		console.log("диапозон:", selDateStr, taskStartStr, taskEndStr);
-		if (!selDateStr || selDateStr < taskStartStr || selDateStr > taskEndStr) {
-			console.log("Дата вне диапазона!", selDateStr);
-			selectedDate.value = null;
-			return;
-		}
+// Добавляем состояние для уведомлений
+const notification = ref({
+    show: false,
+    message: '',
+    type: 'info' // 'info', 'success', 'error'
+});
 
-		if (checkedDates.value.includes(selDateStr) || missedDates.value.includes(selDateStr)) {
-			console.log("Дата уже отмечена", selDateStr);
-			return;
-		}
+// Функция для отображения уведомлений
+const showNotification = (message, type = 'info') => {
+    notification.value = {
+        show: true,
+        message,
+        type
+    };
 
-		const totalDays = Math.max(1, (new Date(taskEndStr) - new Date(taskStartStr)) / (1000 * 60 * 60 * 24) + 1);
-		const step = (100 / totalDays).toFixed(2);
+    // Автоматически скрываем уведомление через 3 секунды
+    setTimeout(() => {
+        closeNotification();
+    }, 3000);
+};
 
-		if (!selectedTask.value.history) {
-			selectedTask.value.history = [];
-		}
+// Функция для закрытия уведомления
+const closeNotification = () => {
+    notification.value.show = false;
+};
 
-		const currentProgress = selectedTask.value.progress || 0;
-		const currentProgressMiss = selectedTask.value.progressMiss || 0;
-		const remainingProgress = 100 - currentProgress - currentProgressMiss;
-		if (remainingProgress <= 0) return;
-		if (btn === "done") {
-			if (!selectedTask.value.checkedDates) {
-				selectedTask.value.checkedDates = [];
-			}
-			selectedTask.value.checkedDates.push(selDateStr);
-			checkedDates.value = [...selectedTask.value.checkedDates];
+const misscCheckClick = (btn) => {
+    if (!selectedTask.value) return;
+    if (!selectedDate.value) {
+        showNotification(t('taskDetails.selectDateFirst'), 'error');
+        return;
+    }
 
-			selectedTask.value.history.push({
-				color: "#4FC55C",
-				percent: Math.min(parseFloat(step), remainingProgress),
-			});
-		} else if (btn === "missed") {
-			if (!selectedTask.value.missedDates) {
-				selectedTask.value.missedDates = [];
-			}
-			if (!selectedTask.value.missedDates.includes(selDateStr)) {
-				selectedTask.value.missedDates.push(selDateStr);
-				missedDates.value = [...selectedTask.value.missedDates];
+    const selDateStr = selectedDate.value;
+    const taskStartStr = convertToDate(selectedTask.value.dateRange.start)
+        .toLocaleDateString('en-CA');
+    const taskEndStr = convertToDate(selectedTask.value.dateRange.end)
+        .toLocaleDateString('en-CA');
 
-				selectedTask.value.history.push({
-					color: "#FF5C00",
-					percent: Math.min(parseFloat(step), remainingProgress),
-				});
-			}
-		}
-		habitStore.updateTask(selectedTask.value);
-		habitStore.updateProgress(selectedTask.value);
-		habitStore.saveTasks();
+    if (selDateStr < taskStartStr || selDateStr > taskEndStr) {
+        showNotification(t('taskDetails.dateOutOfRange'), 'error');
+        return;
+    }
 
-		if (selectedTask.value.progress === 100) {
-			if (!habitStore.isAudioEnabled) return;
-			setTimeout(() => {
-				if (animationBlock.value) {
-					const animSpeed = Lottie.loadAnimation({
-						container: animationBlock.value,
-						loop: true,
-						animationData: CongratsAmination,
-					});
-					animSpeed.setSpeed(0.4);
-					applausAudio()
-				}
-			}, 400);
-		}
-	};
+    if (checkedDates.value.includes(selDateStr) || missedDates.value.includes(selDateStr)) {
+        showNotification(t('taskDetails.dateAlreadyMarked'), 'info');
+        return;
+    }
 
-	const allowedDateRange = computed(() => {
-		if (selectedTask.value) {
-			const start = convertToDate(selectedTask.value.dateRange.start);
-			const end = convertToDate(selectedTask.value.dateRange.end);
-			return {
-				start: start.toLocaleDateString('en-CA'),
-				end: end.toLocaleDateString('en-CA')
-			};
-		}
-		return { start: null, end: null };
-	});
+    // Добавляем дату в соответствующий массив и обновляем реактивные значения
+    if (btn === "done") {
+        if (!selectedTask.value.checkedDates) {
+            selectedTask.value.checkedDates = [];
+        }
+        selectedTask.value.checkedDates.push(selDateStr);
+        checkedDates.value = [...selectedTask.value.checkedDates];
+        showNotification(t('taskDetails.taskMarkedAsDone'), 'success');
+    } else if (btn === "missed") {
+        if (!selectedTask.value.missedDates) {
+            selectedTask.value.missedDates = [];
+        }
+        selectedTask.value.missedDates.push(selDateStr);
+        missedDates.value = [...selectedTask.value.missedDates];
+        showNotification(t('taskDetails.taskMarkedAsMissed'), 'info');
+    }
 
-	const onDateSelect = (day) => {
-		if (!day || !day.id || !selectedTask.value) return;
-		const selDate = new Date(day.id);
-		selDate.setHours(0, 0, 0, 0);
-		const taskStart = new Date(convertToDate(selectedTask.value.dateRange.start));
-		taskStart.setHours(0, 0, 0, 0);
-		const taskEnd = new Date(convertToDate(selectedTask.value.dateRange.end));
-		taskEnd.setHours(0, 0, 0, 0);
+    // Расчет прогресса
+    const totalDays = Math.max(
+        1,
+        (new Date(taskEndStr) - new Date(taskStartStr)) / (1000 * 60 * 60 * 24) + 1
+    );
+    const step = (100 / totalDays).toFixed(2);
 
-		if (selDate < taskStart || selDate > taskEnd) {
-			console.log("Дата вне диапазона", formatDateLocal(selDate));
-			return;
-		}
-		isDateSelected.value = true;
-		selectedDate.value = formatDateLocal(selDate);
-		console.log("Выбрана", selectedDate.value);
-	};
+    if (!selectedTask.value.history) {
+        selectedTask.value.history = [];
+    }
+    const currentProgress = selectedTask.value.progress || 0;
+    const currentProgressMiss = selectedTask.value.progressMiss || 0;
+    const remainingProgress = 100 - currentProgress - currentProgressMiss;
+    if (remainingProgress <= 0) return;
 
-	const disabledDates = computed(() => {
-		return selectedTask.value?.blockedDates || [];
-	});
+    if (btn === "done") {
+        selectedTask.value.history.push({
+            color: "#4FC55C",
+            percent: Math.min(parseFloat(step), remainingProgress),
+        });
+    } else if (btn === "missed") {
+        selectedTask.value.history.push({
+            color: "#FF5C00",
+            percent: Math.min(parseFloat(step), remainingProgress),
+        });
+    }
 
-	const loadTask = () => {
-		habitStore.loadTasks();
-		if (selectedTask.value) {
-			const savedCheckedDates = localStorage.getItem(`task_${selectedTask.value.id}_checkedDates`);
-			if (savedCheckedDates) {
-				checkedDates.value = JSON.parse(savedCheckedDates);
-				selectedTask.value.checkedDates = [...checkedDates.value];
-			}
-			const savedMissedDates = localStorage.getItem(`task_${selectedTask.value.id}_missedDates`);
-			if (savedMissedDates) {
-				missedDates.value = JSON.parse(savedMissedDates);
-				selectedTask.value.missedDates = [...missedDates.value];
-			}
-		}
-	};
+    habitStore.updateTask(selectedTask.value);
+    habitStore.updateProgress(selectedTask.value);
+    habitStore.saveTasks();
 
-	onMounted(() => {
-		loadTask();
-		if (selectedTask.value) {
-			checkedCount.value = selectedTask.value.checkedDates?.length || 0;
-			missedCount.value = selectedTask.value.missedDates?.length || 0;
-		}
-		if (allowedDateRange.value.start && allowedDateRange.value.end) {
-			const today = getLocalDate();
-			if (new Date(today) >= new Date(allowedDateRange.value.start) && new Date(today) <= new Date(allowedDateRange.value.end)) {
-				selectedDate.value = today;
-			} else {
-				selectedDate.value = allowedDateRange.value.start;
-			}
-		}
-	});
+    if (selectedTask.value.progress === 100) {
+        setTimeout(() => {
+            if (animationBlock.value) {
+                const animSpeed = Lottie.loadAnimation({
+                    container: animationBlock.value,
+                    loop: true,
+                    animationData: CongratsAmination,
+                });
+                animSpeed.setSpeed(0.4);
+                applausAudio();
+                showNotification(t('taskDetails.congratulations'), 'success');
+            }
+        }, 400);
+    }
+};
 
-	const checkedDatesAttributes = computed(() => {
-		return [
-			...checkedDates.value.map(date => ({
-				key: `checked-${date}`,
-				dates: [new Date(date)],
-				highlight: { contentClass: "vc-highlight-green" },
-			})),
-			...missedDates.value.map(date => ({
-				key: `missed-${date}`,
-				dates: [new Date(date)],
-				highlight: { contentClass: "vc-highlight-red" },
-			})),
-		];
-	});
+const allowedDateRange = computed(() => {
+    if (selectedTask.value) {
+        const start = convertToDate(selectedTask.value.dateRange.start);
+        const end = convertToDate(selectedTask.value.dateRange.end);
+        return {
+            start: start.toLocaleDateString('en-CA'),
+            end: end.toLocaleDateString('en-CA')
+        };
+    }
+    return {start: null, end: null};
+});
 
-	const isDateMarked = computed(() => {
-		const date = selectedDate.value;
-		if (!date) return false;
-		return checkedDates.value.includes(date) || missedDates.value.includes(date);
-	});
+const onDateSelect = (day) => {
+    if (!day || !day.id || !selectedTask.value) return;
+    const selDate = new Date(day.id);
+    selDate.setHours(0, 0, 0, 0);
+    const taskStart = new Date(convertToDate(selectedTask.value.dateRange.start));
+    taskStart.setHours(0, 0, 0, 0);
+    const taskEnd = new Date(convertToDate(selectedTask.value.dateRange.end));
+    taskEnd.setHours(0, 0, 0, 0);
 
-	const clearTask = async (taskId) => {
-		if (!taskId) return;
+    if (selDate < taskStart || selDate > taskEnd) {
+        console.log("Дата вне диапазона", formatDateLocal(selDate));
+        return;
+    }
+    isDateSelected.value = true;
+    selectedDate.value = formatDateLocal(selDate);
+    console.log("Выбрана", selectedDate.value);
+};
 
-		if (habitStore.tasks.find(t => t.id === taskId)) {
-			habitStore.removeTask(taskId);
-		} else {
-			await taskStore.archiveTask(taskId);
-		}
+const disabledDates = computed(() => {
+    return selectedTask.value?.blockedDates || [];
+});
 
-		const allTasks = [...habitStore.tasks, ...taskStore.tasks];
-		checkedCount.value = allTasks.reduce((sum, task) => sum + (task.checkedDates?.length || 0), 0);
-		missedCount.value = allTasks.reduce((sum, task) => sum + (task.missedDates?.length || 0), 0);
-	};
+const loadTask = () => {
+    habitStore.loadTasks();
+    if (selectedTask.value) {
+        const savedCheckedDates = localStorage.getItem(`task_${selectedTask.value.id}_checkedDates`);
+        if (savedCheckedDates) {
+            checkedDates.value = JSON.parse(savedCheckedDates);
+            selectedTask.value.checkedDates = [...checkedDates.value];
+        }
+        const savedMissedDates = localStorage.getItem(`task_${selectedTask.value.id}_missedDates`);
+        if (savedMissedDates) {
+            missedDates.value = JSON.parse(savedMissedDates);
+            selectedTask.value.missedDates = [...missedDates.value];
+        }
+    }
+};
 
-	const cancelDelete = () => {
-		taskToDelete.value = null;
-		isOpen.value = false;
-		editState.value = false;
-	};
+onMounted(() => {
+    loadTask();
+    if (selectedTask.value) {
+        checkedCount.value = selectedTask.value.checkedDates?.length || 0;
+        missedCount.value = selectedTask.value.missedDates?.length || 0;
+    }
+    // if (allowedDateRange.value.start && allowedDateRange.value.end) {
+    //     const today = getLocalDate();
+    //     if (new Date(today) >= new Date(allowedDateRange.value.start) && new Date(today) <= new Date(allowedDateRange.value.end)) {
+    //         selectedDate.value = today;
+    //     } else {
+    //         selectedDate.value = allowedDateRange.value.start;
+    //     }
+    // }
+});
 
-	const editMenu = () => {
-		isOpen.value = true;
-	};
+const checkedDatesAttributes = computed(() => {
+    return [
+        ...checkedDates.value.map(date => ({
+            key: `checked-${date}`,
+            dates: [new Date(date + 'T00:00:00')],
+            highlight: {contentClass: "vc-highlight-green"},
+        })),
+        ...missedDates.value.map(date => ({
+            key: `missed-${date}`,
+            dates: [new Date(date + 'T00:00:00')],
+            highlight: {contentClass: "vc-highlight-red"},
+        })),
+    ];
+});
 
-	const openConfirmWindow = (taskId) => {
-		taskToDelete.value = taskId;
-		isOpen.value = false;
-		editState.value = true;
-	};
+const isDateMarked = computed(() => {
+    const date = selectedDate.value;
+    if (!date) return true; // Если дата не выбрана – кнопки блокируются
+    const today = getLocalDate(); // Получаем сегодняшнюю дату в формате 'YYYY-MM-DD'
+    if (date !== today) return true; // Если выбрана не сегодняшняя дата – кнопки блокируются
+    // Если выбранная дата сегодня, то проверяем, отмечена ли она уже
+    return checkedDates.value.includes(date) || missedDates.value.includes(date);
+});
 
-	const formatDate = (date) => {
-		const d = convertToDate(date);
-		return d.toLocaleDateString("en-US", {
-			day: "2-digit",
-			month: "2-digit",
-			year: "numeric",
-		});
-	};
+const clearTask = async (taskId) => {
+    if (!taskId) return;
 
-	watch(selectedTask, (newTask) => {
-		if (!newTask) return;
-		checkedDates.value = newTask.checkedDates || [];
-		missedDates.value = newTask.missedDates || [];
-		checkedCount.value = newTask.checkedDates?.length || 0;
-		missedCount.value = newTask.missedDates?.length || 0;
-		if (allowedDateRange.value.start && allowedDateRange.value.end) {
-			const today = getLocalDate();
-			if (
-				new Date(today) >= new Date(allowedDateRange.value.start) &&
-				new Date(today) <= new Date(allowedDateRange.value.end)
-			) {
-				selectedDate.value = today;
-			} else {
-				selectedDate.value = allowedDateRange.value.start;
-			}
-		}
-	}, { immediate: true });
+    if (habitStore.tasks.find(t => t.id === taskId)) {
+        habitStore.removeTask(taskId);
+    } else {
+        await taskStore.archiveTask(taskId);
+    }
 
+    const allTasks = [...habitStore.tasks, ...taskStore.tasks];
+    checkedCount.value = allTasks.reduce((sum, task) => sum + (task.checkedDates?.length || 0), 0);
+    missedCount.value = allTasks.reduce((sum, task) => sum + (task.missedDates?.length || 0), 0);
+};
+
+const cancelDelete = () => {
+    taskToDelete.value = null;
+    isOpen.value = false;
+    editState.value = false;
+};
+
+const editMenu = () => {
+    isOpen.value = true;
+};
+
+const openConfirmWindow = (taskId) => {
+    taskToDelete.value = taskId;
+    isOpen.value = false;
+    editState.value = true;
+};
+onMounted(() => {
+    if (localStorage.getItem('hints_shown') !== 'true') {
+        showHints.value = true
+        localStorage.setItem('hints_shown', 'true')
+    }
+})
+const formatDate = (date) => {
+    const d = convertToDate(date);
+    return d.toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+    });
+};
+
+watch(selectedTask, (newTask) => {
+    if (!newTask) return;
+    checkedDates.value = newTask.checkedDates || [];
+    missedDates.value = newTask.missedDates || [];
+    // if (allowedDateRange.value.start && allowedDateRange.value.end) {
+    //     const today = getLocalDate();
+    //     if (
+    //         new Date(today) >= new Date(allowedDateRange.value.start) &&
+    //         new Date(today) <= new Date(allowedDateRange.value.end)
+    //     ) {
+    //         selectedDate.value = today;
+    //     } else {
+    //         selectedDate.value = allowedDateRange.value.start;
+    //     }
+    // }
+}, {immediate: true});
+
+// Функция для открытия модального окна заметок
+const openNotesModal = () => {
+    if (!selectedDate.value) return;
+
+    // Загружаем существующие заметки для выбранной даты
+    const notes = getDateNotes(selectedDate.value);
+    dateNotes.value = notes || '';
+
+    showNotesModal.value = true;
+};
+
+// Функция для закрытия модального окна заметок
+const closeNotesModal = () => {
+    showNotesModal.value = false;
+    dateNotes.value = '';
+};
+
+// Функция для сохранения заметок к дате
+const saveDateNotes = () => {
+    if (!selectedDate.value) return;
+
+    // Сохраняем заметки в localStorage
+    const notesKey = `task_${selectedTask.value.id}_notes_${selectedDate.value}`;
+    localStorage.setItem(notesKey, dateNotes.value);
+
+    showNotification(t('taskDetails.notesSaved'), 'success');
+    closeNotesModal();
+};
+
+// Функция для получения заметок к дате
+const getDateNotes = (date) => {
+    if (!selectedTask.value || !date) return '';
+
+    const notesKey = `task_${selectedTask.value.id}_notes_${date}`;
+    return localStorage.getItem(notesKey) || '';
+};
+
+// Проверка наличия заметок для выбранной даты
+const hasDateNotes = computed(() => {
+    if (!selectedDate.value) return false;
+    return !!getDateNotes(selectedDate.value);
+});
+
+// Функция для форматирования даты для отображения
+const formatDateForDisplay = (date) => {
+    if (!date) return '';
+
+    const d = new Date(date);
+    return d.toLocaleDateString("ru-RU", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+    });
+};
+
+
+const isDateMissed = (date) => {
+    if (!selectedTask.value || !selectedTask.value.missedDates) return false;
+    return selectedTask.value.missedDates.includes(date);
+};
+
+const isDateActive = (date) => {
+    if (!selectedTask.value) return false;
+
+    const taskDate = new Date(date);
+    const startDate = new Date(selectedTask.value.dateRange.start);
+    const endDate = new Date(selectedTask.value.dateRange.end);
+
+    return taskDate >= startDate && taskDate <= endDate;
+};
+
+const isDateInactive = (date) => {
+    return !isDateActive(date);
+};
+
+const getDateStatus = (date) => {
+    if (isDateChecked(date)) return 'completed'
+    if (isDateMissed(date)) return 'missed'
+    if (isDateActive(date)) return 'active'
+    return 'inactive'
+}
+
+const getStatusText = (status) => {
+    const key = `taskDetails.${status}`
+    return safeTranslate(key)
+}
 </script>
 <style>
 
@@ -439,6 +636,18 @@
 		background-color: #FF3030 !important;
 		color: white !important;
 	}
+.animation__block {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 10;
+    transform: translateY(-50%);
+}
+
+.vc-highlight-red {
+    background-color: #FF3030 !important;
+    color: white !important;
+}
 
 	.vc-highlight-green {
 		background-color: #00D100 !important;
@@ -457,9 +666,9 @@
 		background-color: var(--vc-highlight-bg);
 	}
 
-	.vc-blue {
-		border: none;
-	}
+.vc-blue {
+    border: none;
+}
 
 	.vc-header .vc-arrow {
 		color: var(--vc-arrow-cal);
@@ -497,12 +706,11 @@
 	.checked__wrapper {
 		display: flex;
 		align-items: center;
-		flex-direction: column;
-		background: var(--menu--btn-bg);
+		background: grey;
 		width: 100%;
 		padding: 10px;
 		border-radius: 15px;
-		margin: 5px;
+		margin-bottom: 10px;
 	}
 
 	.checked__text {

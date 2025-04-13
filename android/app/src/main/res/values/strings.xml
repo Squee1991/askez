@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Askeza</string>
-    <string name="title_activity_main">Askeza</string>
+    <string name="app_name">askeza</string>
+    <string name="title_activity_main">askeza</string>
     <string name="package_name">com.yourname.askeza</string>
     <string name="custom_url_scheme">com.yourname.askeza</string>
 </resources>
