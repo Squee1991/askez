@@ -26,89 +26,6 @@
             </div>
         </div>
 
-        <!-- Модальное окно для редактирования задачи -->
-        <div v-if="showEditModal" class="edit__modal">
-            <div class="edit__modal-content">
-                <div class="edit__modal-header">
-                    <h3 class="edit__modal-title">{{ t('taskDetails.editTask') }}</h3>
-                    <button class="edit__modal-close" @click="closeEditModal">×</button>
-                </div>
-                <div class="edit__modal-body">
-                    <div class="edit__form-group">
-                        <label class="edit__label">{{ t('taskDetails.taskName') }}</label>
-                        <input
-                            v-model="editedTask.goal"
-                            class="edit__input"
-                            type="text"
-                            :placeholder="t('taskDetails.taskNamePlaceholder')"
-                        />
-                    </div>
-                    <div class="edit__form-group">
-                        <label class="edit__label">{{ t('taskDetails.dateRange') }}</label>
-                        <div class="edit__date-range">
-                            <div class="edit__date-input">
-                                <label class="edit__date-label">{{ t('taskDetails.startDate') }}</label>
-                                <input
-                                    v-model="editedTask.dateRange.start"
-                                    class="edit__input"
-                                    type="date"
-                                />
-                            </div>
-                            <div class="edit__date-input">
-                                <label class="edit__date-label">{{ t('taskDetails.endDate') }}</label>
-                                <input
-                                    v-model="editedTask.dateRange.end"
-                                    class="edit__input"
-                                    type="date"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="edit__form-group">
-                        <label class="edit__label">{{ t('taskDetails.notes') }}</label>
-                        <textarea
-                            v-model="editedTask.notes"
-                            class="edit__textarea"
-                            :placeholder="t('taskDetails.notesPlaceholder')"
-                        ></textarea>
-                    </div>
-                </div>
-                <div class="edit__modal-footer">
-                    <button class="edit__btn edit__btn-cancel" @click="closeEditModal">
-                        {{ t('taskDetails.cancel') }}
-                    </button>
-                    <button class="edit__btn edit__btn-save" @click="saveTaskChanges">
-                        {{ t('taskDetails.save') }}
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Модальное окно для заметок к дате -->
-        <div v-if="showNotesModal" class="notes__modal">
-            <div class="notes__modal-content">
-                <div class="notes__modal-header">
-                    <h3 class="notes__modal-title">{{ t('taskDetails.notesForDate', { date: formatDateForDisplay(selectedDate) }) }}</h3>
-                    <button class="notes__modal-close" @click="closeNotesModal">×</button>
-                </div>
-                <div class="notes__modal-body">
-                    <textarea
-                        v-model="dateNotes"
-                        class="notes__textarea"
-                        :placeholder="t('taskDetails.addNotesPlaceholder')"
-                    ></textarea>
-                </div>
-                <div class="notes__modal-footer">
-                    <button class="notes__btn notes__btn-cancel" @click="closeNotesModal">
-                        {{ t('taskDetails.cancel') }}
-                    </button>
-                    <button class="notes__btn notes__btn-save" @click="saveDateNotes">
-                        {{ t('taskDetails.save') }}
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <div v-if="selectedTask">
             <div class="task__name">
                 <NuxtLink class="task__icon-back" to="/welcomePage" aria-label="Вернуться на главный экран">
@@ -169,12 +86,6 @@
                     <div class="range__date-text">{{ t('taskDetails.endDate') }}</div>
                     <div class="range__date__data end">{{ formatDate(selectedTask.dateRange.end) }}</div>
                 </div>
-            </div>
-
-            <!-- Подсказка для календаря -->
-            <div v-if="!selectedDate" class="calendar__hint">
-                <div class="calendar__hint-icon">📅</div>
-                <div class="calendar__hint-text">{{ t('taskDetails.selectDateHint') }}</div>
             </div>
 
             <div class="date__picker">
@@ -245,69 +156,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Расширенная статистика -->
-            <div class="task__stats">
-                <div class="task__stats-title">{{ t('taskDetails.statistics') }}</div>
-                <div class="task__stats-content">
-                    <div class="task__stats-item">
-                        <div class="task__stats-label">{{ t('taskDetails.streak') }}</div>
-                        <div class="task__stats-value">{{ calculateStreak() }}</div>
-                    </div>
-                    <div class="task__stats-item">
-                        <div class="task__stats-label">{{ t('taskDetails.completionRate') }}</div>
-                        <div class="task__stats-value">{{ calculateCompletionRate() }}%</div>
-                    </div>
-                    <div class="task__stats-item">
-                        <div class="task__stats-label">{{ t('taskDetails.remainingDays') }}</div>
-                        <div class="task__stats-value">{{ calculateRemainingDays() }}</div>
-                    </div>
-                </div>
-
-                <!-- Дополнительная статистика -->
-                <div class="task__stats-details">
-                    <div class="task__stats-row">
-                        <div class="task__stats-detail">
-                            <div class="task__stats-detail-label">{{ t('taskDetails.bestStreak') }}</div>
-                            <div class="task__stats-detail-value">{{ calculateBestStreak() }}</div>
-                        </div>
-                        <div class="task__stats-detail">
-                            <div class="task__stats-detail-label">{{ t('taskDetails.averageStreak') }}</div>
-                            <div class="task__stats-detail-value">{{ calculateAverageStreak() }}</div>
-                        </div>
-                    </div>
-                    <div class="task__stats-row">
-                        <div class="task__stats-detail">
-                            <div class="task__stats-detail-label">{{ t('taskDetails.consistency') }}</div>
-                            <div class="task__stats-detail-value">{{ calculateConsistency() }}%</div>
-                        </div>
-                        <div class="task__stats-detail">
-                            <div class="task__stats-detail-label">{{ t('taskDetails.daysLeft') }}</div>
-                            <div class="task__stats-detail-value">{{ calculateDaysLeft() }}</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- График активности -->
-                <div class="task__activity-chart">
-                    <div class="task__activity-title">{{ t('taskDetails.activityChart') }}</div>
-                    <div class="task__activity-bars">
-                        <div
-                            v-for="(day, index) in getLast7Days()"
-                            :key="index"
-                            class="task__activity-bar"
-                            :class="{
-                                'completed': isDateChecked(day),
-                                'missed': isDateMissed(day),
-                                'active': isDateActive(day),
-                                'inactive': isDateInactive(day)
-                            }"
-                            :title="formatActivityTooltip(day)"
-                        ></div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Заметки к задаче -->
             <div v-if="selectedTask.notes" class="task__notes">
                 <div class="task__notes-title">{{ t('taskDetails.taskNotes') }}</div>
@@ -339,14 +187,14 @@ const {locale, t, te} = useI18n();
 
 const showHints = ref(true);
 
-const hintSteps = [
-    {selector: '.task__icon-back', text: 'Нажмите, чтобы вернуться на главный экран'},
-    {selector: '.task__goal-name', text: 'Это название вашей цели'},
-    {selector: '.range__date-wrapper', text: 'Здесь отображаются даты начала и конца'},
-    {selector: '.vc-container', text: 'Выберите дату в этом календаре'},
-    {selector: '.task__details-btns', text: 'Отметьте выполнение задачи за выбранную дату'},
-    {selector: '.progress__container-details', text: 'Прогресс задачи отображается здесь'},
-];
+// const hintSteps = [
+//     {selector: '.task__icon-back', text: 'Нажмите, чтобы вернуться на главный экран'},
+//     {selector: '.task__goal-name', text: 'Это название вашей цели'},
+//     {selector: '.range__date-wrapper', text: 'Здесь отображаются даты начала и конца'},
+//     {selector: '.vc-container', text: 'Выберите дату в этом календаре'},
+//     {selector: '.task__details-btns', text: 'Отметьте выполнение задачи за выбранную дату'},
+//     {selector: '.progress__container-details', text: 'Прогресс задачи отображается здесь'},
+// ];
 
 const animationBlock = ref(null);
 const editIcon = ref(EditIcon);
@@ -435,69 +283,6 @@ const closeNotification = () => {
     notification.value.show = false;
 };
 
-// Функция для расчета текущей серии выполненных задач
-const calculateStreak = () => {
-    if (!selectedTask.value || !selectedTask.value.checkedDates || selectedTask.value.checkedDates.length === 0) {
-        return 0;
-    }
-
-    const sortedDates = [...selectedTask.value.checkedDates].sort();
-    let streak = 1;
-    let maxStreak = 1;
-
-    for (let i = 1; i < sortedDates.length; i++) {
-        const currentDate = new Date(sortedDates[i]);
-        const prevDate = new Date(sortedDates[i-1]);
-
-        // Проверяем, что даты идут подряд
-        const diffDays = Math.floor((currentDate - prevDate) / (1000 * 60 * 60 * 24));
-
-        if (diffDays === 1) {
-            streak++;
-            maxStreak = Math.max(maxStreak, streak);
-        } else {
-            streak = 1;
-        }
-    }
-
-    return maxStreak;
-};
-
-// Функция для расчета процента выполнения
-const calculateCompletionRate = () => {
-    if (!selectedTask.value || !selectedTask.value.checkedDates) {
-        return 0;
-    }
-
-    const totalDays = Math.max(
-        1,
-        (new Date(selectedTask.value.dateRange.end) - new Date(selectedTask.value.dateRange.start)) / (1000 * 60 * 60 * 24) + 1
-    );
-
-    const completedDays = selectedTask.value.checkedDates.length;
-    return Math.round((completedDays / totalDays) * 100);
-};
-
-// Функция для расчета оставшихся дней
-const calculateRemainingDays = () => {
-    if (!selectedTask.value) {
-        return 0;
-    }
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const endDate = new Date(selectedTask.value.dateRange.end);
-    endDate.setHours(0, 0, 0, 0);
-
-    if (today > endDate) {
-        return 0;
-    }
-
-    return Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
-};
-
-// Модифицируем функцию misscCheckClick для отображения уведомлений
 const misscCheckClick = (btn) => {
     if (!selectedTask.value) return;
     if (!selectedDate.value) {
@@ -736,55 +521,6 @@ watch(selectedTask, (newTask) => {
     // }
 }, {immediate: true});
 
-// Состояния для модальных окон
-const showEditModal = ref(false);
-const showNotesModal = ref(false);
-const editedTask = ref({});
-const dateNotes = ref('');
-
-// Функция для открытия модального окна редактирования
-const openEditModal = () => {
-    editedTask.value = JSON.parse(JSON.stringify(selectedTask.value));
-    showEditModal.value = true;
-};
-
-// Функция для закрытия модального окна редактирования
-const closeEditModal = () => {
-    showEditModal.value = false;
-};
-
-// Функция для сохранения изменений задачи
-const saveTaskChanges = () => {
-    if (!editedTask.value || !editedTask.value.id) return;
-
-    // Проверка валидности данных
-    if (!editedTask.value.goal || !editedTask.value.dateRange.start || !editedTask.value.dateRange.end) {
-        showNotification(t('taskDetails.fillAllFields'), 'error');
-        return;
-    }
-
-    // Проверка корректности диапазона дат
-    const startDate = new Date(editedTask.value.dateRange.start);
-    const endDate = new Date(editedTask.value.dateRange.end);
-
-    if (startDate > endDate) {
-        showNotification(t('taskDetails.invalidDateRange'), 'error');
-        return;
-    }
-
-    // Обновляем задачу
-    selectedTask.value.goal = editedTask.value.goal;
-    selectedTask.value.dateRange = editedTask.value.dateRange;
-    selectedTask.value.notes = editedTask.value.notes;
-
-    // Сохраняем изменения
-    habitStore.updateTask(selectedTask.value);
-    habitStore.saveTasks();
-
-    showNotification(t('taskDetails.taskUpdated'), 'success');
-    closeEditModal();
-};
-
 // Функция для открытия модального окна заметок
 const openNotesModal = () => {
     if (!selectedDate.value) return;
@@ -840,129 +576,6 @@ const formatDateForDisplay = (date) => {
     });
 };
 
-// Функция для расчета лучшей серии
-const calculateBestStreak = () => {
-    if (!selectedTask.value || !selectedTask.value.checkedDates || selectedTask.value.checkedDates.length === 0) {
-        return 0;
-    }
-
-    const sortedDates = [...selectedTask.value.checkedDates].sort();
-    let currentStreak = 1;
-    let bestStreak = 1;
-
-    for (let i = 1; i < sortedDates.length; i++) {
-        const currentDate = new Date(sortedDates[i]);
-        const prevDate = new Date(sortedDates[i-1]);
-
-        // Проверяем, что даты идут подряд
-        const diffDays = Math.floor((currentDate - prevDate) / (1000 * 60 * 60 * 24));
-
-        if (diffDays === 1) {
-            currentStreak++;
-            bestStreak = Math.max(bestStreak, currentStreak);
-        } else {
-            currentStreak = 1;
-        }
-    }
-
-    return bestStreak;
-};
-
-// Функция для расчета средней серии
-const calculateAverageStreak = () => {
-    if (!selectedTask.value || !selectedTask.value.checkedDates || selectedTask.value.checkedDates.length === 0) {
-        return 0;
-    }
-
-    const sortedDates = [...selectedTask.value.checkedDates].sort();
-    let streaks = [];
-    let currentStreak = 1;
-
-    for (let i = 1; i < sortedDates.length; i++) {
-        const currentDate = new Date(sortedDates[i]);
-        const prevDate = new Date(sortedDates[i-1]);
-
-        // Проверяем, что даты идут подряд
-        const diffDays = Math.floor((currentDate - prevDate) / (1000 * 60 * 60 * 24));
-
-        if (diffDays === 1) {
-            currentStreak++;
-        } else {
-            if (currentStreak > 1) {
-                streaks.push(currentStreak);
-            }
-            currentStreak = 1;
-        }
-    }
-
-    // Добавляем последнюю серию, если она есть
-    if (currentStreak > 1) {
-        streaks.push(currentStreak);
-    }
-
-    if (streaks.length === 0) return 1;
-
-    const sum = streaks.reduce((acc, val) => acc + val, 0);
-    return Math.round(sum / streaks.length);
-};
-
-// Функция для расчета последовательности
-const calculateConsistency = () => {
-    if (!selectedTask.value || !selectedTask.value.checkedDates || selectedTask.value.checkedDates.length === 0) {
-        return 0;
-    }
-
-    const totalDays = Math.max(
-        1,
-        (new Date(selectedTask.value.dateRange.end) - new Date(selectedTask.value.dateRange.start)) / (1000 * 60 * 60 * 24) + 1
-    );
-
-    const completedDays = selectedTask.value.checkedDates.length;
-    const missedDays = selectedTask.value.missedDates?.length || 0;
-
-    // Последовательность = (выполненные дни) / (выполненные дни + пропущенные дни)
-    return Math.round((completedDays / (completedDays + missedDays)) * 100);
-};
-
-// Функция для расчета оставшихся дней
-const calculateDaysLeft = () => {
-    if (!selectedTask.value) {
-        return 0;
-    }
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const endDate = new Date(selectedTask.value.dateRange.end);
-    endDate.setHours(0, 0, 0, 0);
-
-    if (today > endDate) {
-        return 0;
-    }
-
-    return Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
-};
-
-// Функция для получения последних 7 дней
-const getLast7Days = () => {
-    const days = [];
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    for (let i = 6; i >= 0; i--) {
-        const date = new Date(today);
-        date.setDate(date.getDate() - i);
-        days.push(date.toISOString().split('T')[0]);
-    }
-
-    return days;
-};
-
-// Функции для проверки статуса даты
-const isDateChecked = (date) => {
-    if (!selectedTask.value || !selectedTask.value.checkedDates) return false;
-    return selectedTask.value.checkedDates.includes(date);
-};
 
 const isDateMissed = (date) => {
     if (!selectedTask.value || !selectedTask.value.missedDates) return false;
@@ -994,45 +607,6 @@ const getStatusText = (status) => {
     const key = `taskDetails.${status}`
     return safeTranslate(key)
 }
-
-// Функция для форматирования подсказки активности
-const formatActivityTooltip = (date) => {
-    const formattedDate = new Date(date).toLocaleDateString("ru-RU", {
-        day: "2-digit",
-        month: "2-digit",
-    });
-
-    const status = getDateStatus(date);
-    const statusText = getStatusText(status);
-
-    return `${formattedDate}: ${statusText}`;
-};
-
-// Функция для безопасного перевода
-const safeTranslate = (key) => {
-    return te(key) ? t(key) : key
-}
-
-// Функция для определения класса активности дня
-const getActivityClass = (date) => {
-    if (!selectedTask.value) return 'inactive';
-
-    if (selectedTask.value.checkedDates?.includes(date)) {
-        return 'completed';
-    } else if (selectedTask.value.missedDates?.includes(date)) {
-        return 'missed';
-    } else {
-        const taskDate = new Date(date);
-        const startDate = new Date(selectedTask.value.dateRange.start);
-        const endDate = new Date(selectedTask.value.dateRange.end);
-
-        if (taskDate >= startDate && taskDate <= endDate) {
-            return 'active';
-        } else {
-            return 'inactive';
-        }
-    }
-};
 </script>
 <style>
 .animation__block {
@@ -1349,26 +923,6 @@ const getActivityClass = (date) => {
         transform: translateX(0);
         opacity: 1;
     }
-}
-
-/* Стили для подсказки календаря */
-.calendar__hint {
-    display: flex;
-    align-items: center;
-    background-color: rgba(0, 188, 212, 0.1);
-    border-radius: 8px;
-    padding: 10px 15px;
-    margin: 10px 0;
-}
-
-.calendar__hint-icon {
-    font-size: 20px;
-    margin-right: 10px;
-}
-
-.calendar__hint-text {
-    font-size: 14px;
-    color: var(--text-color);
 }
 
 /* Стили для подсказок кнопок */

@@ -1,7 +1,0 @@
-{
-
-  "appId": "com.pandarius.ascetic",
-  "appName": "ascetic-app",
-  "webDir": "dist",
-  "bundledWebRuntime": false
-}
