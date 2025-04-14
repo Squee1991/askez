@@ -19,6 +19,9 @@
 	"menu": {
 		"title": "Menü"
 	},
+	"color": {
+		"value": "Farbe wählen"
+	},
 	"meniu": [
 		"Konto",
 		"Über die App",

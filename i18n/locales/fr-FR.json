@@ -6,6 +6,15 @@
 	"settings": {
 		"title": "Paramètres"
 	},
+	"color": {
+		"value": "Choisissez une couleur"
+	},
+	"congrats": {
+		"done": "Vous avez atteint votre objectif avec succès",
+		"notDone": "Vous n'avez pas atteint votre objectif",
+		"marked": "Réussi aujourd’hui",
+		"missed": "Échoué aujourd’hui"
+	},
 	"buyPremium": {
 		"buy": "Mensuel",
 		"plus": "Avantages"
@@ -104,6 +113,11 @@
 	"checkedBtns": {
 		"done": "Terminé",
 		"missed": "Manqué"
+	},
+	"notAllowed": {
+		"done": "Date déjà marquée",
+		"outside": "Impossible de marquer une date hors de la plage",
+		"onlyToday": "Vous ne pouvez marquer qu'aujourd'hui"
 	},
 	"achieve": {
 		"1": "Terminer la première askeza",

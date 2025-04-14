@@ -251,16 +251,6 @@
 		return '/images/33.png'
 	})
 
-	// function handleClick() {
-	// 	clicked.value = true
-	// 	setTimeout(() => {
-	// 		isButtonVisible.value = false
-	// 		setTimeout(() => {
-	// 			isOpen.value = true
-	// 		}, 500)
-	// 	}, 2000)
-	// }
-
 	onMounted(() => {
 		store.updateAllProgress()
 		setTimeout(() => {

@@ -16,7 +16,7 @@
 
 <script setup>
 	import {defineProps} from 'vue'
-	import LickPanda from '../../assets/images/licking-pan.svg'
+	import LickPanda from '../../assets/images/diamond.svg'
 	import Close from '../../assets/images/close.svg'
 
 	const props = defineProps({
@@ -68,6 +68,7 @@
 		position: absolute;
 		top: 10px;
 		right: 10px;
+		cursor: pointer;
 	}
 
 	.premium__window {
@@ -103,13 +104,18 @@
 
 	.premium__premium__window-btn {
 		width: 100%;
-		background: #e7bd6f;
+		background: #dda742;
 		font-family: "Nunito", serif;
 		display: flex;
 		justify-content: center;
 		color: white;
 		padding: 10px;
-		border-radius: 15px;
+		border-radius: 12px;
+		font-size: 18px;
+	}
+
+	.premium__premium__window-btn:active {
+		background: #e7bd6f;
 	}
 
 </style>

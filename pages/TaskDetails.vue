@@ -1,26 +1,26 @@
 <template>
 	<div class="update__date-wrapper">
 		<div ref="animationBlock" class="animation__block"></div>
-		<!-- Уведомления и сообщения -->
-		<div v-if="notification.show" :class="['notification', notification.type]" @click="closeNotification">
-			<div class="notification__icon">
-				<span v-if="notification.type === 'success'">✓</span>
-				<span v-else-if="notification.type === 'error'">!</span>
-				<span v-else-if="notification.type === 'info'">i</span>
-			</div>
+		<div :class="['notification', notification.type, notification.show ? 'active' : '']" @click="closeNotification">
 			<div class="notification__message">{{ notification.message }}</div>
 			<button class="notification__close" @click.stop="closeNotification">×</button>
 		</div>
-		<div v-if="isOpen" class="confirm__content-wrapper-overlay" @click="cancelDelete">
-			<div :class="{'show__confirm': isOpen}" class="confirm__window" @click.stop>
+		<div>
+			<div :class="{'not__allowed': notAllowed.show}" class="not__allowed-data">
+				{{ notAllowed.message }}
+			</div>
+		</div>
+		<div v-if="isOpen" class="overlay__confirm">
+			<div class="confirm__window">
 				<div class="confirm__content-wrapper">
-					<div class="confirm__title">{{ $t('delConfirm.title') }}</div>
-					<div class="confirm__text"> При удалении задача попадает в архив</div>
+					<img class="out__icon" src="../assets/images/garbage.svg" alt="">
+					<div class="confirm__title">{{ t('delConfirm.title') }}</div>
 					<div class="confirm__btns">
 						<NuxtLink @click="clearTask(selectedTask.id)" class="confirm__btn" to="/welcomePage">
-							<button class="confirm__btn">{{ $t('delConfirm.accept') }}</button>
+							<button class="confirm__btn">{{ t('delConfirm.accept') }}</button>
 						</NuxtLink>
-						<button @click="cancelDelete" class="btn-green confirm__btn">{{ $t('delConfirm.reject') }}</button>
+						<button @click="cancelDelete" class="btn-green confirm__btn">{{ t('delConfirm.reject') }}
+						</button>
 					</div>
 				</div>
 			</div>
@@ -69,6 +69,7 @@
 		C186.124,153.768,186.063,161.04,183.474,166.147z"/>
 </g>
 </svg>
+
 				</NuxtLink>
 				<span class="task__goal-name">{{ selectedTask.goal }}</span>
 				<div class="edit__menu-wrapper">
@@ -99,6 +100,7 @@
 					:attributes="[...checkedDatesAttributes, ...activeDateAttributes]"
 				/>
 			</div>
+
 			<div class="task__details-btns">
 				<div v-for="(btn, index) in ['done', 'missed']" :key="index" class="task__details-btn"
 				     :class="[btn === 'done' ? 'check' : '', isDateMarked ? 'disabled' : '']">
@@ -111,51 +113,42 @@
 					>
 						{{ t(`checkedBtns.${btn}`) }}
 					</button>
-					<div v-if="isDateMarked && selectedDate" class="btn__hint">
-						{{ t('taskDetails.dateAlreadyMarked') }}
+				</div>
+			</div>
+			<div class="checked-progress">
+				<div class="checked__progress-wrapper">
+					<div class="checked__wrapper">
+						<img src="../assets/images/checked.svg" alt="" class="checked__icon"/>
+						<span class="checked__count">{{ checkedCount }}</span>
+						<span class="checked__text checked__green"> {{t('CheckedProgress.checked')}}</span>
+					</div>
+					<div class="checked__wrapper">
+						<img src="../assets/images/cancel.svg" alt="" class="checked__icon"/>
+						<span class="checked__count">{{ missedCount }}</span>
+						<span class="checked__text">{{ t('CheckedProgress.notChecked') }}</span>
 					</div>
 				</div>
 			</div>
-
-			<!-- Кнопка для добавления заметок к выбранной дате -->
-			<div v-if="selectedDate && (isDateMarked || hasDateNotes)" class="notes__btn-container">
-				<button class="notes__btn" @click="openNotesModal">
-					<span class="notes__btn-icon">📝</span>
-					{{ hasDateNotes ? t('taskDetails.editNotes') : t('taskDetails.addNotes') }}
-				</button>
-			</div>
-
 			<div class="progress__container-details">
 				<ProgressBar
 					:progress="selectedTask.progress"
 					:progressMiss="selectedTask.progressMiss"
 					:history="selectedTask.history"
-					:size="190"
+					:size="170"
 					:padding="25"
 				/>
 			</div>
-			<div class="checked-progress">
-				<div class="checked__progress-wrapper">
-					<div class="checked__wrapper">
-						<img src="../assets/images/checkIcon.svg" alt="" class="checked__icon"/>
-						<span class="checked__text checked__green">{{ checkedCount }} {{
-                            t('CheckedProgress.checked')
-                            }}</span>
-					</div>
-					<div class="checked__wrapper">
-						<img src="../assets/images/cancel.svg" alt="" class="checked__icon"/>
-						<span class="checked__count">{{ missedCount }}</span>
-						<span class="checked__text"> {{ $t('CheckedProgress.notChecked') }}</span>
-					</div>
-				</div>
+			<div v-if="selectedTask.notes" class="task__notes">
+				<div class="task__notes-title">{{ t('taskDetails.taskNotes') }}</div>
+				<div class="task__notes-content">{{ selectedTask.notes }}</div>
 			</div>
 		</div>
 	</div>
-	<StepHint
-		:steps="hintSteps"
-		:show="showHints"
-		@close="showHints = false"
-	/>
+	<!--	<StepHint-->
+	<!--		:steps="hintSteps"-->
+	<!--		:show="showHints"-->
+	<!--		@close="showHints = false"-->
+	<!--	/>-->
 </template>
 
 <script setup>
@@ -171,19 +164,16 @@
 	import {useTaskStore} from '../stores/OfflineTaskStore.js'
 	import StepHint from '../src/components/StepHint.vue'
 
-	const {locale, t, te} = useI18n();
-
+	const {locale, t} = useI18n();
 	let showHints = ref(true);
-
-	const hintSteps = [
-		{selector: '.task__icon-back', text: 'Нажмите, чтобы вернуться на главный экран'},
-		{selector: '.task__goal-name', text: 'Это название вашей цели'},
-		{selector: '.range__date-wrapper', text: 'Здесь отображаются даты начала и конца'},
-		{selector: '.vc-container', text: 'Выберите дату в этом календаре'},
-		{selector: '.task__details-btns', text: 'Отметьте выполнение задачи за выбранную дату'},
-		{selector: '.progress__container-details', text: 'Прогресс задачи отображается здесь'},
-	];
-
+	// const hintSteps = [
+	//     {selector: '.task__icon-back', text: 'Нажмите, чтобы вернуться на главный экран'},
+	//     {selector: '.task__goal-name', text: 'Это название вашей цели'},
+	//     {selector: '.range__date-wrapper', text: 'Здесь отображаются даты начала и конца'},
+	//     {selector: '.vc-container', text: 'Выберите дату в этом календаре'},
+	//     {selector: '.task__details-btns', text: 'Отметьте выполнение задачи за выбранную дату'},
+	//     {selector: '.progress__container-details', text: 'Прогресс задачи отображается здесь'},
+	// ];
 	const animationBlock = ref(null);
 	const editIcon = ref(EditIcon);
 	const editState = ref(false);
@@ -198,11 +188,6 @@
 	const habitStore = useHabitStore();
 	const selectedDate = ref(null);
 	const taskStore = useTaskStore();
-
-	const applausAudio = () => {
-		if (!habitStore.isAudioEnabled) return;
-		new Audio('/sounds/sound.mp3').play();
-	};
 	const activeDateAttributes = computed(() => {
 		if (!selectedDate.value) return [];
 		return [{
@@ -212,6 +197,20 @@
 		}];
 	});
 
+	const notAllowed = ref({show: false, message: ''})
+	const showNotAllowed = (key) => {
+		notAllowed.value = {
+			show: true,
+			message: t(`notAllowed.${key}`),
+		}
+		setTimeout(() => {
+			notAllowed.value.show = false
+		}, 2000)
+	}
+	const applausAudio = () => {
+		const audio = new Audio('/sounds/cry.wav')
+		audio.play()
+	}
 
 	const selectedTask = computed(() => {
 		const id = router.query.id;
@@ -238,96 +237,57 @@
 		const day = d.getDate().toString().padStart(2, '0');
 		return `${year}-${month}-${day}`;
 	};
-
-	const getCurrentDate = () => {
-		const d = new Date();
-		d.setHours(0, 0, 0, 0);
-		return d.toLocaleDateString('en-CA');
-	};
-
 	// Добавляем состояние для уведомлений
 	const notification = ref({
 		show: false,
 		message: '',
-		type: 'info' // 'info', 'success', 'error'
+		type: ''
 	});
 
-	// Функция для отображения уведомлений
-	const showNotification = (message, type = 'info') => {
+	const showNotification = (message, type) => {
 		notification.value = {
 			show: true,
 			message,
 			type
 		};
-
-		// Автоматически скрываем уведомление через 3 секунды
 		setTimeout(() => {
-			closeNotification();
-		}, 3000);
+			notification.value.show = false;
+		}, 2000);
 	};
-
-
+	// Функция для закрытия уведомления
 	const closeNotification = () => {
 		notification.value.show = false;
 	};
 
 	const misscCheckClick = (btn) => {
 		if (!selectedTask.value) return;
-		if (!selectedDate.value) {
-			showNotification(t('taskDetails.selectDateFirst'), 'error');
-			return;
-		}
-		const selDateStr = selectedDate.value;
-		const taskStartStr = convertToDate(selectedTask.value.dateRange.start)
-		.toLocaleDateString('en-CA');
-		const taskEndStr = convertToDate(selectedTask.value.dateRange.end)
-		.toLocaleDateString('en-CA');
 
-		if (selDateStr < taskStartStr || selDateStr > taskEndStr) {
-			showNotification(t('taskDetails.dateOutOfRange'), 'error');
-			return;
-		}
-		if (checkedDates.value.includes(selDateStr) || missedDates.value.includes(selDateStr)) {
-			showNotification(t('taskDetails.dateAlreadyMarked'), 'info');
-			return;
-		}
-		// Добавляем дату в соответствующий массив и обновляем реактивные значения
+		const selDateStr = selectedDate.value;
+		const taskStartStr = convertToDate(selectedTask.value.dateRange.start).toLocaleDateString('en-CA');
+		const taskEndStr = convertToDate(selectedTask.value.dateRange.end).toLocaleDateString('en-CA');
+
 		if (btn === "done") {
-			if (!selectedTask.value.checkedDates) {
-				selectedTask.value.checkedDates = [];
-			}
+			if (!selectedTask.value.checkedDates) selectedTask.value.checkedDates = [];
 			selectedTask.value.checkedDates.push(selDateStr);
 			checkedDates.value = [...selectedTask.value.checkedDates];
-			showNotification(t('taskDetails.taskMarkedAsDone'), 'success');
 		} else if (btn === "missed") {
-			if (!selectedTask.value.missedDates) {
-				selectedTask.value.missedDates = [];
-			}
+			if (!selectedTask.value.missedDates) selectedTask.value.missedDates = [];
 			selectedTask.value.missedDates.push(selDateStr);
 			missedDates.value = [...selectedTask.value.missedDates];
-			showNotification(t('taskDetails.taskMarkedAsMissed'), 'info');
 		}
 
-		// Расчет прогресса
 		const totalDays = Math.max(1, (new Date(taskEndStr) - new Date(taskStartStr)) / (1000 * 60 * 60 * 24) + 1);
 		const step = (100 / totalDays).toFixed(2);
 
-		if (!selectedTask.value.history) {
-			selectedTask.value.history = [];
-		}
+		if (!selectedTask.value.history) selectedTask.value.history = [];
+
 		const currentProgress = selectedTask.value.progress || 0;
 		const currentProgressMiss = selectedTask.value.progressMiss || 0;
 		const remainingProgress = 100 - currentProgress - currentProgressMiss;
-		if (remainingProgress <= 0) return;
 
-		if (btn === "done") {
+		if (remainingProgress > 0) {
 			selectedTask.value.history.push({
-				color: "#4FC55C",
-				percent: Math.min(parseFloat(step), remainingProgress),
-			});
-		} else if (btn === "missed") {
-			selectedTask.value.history.push({
-				color: "#FF5C00",
+				color: btn === 'done' ? "#4FC55C" : "#FF5C00",
 				percent: Math.min(parseFloat(step), remainingProgress),
 			});
 		}
@@ -336,19 +296,30 @@
 		habitStore.updateProgress(selectedTask.value);
 		habitStore.saveTasks();
 
-		if (selectedTask.value.progress === 100) {
-			setTimeout(() => {
-				if (animationBlock.value) {
-					const animSpeed = Lottie.loadAnimation({
-						container: animationBlock.value,
-						loop: true,
-						animationData: CongratsAmination,
-					});
-					animSpeed.setSpeed(0.4);
-					applausAudio();
-					showNotification(t('taskDetails.congratulations'), 'success');
-				}
-			}, 400);
+		const isCompleted = selectedTask.value.progress + selectedTask.value.progressMiss >= 100;
+		const hasMisses = selectedTask.value.progressMiss > 0;
+		if (isCompleted) {
+			const message = hasMisses ? t('congrats.notDone') : t('congrats.done');
+			const type = hasMisses ? 'notDone' : 'marked';
+			showNotification(message, type);
+
+			if (!hasMisses && btn === "done") {
+				setTimeout(() => {
+					if (animationBlock.value) {
+						const anim = Lottie.loadAnimation({
+							container: animationBlock.value,
+							loop: false,
+							animationData: CongratsAmination,
+						});
+						anim.setSpeed(0.4);
+						applausAudio();
+					}
+				}, 400);
+			}
+		} else {
+			const message = btn === "done" ? t('congrats.marked') : t('congrats.missed');
+			const type = btn === "done" ? "success" : "missed";
+			showNotification(message, type);
 		}
 	};
 
@@ -366,15 +337,22 @@
 
 	const onDateSelect = (day) => {
 		if (!day || !day.id || !selectedTask.value) return;
+
 		const selDate = new Date(day.id);
 		selDate.setHours(0, 0, 0, 0);
+		const formatted = formatDateLocal(selDate);
 		const taskStart = new Date(convertToDate(selectedTask.value.dateRange.start));
 		taskStart.setHours(0, 0, 0, 0);
 		const taskEnd = new Date(convertToDate(selectedTask.value.dateRange.end));
 		taskEnd.setHours(0, 0, 0, 0);
 
 		if (selDate < taskStart || selDate > taskEnd) {
-			console.log("Дата вне диапазона", formatDateLocal(selDate));
+			showNotAllowed('outside')
+			return;
+		}
+
+		if (checkedDates.value.includes(formatted) || missedDates.value.includes(formatted)) {
+			showNotAllowed('done');
 			return;
 		}
 		isDateSelected.value = true;
@@ -433,12 +411,16 @@
 		];
 	});
 
+
 	const isDateMarked = computed(() => {
 		const date = selectedDate.value;
 		if (!date) return true; // Если дата не выбрана – кнопки блокируются
 		const today = getLocalDate(); // Получаем сегодняшнюю дату в формате 'YYYY-MM-DD'
-		if (date !== today) return true; // Если выбрана не сегодняшняя дата – кнопки блокируются
-		// Если выбранная дата сегодня, то проверяем, отмечена ли она уже
+		if (date !== today) {
+			showNotAllowed('onlyToday')
+			return true;
+		}
+
 		return checkedDates.value.includes(date) || missedDates.value.includes(date);
 	});
 
@@ -471,6 +453,7 @@
 		isOpen.value = false;
 		editState.value = true;
 	};
+
 	onMounted(() => {
 		if (localStorage.getItem('hints_shown') !== 'true') {
 			showHints.value = true
@@ -503,118 +486,8 @@
 		// }
 	}, {immediate: true});
 
-	// Функция для открытия модального окна заметок
-	const openNotesModal = () => {
-		if (!selectedDate.value) return;
-
-		// Загружаем существующие заметки для выбранной даты
-		const notes = getDateNotes(selectedDate.value);
-		dateNotes.value = notes || '';
-
-		showNotesModal.value = true;
-	};
-
-	// Функция для закрытия модального окна заметок
-	const closeNotesModal = () => {
-		showNotesModal.value = false;
-		dateNotes.value = '';
-	};
-
-	// Функция для сохранения заметок к дате
-	const saveDateNotes = () => {
-		if (!selectedDate.value) return;
-
-		// Сохраняем заметки в localStorage
-		const notesKey = `task_${selectedTask.value.id}_notes_${selectedDate.value}`;
-		localStorage.setItem(notesKey, dateNotes.value);
-
-		showNotification(t('taskDetails.notesSaved'), 'success');
-		closeNotesModal();
-	};
-
-	// Функция для получения заметок к дате
-	const getDateNotes = (date) => {
-		if (!selectedTask.value || !date) return '';
-
-		const notesKey = `task_${selectedTask.value.id}_notes_${date}`;
-		return localStorage.getItem(notesKey) || '';
-	};
-
-	// Проверка наличия заметок для выбранной даты
-	const hasDateNotes = computed(() => {
-		if (!selectedDate.value) return false;
-		return !!getDateNotes(selectedDate.value);
-	});
-
-	// Функция для форматирования даты для отображения
-	const formatDateForDisplay = (date) => {
-		if (!date) return '';
-
-		const d = new Date(date);
-		return d.toLocaleDateString("ru-RU", {
-			day: "2-digit",
-			month: "2-digit",
-			year: "numeric",
-		});
-	};
-
-
-	const isDateMissed = (date) => {
-		if (!selectedTask.value || !selectedTask.value.missedDates) return false;
-		return selectedTask.value.missedDates.includes(date);
-	};
-
-	const isDateActive = (date) => {
-		if (!selectedTask.value) return false;
-
-		const taskDate = new Date(date);
-		const startDate = new Date(selectedTask.value.dateRange.start);
-		const endDate = new Date(selectedTask.value.dateRange.end);
-
-		return taskDate >= startDate && taskDate <= endDate;
-	};
-
-	const isDateInactive = (date) => {
-		return !isDateActive(date);
-	};
-
-	const getDateStatus = (date) => {
-		if (isDateChecked(date)) return 'completed'
-		if (isDateMissed(date)) return 'missed'
-		if (isDateActive(date)) return 'active'
-		return 'inactive'
-	}
-
-	const getStatusText = (status) => {
-		const key = `taskDetails.${status}`
-		return safeTranslate(key)
-	}
 </script>
 <style>
-
-	.checked__icon {
-		width: 40px;
-	}
-
-	.checked__count {
-		font-size: 20px;
-		padding-top: 10px;
-		font-family: "Acme", serif;
-	}
-
-	.animation__block {
-		position: absolute;
-		top: 50%;
-		left: 0;
-		z-index: 10;
-		transform: translateY(-50%);
-	}
-
-	.vc-highlight-red {
-		background-color: #FF3030 !important;
-		color: white !important;
-	}
-
 	.animation__block {
 		position: absolute;
 		top: 50%;
@@ -685,29 +558,27 @@
 	.checked__wrapper {
 		display: flex;
 		align-items: center;
-		background: grey;
-		width: 100%;
+		flex-direction: column;
+		width: 47%;
+		background-color: var(--menu--btn-bg);
 		padding: 10px;
-		border-radius: 15px;
-		margin-bottom: 10px;
 	}
 
 	.checked__text {
-		max-width: 110px;
-		text-align: center;
-		font-size: 14px;
+		text-align: start;
+		font-size: 16px;
 		font-family: "Nunito", serif;
 		line-height: 21.82px;
 		padding: 3px;
 		color: var(--text-color);
-		margin: 5px;
-
 	}
 
 	.checked__progress-wrapper {
 		margin-top: 10px;
-		width: 100%;
 		display: flex;
+		justify-content: space-between;
+
+		width: 100%;
 	}
 
 	.checked-progress {
@@ -719,9 +590,6 @@
 
 	.progress__container-details {
 		margin-top: 14px;
-		background: var(--menu--btn-bg);
-		padding: 5px;
-		border-radius: 15px;
 	}
 
 	.task__details-btns {
@@ -764,11 +632,6 @@
 	.task__goal-name {
 		font-size: 18px;
 		color: var(--text-color);
-		text-align: center;
-		padding: 0 10px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
 	}
 
 	.edit__menu-wrapper {
@@ -779,16 +642,6 @@
 		margin-top: 5px;
 		width: 48%;
 		padding: 5px;
-	}
-
-	.confirm__text {
-		color: white;
-		text-align: center;
-		max-width: 200px;
-		margin: 0 auto;
-		padding: 10px;
-		font-size: 12px;
-		font-family: "Nunito", sans-serif;
 	}
 
 	.update__date-wrapper {
@@ -816,6 +669,16 @@
 		font-weight: 600;
 	}
 
+	.checked__icon {
+		width: 40px;
+	}
+
+	.checked__count {
+		font-size: 24px;
+		font-family: "Nunito", sans-serif;
+
+	}
+
 	.task__icon-back {
 		width: 35px;
 		height: 35px;
@@ -839,24 +702,13 @@
 		background: #4FC55C;
 	}
 
-	/*.confirm__window.show__confirm {*/
-	/*	height: 170px;*/
-	/*	border-radius: 15px;*/
-	/*}*/
-
-	.confirm__content-wrapper-overlay {
-		width: 100%;
-		position: fixed;
-		height: 100vh;
-		background: rgba(0, 0, 0, 0.5);
-		top: 0;
-		left: 0;
-		z-index: 10;
+	.out__icon {
+		width: 100px;
 	}
 
 	.confirm__window {
-		width: 80%;
-		top: 40%;
+		width: 100%;
+		top: 30%;
 		left: 50%;
 		transform: translateX(-50%);
 		z-index: 2;
@@ -867,46 +719,166 @@
 		transition: height 0.3s ease;
 	}
 
-	.confirm__content-wrapper {
-		background: #34364a;;
+	.overlay__confirm {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background-color: rgba(0, 0, 0, 0.5);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 999;
+		transition: opacity 0.3s ease, visibility 0.3s ease;
+	}
+
+	.not__allowed-data {
+		height: 0;
+		overflow: hidden;
+		position: absolute;
 		width: 100%;
+		left: 0;
+		top: 0;
+		transition: .3s;
+		text-align: center;
+		z-index: 100;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: white;
+		font-family: "Nunito", sans-serif;
+		font-size: 16px;
+	}
+
+	.not__allowed {
+		height: 50px;
+		background-color: #FF5C00;
+		transition: .3s;
+		font-family: "Nunito", sans-serif;
+		font-size: 16px;
+	}
+
+	.confirm__content-wrapper {
+		background-color: #56369f;
+		padding: 20px;
+		width: 80%;
 		height: 100%;
 		border-radius: 15px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.confirm__title {
 		padding: 15px;
 		color: white;
 		text-align: center;
-		font-size: 24px;
+		font-size: 20px;
 		font-family: "Nunito", serif;
-		font-weight: 600;
+
 	}
 
 	.confirm__btns {
-		padding: 10px 0;
 		display: flex;
 		justify-content: center;
+		color: #4FC55C;
+		padding: 15px;
 	}
 
-	/*.confirm__btn.btn-green {*/
-	/*	background: #4FC55C;*/
-	/*}*/
+	.confirm__btn.btn-green {
+		background: none;
+		color: #4FC55C;
+		width: 60px;
+		font-size: 20px;
+		font-weight: bold;
+		font-family: "Nunito", sans-serif;
+	}
+
 
 	.confirm__btn {
-		background: none;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		width: 30%;
+		width: 60px;
 		margin: 0 5px;
-		font-size: 18px;
-		font-weight: 600;
+		font-size: 20px;
+		font-family: "Nunito", sans-serif;
 		padding: 5px;
 		border-radius: 10px;
 		border: none;
-		/*background: #FF5C00;*/
-		color: #24ba1d;;
-		font-family: "Nunito", serif;
+		background: none;
+		color: #4FC55C;
+		font-weight: bold;
 	}
+
+	.notification {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		overflow: hidden;
+		height: 0;
+		transition: height 0.3s ease, padding 0.3s ease;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 20px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		z-index: 1000;
+	}
+
+	.notification.active {
+		height: 80px;
+		padding: 20px;
+	}
+
+	.notification.success {
+		background-color: rgba(79, 197, 92, 0.9);
+		color: white;
+	}
+
+	.notification.missed {
+		background-color: rgba(255, 92, 0, 0.9);
+		color: white;
+	}
+
+	.notification.marked {
+		background-color: rgba(0, 153, 255, 0.9);
+		color: white;
+	}
+
+	.notification.notDone {
+		background-color: rgba(200, 0, 0, 0.9);
+		color: white;
+	}
+
+	.notification__message {
+		font-size: 16px;
+		font-family: "Nunito", sans-serif;
+	}
+
+	.notification__close {
+		background: none;
+		border: none;
+		color: white;
+		font-size: 18px;
+		cursor: pointer;
+		margin-left: 10px;
+	}
+
+	.task__details-btn.disabled .update__task-btn {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	.confirm__description {
+		padding: 0 15px 15px;
+		color: var(--text-color);
+		text-align: center;
+		font-size: 14px;
+		opacity: 0.8;
+	}
+
 </style>

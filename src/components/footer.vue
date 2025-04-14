@@ -111,6 +111,9 @@
 		width: 55px;
 		height: 55px;
 		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.plus__icon-border {
@@ -136,7 +139,7 @@
 	}
 
 	.goal__btn-icon {
-		width: 35px;
+		width: 45px;
 	}
 
 	.profile__icon-wrapper {

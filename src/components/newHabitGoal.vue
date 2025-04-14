@@ -31,7 +31,7 @@
 					</div>
 				</div>
 				<div class="border__underline-wrapper">
-					<div @click="toogleColor" class="title__underline">Выберите цвет</div>
+					<div @click="toogleColor" class="title__underline">{{ $t('color.value')}}</div>
 					<div class="color-picker">
 						<div
 							v-for="color in colors"
@@ -81,10 +81,10 @@
 		end: new Date()
 	})
 	const colors = [
+		'#845EC2',
 		'#FF6B6B',
 		'#4D96FF',
 		'#FFD93D',
-		'#845EC2',
 		'#FF9671',
 		'#00C9A7',
 		'#FF61A6',

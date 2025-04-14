@@ -1,6 +1,6 @@
 <template>
 	<div v-if="showPremiumModal" class="premium-info">
-		<HeaderWithback :icon="ArrowIcon" title="Premium"/>
+		<HeaderWithback :icon="ArrowIcon"/>
 		<div class="premium-content">
 			<div class="premium-title">{{$t('buyPremium.plus')}}</div>
 			<div class="premium-list">
@@ -147,7 +147,7 @@
 	}
 
 	.premium__icons {
-		width: 40px;
+		width: 43px;
 		margin-right: 10px;
 	}
 
@@ -180,7 +180,7 @@
 		font-size: 26px;
 		color: #a887fc;
 		font-family: "Nunito", sans-serif;
-		padding: 10px 0 4px 0;
+		padding: 0 0 4px 0;
 	}
 
 	.premium-title:after {
@@ -207,7 +207,7 @@
 		width: 80%;
 		background-color: #7E61C7;
 		color: white;
-		padding: 14px 28px;
+		padding: 12px 28px;
 		border: none;
 		border-radius: 10px;
 		font-size: 18px;
@@ -216,8 +216,7 @@
 		transition: transform 0.2s ease, background-color 0.3s ease;
 	}
 
-	.premium-button:hover {
+	.premium-button:active {
 		background-color: #a181e5;
-		transform: scale(1.05);
 	}
 </style>

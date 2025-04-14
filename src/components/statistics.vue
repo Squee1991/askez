@@ -263,7 +263,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		min-height: 150px;
+		min-height: 155px;
 	}
 
 	.stats__right {

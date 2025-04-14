@@ -6,17 +6,26 @@
 	"settings": {
 		"title": "Settings"
 	},
+	"color": {
+		"value": "Choose a color"
+	},
+	"congrats": {
+		"done": "You successfully completed the goal",
+		"notDone": "You did not successfully complete the goal",
+		"marked": "Successful today",
+		"missed": "Unsuccessful today"
+	},
 	"buyPremium": {
 		"buy": "Monthly",
 		"plus": "Benefits"
 	},
 	"setting": [
-		"Eliminar cuenta",
-		"Política de privacidad",
-		"Atribución",
-		"Торжественный звук",
-		"Modo",
-		"Chat",
+		"Delete account",
+		"Privacy policy",
+		"Attribution",
+		"Celebration sound",
+		"Mode",
+		"Chat"
 	],
 	"attr": {
 		"value": "Attribution"
@@ -108,6 +117,11 @@
 	"checkedBtns": {
 		"done": "Done",
 		"missed": "Missed"
+	},
+	"notAllowed": {
+		"done": "Date already marked",
+		"outside": "Cannot mark a date outside the range",
+		"onlyToday": "You can only mark today's date"
 	},
 	"achieve": {
 		"1": "Complete the first askeza",

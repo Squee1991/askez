@@ -20,6 +20,9 @@
 	"menu": {
 		"title": "Menu"
 	},
+	"color": {
+		"value": "Wybierz kolor"
+	},
 	"premiumWindow": {
 		"bot": "Aby móc korzystać z wirtualnego asystenta, musisz przejść na plan Premium.",
 		"taskText": "Niestety osiągnąłeś limit liczby nawyków w darmowym planie. Aby móc dodawać nieograniczoną liczbę nawyków, musisz przejść na plan Premium.",
