@@ -175,12 +175,11 @@
 		return [...habitTasks, ...filteredOffline];
 	});
 
-
 	const pandaGreetings = {
 		en: [
-			'Hi! I\'m your mindful panda 🐼',
-			'Let’s make today awesome!',
-			'Discipline makes dreams real!',
+			"Hi! I'm your mindful panda 🐼",
+			"Let’s make today awesome!",
+			"Discipline makes dreams real!",
 		],
 		ru: [
 			'Привет! Я твоя панда 🐼',
@@ -202,7 +201,32 @@
 			'¡Vamos a lograrlo hoy!',
 			'La disciplina crea resultados.',
 		],
-	}
+		uk: [
+			'Привіт! Я твій панда 🐼',
+			'Сьогодні чудовий день для цілей!',
+			'Дисципліна творить успіх!',
+		],
+		be: [
+			'Прывітанне! Я твоя панда 🐼',
+			'Сёння выдатны дзень для мэты!',
+			'Дысцыпліна вядзе да перамогі!',
+		],
+		pl: [
+			'Cześć! Jestem twoją pandą 🐼',
+			'Dziś świetny dzień na cel!',
+			'Dyscyplina to klucz do sukcesu!',
+		],
+		ar: [
+			'مرحبًا! أنا الباندا الخاصة بك 🐼',
+			'اليوم يوم رائع لتحقيق الهدف!',
+			'الانضباط هو سر النجاح!',
+		],
+		zh: [
+			'你好！我是你的小熊猫 🐼',
+			'今天是实现目标的好日子！',
+			'自律成就梦想！',
+		],
+	};
 
 
 	const toPremium = () => {
@@ -707,7 +731,7 @@
 		left: 50%;
 		top: 0;
 		transform: translateX(-50%);
-		z-index: 1;
+		z-index: 99;
 	}
 
 	.add__goals {

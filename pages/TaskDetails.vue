@@ -208,6 +208,7 @@
 		}, 2000)
 	}
 	const applausAudio = () => {
+		if (!habitStore.isAudioEnabled) return;
 		const audio = new Audio('/sounds/cry.wav')
 		audio.play()
 	}
@@ -304,6 +305,7 @@
 			showNotification(message, type);
 
 			if (!hasMisses && btn === "done") {
+				if (!habitStore.isAnimationEnabled) return;
 				setTimeout(() => {
 					if (animationBlock.value) {
 						const anim = Lottie.loadAnimation({
@@ -676,6 +678,8 @@
 	.checked__count {
 		font-size: 24px;
 		font-family: "Nunito", sans-serif;
+		color: var(--text-color);
+		padding: 5px;
 
 	}
 
@@ -835,22 +839,22 @@
 	}
 
 	.notification.success {
-		background-color: rgba(79, 197, 92, 0.9);
+		background-color: #4FC55C;
 		color: white;
 	}
 
 	.notification.missed {
-		background-color: rgba(255, 92, 0, 0.9);
+		background-color: #FF5C00;
 		color: white;
 	}
 
 	.notification.marked {
-		background-color: rgba(0, 153, 255, 0.9);
+		background-color: #0099FF;
 		color: white;
 	}
 
 	.notification.notDone {
-		background-color: rgba(200, 0, 0, 0.9);
+		background-color: #C80000;
 		color: white;
 	}
 

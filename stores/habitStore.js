@@ -31,15 +31,27 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	const userId = ref(null);
 	const authStore = useAuthStore();
 
+	const setAndAnimation = (value) => {
 
-	const setAudioEnabled = (value) => {
+		isAnimationEnabled.value = value;
+		localStorage.setItem('animationEnabled', JSON.stringify(value));
+	};
+
+	const setAudio = (value) => {
 		isAudioEnabled.value = value;
+
 		localStorage.setItem('audioEnabled', JSON.stringify(value));
+
 	};
 
 	const toggleAudio = () => {
 		isAudioEnabled.value = !isAudioEnabled.value;
 		localStorage.setItem('audioEnabled', JSON.stringify(isAudioEnabled.value));
+	};
+
+	const toggleAnimation = () => {
+		isAnimationEnabled.value = !isAnimationEnabled.value;
+		localStorage.setItem('animationEnabled', JSON.stringify(isAnimationEnabled.value));
 	};
 
 	const updateTask = (updatedTask) => {
@@ -337,7 +349,9 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		loadArchiveTasks,
 		onAuthStateChanged,
 		updateTask,
-		setAudioEnabled,
-		toggleAudio
+		setAudio,
+		setAndAnimation,
+		toggleAudio,
+		toggleAnimation
 	};
 });
