@@ -144,14 +144,15 @@
 			</div>
 		</div>
 	</div>
-	<!--	<StepHint-->
-	<!--		:steps="hintSteps"-->
-	<!--		:show="showHints"-->
-	<!--		@close="showHints = false"-->
-	<!--	/>-->
+		<StepHint
+			:steps="hintSteps"
+			:show="showHints"
+			@close="showHints = false"
+		/>
 </template>
 
 <script setup>
+	import StepHint from '../src/components/StepHint.vue'
 	import {ref, computed, onMounted, watch} from "vue";
 	import {useRoute} from "vue-router";
 	import {useHabitStore} from "../stores/habitStore.js";
@@ -162,18 +163,19 @@
 	import Lottie from 'lottie-web';
 	import CongratsAmination from '../assets/animations/GratsAnimation.json'
 	import {useTaskStore} from '../stores/OfflineTaskStore.js'
-	import StepHint from '../src/components/StepHint.vue'
+	import { getAuth } from 'firebase/auth';
+
 
 	const {locale, t} = useI18n();
-	let showHints = ref(true);
-	// const hintSteps = [
-	//     {selector: '.task__icon-back', text: 'Нажмите, чтобы вернуться на главный экран'},
-	//     {selector: '.task__goal-name', text: 'Это название вашей цели'},
-	//     {selector: '.range__date-wrapper', text: 'Здесь отображаются даты начала и конца'},
-	//     {selector: '.vc-container', text: 'Выберите дату в этом календаре'},
-	//     {selector: '.task__details-btns', text: 'Отметьте выполнение задачи за выбранную дату'},
-	//     {selector: '.progress__container-details', text: 'Прогресс задачи отображается здесь'},
-	// ];
+	const showHints = ref(true);
+	const hintSteps = [
+	    {selector: '.task__icon-back', text: 'Нажмите, чтобы вернуться на главный экран'},
+	    {selector: '.task__goal-name', text: 'Это название вашей цели'},
+	    {selector: '.range__date-wrapper', text: 'Здесь отображаются даты начала и конца'},
+	    {selector: '.vc-container', text: 'Выберите дату в этом календаре'},
+	    {selector: '.task__details-btns', text: 'Отметьте выполнение задачи за выбранную дату'},
+	    {selector: '.progress__container-details', text: 'Прогресс задачи отображается здесь'},
+	];
 	const animationBlock = ref(null);
 	const editIcon = ref(EditIcon);
 	const editState = ref(false);
@@ -457,11 +459,26 @@
 	};
 
 	onMounted(() => {
-		if (localStorage.getItem('hints_shown') !== 'true') {
-			showHints.value = true
-			localStorage.setItem('hints_shown', 'true')
+		const user = getAuth().currentUser;
+
+		if (user && user.uid) {
+			const hintKey = `hints_shown_${user.uid}`;
+			if (localStorage.getItem(hintKey) !== 'true') {
+				showHints.value = true;
+				localStorage.setItem(hintKey, 'true');
+			} else {
+				showHints.value = false;
+			}
+		} else {
+			// Для гостей можно отключить или показывать один раз:
+			if (localStorage.getItem('hints_shown_guest') !== 'true') {
+				showHints.value = true;
+				localStorage.setItem('hints_shown_guest', 'true');
+			} else {
+				showHints.value = false;
+			}
 		}
-	})
+	});
 	const formatDate = (date) => {
 		const d = convertToDate(date);
 		return d.toLocaleDateString("en-US", {
