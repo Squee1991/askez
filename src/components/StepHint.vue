@@ -1,262 +1,169 @@
 <template>
-    <div v-if="show" class="step-hint-container">
-        <div v-for="(step, index) in steps" :key="index"
-             class="step-hint"
-             :class="{ 'show': currentStep === index }"
-             :style="{ top: getElementPosition(step.selector) }">
-            <div class="step-hint-content">
-                <div class="step-hint-header">
-                    <div class="step-hint-counter">{{ currentStep + 1 }}/{{ steps.length }}</div>
-                    <button @click="close" class="step-hint-close">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </button>
-                </div>
-                <div class="step-hint-text">{{ step.text }}</div>
-                <div class="step-hint-controls">
-                    <button v-if="currentStep > 0" @click="prevStep" class="step-hint-btn prev">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                        Назад
-                    </button>
-                    <button v-if="currentStep < steps.length - 1" @click="nextStep" class="step-hint-btn next">
-                        Далее
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
-                    <button v-else @click="close" class="step-hint-btn finish">
-                        Завершить
-                    </button>
-                </div>
+    <div v-if="show && currentStep" class="step-hint-overlay">
+        <div class="step-hint-backdrop" @click="skipHint"></div>
+
+        <!-- Подсветка вокруг элемента -->
+        <div
+            v-if="highlightStyle"
+            class="step-hint-highlight"
+            :style="highlightStyle"
+        />
+
+        <!-- Тултип с текстом -->
+        <div
+            v-if="tooltipStyle"
+            class="step-hint-tooltip"
+            :style="tooltipStyle"
+        >
+            <div class="step-hint-text">{{ currentStep.text }}</div>
+            <div class="step-hint-actions">
+                <button @click="skipHint" class="hint-btn skip">Пропустить</button>
+                <button @click="nextStep" class="hint-btn next">
+                    {{ isLastStep ? 'Готово' : 'Далее' }} →
+                </button>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, onMounted, nextTick } from 'vue';
 
 const props = defineProps({
-    steps: {
-        type: Array,
-        required: true
-    },
-    show: {
-        type: Boolean,
-        default: false
-    }
-})
+    steps: Array,
+    show: Boolean
+});
+const emit = defineEmits(['close']);
 
-const emit = defineEmits(['close'])
-const currentStep = ref(0)
+const stepIndex = ref(0);
+const currentStep = computed(() => props.steps[stepIndex.value] || null);
+const isLastStep = computed(() => stepIndex.value === props.steps.length - 1);
+
+const tooltipStyle = ref(null);
+const highlightStyle = ref(null);
+
+const updatePosition = () => {
+    const selector = currentStep.value?.selector;
+    const target = document.querySelector(selector);
+    if (!target) return;
+
+    const rect = target.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const tooltipHeight = 80; // Примерная высота тултипа
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    const showAbove = rect.bottom + tooltipHeight + 10 > viewportHeight;
+
+
+    // Тултип снизу элемента
+    tooltipStyle.value = {
+        top: `${showAbove ? rect.top - tooltipHeight - 10 : rect.bottom + 10}px`,
+        left: `${Math.max(rect.left, 10)}px`,
+        maxWidth: '260px',
+        position: 'absolute'
+    };
+
+    // Подсветка
+    highlightStyle.value = {
+        top: `${rect.top - 6}px`,
+        left: `${rect.left - 6}px`,
+        width: `${rect.width + 12}px`,
+        height: `${rect.height + 12}px`
+    };
+};
 
 const nextStep = () => {
-    if (currentStep.value < props.steps.length - 1) {
-        currentStep.value++
+    if (isLastStep.value) {
+        emit('close');
+    } else {
+        stepIndex.value++;
+        nextTick(updatePosition);
     }
-}
+};
 
-const prevStep = () => {
-    if (currentStep.value > 0) {
-        currentStep.value--
+const skipHint = () => {
+    emit('close');
+};
+
+watch(() => props.show, (val) => {
+    if (val) {
+        stepIndex.value = 0;
+        nextTick(updatePosition);
     }
-}
-
-const close = () => {
-    emit('close')
-}
-
-const getElementPosition = (selector) => {
-    const element = document.querySelector(selector)
-    if (element) {
-        const rect = element.getBoundingClientRect()
-        const windowHeight = window.innerHeight
-        const hintHeight = 150 // Примерная высота подсказки
-
-        // Проверяем, поместится ли подсказка под элементом
-        if (rect.bottom + hintHeight > windowHeight) {
-            // Если не помещается, показываем над элементом
-            return `${rect.top - hintHeight + window.scrollY}px`
-        } else {
-            // Если помещается, показываем под элементом
-            return `${rect.bottom + window.scrollY}px`
-        }
-    }
-    return '0px'
-}
-
-const updatePositions = () => {
-    // Обновляем позиции подсказок при изменении размера окна
-    if (props.show) {
-        currentStep.value = currentStep.value
-    }
-}
+});
 
 onMounted(() => {
-    window.addEventListener('resize', updatePositions)
-    window.addEventListener('scroll', updatePositions)
-})
-
-onBeforeUnmount(() => {
-    window.removeEventListener('resize', updatePositions)
-    window.removeEventListener('scroll', updatePositions)
-})
+    if (props.show) nextTick(updatePosition);
+});
 </script>
 
 <style scoped>
-.step-hint-container {
+.step-hint-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
     pointer-events: none;
 }
 
-.step-hint {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background-color: var(--background-color);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+.step-hint-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
     pointer-events: auto;
-    max-width: 90%;
-    width: 350px;
-    opacity: 0;
-    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.step-hint.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
-.step-hint-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.step-hint-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 15px;
-}
-
-.step-hint-counter {
-    font-size: 14px;
-    color: var(--text-color);
-    opacity: 0.7;
-}
-
-.step-hint-close {
-    background: none;
-    border: none;
-    color: var(--text-color);
-    opacity: 0.7;
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease, opacity 0.2s ease;
-}
-
-.step-hint-close:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    opacity: 1;
+.step-hint-tooltip {
+    background: white;
+    color: #333;
+    padding: 14px 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 10001;
+    font-family: "Nunito", sans-serif;
+    pointer-events: auto;
 }
 
 .step-hint-text {
-    font-size: 16px;
-    margin-bottom: 20px;
-    text-align: center;
-    color: var(--text-color);
+    font-size: 15px;
     line-height: 1.5;
+    margin-bottom: 10px;
 }
 
-.step-hint-controls {
+.step-hint-actions {
     display: flex;
+    justify-content: space-between;
     gap: 10px;
-    width: 100%;
 }
 
-.step-hint-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 10px 15px;
+.hint-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+    font-family: "Nunito", sans-serif;
     border: none;
-    border-radius: 8px;
-    background-color: var(--primary-color);
-    color: white;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-    font-size: 14px;
-    font-weight: 500;
-    flex: 1;
 }
 
-.step-hint-btn:hover {
-    background-color: var(--primary-color-dark);
-    transform: translateY(-2px);
+.hint-btn.skip {
+    background: transparent;
+    color: #999;
 }
 
-.step-hint-btn:active {
-    transform: translateY(0);
+.hint-btn.next {
+    background: #4FC55C;
+    color: white;
 }
 
-.step-hint-btn.prev {
-    background-color: var(--secondary-color);
-}
-
-.step-hint-btn.finish {
-    background-color: var(--success-color);
-}
-
-/* Адаптивность для мобильных устройств */
-@media (max-width: 768px) {
-    .step-hint {
-        width: 90%;
-        max-width: 350px;
-        padding: 15px;
-    }
-
-    .step-hint-text {
-        font-size: 14px;
-    }
-
-    .step-hint-btn {
-        padding: 8px 12px;
-        font-size: 13px;
-    }
-}
-
-/* Анимация появления подсказки */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
-}
-
-.step-hint.show {
-    animation: fadeIn 0.3s ease forwards;
+.step-hint-highlight {
+    position: absolute;
+    border: 3px solid #4FC55C;
+    border-radius: 10px;
+    box-sizing: border-box;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 10000;
 }
 </style>
