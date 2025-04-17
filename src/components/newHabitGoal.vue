@@ -36,11 +36,15 @@
 						<div
 							v-for="color in colors"
 							:key="color"
-							class="color-circle"
-							:style="{ backgroundColor: color,  }"
+							class="color-picker__wrapper"
 							:class="{ selected: selectedColor === color }"
-							@click="selectedColor = color"
-						/>
+						>
+							<div
+								class="color-circle"
+								:style="{ backgroundColor: color }"
+								@click="selectedColor = color"
+							/>
+						</div>
 					</div>
 				</div>
 				<div class="date__picker-inenr">
@@ -84,14 +88,14 @@
 		'#845EC2',
 		'#FF6B6B',
 		'#4D96FF',
-		'#FFD93D',
+		'#d7b52a',
 		'#FF9671',
 		'#00C9A7',
 		'#FF61A6',
 		'#c782a1',
 		'#61d2ff',
 		'#bb6634',
-		'#61d2ff',
+
 	];
 	let selectedColor = ref(colors[0])
 
@@ -137,16 +141,15 @@
 
 </script>
 <style>
-
 	.color-picker {
 		display: flex;
 		gap: 8px;
 		margin: 5px 0 12px 0;
-		background: var(--background-color);
 		padding: 10px;
 		border-radius: 10px;
 		align-items: center;
-		overflow-x: auto;
+		flex-wrap: wrap;
+		justify-content: center;
 	}
 
 	.title__underline {
@@ -156,19 +159,27 @@
 		font-weight: 600;
 	}
 
+	.color-picker__wrapper {
+		padding: 8px;
+		border-radius: 50%;
+		border: 2px solid transparent;
+		box-sizing: border-box;
+		transition: border-color 0.3s ease;
+	}
+
+	.color-picker__wrapper.selected {
+		border: 2px solid grey;
+	}
+
 	.color-circle {
+		padding: 10px;
 		width: 35px;
 		height: 35px;
-		border-radius: 50%;
+		border-radius: 30%;
 		cursor: pointer;
 		transition: transform 0.2s;
 		border: 2px solid transparent;
 		flex: 0 0 auto;
-	}
-
-	.color-circle.selected {
-		transform: scale(1.1);
-		border-color: grey;
 	}
 
 	.border__underline-wrapper {
@@ -243,9 +254,9 @@
 	.vc-container {
 		width: 100%;
 		border: none;
-		background: var(--background-color);
+		background-color: var(--menu--btn-bg);
 		padding: 10px;
-		margin-top: 3px;
+		margin-top: 10px;
 	}
 
 	.vc-header .vc-title {
@@ -303,17 +314,18 @@
 	}
 
 	.input__fields-wrapper {
-		padding: 20px;
+		width: 100%;
+		height: 100vh;
+        padding: 20px;
 		background-color: var(--calendar--bg);
 		border-radius: 10px;
 	}
 
 	.habit-goal-modal {
-		position: absolute;
+
 		width: 100%;
-		top: 70px;
+		top: 20px;
 		border-radius: 10px;
-		padding: 5px 15px;
 		font-family: Arial, sans-serif;
 	}
 

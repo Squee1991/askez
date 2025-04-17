@@ -1,5 +1,5 @@
 <script setup>
-	import {ref, onMounted , computed} from 'vue';
+	import {ref, onMounted, computed} from 'vue';
 	import {getAuth, reauthenticateWithCredential, EmailAuthProvider, deleteUser} from 'firebase/auth';
 	import PremiumWindow from '../src/components/premiumWindow.vue'
 	import Light from '../assets/images/sun-2.svg';
@@ -47,12 +47,9 @@
 		setTimeout(() => {
 			activeBotAnim.value = false;
 		}, 200);
-
 		localBotToggle.value = !localBotToggle.value;
 		authStore.isBotEnabled = localBotToggle.value;
-
 		await authStore.saveBotStateToFirebase(localBotToggle.value);
-		// authStore.saveBotStateToLocal(localBotToggle.value);
 	};
 
 	const clickPremiumButton = () => {
@@ -78,7 +75,6 @@
 			SettingsChange(t(`setting.${index - 1}`));
 		}
 	};
-
 
 	const deleteAllDatas = async () => {
 		const auth = getAuth();
@@ -137,7 +133,6 @@
 	});
 
 </script>
-
 <template>
 	<div v-if="isOverlayVisible" class="premium__window">
 		<PremiumWindow
@@ -146,7 +141,6 @@
 			@close="isOverlayVisible = false"
 		/>
 	</div>
-
 	<div class="settings__wrapper">
 		<div v-if="confirmDeleteDatas" class="overlay">
 			<div class="confirm__wrapper">
@@ -166,9 +160,7 @@
 				</div>
 			</div>
 		</div>
-
 		<HeaderWithBack :icon="Arrowicon" :title="$t('settings.title')"/>
-
 		<div class="settings__btns">
 			<div class="menu__btn-wrapper" v-for="index in 7" :key="index">
 				<button
@@ -177,35 +169,30 @@
 					@click="handleClick(index)"
 				>
 					<span class="accoun__text">{{ $t('setting.' + (index - 1)) }}</span>
-					<span v-if="index === 5" class="toggle-bar" :class="{ 'toggle-active': !isAnimationEnabled }">
-						<span class="toggle-thumb"
-						      :style="{ left: isAnimationEnabled ? '38px' : '2px', backgroundColor: isAnimationEnabled ? 'orange' : 'grey' }"/>
-					</span>
 					<span v-if="index === 4" class="toggle-bar" :class="{ 'toggle-active': !isAudioEnabled }">
-						<span class="toggle-thumb"
-						      :style="{ left: isAudioEnabled ? '38px' : '2px', backgroundColor: isAudioEnabled ? 'orange' : 'grey' }"/>
-					</span>
-
+							<span class="toggle-thumb"
+							      :style="{ left: isAudioEnabled ? '38px' : '2px', backgroundColor: isAudioEnabled ? 'orange' : 'grey' }"/>
+						</span>
+					<span v-if="index === 5" class="toggle-bar" :class="{ 'toggle-active': !isAnimationEnabled }">
+							<span class="toggle-thumb"
+							      :style="{ left: isAnimationEnabled ? '38px' : '2px', backgroundColor: isAnimationEnabled ? 'orange' : 'grey' }"/>
+						</span>
 					<span v-if="index === 6" class="toggle-bar" :class="{ 'toggle-active': isToggle }">
-						<img :src="Dark" alt="Dark" class="toggle-icon left"/>
-						<span class="toggle-thumb"
-						      :style="{ left: isToggle ? '38px' : '2px', backgroundColor: isToggle ? 'orange' : 'grey' }"/>
-						<img :src="Light" alt="Light" class="toggle-icon right"/>
-					</span>
-
+							<img :src="Dark" alt="Dark" class="toggle-icon left"/>
+							<span class="toggle-thumb"
+							      :style="{ left: isToggle ? '38px' : '2px', backgroundColor: isToggle ? 'orange' : 'grey' }"/>
+							<img :src="Light" alt="Light" class="toggle-icon right"/>
+						</span>
 					<span v-if="index === 7" class="toggle-bar" :class="{ 'toggle-active': localBotToggle }">
-						<span class="toggle-thumb"
-						      :style="{ left: localBotToggle ? '38px' : '2px', backgroundColor: localBotToggle ? 'orange' : 'grey' }"/>
-					</span>
+							<span class="toggle-thumb"
+							      :style="{ left: localBotToggle ? '38px' : '2px', backgroundColor: localBotToggle ? 'orange' : 'grey' }"/>
+						</span>
 				</button>
 			</div>
 		</div>
 	</div>
 </template>
-
-
 <style scoped>
-
 	.premium__window {
 		position: absolute;
 		width: 100%;
@@ -272,11 +259,9 @@
 		pointer-events: none;
 	}
 
-
 	.toggle-thumb.active-anim {
 		transform: scaleX(1.4);
 	}
-
 
 	.confirm__label {
 		height: 80px;
@@ -376,7 +361,7 @@
 	.settings__btns {
 		background: var(--menu--btn-bg);
 		padding: 0 15px;
-		border-radius: 12px;
+		border-radius: 20px;
 	}
 
 	.account__settings-btn {

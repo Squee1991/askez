@@ -57,6 +57,7 @@
 		"name": "Your askezas",
 		"achieveTitle": "Ascezas archive",
 		"totalDays": "Total days",
+		"notchecked": "Days left",
 		"checkedDays": "Checked",
 		"notChecked": "Not checked"
 	},

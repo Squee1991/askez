@@ -24,9 +24,22 @@
 		"Política de privacidad",
 		"Atribución",
 		"Sonido de celebración",
-		"Modo",
+		"Animación",
+		"Mod",
 		"Chat"
 	],
+	"stepHint": {
+		"skip": "Omitir",
+		"further": "Siguiente",
+		"done": "Listo",
+		"screen": "Pulsa para volver a la pantalla principal",
+		"goal": "Nombre de tu objetivo",
+		"date": "Las fechas de inicio y fin se muestran aquí.",
+		"calendar": "Selecciona la fecha actual en el calendario",
+		"mark": "Marca la tarea como completada en la fecha seleccionada",
+		"progress": "El progreso de la tarea se muestra aquí"
+	},
+
 	"attr": {
 		"value": "Atribución"
 	},
@@ -64,6 +77,7 @@
 		"bot": "Para usar el asistente virtual, necesitas pasarte al plan Premium.",
 		"taskText": "Lamentablemente, has alcanzado el límite de hábitos del plan gratuito. Para añadir hábitos ilimitados, actualiza al plan Premium.",
 		"subtext": "Al suscribirte a Premium obtendrás acceso completo a todas las funciones de la aplicación.",
+		"leveling": "Para acceder a la mejora de los pandib, necesitas el plan Premium.",
 		"btnPremium": "Obtener Premium"
 	},
 	"meniu": [
@@ -101,6 +115,7 @@
 		"name": "Tus ascetismos",
 		"achieveTitle": "Archivo de ascetismos",
 		"totalDays": "Total de días",
+		"notchecked": "Días restantes",
 		"checkedDays": "Marcado",
 		"notChecked": "No marcado"
 	},
@@ -124,12 +139,15 @@
 		"onlyToday": "Solo se puede marcar la fecha actual"
 	},
 	"achieve": {
-		"1": "Completa la primera askeza",
-		"2": "Completa 10 askezas",
-		"3": "Completa 25 askezas",
-		"4": "Completa 50 askezas",
-		"5": "Completa 100 askezas",
-		"6": "Completa 200 askezas"
+		"1": "Completa tu primera meta",
+		"2": "Completa 10 metas",
+		"3": "Completa 20 metas",
+		"4": "Completa 50 metas",
+		"5": "Completa 70 metas",
+		"6": "Completa 100 metas",
+		"7": "Completa 120 metas",
+		"8": "Completa 150 metas",
+		"9": "Completa 200 metas"
 	},
 	"feedBack": {
 		"title": "Comentarios",
@@ -139,7 +157,7 @@
 		"overlayTitle": "Gracias por tu retroalimentación"
 	},
 	"startPage": {
-		"value": "comenzar"
+		"value": "Comenzar"
 	},
 	"description": {
 		"value": "siguiente paso"
@@ -213,7 +231,11 @@
 	},
 	"taskDetails": {
 		"startDate": "Fecha de inicio",
-		"endDate": "Fecha de finalización"
+		"endDate": "Fecha de finalización",
+		"title": "Título",
+		"status": "Estado",
+		"order": "Orden",
+		"activity": "Hacer todos los días"
 	},
 	"delConfirm": {
 		"title": "¿Eliminar meta?",

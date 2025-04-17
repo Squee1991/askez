@@ -57,6 +57,7 @@
 		"name": "Vos ascèses",
 		"achieveTitle": "Archive des ascèses",
 		"totalDays": "Total de jours",
+		"notchecked": "Jours restants",
 		"checkedDays": "Marqué",
 		"notChecked": "Non marqué"
 	},

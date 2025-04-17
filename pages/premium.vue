@@ -172,7 +172,7 @@
 		margin: 0 auto;
 		overflow-y: auto;
 		max-height: calc(100vh - 80px);
-		padding: 5px 0 12px 0
+		padding: 0 0 12px 0
 	}
 
 	.premium-title {
@@ -204,7 +204,7 @@
 
 	.premium-button {
 		margin-bottom: 10px;
-		width: 80%;
+		width: 90%;
 		background-color: #7E61C7;
 		color: white;
 		padding: 12px 28px;

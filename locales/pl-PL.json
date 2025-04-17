@@ -69,6 +69,7 @@
 		"achieveTitle": "Archiwum ascez",
 		"name": "Twoje ascezy",
 		"totalDays": "Łącznie dni",
+		"notchecked": "Pozostało dni",
 		"checkedDays": "Zaznaczone",
 		"notChecked": "Nie zaznaczone"
 	},

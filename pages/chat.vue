@@ -7,7 +7,7 @@
 	import {getSystemPrompt} from '../src/ai/systemPromt.js'
 	import {errorMessages} from '../src/ai/messageBot.js'
 	import {eventMessages} from '../src/ai/messageBot.js'
-	import {messageBot} from '../src/ai/messageBot.js'
+	import {timeBasedGreetings } from '../src/ai/messageBot.js'
 	import Backicon from '../assets/images/undo.svg'
 
 	const habitStore = useHabitStore()
@@ -104,14 +104,14 @@
 	onMounted(() => {
 		userLang.value = locale.value.split('-')[0] || 'en'
 		const lang = userLang.value
-		const langGreetings = messageBot[lang] || messageBot['en']
+		const langGreetings = timeBasedGreetings[lang]?.day || timeBasedGreetings['en'].day
 		const randomGreeting = langGreetings[Math.floor(Math.random() * langGreetings.length)]
 		messages.value = [{role: 'assistant', text: randomGreeting}]
 	})
 
 	watch(locale, (newLocale) => {
 		userLang.value = newLocale.split('-')[0]
-		const greetings = messageBot[userLang.value] || messageBot['en']
+		const greetings = timeBasedGreetings[userLang.value]?.day || timeBasedGreetings['en'].day
 		messages.value = [{ role: 'assistant', text: greetings[Math.floor(Math.random() * greetings.length)] }]
 	})
 

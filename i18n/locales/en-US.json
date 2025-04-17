@@ -24,9 +24,21 @@
 		"Privacy policy",
 		"Attribution",
 		"Celebration sound",
-		"Mode",
+		"Animation",
+		"Mod",
 		"Chat"
 	],
+	"stepHint": {
+		"skip": "Skip",
+		"further": "Further",
+		"done": "Ready",
+		"screen": "Press to go back to the main screen",
+		"goal": "Name of your goal",
+		"date": "The start and end dates are displayed here.",
+		"calendar": "Select the current date in the calendar",
+		"mark": "Mark the task as completed on the selected date",
+		"progress": "Task progress is displayed here"
+	},
 	"attr": {
 		"value": "Attribution"
 	},
@@ -64,6 +76,7 @@
 		"bot": "To use the virtual assistant, you need to upgrade to the Premium plan.",
 		"taskText": "Unfortunately, you've reached the habit limit on the free plan. To add unlimited habits, please upgrade to Premium.",
 		"subtext": "By subscribing to Premium, you'll get full access to all app features.",
+		"leveling": "To unlock pandib leveling, you need to upgrade to the Premium plan.",
 		"btnPremium": "Get Premium"
 	},
 	"meniu": [
@@ -101,6 +114,7 @@
 		"name": "Your askezas",
 		"achieveTitle": "Ascezas archive",
 		"totalDays": "Total days",
+		"notchecked": "Days left",
 		"checkedDays": "Checked",
 		"notChecked": "Not checked"
 	},
@@ -124,12 +138,15 @@
 		"onlyToday": "You can only mark today's date"
 	},
 	"achieve": {
-		"1": "Complete the first askeza",
-		"2": "Complete 10 askezas",
-		"3": "Complete 25 askezas",
-		"4": "Complete 50 askezas",
-		"5": "Complete 100 askezas",
-		"6": "Complete 200 askezas"
+		"1": "Complete the first goal",
+		"2": "Complete 10 goals",
+		"3": "Complete 20 goals",
+		"4": "Complete 50 goals",
+		"5": "Complete 70 goals",
+		"6": "Complete 100 goals",
+		"7": "Complete 120 goals",
+		"8": "Complete 150 goals",
+		"9": "Complete 200 goals"
 	},
 	"feedBack": {
 		"title": "Feedback",
@@ -139,7 +156,7 @@
 		"overlayTitle": "Thank you for your feedback"
 	},
 	"startPage": {
-		"value": "get started"
+		"value": "Get started"
 	},
 	"description": {
 		"value": "Next step"
@@ -212,8 +229,12 @@
 		"button": "OK"
 	},
 	"taskDetails": {
-		"startDate": "Start date",
-		"endDate": "End date"
+		"startDate": "Start Date",
+		"endDate": "End Date",
+		"title": "Name",
+		"status": "Status",
+		"order": "Order",
+		"activity": "Do every day"
 	},
 	"delConfirm": {
 		"title": "Delete goal?",
@@ -224,8 +245,8 @@
 		"delTask": "Delete"
 	},
 	"CheckedProgress": {
-		"checked": "days checked",
-		"notChecked": "days missed"
+		"checked": "Days checked",
+		"notChecked": "Days missed"
 	},
 	"bublingWindows": {
 		"fieldEmpty": "Enter the name of the Askesis"

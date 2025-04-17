@@ -593,17 +593,19 @@
 		width: 100%;
 		background: var(--indicator-bg);
 		color: white;
-		font-size: 20px;
-		padding: 12px;
+		font-size: 16px;
+		padding: 14px;
 		border: none;
-		border-radius: 8px;
+		border-radius: 20px;
 		cursor: pointer;
-		transition: background-color 0.3s ease;
-		font-family: "Acme", serif;
+		font-family: "Nunito", sans-serif;
+		transition: box-shadow 0.2s ease, transform 0.1s ease;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 	}
 
 	.form__btn:active {
-		background-color: #357ABD;
+		transform: scale(0.98);
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 	}
 
 	.form__btn:hover {

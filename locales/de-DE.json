@@ -57,6 +57,7 @@
 		"name": "Ihre Ziele",
 		"achieveTitle": "Archiv der Askesen",
 		"totalDays": "Gesamttage",
+		"notchecked": "Verbleibende Tage",
 		"checkedDays": "Markiert",
 		"notChecked": "Nicht markiert"
 	},

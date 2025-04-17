@@ -1,8 +1,7 @@
 <template>
 	<div class="progress-container">
-		<div
-			class="progress-circle"
-			:style="{
+		<div class="progress-circle"
+		     :style="{
                 background: `conic-gradient(${gradientStops})`,
                 width: `${size}px`,
                 height: `${size}px`,
@@ -12,12 +11,11 @@
 			<div class="progress-inner"></div>
 		</div>
 		<div class="progress-text  top">{{ Math.floor(progress) }}%</div>
-		<div class="progress-text bottom">{{ Math.floor(progressMiss) }}%</div>
 	</div>
 </template>
 
 <script setup>
-	import {computed , defineProps} from "vue";
+	import {computed, defineProps} from "vue";
 
 	const props = defineProps({
 		progress: {
@@ -47,7 +45,7 @@
 
 	const gradientStops = computed(() => {
 		if (!props.history || props.history.length === 0) {
-			return "gray 0% 100%";
+			return "#cbd5e1 0% 100%";
 		}
 		let stops = [];
 		let currentProgress = 0;
@@ -57,7 +55,7 @@
 			currentProgress = nextProgress;
 		});
 		if (currentProgress < 100) {
-			stops.push(`gray ${currentProgress}% 100%`);
+			stops.push(`#cbd5e1 ${currentProgress}% 100%`);
 		}
 		return stops.join(", ");
 	});
@@ -71,7 +69,7 @@
 		justify-content: center;
 		align-items: center;
 		position: relative;
-		padding: 10px;
+		padding: 20px;
 
 	}
 
@@ -99,18 +97,19 @@
 	}
 
 	.progress-text.top {
-		top: 40%;
+		top: 50%;
 		transform: translateY(-50%);
-		color: green;
-		font-size: 18px;
+		color: var(--text-color);
+		font-family: "Nunito", sans-serif;
+		font-size: 14px;
 	}
 
-	.progress-text.bottom {
-		bottom: 38%;
-		transform: translateY(50%);
-		color: #e37b7b;
-		font-size: 18px;
-	}
+	/*.progress-text.bottom {*/
+	/*	bottom: 38%;*/
+	/*	transform: translateY(50%);*/
+	/*	color: #e37b7b;*/
+	/*	font-size: 14px;*/
+	/*}*/
 </style>
 
 
