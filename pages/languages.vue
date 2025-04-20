@@ -86,7 +86,7 @@
 	.language__list {
 		background: var(--menu--btn-bg);
 		padding: 10px 10px 10px 10px;
-		border-radius: 15px;
+		border-radius: 25px;
 	}
 
 	.no-space {

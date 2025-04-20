@@ -1,5 +1,5 @@
 <template>
-	<div class="premium__window-overlay" @click="handleOverlayClick">
+	<div class="premium__window-overlay" v-show="visible" @click="handleOverlayClick">
 		<div class="premium__window" @click.stop>
 			<img @click="closePremiumWindow" class="close__img" :src="Close" alt="">
 			<img class="premium__window-icon" :src="LickPanda" alt="">
@@ -18,7 +18,7 @@
 	import {defineProps} from 'vue'
 	import LickPanda from '../../assets/images/diamond.svg'
 	import Close from '../../assets/images/close.svg'
-
+	const visible = ref(true)
 	const props = defineProps({
 		text: {
 			type: String,
@@ -37,15 +37,18 @@
 	}
 
 	const closePremiumWindow = () => {
-
-		emit('close')
+		visible.value = false
 	}
+
+	watch(visible, (val) => {
+		if (!val) emit('close')
+	})
 
 </script>
 
 <style scoped>
 	.premium__window-overlay {
-		position: relative;
+		position: fixed;
 		z-index: 99999;
 		background: rgba(0, 0, 0, 0.56);
 		width: 100vw;

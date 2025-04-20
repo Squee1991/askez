@@ -57,6 +57,7 @@
 		"name": "Tus ascetismos",
 		"achieveTitle": "Archivo de ascetismos",
 		"totalDays": "Total de días",
+		"notchecked": "Días restantes",
 		"checkedDays": "Marcado",
 		"notChecked": "No marcado"
 	},

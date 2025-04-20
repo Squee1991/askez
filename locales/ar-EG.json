@@ -62,6 +62,7 @@
 		"name": "أسكازاتك",
 		"achieveTitle": "أرشيف الأسكازات",
 		"totalDays": "إجمالي الأيام",
+		"notchecked": "الأيام المتبقية",
 		"checkedDays": "تم التحقق",
 		"notChecked": "لم يتم التحقق"
 	},

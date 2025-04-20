@@ -2,8 +2,8 @@
 	<div class="welcome">
 		<Transition name="fade">
 			<div v-if="authStore.isBotEnabled && showAIGreeting && greetingMessage"
-				class="ai-greeting"
-				@click="goToBot"
+			     class="ai-greeting"
+			     @click="goToBot"
 			>
 				{{ greetingMessage }}
 			</div>
@@ -50,67 +50,60 @@
 								</div>
 							</div>
 							<div class="add__goals">
-								<div class=""></div>
-								<div :class="{'visible' : activeButton === 'achiv' }" class="achiv">
-									<Achievment/>
-								</div>
-								<div :class="{'visible': activeButton === 'stats'}" class="stats">
-									<Statistic/>
-								</div>
-								<div :class="{ 'visible': activeButton === 'tasks' }" class="task__goal-content">
-									<div
-										class="task__goal-list"
-										v-for="task in tasks"
-										:key="task.id"
-										:style="{ borderBottomColor: task.color }"
-									>
-										<div class="task__goal-list-inner">
-											<div class="taks__progress__date-wrapper">
-												<div class="task__datum-wrapper">
-													<div class="task__goal-wrapper">
-														<div class="task__goal-item goals goal__name">{{ task.goal }}
+								<Transition :name="transitionName" mode="out-in">
+									<div v-if="activeButton === 'achiv'" class="achiv">
+										<Achievment />
+									</div>
+									<div v-else-if="activeButton === 'stats'" class="stats">
+										<Statistic />
+									</div>
+									<div v-else class="task__goal-content">
+										<div
+											class="task__goal-list"
+											v-for="task in tasks"
+											:key="task.id"
+											:style="{ borderBottomColor: task.color }"
+										>
+											<div class="task__goal-list-inner">
+												<div class="taks__progress__date-wrapper">
+													<div class="task__datum-wrapper">
+														<div class="task__goal-wrapper">
+															<div class="task__goal-item goals goal__name">{{ task.goal }}</div>
 														</div>
-													</div>
-													<div class="task__date-wrapper">
-														<div class="task__start__date tasks__date">
-															<div class="task__goal-item goal__type">{{
-																formatDate(task.dateRange.start)
-																}}
+														<div class="task__date-wrapper">
+															<div class="task__start__date tasks__date">
+																<div class="task__goal-item goal__type">{{ formatDate(task.dateRange.start) }}</div>
 															</div>
-														</div>
-														<img class="arrow__datum" src="../assets/images/arrayDatum.svg"
-														     alt="">
-														<div class="task__end__date tasks__date">
-															<div class="task__goal-item goal__type">{{
-																formatDate(task.dateRange.end)
-																}}
+															<img class="arrow__datum" src="../assets/images/arrayDatum.svg" alt="">
+															<div class="task__end__date tasks__date">
+																<div class="task__goal-item goal__type">{{ formatDate(task.dateRange.end) }}</div>
 															</div>
 														</div>
 													</div>
 												</div>
-											</div>
-											<div class="taks__btns">
-												<div class="task__progress-wrapper">
-													<div class="task__progress-value">
-														<div class="task__progress-green">
-															<span class="emoji">&#9989; </span>
-															<span class="progress-green percent__progress">{{ getProgress(task).progress }}</span>
-														</div>
-														<div class="task__progress-green">
-															<span class="emoji">&#10060;</span>
-															<span class="progress-red percent__progress">{{ getProgress(task).progressMiss }}</span>
+												<div class="taks__btns">
+													<div class="task__progress-wrapper">
+														<div class="task__progress-value">
+															<div class="task__progress-green">
+																<span class="emoji">&#9989;</span>
+																<span class="progress-green percent__progress">{{ getProgress(task).progress }}</span>
+															</div>
+															<div class="task__progress-green">
+																<span class="emoji">&#10060;</span>
+																<span class="progress-red percent__progress">{{ getProgress(task).progressMiss }}</span>
+															</div>
 														</div>
 													</div>
-												</div>
-												<div class="btn__details-wrapper">
-													<button @click="openTaskDetails(task)" class="task__come-btn">
-														{{ $t('homePage.btn') }}
-													</button>
+													<div class="btn__details-wrapper">
+														<button @click="openTaskDetails(task)" class="task__come-btn">
+															{{ $t('homePage.btn') }}
+														</button>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
+								</Transition>
 							</div>
 							<Transition name="fade">
 								<div class="not__task-inner"
@@ -143,7 +136,7 @@
 	import {useRouter, useRoute} from 'vue-router'
 	import {getAuth} from "firebase/auth";
 	import { App } from '@capacitor/app';
-	let aiGreetedOnce = false
+	import { timeBasedGreetings, getTimeOfDay } from '../src/ai/messageBot.js'
 	const route = useRoute();
 	const isTasksLoaded = ref(false)
 	const taskStore = useTaskStore();
@@ -158,10 +151,12 @@
 	const showAIGreeting = ref(false)
 	const greetingMessage = ref(null)
 	const activeButton = ref('tasks');
-	const buttonBackground = ref(null);
+	const transitionName = ref('slide-left')
+	let prevButton = 'tasks'
 	const auth = getAuth()
 	const isReady = ref(false);
 	const user = auth.currentUser
+	const isNotTask = computed(() => habitStore.tasks.length === 0);
 	const tasks = computed(() => {
 		const habitTasks = habitStore.tasks;
 		const offlineTasks = taskStore.tasks;
@@ -175,59 +170,12 @@
 		return [...habitTasks, ...filteredOffline];
 	});
 
-	const pandaGreetings = {
-		en: [
-			"Hi! I'm your mindful panda 🐼",
-			"Let’s make today awesome!",
-			"Discipline makes dreams real!",
-		],
-		ru: [
-			'Привет! Я твоя панда 🐼',
-			'Сегодня отличный день для цели!',
-			'Дисциплина — путь к победе!',
-		],
-		de: [
-			'Hallo! Ich bin dein Panda 🐼',
-			'Bereit für neue Ziele?',
-			'Disziplin macht den Meister!',
-		],
-		fr: [
-			'Salut ! Je suis ton panda 🐼',
-			'C’est une belle journée pour avancer !',
-			'La discipline est la clé !',
-		],
-		es: [
-			'¡Hola! Soy tu panda 🐼',
-			'¡Vamos a lograrlo hoy!',
-			'La disciplina crea resultados.',
-		],
-		uk: [
-			'Привіт! Я твій панда 🐼',
-			'Сьогодні чудовий день для цілей!',
-			'Дисципліна творить успіх!',
-		],
-		be: [
-			'Прывітанне! Я твоя панда 🐼',
-			'Сёння выдатны дзень для мэты!',
-			'Дысцыпліна вядзе да перамогі!',
-		],
-		pl: [
-			'Cześć! Jestem twoją pandą 🐼',
-			'Dziś świetny dzień na cel!',
-			'Dyscyplina to klucz do sukcesu!',
-		],
-		ar: [
-			'مرحبًا! أنا الباندا الخاصة بك 🐼',
-			'اليوم يوم رائع لتحقيق الهدف!',
-			'الانضباط هو سر النجاح!',
-		],
-		zh: [
-			'你好！我是你的小熊猫 🐼',
-			'今天是实现目标的好日子！',
-			'自律成就梦想！',
-		],
-	};
-
+	function getLocalizedGreeting(currentLocale) {
+		const lang = currentLocale.split('-')[0] || 'en'
+		const time = getTimeOfDay()
+		const greetings = timeBasedGreetings[lang]?.[time] || timeBasedGreetings.en.day
+		return greetings[Math.floor(Math.random() * greetings.length)]
+	}
 
 	const toPremium = () => {
 		router.push('premium')
@@ -258,8 +206,6 @@
 			return taskStore.result(task.id);
 		}
 	};
-
-	const isNotTask = computed(() => habitStore.tasks.length === 0);
 
 	const openTaskDetails = (task) => {
 		router.push({
@@ -306,11 +252,16 @@
 	};
 
 	const setActive = (buttonName) => {
+		if (buttonName === activeButton.value) return;
+
+		// определить направление
+		const order = ['achiv', 'tasks', 'stats'];
+		const fromIndex = order.indexOf(activeButton.value);
+		const toIndex = order.indexOf(buttonName);
+		transitionName.value = toIndex > fromIndex ? 'slide-left' : 'slide-right';
+
+		prevButton = activeButton.value;
 		activeButton.value = buttonName;
-		buttonBackground.value = buttonName
-		setTimeout(() => {
-			buttonBackground.value = null
-		}, 200)
 	};
 
 	onMounted(async () => {
@@ -321,36 +272,29 @@
 		}, 220)
 	});
 
-	function getRandomGreeting(locale) {
-		const lang = locale.split('-')[0] || 'en';
-		const greetings = pandaGreetings[lang] || pandaGreetings['en'];
-		return greetings[Math.floor(Math.random() * greetings.length)];
-	}
-
-	let hasGreeted = false;
-
-	const showGreeting = () => {
-		if (!hasGreeted) {
-			const currentLocale = locale.value;
-			greetingMessage.value = getRandomGreeting(currentLocale);
-			showAIGreeting.value = true;
-
-			setTimeout(() => {
-				showAIGreeting.value = false;
-			}, 2000);
-
-			hasGreeted = true;
-		}
-	};
 
 	onMounted(() => {
-		showGreeting();
+		if (!window.__greetingReset) {
+			sessionStorage.removeItem('greeted')
+			window.__greetingReset = true
+		}
 
-		App.addListener('resume', () => {
-			hasGreeted = false;
-			showGreeting();
-		});
-	});
+		if (
+			authStore.isBotEnabled &&
+			sessionStorage.getItem('greeted') !== 'true' &&
+			locale.value
+		) {
+			greetingMessage.value = getLocalizedGreeting(locale.value)
+			showAIGreeting.value = true
+
+			setTimeout(() => {
+				showAIGreeting.value = false
+			}, 2000)
+
+			sessionStorage.setItem('greeted', 'true')
+		}
+	})
+
 
 	onMounted(() => {
 		if (route.query.open === 'true') {
@@ -359,10 +303,49 @@
 		}
 	});
 
+	onMounted(() => {
+		const el = document.querySelector('.achiv');
+		if (el) {
+			el.style.visibility = 'hidden';
+			el.style.display = 'block';
+			el.offsetHeight;
+			el.style.display = '';
+			el.style.visibility = '';
+		}
+	});
+
+
 
 </script>
 
 <style>
+
+	.slide-left-enter-active,
+	.slide-left-leave-active,
+	.slide-right-enter-active,
+	.slide-right-leave-active {
+		transition: all 0.20s ease;
+		position: absolute;
+		width: 100%;
+	}
+
+	.slide-left-enter-from {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	.slide-left-leave-to {
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+
+	.slide-right-enter-from {
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+	.slide-right-leave-to {
+		transform: translateX(100%);
+	}
+
 	.ai-greeting.gretingOff {
 		width: 0;
 		height: 0;
@@ -483,80 +466,24 @@
 		padding: 0 8px;
 	}
 
-	.task__goal-content {
-		left: 0;
-		width: 100%;
-		opacity: 0;
-		transform: translateX(-100%);
-		pointer-events: none;
-		visibility: hidden;
-		transition: none;
-		overflow-y: auto;
-	}
-
-	.task__goal-content.visible {
-		opacity: 1;
-		transform: translateX(0);
-		pointer-events: auto;
-		visibility: visible;
-		transition: transform 0.3s ease, opacity 0.3s ease;
-	}
-
-	.task__goal-content:not(.visible) {
-		transition: none;
-		right: -100%;
-		opacity: 0;
-	}
-
-	.stats {
-		position: absolute;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		transform: translateX(100%);
-		opacity: 0;
-		overflow-y: auto;
-		transition: none;
-		pointer-events: none;
-		visibility: hidden;
-	}
-
-	.stats.visible {
-		transform: translateX(0);
-		opacity: 1;
-		transition: transform 0.3s ease, opacity 0.3s ease;
-		pointer-events: auto;
-		visibility: visible;
-	}
-
+	.task__goal-content,
+	.stats,
 	.achiv {
-		position: absolute;
-		left: 0;
 		width: 100%;
 		height: 100%;
-		transform: translateX(-100%);
-		opacity: 0;
 		overflow-y: auto;
-		transition: none;
-		pointer-events: none;
-		visibility: hidden;
-	}
-
-	.achiv.visible {
-		transform: translateX(0);
-		opacity: 1;
-		transition: transform 0.3s ease, opacity 0.3s ease;
-		pointer-events: auto;
-		visibility: visible;
 	}
 
 	.goals__btns-inner {
-		/*margin: 0 -10px;*/
-		border-radius: 12px;
+		border-radius: 30px;
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		background-color: var(--slider-bg);
 		padding: 5px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+		transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease;
+		touch-action: manipulation;
 	}
 
 	.goal__indicator {
@@ -566,10 +493,11 @@
 		width: 33.33%;
 		height: 100%;
 		background: var(--indicator-bg);
-		border-radius: 12px;
+		border-radius: 30px;
 		z-index: 0;
-		transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+		transition: transform .5s cubic-bezier(0.22, 1, 0.36, 1);
 		will-change: transform;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	}
 
 	.achiv__btn {
@@ -577,7 +505,7 @@
 		flex: 1;
 		color: white;
 		font-family: Nunito, serif;
-		font-size: 15px;
+		font-size: 14px;
 		padding: 10px 0;
 		border: none;
 		background: none;
@@ -606,11 +534,19 @@
 		min-width: 90px;
 		padding: 10px 19px;
 		border: none;
-		background: #6378e1;
-		border-radius: 5px;
+		background: linear-gradient(to right, #6378e1, #8199f4);
+		border-radius: 15px;
 		color: white;
-		font-size: 16px;
-		font-family: "Acme", serif;
+		font-size: 17px;
+		font-family: "Acme", system-ui, -apple-system, sans-serif;
+		box-shadow: 0 4px 12px rgba(99, 120, 225, 0.4);
+		transition: all 0.2s ease-in-out;
+		touch-action: manipulation;
+	}
+
+	.task__come-btn:active{
+		transform: scale(0.97);
+		box-shadow: 0 2px 6px rgba(99, 120, 225, 0.3);
 	}
 
 	.taks__btns {
@@ -622,10 +558,6 @@
 	.taks__progress__date-wrapper {
 		display: flex;
 		justify-content: space-between;
-	}
-
-	.progres__wrapper {
-		width: 90px;
 	}
 
 	.task__datum-wrapper {
@@ -707,20 +639,16 @@
 		max-width: 160px;
 	}
 
-	.add__goals {
-		flex-grow: 1;
-		overflow-y: auto;
-	}
 
 	.task__goal-list {
 		background-color: var(--menu--btn-bg);
-		margin: 10px 0;
-		border-radius: 10px;
-		padding: 10px;
-
-		border-bottom-width: 4px;
-		border-bottom-style: solid;
-		border-bottom-color: transparent;
+		margin-bottom: 12px;
+		border-radius: 25px;
+		padding: 14px 16px;
+		border-bottom: 4px solid transparent;
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+		transition: all 0.2s ease-in-out;
+		touch-action: manipulation;
 	}
 
 	.habbit__goal {
@@ -735,9 +663,11 @@
 	}
 
 	.add__goals {
-		margin-bottom: 70px;
+		flex-grow: 1;
+		margin-bottom: 80px;
 		padding: 10px 0;
-		overflow: auto;
+		overflow: hidden;
+		position: relative;
 	}
 
 	.progress__inner {

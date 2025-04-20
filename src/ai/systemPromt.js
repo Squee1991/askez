@@ -1,4 +1,4 @@
-export function getSystemPrompt(habitStore, completedToday, missedToday, progressMissTasks, userLang) {
+	export function getSystemPrompt(habitStore, completedToday, missedToday, progressMissTasks, userLang) {
 	const today = new Date().toISOString().split('T')[0];
 	const nextThreshold = habitStore.achievementThresholds.find(th => th > habitStore.achieveCount) || null;
 	const toNextAchieve = typeof nextThreshold === 'number' ? nextThreshold - habitStore.achieveCount : 0;

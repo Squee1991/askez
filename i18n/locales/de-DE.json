@@ -18,11 +18,24 @@
 	"setting": [
 		"Konto löschen",
 		"Datenschutzrichtlinie",
-		"Urheberrecht",
+		"Zuschreibung",
 		"Feierlicher Ton",
-		"Modus",
+		"Animation",
+		"Mod",
 		"Chat"
 	],
+	"stepHint": {
+		"skip": "Überspringen",
+		"further": "Weiter",
+		"done": "Fertig",
+		"screen": "Drücken Sie, um zum Hauptbildschirm zurückzukehren",
+		"goal": "Name Ihres Ziels",
+		"date": "Start- und Enddatum werden hier angezeigt.",
+		"calendar": "Wählen Sie das aktuelle Datum im Kalender aus",
+		"mark": "Markieren Sie die Aufgabe als erledigt am gewählten Datum",
+		"progress": "Der Fortschritt der Aufgabe wird hier angezeigt"
+	},
+
 	"attr": {
 		"value": "Urheberrechtshinweis"
 	},
@@ -64,6 +77,7 @@
 		"bot": "Um den virtuellen Assistenten zu nutzen, musst du auf den Premium-Plan upgraden.",
 		"taskText": "Du hast das Limit der Gewohnheiten im kostenlosen Plan erreicht. Um unbegrenzt Gewohnheiten hinzuzufügen, wechsle zu Premium.",
 		"subtext": "Mit einem Premium-Abonnement erhältst du vollen Zugriff auf alle Funktionen der App.",
+		"leveling": "Um Pandib aufwerten zu können, musst du zum Premium-Plan wechseln.",
 		"btnPremium": "Premium erhalten"
 	},
 	"meniu": [
@@ -101,6 +115,7 @@
 		"name": "Ihre Ziele",
 		"achieveTitle": "Archiv der Askesen",
 		"totalDays": "Gesamttage",
+		"notchecked": "Verbleibende",
 		"checkedDays": "Markiert",
 		"notChecked": "Nicht markiert"
 	},
@@ -124,12 +139,15 @@
 		"onlyToday": "Nur das heutige Datum kann markiert werden"
 	},
 	"achieve": {
-		"1": "Beende die erste Askese",
-		"2": "Beende 10 Askesen",
-		"3": "Beende 25 Askesen",
-		"4": "Beende 50 Askesen",
-		"5": "Beende 100 Askesen",
-		"6": "Beende 200 Askesen"
+		"1": "Beende die erste Ziel",
+		"2": "Beende 10 Zielen",
+		"3": "Beende 25 Zielen",
+		"4": "Beende 50 Zielen",
+		"5": "Beende 70 Zielen",
+		"6": "Beende 100 Zielen",
+		"7": "Beende 120 Zielen",
+		"8": "Beende 150 Zielen",
+		"9": "Beende 200 Zielen"
 	},
 	"feedBack": {
 		"title": "Feedback",
@@ -212,8 +230,12 @@
 		"button": "OK"
 	},
 	"taskDetails": {
-		"startDate": "Startdatum",
-		"endDate": "Enddatum"
+		"startDate": "Anfangsdatum",
+		"endDate": "Enddatum",
+		"title": "Titel",
+		"status": "Status",
+		"order": "Reihenfolge",
+		"activity": "Jeden Tag machen"
 	},
 	"delConfirm": {
 		"title": "Ziel löschen?",
@@ -224,8 +246,8 @@
 		"delTask": "Löschen"
 	},
 	"CheckedProgress": {
-		"checked": "Ziel ist erledigt",
-		"notChecked": "Ziel ist nicht erledigt"
+		"checked": "Tage erledigt",
+		"notChecked": "Tage nicht erledigt"
 	},
 	"bublingWindows": {
 		"fieldEmpty": "Geben Sie den Namen der Ziele"

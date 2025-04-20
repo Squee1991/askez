@@ -57,6 +57,7 @@
 		"name": "你的修行",
 		"achieveTitle": "修行档案",
 		"totalDays": "总天数",
+		"notchecked": "剩余天数",
 		"checkedDays": "已完成",
 		"notChecked": "未完成"
 	},

@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     css: ['@/assets/styles/global.css',],
     vuefire: {
         config: {
-            apiKey: 'AIzaSyBhDly0l8cImq0geDGG7pQdsbH12sPl9CQ',
+            apiKey: process.env.NUXT_PUBLIC_FIREBASE_API_KEY,
             authDomain: 'ascetic-app-a3a9d.firebaseapp.com',
             projectId: 'ascetic-app-a3a9d',
             storageBucket: "ascetic-app-a3a9d.firebasestorage.app",
@@ -26,9 +26,9 @@ export default defineNuxtConfig({
         },
         auth: {
             enabled: true,
-            errorMap: 'debug', // Подробные ошибки в разработке
-            popupRedirectResolver: false, // Отключает зависимость всплывающих окон для входа через соцсети
-            persistence: ['indexedDBLocal'], // Сохраняет сессию пользователя в IndexedDB
+            errorMap: 'debug',
+            popupRedirectResolver: false,
+            persistence: ['indexedDBLocal'],
             sessionCookie: false
         },
     },

@@ -1,5 +1,12 @@
 <template>
 	<div class="acc">
+		<div v-if="isOverlayVisible">
+			<PremiumWindow
+				:text="$t('premiumWindow.leveling')"
+				:subtext="$t('premiumWindow.subtext')"
+				@close="isOverlayVisible = false"
+			/>
+		</div>
 		<button class="circle"
 		        :class="{'clicked': clicked}"
 		        v-if="isButtonVisible">
@@ -226,14 +233,17 @@
 <script setup>
 	import {ref, computed, onMounted} from 'vue'
 	import {useHabitStore} from '../stores/habitStore.js'
+	import {useAuthStore} from '../stores/authStore.js'
+	import PremiumWindow from '../src/components/premiumWindow.vue'
 
 	const store = useHabitStore()
+	const authStore = useAuthStore()
 	const isOpen = ref(false);
 	const isReady = computed(() => store.isLoaded && !isButtonVisible.value)
 	const clicked = ref(false)
 	const isButtonVisible = ref(true)
 	import {useI18n} from 'vue-i18n'
-
+	const isOverlayVisible = ref(false)
 	const {t} = useI18n()
 	const rankKeys = ['rank.newbie', 'rank.pupil', 'rank.master', 'rank.legenda', 'rank.immortal']
 	const isPandaActive = computed(() => store.pandaProgressGlobal >= 66)
@@ -251,18 +261,31 @@
 		return '/images/33.png'
 	})
 
-	onMounted(() => {
-		store.updateAllProgress()
-		setTimeout(() => {
-			clicked.value = true
-		}, 100)
-		setTimeout(() => {
-			isButtonVisible.value = false
+	onMounted(async () => {
+		await store.updateAllProgress();
+		if (!authStore.isPremium) {
+			isOverlayVisible.value = true;
+			return;
+		}
+
+		if (authStore.isGateOpened) {
+			isButtonVisible.value = false;
+			isOpen.value = true;
+		} else {
 			setTimeout(() => {
-				isOpen.value = true
-			}, 100)
-		}, 2000)
-	})
+				clicked.value = true;
+			}, 100);
+			setTimeout(async () => {
+				isButtonVisible.value = false;
+				setTimeout(() => {
+					isOpen.value = true;
+				}, 100);
+
+				await authStore.markGateAsOpened();
+			}, 2000);
+		}
+	});
+
 
 	definePageMeta({
 		layout: 'footerlayout'

@@ -117,15 +117,22 @@
 			</div>
 			<div class="select__inner">
 				<div class="select__wrapper">
-					<div class="indicator" :style="{ transform: isActiveButton === 'active' ? 'translateX(0%)' : 'translateX(100%)' }" />
+					<div class="indicator"
+					     :style="{ transform: isActiveButton === 'active' ? 'translateX(0%)' : 'translateX(100%)' }" />
+
 					<span
 						class="select"
 						:class="{ 'select__active': isActiveButton === 'active' }"
-						@click="isActiveButton = 'active'">{{ $t('statslable.active') }}</span>
+						@click="isActiveButton = 'active'">
+			{{ $t('statslable.active') }}
+		</span>
+
 					<span
 						class="select"
 						:class="{ 'select__active': isActiveButton === 'archive' }"
-						@click="isActiveButton = 'archive'">{{ $t('statslable.archieve') }}</span>
+						@click="isActiveButton = 'archive'">
+			{{ $t('statslable.archieve') }}
+		</span>
 				</div>
 			</div>
 		</div>
@@ -149,6 +156,10 @@
 
 <style scoped>
 
+	.stats__left {
+		min-height: 135px;
+	}
+
 	.active-task {
 		background: var(--menu--btn-bg);
 	}
@@ -159,12 +170,9 @@
 	}
 
 	.select__active {
-		color: white !important; /* <- активный цвет точно сработает */
+		color: white !important;
 	}
 
-	.stats__left {
-		min-height: 135px;
-	}
 
 	.select__wrapper {
 		position: relative;
@@ -181,18 +189,11 @@
 		width: 50%;
 		height: 100%;
 		background: var(--indicator-bg);
-		border-radius: 10px;
+		border-radius: 30px;
 		z-index: 0;
 		pointer-events: none;
-		transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+		transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 		will-change: transform;
-	}
-
-	.select__inner {
-		margin: 10px 0;
-		padding: 3px;
-		background-color: var(--slider-bg);
-		border-radius: 10px;
 	}
 
 	.select {
@@ -208,8 +209,15 @@
 		transition: color 0.3s ease;
 	}
 
+	.select__inner {
+		margin: 10px 0;
+		padding: 5px;
+		background-color: var(--slider-bg);
+		border-radius: 30px;
+	}
+
 	.not__active-askez {
-		color: #666060;
+		color: var(--text-color);
 		font-size: 16px;
 		font-family: "Nunito", sans-serif;
 		font-weight: 400;
@@ -220,13 +228,12 @@
 	.stat__askez-wrapper {
 		flex-grow: 1;
 		overflow-y: auto;
-		padding-bottom: 110px;
+		padding-bottom: 10px;
 	}
 
 	.stat__askez-scroll {
 		flex-grow: 1;
 		overflow-y: auto;
-		padding-bottom: 120px;
 	}
 
 	.askez__status-img {
@@ -241,7 +248,6 @@
 		display: flex;
 		flex-direction: column;
 		height: 100%;
-		padding: 0 10px;
 	}
 
 	.stats__header {
@@ -259,11 +265,13 @@
 	.stats__banner-content {
 		padding: 8px 15px 8px 20px;
 		background: var(--menu--btn-bg);
-		border-radius: 10px;
+		border-radius: 15px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		min-height: 155px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+		margin-bottom: 15px;
 	}
 
 	.stats__right {
@@ -310,7 +318,6 @@
 	}
 
 	.askez__titles {
-		margin-top: 10px;
 		padding: 8px 10px;
 		display: flex;
 		font-size: 18px;
@@ -327,9 +334,10 @@
 	}
 
 	.stat__askez {
-		border-radius: 10px;
+		border-radius: 15px;
 		padding: 0 15px 0 10px;
 		min-height: 81px;
+		margin-bottom: 10px;
 	}
 
 	.askez__info {

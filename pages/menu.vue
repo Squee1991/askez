@@ -192,7 +192,7 @@
 		font-weight: 400;
 		text-decoration: none;
 		background: var(--menu--btn-bg);
-		border-radius: 12px;
+		border-radius: 20px;
 		transition: background 0.3s ease;
 		outline: none;
 		-webkit-tap-highlight-color: transparent;
@@ -347,7 +347,7 @@
 		font-weight: 400;
 		text-decoration: none;
 		background: var(--menu--btn-bg);
-		border-radius: 12px;
+		border-radius: 20px;
 		transition: background 0.3s ease;
 		outline: none;
 		-webkit-tap-highlight-color: transparent;

@@ -71,7 +71,7 @@
 		width: 100%;
 		padding: 10px;
 		border: 1px solid #ccc;
-		border-radius: 5px;
+		border-radius: 15px;
 		resize: none;
 		font-family: "Nunito", serif;
 		height: 130px;
@@ -87,7 +87,7 @@
 		border: none;
 		font-size: 24px;
 		font-family: "Itim", serif;
-		border-radius: 5px;
+		border-radius: 25px;
 		cursor: pointer;
 	}
 

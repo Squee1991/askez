@@ -10,11 +10,11 @@
 	import {onMounted} from 'vue'
 
 	import {useRouter} from 'vue-router'
-	// export default {
-	// 	components: {
-	// 		Header , Footer
-	// 	},
-	// };
+
+	if (!window.__greetingReset) {
+		sessionStorage.removeItem('greeted')
+		window.__greetingReset = true
+	}
 
 	const user = useCurrentUser()
 	const router = useRouter()
@@ -32,7 +32,7 @@
 		})
 	})
 
-</script>
+	</script>
 
 
 <style>

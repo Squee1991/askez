@@ -23,7 +23,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		goalCompleted: false,
 		achievementUnlocked: false
 	});
-	const achievementThresholds = ref([1, 10, 25, 50, 50, 200]);
+	const achievementThresholds = ref([1, 10, 20, 50, 70, 100, 120, 150, 200]);
 	const archiveTasks = ref([]);
 	const skipUpdateAll = ref(false);
 	const auth = getAuth();
@@ -31,7 +31,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
 	const userId = ref(null);
 	const authStore = useAuthStore();
 
-	const setAndAnimation = (value) => {
+	const setAnimation = (value) => {
 
 		isAnimationEnabled.value = value;
 		localStorage.setItem('animationEnabled', JSON.stringify(value));
@@ -350,7 +350,7 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		onAuthStateChanged,
 		updateTask,
 		setAudio,
-		setAndAnimation,
+		setAnimation,
 		toggleAudio,
 		toggleAnimation
 	};

@@ -23,10 +23,23 @@
 		"Usuń konto",
 		"Polityka prywatności",
 		"Atrybucja",
-		"Торжественный звук",
-		"Tryb",
+		"Dźwięk uroczysty",
+		"Animacja",
+		"Mod",
 		"Czat"
 	],
+	"stepHint": {
+		"skip": "Pomiń",
+		"further": "Dalej",
+		"done": "Gotowe",
+		"screen": "Naciśnij, aby wrócić do ekranu głównego",
+		"goal": "Nazwa twojego celu",
+		"date": "Tutaj są wyświetlane daty rozpoczęcia i zakończenia",
+		"calendar": "Wybierz bieżącą datę w kalendarzu",
+		"mark": "Oznacz zadanie jako wykonane w wybranym dniu",
+		"progress": "Postęp zadania jest wyświetlany tutaj"
+	},
+
 	"attr": {
 		"value": "Atrybucja"
 	},
@@ -59,6 +72,7 @@
 		"bot": "Aby móc korzystać z wirtualnego asystenta, musisz przejść na plan Premium.",
 		"taskText": "Niestety osiągnąłeś limit liczby nawyków w darmowym planie. Aby móc dodawać nieograniczoną liczbę nawyków, musisz przejść na plan Premium.",
 		"subtext": "Subskrybując plan Premium, uzyskasz pełny dostęp do wszystkich funkcji aplikacji.",
+		"leveling": "Aby uzyskać dostęp do ulepszania pandib, przejdź na plan Premium.",
 		"btnPremium": "Uzyskaj Premium"
 	},
 	"noConnetction": {
@@ -101,6 +115,7 @@
 		"achieveTitle": "Archiwum ascez",
 		"name": "Twoje ascezy",
 		"totalDays": "Łącznie dni",
+		"notchecked": "Pozostało dni",
 		"checkedDays": "Zaznaczone",
 		"notChecked": "Nie zaznaczone"
 	},
@@ -124,12 +139,15 @@
 		"onlyToday": "Można zaznaczyć tylko dzisiejszą datę"
 	},
 	"achieve": {
-		"1": "Ukończ 1. ascezę",
-		"2": "Ukończ ascezę 10 razy",
-		"3": "Ukończ ascezę 20 razy",
-		"4": "Ukończ ascezę 50 razy",
-		"5": "Ukończ ascezę 100 razy",
-		"6": "Ukończ ascezę 200 razy"
+		"1": "Ukończ swój pierwszy cel",
+		"2": "Ukończ 10 celów",
+		"3": "Ukończ 20 celów",
+		"4": "Ukończ 50 celów",
+		"5": "Ukończ 70 celów",
+		"6": "Ukończ 100 celów",
+		"7": "Ukończ 120 celów",
+		"8": "Ukończ 150 celów",
+		"9": "Ukończ 200 celów"
 	},
 	"feedBack": {
 		"title": "Opinie",
@@ -213,7 +231,11 @@
 	},
 	"taskDetails": {
 		"startDate": "Data rozpoczęcia",
-		"endDate": "Data zakończenia"
+		"endDate": "Data zakończenia",
+		"title": "Tytuł",
+		"status": "Status",
+		"order": "Kolejność",
+		"activity": "Robić codziennie"
 	},
 	"delConfirm": {
 		"title": "Usunąć ascezę?",

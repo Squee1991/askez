@@ -57,6 +57,7 @@
 		"name": "Ваші аскези",
 		"achieveTitle": "Архів аскез",
 		"totalDays": "Всього днів",
+		"notchecked": "Залишилось днів",
 		"checkedDays": "Позначено",
 		"notChecked": "Не позначено"
 	},

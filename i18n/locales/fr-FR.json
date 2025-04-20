@@ -24,9 +24,21 @@
 		"Politique de confidentialité",
 		"Attribution",
 		"Son de célébration",
-		"Mode",
+		"Animation",
+		"Mod",
 		"Chat"
 	],
+	"stepHint": {
+		"skip": "Passer",
+		"further": "Suivant",
+		"done": "Terminé",
+		"screen": "Appuyez pour revenir à l'écran principal",
+		"goal": "Nom de votre objectif",
+		"date": "Les dates de début et de fin sont affichées ici.",
+		"calendar": "Sélectionnez la date actuelle dans le calendrier",
+		"mark": "Marquez la tâche comme terminée à la date choisie",
+		"progress": "La progression de la tâche est affichée ici"
+	},
 	"attr": {
 		"value": "Attribution"
 	},
@@ -43,6 +55,9 @@
 	"privacy": {
 		"page": "Politique de confidentialité"
 	},
+	"googlePlay": {
+		"pay": "L'abonnement est renouvelé automatiquement via Google Play, sauf annulation manuelle. Si vous annulez l’abonnement avant la fin de la période en cours, aucun remboursement ne sera effectué, mais l'accès au Premium restera actif jusqu'à la fin de la période payée. L'annulation prendra effet à l'expiration de la période en cours."
+	},
 	"chat": {
 		"title": "Retour",
 		"btn": "Envoyer",
@@ -51,7 +66,7 @@
 	"noConnetction": {
 		"off": "Pas de connexion Internet",
 		"on": "Connexion rétablie",
-		"btn": "Повторить"
+		"btn": "Répéter"
 	},
 	"menu": {
 		"title": "Menu"
@@ -60,6 +75,7 @@
 		"bot": "Pour utiliser l’assistant virtuel, vous devez passer au plan Premium.",
 		"taskText": "Malheureusement, vous avez atteint la limite d’habitudes dans le plan gratuit. Pour ajouter un nombre illimité d’habitudes, passez au plan Premium.",
 		"subtext": "En vous abonnant à Premium, vous aurez un accès complet à toutes les fonctionnalités de l'application.",
+		"leveling": "Pour débloquer l’évolution des pandas, vous devez passer au plan Premium.",
 		"btnPremium": "Obtenir Premium"
 	},
 	"meniu": [
@@ -97,6 +113,7 @@
 		"name": "Vos ascèses",
 		"achieveTitle": "Archive des ascèses",
 		"totalDays": "Total de jours",
+		"notchecked": "Jours restants",
 		"checkedDays": "Marqué",
 		"notChecked": "Non marqué"
 	},
@@ -120,12 +137,15 @@
 		"onlyToday": "Vous ne pouvez marquer qu'aujourd'hui"
 	},
 	"achieve": {
-		"1": "Terminer la première askeza",
-		"2": "Terminer 10 askezas",
-		"3": "Terminer 25 askezas",
-		"4": "Terminer 50 askezas",
-		"5": "Terminer 100 askezas",
-		"6": "Terminer 200 askezas"
+		"1": "Terminer votre premier objectif",
+		"2": "Terminer 10 objectifs",
+		"3": "Terminer 20 objectifs",
+		"4": "Terminer 50 objectifs",
+		"5": "Terminer 70 objectifs",
+		"6": "Terminer 100 objectifs",
+		"7": "Terminer 120 objectifs",
+		"8": "Terminer 150 objectifs",
+		"9": "Terminer 200 objectifs"
 	},
 	"feedBack": {
 		"title": "Commentaires",
@@ -135,14 +155,14 @@
 		"overlayTitle": "Merci pour votre retour"
 	},
 	"startPage": {
-		"value": "commencer"
+		"value": "Commencer"
 	},
 	"description": {
 		"value": "étape suivante"
 	},
 	"navTop": {
 		"achiv": "Succès",
-		"askez": "Toutes les ascèses",
+		"askez": "Tâches",
 		"stats": "Statistiques"
 	},
 	"statslable": {
@@ -209,7 +229,11 @@
 	},
 	"taskDetails": {
 		"startDate": "Date de début",
-		"endDate": "Date de fin"
+		"endDate": "Date de fin",
+		"title": "Titre",
+		"status": "Statut",
+		"order": "Ordre",
+		"activity": "Faire chaque jour"
 	},
 	"delConfirm": {
 		"title": "Supprimer l'objectif?",

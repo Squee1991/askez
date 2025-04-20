@@ -5,7 +5,6 @@
 		</div>
 		<Transition name="fade">
 			<div v-if="isLoading" class="loading-screen">
-
 				<Transition name="fade">
 					<div v-if="loading" class="loading">{{ $t('accState.load') }}</div>
 				</Transition>
@@ -23,22 +22,14 @@
 					</div>
 				</Transition>
 			</div>
-			<!--		<div v-else class="description">-->
-			<!--			<NuxtLink to="/singup">-->
-			<!--				<button class="next__btn">{{ $t("description.value")}}</button>-->
-			<!--			</NuxtLink>-->
-			<!--		</div>-->
 		</Transition>
 	</div>
-
 </template>
-
 <script setup>
 	import Lottie from 'lottie-web'
 	import {ref, onMounted, nextTick} from 'vue'
 	import Panda from 'assets/animations/panda.json'
 	import {useRouter} from 'vue-router'
-
 	const router = useRouter()
 	const animation = ref(false)
 	const loading = ref(false)
@@ -47,7 +38,6 @@
 	const config = useRuntimeConfig()
 	const apiBase = config.public.apiBase;
 	const showButton = ref(false)
-
 	const toRegistration = () => {
 		router.push('singup')
 	}
@@ -70,19 +60,14 @@
 			setTimeout(() => {
 				showButton.value = true
 			}, 500)
-		}, 3000)
+		}, 2000)
 	})
 
 	definePageMeta({
 		middleware: ['auth'],
 	})
 </script>
-
 <style scoped>
-
-
-
-
 	.form__logo {
 		position: absolute;
 		top: 10%;
@@ -200,34 +185,6 @@
 		opacity: 0;
 	}
 
-	.description {
-		background-image: url("../assets/images/bgPandaDescription.png");
-		width: 100%;
-		height: 100vh;
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		position: relative;
-	}
-
-	.next__btn {
-		opacity: 70%;
-		width: 50%;
-		border-radius: 12px;
-		position: absolute;
-		border: none;
-		padding: 10px 15px;
-		bottom: 15px;
-		left: 50%;
-		transform: translateX(-50%);
-		background-color: #005F23;
-		font-weight: bold;
-		font-size: 19px;
-		color: #ffffff;
-		margin-bottom: 20px;
-		font-family: "Nunito", serif;
-	}
-
 	.container-lottie {
 		width: 100%;
 		position: absolute;
@@ -238,17 +195,26 @@
 
 	.btn {
 		text-align: center;
-		padding: 15px;
+		padding: 14px 18px;
 		background-color: #005F23;
 		border: none;
+		opacity: 85%;
 		color: #FFFFFF;
-		border-radius: 10px;
-		opacity: 60%;
+		border-radius: 30px;
 		width: 100%;
-		font-size: 22px;
-		font-weight: 600;
-		font-family: "Nunito", serif;
+		font-size: 17px;
+		font-weight: 500;
+		font-family: -apple-system, BlinkMacSystemFont, "Nunito", sans-serif;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		transition: all 0.2s ease;
 	}
+
+	.btn:active {
+		transform: scale(0.98);
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+		opacity: 0.9;
+	}
+
 
 	.wrapper {
 		position: relative;
@@ -271,5 +237,4 @@
 		padding: 0 80px;
 		margin-bottom: 20%;
 	}
-
 </style>

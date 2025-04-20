@@ -1,25 +1,21 @@
 <template>
     <div v-if="show && currentStep" class="step-hint-overlay">
         <div class="step-hint-backdrop" @click="skipHint"></div>
-
-        <!-- Подсветка вокруг элемента -->
         <div
             v-if="highlightStyle"
             class="step-hint-highlight"
             :style="highlightStyle"
         />
-
-        <!-- Тултип с текстом -->
         <div
             v-if="tooltipStyle"
             class="step-hint-tooltip"
             :style="tooltipStyle"
         >
-            <div class="step-hint-text">{{ currentStep.text }}</div>
+            <div class="step-hint-text">{{ $t(currentStep.text) }}</div>
             <div class="step-hint-actions">
-                <button @click="skipHint" class="hint-btn skip">Пропустить</button>
+                <button @click="skipHint" class="hint-btn skip">{{ $t('stepHint.skip')}}</button>
                 <button @click="nextStep" class="hint-btn next">
-                    {{ isLastStep ? 'Готово' : 'Далее' }} →
+                    {{ isLastStep ? $t('stepHint.done') : $t('stepHint.further') }} →
                 </button>
             </div>
         </div>
@@ -46,23 +42,17 @@ const updatePosition = () => {
     const selector = currentStep.value?.selector;
     const target = document.querySelector(selector);
     if (!target) return;
-
     const rect = target.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
-    const tooltipHeight = 80; // Примерная высота тултипа
+    const tooltipHeight = 80;
     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
     const showAbove = rect.bottom + tooltipHeight + 10 > viewportHeight;
-
-
-    // Тултип снизу элемента
     tooltipStyle.value = {
         top: `${showAbove ? rect.top - tooltipHeight - 10 : rect.bottom + 10}px`,
         left: `${Math.max(rect.left, 10)}px`,
         maxWidth: '260px',
         position: 'absolute'
     };
-
     // Подсветка
     highlightStyle.value = {
         top: `${rect.top - 6}px`,

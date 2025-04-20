@@ -18,45 +18,48 @@
 						:class="{ 'isActive': habitStore.activeAchievements[index] }"
 						class="badge"
 						:src="item.src"
+						loading="eager"
+						decoding="async"
 						alt="">
 					<span class="achiv__under-text">{{$t(`achieve.${index + 1}`)}}</span>
 				</div>
 			</div>
 		</div>
-		<div class="achive__done-inner">
-		</div>
 	</div>
 </template>
-
 <script setup>
-	import {ref, computed} from 'vue'
+	import {ref, computed , onMounted } from 'vue'
 	import {useHabitStore} from "../../stores/habitStore.js";
-
-	import Kimano from '../../assets/images/kimano.png'
-	import panda1 from '../../assets/images/panda1.png'
-	import panda3 from '../../assets/images/panda3.png'
-	import panda4 from '../../assets/images/panda4.png'
-	import panda2 from '../../assets/images/panda2.png'
-	import pandaa from '../../assets/images/pandaa.png'
+	import Panda1 from '../../assets/images/p1.webp'
+	import Panda2 from '../../assets/images/p2.webp'
+	import Panda3 from '../../assets/images/p3.webp'
+	import Panda4 from '../../assets/images/p4.webp'
+	import Panda5 from '../../assets/images/p5.webp'
+	import Panda6 from '../../assets/images/p6.webp'
+	import Panda7 from '../../assets/images/p7.webp'
+	import Panda8 from '../../assets/images/p8.webp'
+	import Panda9 from '../../assets/images/p9.webp'
 
 	const habitStore = useHabitStore()
 	const activeAchievementCount = computed(() => habitStore.activeAchievements.filter(a => a).length)
 	const totalAchievements = computed(() => habitStore.achievementThresholds.length)
 	const progressValue = computed(() => `${(activeAchievementCount.value / totalAchievements.value) * 360}deg`)
 
-
 	const data = ref([
-		{id: 1, src: Kimano, alt: 'Kimano'},
-		{id: 2, src: panda1, alt: 'panda1'},
-		{id: 3, src: panda3, alt: 'panda3'},
-		{id: 4, src: panda4, alt: 'panda4'},
-		{id: 5, src: panda2, alt: 'panda2'},
-		{id: 6, src: pandaa, alt: 'pandaa'}
+		{id: 1, src: Panda1, alt: 'Panda1'},
+		{id: 2, src: Panda2, alt: 'Panda2'},
+		{id: 3, src: Panda3, alt: 'Panda3'},
+		{id: 4, src: Panda4, alt: 'Panda4'},
+		{id: 5, src: Panda5, alt: 'Panda5'},
+		{id: 6, src: Panda6, alt: 'Panda6'},
+		{id: 7, src: Panda7, alt: 'Panda7'},
+		{id: 8, src: Panda8, alt: 'Panda8'},
+		{id: 9, src: Panda9, alt: 'Panda9'},
 	]);
+
 </script>
 
 <style scoped>
-
 	.ring-wrapper {
 		position: relative;
 		width: 70px;
@@ -96,22 +99,9 @@
 	}
 
 	.achieve__inner {
-		max-height: 70vh;
+		height: 100%;
 		overflow-y: auto;
 	}
-
-	/*.achiv__counter {*/
-	/*	display: flex;*/
-	/*	justify-content: center;*/
-	/*	align-items: center;*/
-	/*	width: 45px;*/
-	/*	height: 45px;*/
-    /*    margin-right: 15px;*/
-	/*	border: 3px solid green;*/
-	/*	padding: 10px;*/
-	/*	border-radius: 50%;*/
-	/*	font-family: "Acme", serif;*/
-	/*}*/
 
 	.archiv__title-sub {
 		text-align: start;
@@ -139,9 +129,9 @@
 		align-items: center;
 		justify-content: space-between;
 		background: var(--menu--btn-bg);
-		margin: 10px;
-		border-radius: 10px;
+		border-radius: 20px;
 		font-family: 'Nunito', serif;
+		margin-bottom: 10px;
 	}
 
 	.achiv__list {
@@ -152,8 +142,7 @@
 
 	.achiv__list-wrapper {
 		background: var(--menu--btn-bg);
-		margin: 10px;
-		border-radius: 10px;
+		border-radius: 20px;
 		padding: 0 0 10px 0;
 	}
 
@@ -164,16 +153,21 @@
 	}
 
 	.badge {
-		width: 75px;
-		height: 75px;
+		display: block;
+		width: 76px;
+		height: 76px;
+		object-fit: contain;
 		filter: grayscale(1);
-		opacity: 80%;
-		transition: filter 0.3s ease, opacity 0.3s ease;
 	}
 
 	.isActive {
-		filter: grayscale(0);
+		object-fit: contain;
+		display: block;
+		width: 76px;
+		height: 76px;
+		filter: grayscale(0) brightness(1.10);
 		opacity: 1;
+		transform: scale(1.05);
 	}
 
 	.achive__done-inner {
@@ -203,7 +197,6 @@
 		color: var(--text-color);
 		width: 90px;
 		text-align: center;
-		margin: 5px 0;
 		font-family: "Nunito", serif;
 		font-size: 12px;
 		font-weight: 400;
