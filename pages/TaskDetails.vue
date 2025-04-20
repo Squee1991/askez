@@ -97,7 +97,7 @@
 					:disabled-dates="disabledDates"
 					v-model="selectedDate"
 					@dayclick="onDateSelect"
-					:attributes="[...checkedDatesAttributes, ...activeDateAttributes]"
+					:attributes="[...checkedDatesAttributes, ...activeDateAttributes,...todayAttribute]"
 				/>
 			</div>
 
@@ -198,7 +198,18 @@
 			customData: {active: true}
 		}];
 	});
+	const todayAttribute = computed(() => {
+		const today = new Date();
+		today.setHours(0, 0, 0, 0);
 
+		return [{
+			key: 'today-highlight',
+			dates: [today],
+			highlight: {
+				contentClass: 'vc-highlight-today'
+			}
+		}];
+	});
 	const notAllowed = ref({show: false, message: ''})
 	const showNotAllowed = (key) => {
 		notAllowed.value = {
@@ -900,6 +911,12 @@
 		text-align: center;
 		font-size: 14px;
 		opacity: 0.8;
+	}
+	.vc-highlight-today {
+		background-color: #0099FF !important;
+		color: white !important;
+		font-weight: bold;
+		border-radius: 50%;
 	}
 
 </style>

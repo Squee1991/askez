@@ -124,7 +124,7 @@ onMounted(() => {
     z-index: 10001;
     font-family: "Nunito", sans-serif;
     pointer-events: auto;
-}
+    animation: fadeInScale 0.3s ease;}
 
 .step-hint-text {
     font-size: 15px;
