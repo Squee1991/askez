@@ -32,10 +32,15 @@
 
 	const showPremiumModal = ref(true)
 	const authStore = useAuthStore()
-	const buyPremium = () => {
-		authStore.activatePremium()
-		showPremiumModal.value = false
-		router.push('/welcomePage')
+
+	const buyPremium = async () => {
+		await authStore.purchasePro()
+		if (authStore.isPremium.value) {
+			showPremiumModal.value = false
+			router.push('/welcomePage')
+		} else {
+			alert('Покупка не прошла или была отменена.')
+		}
 	}
 	const ads = [
 		"无广告", "Без рекламы","Без рэкламы", "Без реклами", "Brak reklam", "Sans publicité", "Sin anuncios",

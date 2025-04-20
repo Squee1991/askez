@@ -55,6 +55,9 @@
 	"privacy": {
 		"page": "Politique de confidentialité"
 	},
+	"googlePlay": {
+		"pay": "L'abonnement est renouvelé automatiquement via Google Play, sauf annulation manuelle. Si vous annulez l’abonnement avant la fin de la période en cours, aucun remboursement ne sera effectué, mais l'accès au Premium restera actif jusqu'à la fin de la période payée. L'annulation prendra effet à l'expiration de la période en cours."
+	},
 	"chat": {
 		"title": "Retour",
 		"btn": "Envoyer",
@@ -63,7 +66,7 @@
 	"noConnetction": {
 		"off": "Pas de connexion Internet",
 		"on": "Connexion rétablie",
-		"btn": "Повторить"
+		"btn": "Répéter"
 	},
 	"menu": {
 		"title": "Menu"
@@ -159,7 +162,7 @@
 	},
 	"navTop": {
 		"achiv": "Succès",
-		"askez": "Toutes les ascèses",
+		"askez": "Tâches",
 		"stats": "Statistiques"
 	},
 	"statslable": {

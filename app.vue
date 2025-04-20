@@ -6,6 +6,7 @@
 
 <script setup>
 	import './assets/styles/global.css'
+	import { disableDevtools, preventDebugAccess , blockConsole } from './src/utils/protect.js'
 	import { useAuthStore } from './stores/authStore.js'
 	import { onMounted, onBeforeUnmount } from 'vue'
 	import { useRouter } from 'vue-router'
@@ -35,7 +36,6 @@
 	}
 
 	onMounted(async () => {
-		// await authStore.loadBotStateFromLocal();
 		authStore.fetchingUser()
 	});
 
@@ -47,6 +47,12 @@
 
 	onBeforeUnmount(() => {
 		if (removeListener) removeListener()
+	})
+
+	onMounted(() => {
+		disableDevtools()
+		preventDebugAccess()
+		blockConsole()
 	})
 
 </script>

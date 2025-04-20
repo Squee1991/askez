@@ -45,9 +45,7 @@
 					<div class="range__date__data end">{{ formatDate(selectedTask.dateRange.end) }}</div>
 				</div>
 			</div>
-			<div class="progres__wrapper-inner"
-			     :style="selectedTask.color ? { borderTop: `4px solid ${selectedTask.color}` } : {}"
-			>
+			<div class="progres__wrapper-inner" :style="selectedTask.color ? { borderTop: `4px solid ${selectedTask.color}` } : {}">
 				<div class="task__about">
 					<div class="tas__name-wrapper">
 						<span class="task__goal-name">{{$t('taskDetails.title')}}: </span>
@@ -75,11 +73,11 @@
 					</div>
 					<div class="count">
 						<div class="checked__progress-inner">
-							<span class="checked__text checked__green"> {{t('CheckedProgress.checked')}}</span>
+							<span class="checked__text checked__green"> {{t('CheckedProgress.checked')}} :</span>
 							<span class="checked__count">{{ checkedCount }}</span>
 						</div>
 						<div class="checked__progress-inner">
-							<span class="checked__text">{{ t('CheckedProgress.notChecked') }}</span>
+							<span class="checked__text">{{ t('CheckedProgress.notChecked') }} :</span>
 							<span class="checked__count">{{ missedCount }}</span>
 						</div>
 					</div>
@@ -505,25 +503,27 @@
 	}
 
 	.days__task-count {
-		font-size: 25px;
+		font-size: 19px;
 		font-weight: bold;
 		font-family: "Acme", serif;
+		color: var(--text-color);
 	}
 
 	.days__task-text {
 		font-family: "Nunito", sans-serif;
-		font-size: 18px;
+		font-size: 15px;
 		font-weight: 600;
 		display: flex;
 		align-items: center;
 		width: 126px;
 		margin-right: 4px;
+		color: var(--text-color);
 	}
 
 	.calendar__icon{
 		position: absolute;
-		right: 20px;
-		width: 130px;
+		right: 10px;
+		width: 125px;
 	}
 
 	.circle {
@@ -553,6 +553,7 @@
 		background: var(--menu--btn-bg);
 		border-radius: 20px;
 		display: flex;
+		flex: 1;
 		flex-direction: column;
 		justify-content: center;
 	}
@@ -573,7 +574,7 @@
 
 	.goal__sticker-item {
 		position: absolute;
-		width: 130px;
+		width: 120px;
 		margin: 0 auto;
 		right: 5%;
 	}
@@ -620,7 +621,7 @@
 		background-color: var(--menu--btn-bg);
 		display: flex;
 		border-radius: 30px;
-		padding: 10px 10px 0 10px;
+		padding: 10px 10px 5px 10px;
 		position: relative;
 		overflow: hidden;
 	}
@@ -714,19 +715,18 @@
 	.checked__progress-inner {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 	}
 
 	.checked__text {
-		padding-left: 18px;
 		font-weight: 600;
-		text-align: center;
-		font-size: 16px;
+		font-size: 14px;
 		font-family: "Nunito", serif;
 		line-height: 21.82px;
 		color: var(--text-color);
-		min-width: 165px;
-		display: flex;
-		justify-content: start;
+		text-align: start;
+		margin-right: 10px;
+		min-width: 140px;
 	}
 
 	.checked__progress-wrapper {
@@ -827,9 +827,9 @@
 		font-size: 29px;
 		font-family: "Acme", serif;
 		color: var(--text-color);
-		padding: 10px;
+		padding: 0 15px 0 0;
 		text-align: center;
-
+        width: 39px;
 	}
 
 	.task__icon-back {

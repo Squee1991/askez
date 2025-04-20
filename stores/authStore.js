@@ -11,6 +11,8 @@ import {
 	sendPasswordResetEmail
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, getFirestore } from 'firebase/firestore';
+import { Capacitor } from '@capacitor/core';
+import { Purchases } from '@revenuecat/purchases-capacitor';
 
 export const useAuthStore = defineStore('auth', () => {
 	const db = getFirestore();
@@ -19,6 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
 	const password = ref(null);
 	const isPremium = ref(false);
 	const isBotEnabled = ref(false);
+	const isGateOpened = ref(false);
 
 	const setUserData = (data) => {
 		name.value = data.name || null;
@@ -26,10 +29,35 @@ export const useAuthStore = defineStore('auth', () => {
 		password.value = data.password || null;
 	};
 
-	const setPremium = (value) => {
-		isPremium.value = value;
+	const safePurchasesCall = async (fn) => {
+		if (!Capacitor.isNativePlatform()) return;
+		try {
+			await fn();
+		} catch (e) {
+			console.error('[RevenueCat]', e);
+		}
 	};
 
+	const checkRevenueCatPremium = async () => {
+		await safePurchasesCall(async () => {
+			const { purchaserInfo } = await Purchases.getCustomerInfo();
+			const active = purchaserInfo.entitlements.active['pro'];
+			isPremium.value = !!active;
+		});
+	};
+
+	const purchasePro = async () => {
+		await safePurchasesCall(async () => {
+			const offerings = await Purchases.getOfferings();
+			const pkg = offerings.current?.availablePackages.find(p => p.identifier === 'pro_monthly');
+			if (pkg) {
+				const { purchaserInfo } = await Purchases.purchasePackage(pkg);
+				const active = purchaserInfo.entitlements.active['pro'];
+				isPremium.value = !!active;
+				if (active) await activatePremium();
+			}
+		});
+	};
 
 	const activatePremium = async () => {
 		const auth = getAuth();
@@ -39,6 +67,16 @@ export const useAuthStore = defineStore('auth', () => {
 		const userDocRef = doc(db, "users", user.uid);
 		await setDoc(userDocRef, { isPremium: true }, { merge: true });
 		isPremium.value = true;
+	};
+
+	const markGateAsOpened = async () => {
+		const auth = getAuth();
+		const user = auth.currentUser;
+		if (!user) return;
+
+		const userDocRef = doc(db, "users", user.uid);
+		await setDoc(userDocRef, { premiumGateOpened: true }, { merge: true });
+		isGateOpened.value = true;
 	};
 
 	const loadPremiumStatus = async () => {
@@ -52,16 +90,6 @@ export const useAuthStore = defineStore('auth', () => {
 			isPremium.value = docSnap.data().isPremium ?? false;
 		}
 	};
-
-	// const saveBotStateToLocal = (enabled) => {
-	// 	isBotEnabled.value = enabled;
-	// 	localStorage.setItem('isBotEnabled', enabled);
-	// };
-	//
-	// const loadBotStateFromLocal = () => {
-	// 	const saved = localStorage.getItem('isBotEnabled');
-	// 	isBotEnabled.value = saved !== 'false';
-	// };
 
 	const loadBotStateFromFirebase = async () => {
 		const auth = getAuth();
@@ -89,11 +117,7 @@ export const useAuthStore = defineStore('auth', () => {
 
 	const registerUser = async (userData) => {
 		const auth = getAuth();
-		const userCredential = await createUserWithEmailAndPassword(
-			auth,
-			userData.email,
-			userData.password
-		);
+		const userCredential = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
 		await updateProfile(userCredential.user, {
 			displayName: userData.name
 		});
@@ -109,7 +133,6 @@ export const useAuthStore = defineStore('auth', () => {
 		});
 	};
 
-	// --- Вход ---
 	const loginUser = async ({ email, password }) => {
 		const auth = getAuth();
 		await signInWithEmailAndPassword(auth, email, password);
@@ -143,7 +166,6 @@ export const useAuthStore = defineStore('auth', () => {
 		password.value = null;
 	};
 
-
 	const fetchingUser = () => {
 		const auth = getAuth();
 		onAuthStateChanged(auth, async (user) => {
@@ -152,7 +174,6 @@ export const useAuthStore = defineStore('auth', () => {
 					name: user.displayName,
 					email: user.email
 				});
-
 				await loadPremiumStatus();
 				await loadBotStateFromFirebase();
 			} else {
@@ -164,7 +185,6 @@ export const useAuthStore = defineStore('auth', () => {
 			}
 		});
 	};
-
 
 	const saveLanguageToFirebase = async (lang) => {
 		const auth = getAuth();
@@ -193,9 +213,7 @@ export const useAuthStore = defineStore('auth', () => {
 		const user = auth.currentUser;
 		if (!user) return;
 
-		await updateProfile(user, {
-			displayName: newName
-		});
+		await updateProfile(user, { displayName: newName });
 		name.value = newName;
 	};
 
@@ -207,8 +225,8 @@ export const useAuthStore = defineStore('auth', () => {
 		password,
 		isPremium,
 		isBotEnabled,
+		isGateOpened,
 		setUserData,
-		setPremium,
 		activatePremium,
 		loadPremiumStatus,
 		registerUser,
@@ -216,13 +234,14 @@ export const useAuthStore = defineStore('auth', () => {
 		logout,
 		deleteAccount,
 		resetPassword,
-		// saveBotStateToLocal,
-		// loadBotStateFromLocal,
+		purchasePro,
+		checkRevenueCatPremium,
 		saveBotStateToFirebase,
 		loadBotStateFromFirebase,
 		saveLanguageToFirebase,
 		loadLanguageFromFirebase,
 		UpdateNameDisplayName,
-		fetchingUser
+		fetchingUser,
+		markGateAsOpened
 	};
 });

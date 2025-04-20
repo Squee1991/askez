@@ -161,7 +161,7 @@
 
 	.color-picker__wrapper {
 		padding: 8px;
-		border-radius: 50%;
+		border-radius: 30%;
 		border: 2px solid transparent;
 		box-sizing: border-box;
 		transition: border-color 0.3s ease;
@@ -175,7 +175,7 @@
 		padding: 10px;
 		width: 35px;
 		height: 35px;
-		border-radius: 30%;
+		border-radius: 50%;
 		cursor: pointer;
 		transition: transform 0.2s;
 		border: 2px solid transparent;
@@ -293,7 +293,7 @@
 		font-size: 16px;
 		font-weight: bold;
 		cursor: pointer;
-		border-radius: 8px;
+		border-radius: 25px;
 		position: relative;
 		overflow: hidden;
 	}
@@ -318,7 +318,7 @@
 		height: 100vh;
         padding: 20px;
 		background-color: var(--calendar--bg);
-		border-radius: 10px;
+		overflow-y: auto;
 	}
 
 	.habit-goal-modal {

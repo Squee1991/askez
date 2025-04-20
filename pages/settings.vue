@@ -61,7 +61,9 @@
 	}
 
 	const handleClick = (index) => {
-		if (index === 3) {
+		if (index === 2) {
+			router.push('/policyPrivacy');
+		} else if (index === 3) {
 			router.push('/attribution');
 		} else if (index === 4) {
 			habitStore.toggleAudio();

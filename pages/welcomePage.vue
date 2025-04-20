@@ -666,7 +666,7 @@
 		flex-grow: 1;
 		margin-bottom: 80px;
 		padding: 10px 0;
-		overflow: auto;
+		overflow: hidden;
 		position: relative;
 	}
 

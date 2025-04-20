@@ -261,22 +261,31 @@
 		return '/images/33.png'
 	})
 
-	onMounted(() => {
-		store.updateAllProgress()
+	onMounted(async () => {
+		await store.updateAllProgress();
 		if (!authStore.isPremium) {
-			isOverlayVisible.value = true
-			return
+			isOverlayVisible.value = true;
+			return;
 		}
-		setTimeout(() => {
-			clicked.value = true
-		}, 100)
-		setTimeout(() => {
-			isButtonVisible.value = false
+
+		if (authStore.isGateOpened) {
+			isButtonVisible.value = false;
+			isOpen.value = true;
+		} else {
 			setTimeout(() => {
-				isOpen.value = true
-			}, 100)
-		}, 2000)
-	})
+				clicked.value = true;
+			}, 100);
+			setTimeout(async () => {
+				isButtonVisible.value = false;
+				setTimeout(() => {
+					isOpen.value = true;
+				}, 100);
+
+				await authStore.markGateAsOpened();
+			}, 2000);
+		}
+	});
+
 
 	definePageMeta({
 		layout: 'footerlayout'
