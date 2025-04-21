@@ -1,7 +1,7 @@
 // @ts-ignore
 import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
-  appId: 'com.yourname.askeza',
+  appId: 'com.focuspanda.app',
   appName: 'askeza',
   webDir: '.output/public'
 };
