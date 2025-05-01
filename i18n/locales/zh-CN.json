@@ -6,6 +6,9 @@
 	"settings": {
 		"title": "设置"
 	},
+	"disclemer": {
+		"value": "此虚拟助手不提供医疗、法律或心理方面的建议。"
+	},
 	"color": {
 		"value": "选择颜色"
 	},
@@ -14,6 +17,11 @@
 		"notDone": "你未能成功完成目标",
 		"marked": "今天成功",
 		"missed": "今天失败"
+	},
+	"dayMarked": {
+		"done": "已完成",
+		"notDone": "去做吧",
+		"passed": "已过期"
 	},
 	"buyPremium": {
 		"buy": "每月",
@@ -28,6 +36,11 @@
 		"模组",
 		"聊天"
 	],
+	"buttons": {
+		"edit": "编辑",
+		"delete": "删除",
+		"close": "关闭"
+	},
 	"stepHint": {
 		"skip": "跳过",
 		"further": "下一步",
@@ -48,7 +61,6 @@
 		"熊猫成长",
 		"获取成就",
 		"支持开发者",
-		"可修改数据",
 		"目标数量无限",
 		"虚拟助手访问权限",
 		"即将推出的功能访问权限"
@@ -68,7 +80,7 @@
 	"noConnetction": {
 		"off": "无网络连接",
 		"on": "连接已恢复",
-		"btn": "Повторить"
+		"btn": "再试一次"
 	},
 	"menu": {
 		"title": "菜单"
@@ -250,12 +262,29 @@
 		"notChecked": "未完成"
 	},
 	"bublingWindows": {
-		"fieldEmpty": "输入修行的名称"
+		"fieldEmpty": "输入修行的名称",
+		"error": "任务名称包含禁止词语。"
 	},
 	"footerBtnText": {
 		"menu": "菜单",
 		"archieve": "档案",
 		"panda": "熊猫",
 		"tasks": "任务"
+	},
+	"about": {
+		"title": "Askez",
+		"subtitle": "通往精神成长之路",
+		"intro": "Askez 是一款独特的应用，旨在支持你走上苦修与灵性成长的旅程。我们通过克制与自律，帮助你增强精神力量。",
+		"section1_title": "什么是苦修？",
+		"section1_text": "苦修是为了追求精神目标而戒除世俗享乐的实践。它是一条自我约束的道路，有助于培养内在力量与心灵清明。",
+		"section2_title": "应用功能",
+		"feature_track": "跟踪每日苦修实践",
+		"feature_challenges": "设定并管理个人挑战",
+		"feature_guidance": "获取指导与灵感",
+		"feature_community": "与志同道合者交流",
+		"feature_discipline": "保持自律的生活方式",
+		"section3_title": "我们的使命",
+		"section3_text": "我们的使命是通过苦修帮助你建立精神力量，提供你成长旅程中的工具与支持。",
+		"version": "版本 1.0.0"
 	}
 }

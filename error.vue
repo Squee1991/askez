@@ -1,18 +1,19 @@
 <template>
 	<div class="error">
-		<img class="error__img" src="/images/error.svg" alt="Error"/>
+		<img class="error__img" src="/images/pandaErrors.png" alt="Error"/>
 		<div class="text">{{ $t('noConnetction.off') }}</div>
-		<button class="reconnect" @click="tryReconnect" :disabled="isTrying">
+		<button class="reconnect" @click="tryReconnect" :disabled="isTrying" type="button">
 			{{ $t('noConnetction.btn') }}
 		</button>
 	</div>
 </template>
 
 <script setup>
-	import {ref} from 'vue'
+	import { ref } from 'vue'
+	import { useRouter } from 'vue-router'
 
+	const router = useRouter()
 	const isTrying = ref(false)
-
 	const tryReconnect = async () => {
 		if (isTrying.value) return
 		isTrying.value = true
@@ -22,12 +23,16 @@
 				cache: 'no-cache',
 				mode: 'no-cors',
 			})
+			window.addEventListener('online', () => {
+				router.replace('/')
+			})
 			location.reload()
 		} catch (e) {
-			console.warn('Still offline')
+			console.error(e)
 		} finally {
 			isTrying.value = false
 		}
+		router.push('/')
 	}
 </script>
 
@@ -36,6 +41,10 @@
 	* {
 		outline: none;
 		-webkit-tap-highlight-color: transparent;
+	}
+
+	.error__img {
+		width: 200px;
 	}
 
 	.error {
@@ -57,41 +66,30 @@
 		font-size: 22px;
 		font-weight: bold;
 		font-family: 'Nunito', sans-serif;
-		margin-top: 250px;
+		margin-top: 40px;
 		margin-bottom: 20px;
+		max-width: 250px;
 	}
 
 	.reconnect {
-		background-color: #3498db;
+		background-color: #2196F3;
 		color: white;
 		border: none;
 		padding: 12px 24px;
-		border-radius: 5px;
-		cursor: pointer;
+		border-radius: 20px;
 		font-size: 16px;
-		font-family: 'Acme', serif;
-		transition: background-color 0.3s ease, transform 0.2s ease;
-		position: relative;
-		overflow: hidden;
+		font-family: "Nunito", sans-serif;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+		transition: background-color 0.2s ease, transform 0.1s ease;
+		min-width: 240px;
+		text-align: center;
+		touch-action: manipulation;
+		-webkit-user-select: none;
+		user-select: none;
+		-webkit-tap-highlight-color: transparent;
 	}
-	.reconnect::after {
-		content: '';
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%) scale(0);
-		width: 200%;
-		height: 200%;
-		background: rgba(255, 255, 255, 0.3);
-		border-radius: 50%;
-		opacity: 0;
-		pointer-events: none;
-		transition: transform 0.4s ease, opacity 0.4s ease;
-	}
-
-	.reconnect:active::after {
-		transform: translate(-50%, -50%) scale(1);
-		opacity: 1;
-		transition: transform 0s, opacity 0s;
+	.reconnect:active {
+		background-color: #83beea;
+		transform: scale(0.98);
 	}
 </style>

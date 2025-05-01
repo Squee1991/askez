@@ -53,7 +53,7 @@ const updatePosition = () => {
         maxWidth: '260px',
         position: 'absolute'
     };
-    // Подсветка
+
     highlightStyle.value = {
         top: `${rect.top - 6}px`,
         left: `${rect.left - 6}px`,
@@ -86,7 +86,6 @@ onMounted(() => {
     if (props.show) nextTick(updatePosition);
 });
 </script>
-
 <style scoped>
 .step-hint-overlay {
     position: fixed;

@@ -39,7 +39,7 @@
 
 <script setup>
 	import HeaderWithback from '../src/components/headerWithBack.vue'
-	import Arrowicon from '../assets/images/arrowSvg.svg';
+	import Arrowicon from '../assets/images/back.svg';
 	import {useI18n} from "vue-i18n";
 
 	const {t} = useI18n();

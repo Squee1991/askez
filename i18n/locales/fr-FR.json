@@ -6,6 +6,9 @@
 	"settings": {
 		"title": "Paramètres"
 	},
+	"disclemer": {
+		"value": "Cet assistant virtuel ne fournit pas de conseils médicaux, juridiques ou psychologiques."
+	},
 	"color": {
 		"value": "Choisissez une couleur"
 	},
@@ -28,6 +31,11 @@
 		"Mod",
 		"Chat"
 	],
+	"buttons": {
+		"edit": "Modifier",
+		"delete": "Supprimer",
+		"close": "Fermer"
+	},
 	"stepHint": {
 		"skip": "Passer",
 		"further": "Suivant",
@@ -47,7 +55,6 @@
 		"Amélioration du panda",
 		"Accès aux succès",
 		"Soutien aux développeurs",
-		"Possibilité de modifier les données",
 		"Nombre illimité d’objectifs",
 		"Accès à l’assistant virtuel",
 		"Accès aux fonctionnalités à venir (bientôt disponible)"
@@ -218,6 +225,8 @@
 	},
 	"createTask": {
 		"title": "Créer un nouvel objectif",
+		"edit_title": "Modifier l'objectif",
+		"edit_btn": "Modifier",
 		"btn": "Créer nouveau",
 		"task": "Votre objectif",
 		"datum": "Sélectionnez une période de dates"
@@ -248,12 +257,29 @@
 		"notChecked": "Objectif non atteint"
 	},
 	"bublingWindows": {
-		"fieldEmpty": "Entrez le nom de l'ascèse"
+		"fieldEmpty": "Entrez le nom de l'ascèse",
+		"error": "Le nom de la tâche contient des mots interdits."
 	},
 	"footerBtnText": {
 		"menu": "Menu",
 		"archieve": "Archive",
 		"panda": "Panda",
 		"tasks": "Tâches"
+	},
+	"about": {
+		"title": "Askez",
+		"subtitle": "Le chemin de la croissance spirituelle",
+		"intro": "Askez est une application unique conçue pour accompagner votre parcours d'ascèse et de développement spirituel. Nous vous aidons à renforcer votre esprit grâce à la discipline et la modération.",
+		"section1_title": "Qu’est-ce que l’ascèse ?",
+		"section1_text": "L’ascèse est la pratique consistant à s’abstenir des plaisirs mondains pour atteindre des objectifs spirituels. C’est un chemin de discipline qui développe la force intérieure et la clarté de l’esprit.",
+		"section2_title": "Fonctionnalités de l’application",
+		"feature_track": "Suivez vos pratiques ascétiques quotidiennes",
+		"feature_challenges": "Fixez et suivez vos défis personnels",
+		"feature_guidance": "Recevez des conseils et de l’inspiration",
+		"feature_community": "Connectez-vous avec d’autres utilisateurs partageant vos valeurs",
+		"feature_discipline": "Maintenez un mode de vie discipliné",
+		"section3_title": "Notre mission",
+		"section3_text": "Notre mission est de vous aider à grandir spirituellement par l’ascèse, en vous fournissant les outils et le soutien nécessaires.",
+		"version": "Version 1.0.0"
 	}
 }

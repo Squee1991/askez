@@ -1,6 +1,6 @@
 <script setup>
-	import { useHabitStore } from '../../stores/habitStore.js'
-	import { computed, ref } from 'vue';
+	import {useHabitStore} from '../../stores/habitStore.js'
+	import {computed, ref} from 'vue';
 	import CheckedIcon from '../../assets/images/checkIcon.svg'
 	import CheckedNotFull from '../../assets/images/cross.svg'
 	import InProgressIcon from '../../assets/images/in-progress.svg'
@@ -107,10 +107,9 @@
 						</div>
 					</div>
 					<div class="not__active-askez" v-else>
-						{{ $t('hasNotAskez.value') }}
+						<div>{{ isActiveButton === 'active' ? $t('hasNotAskez.value') : $t('archieve.empty') }}</div>
 					</div>
 				</div>
-
 				<div class="stats__right" :style="{ color: completionColor }">
 					{{ filteredCompletionRate }}<span class="procent">%</span>
 				</div>
@@ -118,28 +117,20 @@
 			<div class="select__inner">
 				<div class="select__wrapper">
 					<div class="indicator"
-					     :style="{ transform: isActiveButton === 'active' ? 'translateX(0%)' : 'translateX(100%)' }" />
-
-					<span
-						class="select"
-						:class="{ 'select__active': isActiveButton === 'active' }"
-						@click="isActiveButton = 'active'">
-			{{ $t('statslable.active') }}
-		</span>
-
-					<span
-						class="select"
-						:class="{ 'select__active': isActiveButton === 'archive' }"
-						@click="isActiveButton = 'archive'">
-			{{ $t('statslable.archieve') }}
-		</span>
+					     :style="{ transform: isActiveButton === 'active' ? 'translateX(0%)' : 'translateX(100%)' }"/>
+					<span class="select"
+					      :class="{ 'select__active': isActiveButton === 'active' }"
+					      @click="isActiveButton = 'active'">{{ $t('statslable.active') }}</span>
+					<span class="select"
+					      :class="{ 'select__active': isActiveButton === 'archive' }"
+					      @click="isActiveButton = 'archive'">{{ $t('statslable.archieve') }}</span>
 				</div>
 			</div>
 		</div>
-
 		<div class="stat__askez-scroll">
 			<div class="stat__askez-wrapper">
-				<div v-for="task in tasks" :key="task.id" :class="['stat__askez', isArchivedTask(task) ? 'archived-task' : 'active-task']">
+				<div v-for="task in tasks" :key="task.id"
+				     :class="['stat__askez', isArchivedTask(task) ? 'archived-task' : 'active-task']">
 					<div class="askez__titles">
 						<div class="askez__title-status --name__askez">{{ $t('infoLabels.name') }}</div>
 						<div class="askez__title-status --status__askez">{{ $t('infoLabels.status') }}</div>
@@ -172,7 +163,6 @@
 	.select__active {
 		color: white !important;
 	}
-
 
 	.select__wrapper {
 		position: relative;
@@ -211,7 +201,7 @@
 
 	.select__inner {
 		margin: 10px 0;
-		padding: 5px;
+		padding: 4px;
 		background-color: var(--slider-bg);
 		border-radius: 30px;
 	}
@@ -345,7 +335,4 @@
 		display: flex;
 		justify-content: space-between;
 	}
-
-
-
 </style>

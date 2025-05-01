@@ -37,8 +37,18 @@
 				<p>
 					This Privacy Policy may be updated periodically. All updates will be reflected and accessible directly within the app.
 				</p>
+				<h2>8. AI Assistant</h2>
+				<p>
+					This app features an AI assistant that provides motivational support and responds to user messages about goals, habits, and app features.
+				</p>
+				<p>
+					The assistant is powered by a third-party language model (Groq LLaMA) and only responds based on the current app context. It does not access, store, or process any personal data such as your name, email, password, or private tasks.
+				</p>
+				<p>
+					All AI-generated responses are filtered for safety. The assistant is not capable of providing medical, legal, or financial advice.
+				</p>
 
-				<h2>8. Contact</h2>
+				<h2>9. Contact</h2>
 				<p>
 					For any questions or concerns about this Privacy Policy, please contact us at:
 					<a href="mailto:asketic-email@gmail.com?subject=Question about Privacy Policy">
@@ -50,12 +60,10 @@
 		</div>
 	</div>
 </template>
-
 <script setup>
-	import Icon from '../assets/images/arrowBack.svg'
+	import Icon from '../assets/images/back.svg'
 	import HeaderWithBack from '../src/components/headerWithBack.vue'
 </script>
-
 <style scoped>
 	.privacy {
 		width: 100%;
@@ -79,7 +87,7 @@
 
 	.privacy-policy p {
 		margin-bottom: 15px;
-		color: #bfbaba;
+		color: #b1a8a8;
 		font-size: 12px;
 	}
 

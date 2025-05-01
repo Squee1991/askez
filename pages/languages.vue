@@ -20,17 +20,15 @@
 		</div>
 	</div>
 </template>
-
 <script setup>
 	import { App as CapacitorApp } from '@capacitor/app'
 	import {ref, onMounted, computed, watch} from 'vue';
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
 	import ListComponent from '../src/components/ListComponent.vue';
 	import SelectedIcon from '../assets/images/checkIcon.svg';
-	import Arrowicon from '../assets/images/arrowSvg.svg';
+	import Arrowicon from '../assets/images/back.svg';
 	import Reloader from '../src/components/preloader.vue'
 	import {useAuthStore} from '../stores/authStore'
-
 	const languages = ref({});
 	const preloader = ref(false)
 	const authStore = useAuthStore()
@@ -75,7 +73,6 @@
 </script>
 
 <style scoped>
-
 	.language__wrapper {
 		width: 100%;
 		padding: 15px 6vw;
@@ -93,5 +90,4 @@
 		display: flex;
 		justify-content: space-between;
 	}
-
 </style>

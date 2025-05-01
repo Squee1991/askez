@@ -6,7 +6,8 @@ export const getTimeOfDay = () => {
 	return 'night';
 };
 
-export const timeBasedGreetings = {
+export const timeBasedGreetings =
+	{
 	en: {
 		morning: [
 			"Good morning! Ready to win the day?",
@@ -57,14 +58,14 @@ export const timeBasedGreetings = {
 			"Время расслабиться — ты молодец!",
 			"Вечер — время подвести итоги и отдохнуть.",
 			"Сегодня ты сделал(а) больше, чем думаешь!",
-			"Спокойный вечер — награда за старания."
+			"Доброго — награда за усилиями."
 		],
 		night: [
 			"Спокойной ночи! Пусть приснится панда",
-			"До завтра! Удачи в новом дне!",
-			"Сладких снов и приятных мыслей ",
+			"До завтра! и доброй ночи!",
+			"Сладких снов и до завтра ",
 			"Пусть ночь принесёт восстановление и покой.",
-			"Всё будет хорошо — отдыхай спокойно"
+			"Ты сегодня был молодец — отдыхай!"
 		]
 	},
 	uk: {
@@ -360,4 +361,47 @@ export const eventMessages = {
 		pl: '🎉 Wydarzenie: osiągnięcie zdobyte'
 	}
 }
+
+export const blockedWords = {
+	en: ['sex', 'nsfw', 'nude', 'naked', 'kill', 'suicide', 'drugs', 'alcohol', 'terrorist', 'religion', 'buddha', 'jesus', 'allah', 'politics', 'gun', 'violence', 'pain', 'hurt', 'addiction', 'zen'],
+	ru: ['секс', 'интим', 'обнажён', 'убить', 'насилие', 'наркотик', 'алкоголь', 'террорист', 'религия', 'будда', 'иисус', 'аллах', 'политика', 'оружие', 'боль', 'зависимость', 'страдание', 'зен'],
+	be: ['сэкс', 'інтым', 'аголены', 'забіць', 'гвалт', 'наркотыкі', 'алкаголь', 'тэрарызм', 'рэлігія', 'будда', 'ісус', 'алах', 'палітыка', 'зброя', 'боль', 'залежнасць'],
+	uk: ['секс', 'інтим', 'оголений', 'вбити', 'насильство', 'наркотики', 'алкоголь', 'терорист', 'релігія', 'будда', 'ісус', 'аллах', 'політика', 'зброя', 'біль', 'залежність'],
+	ar: ['جنس', 'عاري', 'قتل', 'انتحار', 'مخدرات', 'كحول', 'إرهاب', 'دين', 'بوذا', 'يسوع', 'الله', 'سياسة', 'سلاح', 'ألم', 'إدمان'],
+	es: ['sexo', 'desnudo', 'matar', 'suicidio', 'drogas', 'alcohol', 'terrorista', 'religión', 'buda', 'jesús', 'alá', 'política', 'arma', 'dolor', 'adicción'],
+	de: ['sex', 'nackt', 'töten', 'selbstmord', 'drogen', 'alkohol', 'terrorist', 'religion', 'buddha', 'jesus', 'allah', 'politik', 'waffe', 'schmerz', 'sucht'],
+	fr: ['sexe', 'nu', 'tuer', 'suicide', 'drogue', 'alcool', 'terroriste', 'religion', 'bouddha', 'jésus', 'allah', 'politique', 'arme', 'douleur', 'addiction'],
+	pl: ['seks', 'nagość', 'zabić', 'samobójstwo', 'narkotyki', 'alkohol', 'terrorysta', 'religia', 'budda', 'jezus', 'allah', 'polityka', 'broń', 'ból', 'uzależnienie'],
+	zh: ['性爱', '裸', '杀', '自杀', '毒品', '酒精', '恐怖分子', '宗教', '佛', '耶稣', '真主', '政治', '武器', '疼痛', '上瘾']
+}
+
+export const blockedMessages = {
+	en: "❗ I can't respond to that. Let's focus on your daily goals and your habits. ",
+	ru: "❗ Я не могу ответить на это. Давай сосредоточимся на твоих целях и привычках. ",
+	be: "❗ Я не магу адказаць на гэта. Давай засяродзімся на тваіх мэтах і звычках. ",
+	uk: "❗ Я не можу відповісти на це. Давай зосередимося на твоїх цілях і звичках. ",
+	ar: "❗ لا أستطيع الرد على ذلك. دعنا نركز على أهدافك وعاداتك. ",
+	es: "❗ No puedo responder a eso. Centrémonos en tus metas y hábitos diarios. ",
+	de: "❗ Ich kann darauf nicht antworten. Lass uns auf deine Ziele und Gewohnheiten konzentrieren. ",
+	fr: "❗ Je ne peux pas répondre à cela. Concentrons-nous sur tes objectifs et tes habitudes. ",
+	pl: "❗ Nie mogę na to odpowiedzieć. Skupmy się na Twoich celach i nawykach. ",
+	zh: "❗ 我无法回应这个内容。让我们专注于你的目标和习惯吧。"
+}
+
+export const unsupportedMessages = {
+	en: "❗ Sorry, I do not understand your language yet.",
+	ru: "❗ Извините, я пока не понимаю ваш язык.",
+	be: "❗ Прабачце, я пакуль не разумею вашу мову.",
+	uk: "❗ Вибач, я ще не розумію цю мову.",
+	ar: "❗ عذرًا، لا أفهم لغتك بعد.",
+	es: "❗ Lo siento, aún no entiendo este idioma.",
+	de: "❗ Entschuldigung, ich verstehe deine Sprache noch nicht.",
+	fr: "❗ Désolé, je ne comprends pas encore votre langue.",
+	pl: "❗ Przepraszam, jeszcze nie rozumiem tego języka.",
+	zh: "❗ 抱歉，我目前还无法理解您的语言。"
+}
+
+export const supportedLangs = ['en', 'ru', 'be', 'uk', 'ar', 'es', 'de', 'fr', 'pl', 'zh']
+
+
 

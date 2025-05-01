@@ -44,7 +44,6 @@
 	const activeAchievementCount = computed(() => habitStore.activeAchievements.filter(a => a).length)
 	const totalAchievements = computed(() => habitStore.achievementThresholds.length)
 	const progressValue = computed(() => `${(activeAchievementCount.value / totalAchievements.value) * 360}deg`)
-
 	const data = ref([
 		{id: 1, src: Panda1, alt: 'Panda1'},
 		{id: 2, src: Panda2, alt: 'Panda2'},

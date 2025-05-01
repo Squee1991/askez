@@ -22,7 +22,7 @@
 					<div class="plus__icon-border">
 						<button class="footer__nav-btn__plus"
 						        @click="toggleHabitGoalHandler">
-							<img src="assets/images/addTask.svg" alt="" class="goal__btn-icon"/>
+							<img src="assets/images/addTask.svg" alt="" class="goal__btn-icon-plus"/>
 						</button>
 					</div>
 				</div>
@@ -46,8 +46,6 @@
 		</div>
 	</footer>
 </template>
-
-
 <script setup>
 	import {useHabitStore} from "../../stores/habitStore";
 	import {defineEmits, onMounted} from 'vue';
@@ -99,13 +97,11 @@
 </script>
 
 <style>
-
 	.footer__nav-btn__plus {
 		position: absolute;
 		bottom: 0;
 		left: 50%;
 		transform: translateX(-50%);
-		/*background-color: var(--footer-bg);*/
 		background: #6378e1;
 		border: none;
 		width: 55px;
@@ -128,6 +124,10 @@
 		height: 62px;
 	}
 
+	.goal__btn-icon-plus{
+		width: 22px;
+	}
+
 	.footer__nav-btn {
 		background: none;
 		border: none;
@@ -138,9 +138,6 @@
 		padding: 10px;
 	}
 
-	.goal__btn-icon {
-		width: 45px;
-	}
 
 	.profile__icon-wrapper {
 		position: relative;
@@ -210,6 +207,4 @@
 	svg {
 		color: currentColor;
 	}
-
-
 </style>

@@ -4,12 +4,10 @@
 		<div class="premium-content">
 			<div class="premium-title">{{$t('buyPremium.plus')}}</div>
 			<div class="premium-list">
-
-				<div class="premium__list-item" v-for="index in 8" :key="index">
+				<div class="premium__list-item" v-for="index in 7" :key="index">
 					<img class="premium__icons" :src="getPremiumIcon(t(`premiumValues.${index - 1}`))" alt="">
 					<span class="premium__list-text">{{ t(`premiumValues.${index - 1}`)}}</span>
 				</div>
-
 			</div>
 			<button class="premium-button" @click="buyPremium">{{$t('buyPremium.buy')}} 3.99$</button>
 			<span class="play__info">{{$t('googlePlay.pay')}}</span>
@@ -21,26 +19,24 @@
 </template>
 
 <script setup>
-	import ArrowIcon from '../assets/images/arrowBack.svg';
+	import ArrowIcon from '../assets/images/back.svg';
 	import HeaderWithback from '../src/components/headerWithBack.vue';
 	import {useAuthStore} from '../stores/authStore.js'
 	import {useRouter} from 'vue-router'
 	import {useI18n} from "vue-i18n";
-
 	const {t} = useI18n();
 	const router = useRouter()
-
 	const showPremiumModal = ref(true)
 	const authStore = useAuthStore()
-
 	const buyPremium = async () => {
-		await authStore.purchasePro()
-		if (authStore.isPremium.value) {
+		// await authStore.purchasePro()
+		await authStore.activatePremium();
 			showPremiumModal.value = false
 			router.push('/welcomePage')
-		} else {
-			alert('Покупка не прошла или была отменена.')
-		}
+		// if (authStore.isPremium) {
+		// 	showPremiumModal.value = false
+		// 	router.push('/welcomePage')
+		// }
 	}
 	const ads = [
 		"无广告", "Без рекламы","Без рэкламы", "Без реклами", "Brak reklam", "Sans publicité", "Sin anuncios",
@@ -61,11 +57,11 @@
 		"Apoyo a los desarrolladores", "Support the developers", "Unterstützung der Entwickler",
 		"Падтрымка распрацоўшчыкаў", "دعم المطورين"
 	]
-	const datas = [
-		"可修改数据","Возможность смены данных","Магчымасць змяніць дадзеныя", "Можливість змінити дані", "Możliwość zmiany danych",
-		"Possibilité de modifier les données", "Cambio de datos permitido", "Ability to change data",
-		"Möglichkeit zur Datenänderung", "Магчымасць змяніць дадзеныя", "إمكانية تعديل البيانات"
-	]
+	// const datas = [
+	// 	"可修改数据","Возможность смены данных","Магчымасць змяніць дадзеныя", "Можливість змінити дані", "Możliwość zmiany danych",
+	// 	"Possibilité de modifier les données", "Cambio de datos permitido", "Ability to change data",
+	// 	"Möglichkeit zur Datenänderung", "Магчымасць змяніць дадзеныя", "إمكانية تعديل البيانات"
+	// ]
 	const limit = [
 		"目标数量无限","Неограниченное количество целей","Неабмежаваная колькасць мэтаў", "Необмежена кількість цілей", "Nieograniczona liczba celów",
 		"Nombre illimité d’objectifs", "Objetivos ilimitados", "Unlimited number of goals",
@@ -94,8 +90,8 @@
 			return '/images/icon-level.svg'
 		} else if (future.includes(text)) {
 			return '/images/icon-advertisement.svg'
-		} else if (datas.includes(text)) {
-			return '/images/icon-datas.svg'
+		// } else if (datas.includes(text)) {
+		// 	return '/images/icon-datas.svg'
 		} else if (limit.includes(text)) {
 			return '/images/icon-limit.svg'
 		} else if (chatBot.includes(text)) {

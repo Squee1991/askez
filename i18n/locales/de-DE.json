@@ -6,6 +6,9 @@
 	"settings": {
 		"title": "Einstellungen"
 	},
+	"disclemer": {
+		"value": "Dieser virtuelle Assistent bietet keine medizinische, rechtliche oder psychologische Beratung."
+	},
 	"color": {
 		"value": "Farbe wählen"
 	},
@@ -14,6 +17,11 @@
 		"notDone": "Ziel nicht erreicht",
 		"marked": "Heute erfolgreich",
 		"missed": "Heute nicht erfolgreich"
+	},
+	"dayMarked": {
+		"done": "Erledigt",
+		"notDone": "Mach es",
+		"passed": "Abgelaufen"
 	},
 	"setting": [
 		"Konto löschen",
@@ -24,6 +32,11 @@
 		"Mod",
 		"Chat"
 	],
+	"buttons": {
+		"edit": "Bearbeiten",
+		"delete": "Löschen",
+		"close": "Schließen"
+	},
 	"stepHint": {
 		"skip": "Überspringen",
 		"further": "Weiter",
@@ -48,7 +61,6 @@
 		"Panda-Entwicklung",
 		"Zugang zu Erfolgen",
 		"Unterstützung der Entwickler",
-		"Möglichkeit zur Datenänderung",
 		"Unbegrenzte Anzahl an Zielen",
 		"Zugang zum virtuellen Assistenten",
 		"Zugriff auf kommende Funktionen (bald verfügbar)"
@@ -68,7 +80,7 @@
 	"noConnetction": {
 		"off": "Keine Internetverbindung",
 		"on": "Verbindung wiederhergestellt",
-		"btn": "Повторить"
+		"btn": "Noch mal"
 	},
 	"menu": {
 		"title": "Menü"
@@ -221,6 +233,8 @@
 	"createTask": {
 		"title": "Neues Ziel erstellen",
 		"btn": "Neu erstellen",
+		"edit_title": "Ziel bearbeiten",
+		"edit_btn": "Bearbeiten",
 		"task": "Dein Ziel",
 		"datum": "Wählen Sie einen Datumsbereich"
 	},
@@ -250,12 +264,29 @@
 		"notChecked": "Tage nicht erledigt"
 	},
 	"bublingWindows": {
-		"fieldEmpty": "Geben Sie den Namen der Ziele"
+		"fieldEmpty": "Geben Sie den Namen der Ziele",
+		"error": "Der Aufgabenname enthält verbotene Wörter."
 	},
 	"footerBtnText": {
 		"menu": "Menü",
 		"archieve": "Archiv",
 		"panda": "Panda",
 		"tasks": "Aufgaben"
+	},
+	"about": {
+		"title": "Askez",
+		"subtitle": "Der Weg zum spirituellen Wachstum",
+		"intro": "Askez ist eine einzigartige App, die dich auf deinem Weg der Askese und spirituellen Entwicklung unterstützt. Wir helfen dir, deinen Geist durch Selbstdisziplin und Enthaltsamkeit zu stärken.",
+		"section1_title": "Was ist Askese?",
+		"section1_text": "Askese ist die Praxis, auf weltliche Vergnügungen zu verzichten, um spirituelle Ziele zu erreichen. Sie ist ein Weg der Selbstdisziplin, der innere Stärke und geistige Klarheit fördert.",
+		"section2_title": "App-Funktionen",
+		"feature_track": "Verfolge tägliche asketische Praktiken",
+		"feature_challenges": "Setze und überwache persönliche Herausforderungen",
+		"feature_guidance": "Erhalte Anleitung und Inspiration",
+		"feature_community": "Vernetze dich mit Gleichgesinnten",
+		"feature_discipline": "Pflege einen disziplinierten Lebensstil",
+		"section3_title": "Unsere Mission",
+		"section3_text": "Unsere Mission ist es, dich durch asketische Praktiken spirituell zu stärken, mit passenden Werkzeugen und Unterstützung.",
+		"version": "Version 1.0.0"
 	}
 }

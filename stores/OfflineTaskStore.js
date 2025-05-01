@@ -1,6 +1,7 @@
 import {defineStore} from 'pinia';
 import {ref} from 'vue';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 const archivedTasks = ref([]);
 let dbPromise;
@@ -43,24 +44,36 @@ export const useTaskStore = defineStore('tasks', () => {
 		tasks.value.push({ ...cleanTask, id });
 	};
 
+
 	const syncTasks = async () => {
 		if (!dbPromise || !navigator.onLine) return;
+
+		const auth = getAuth();
+		const user = auth.currentUser;
+		if (!user) return;
+
 		const db = await dbPromise;
 		const unsyncedTasks = await db.getAll('tasks');
-
 		if (!unsyncedTasks.length) return;
 
 		const firestore = getFirestore();
 		const tasksCollection = collection(firestore, 'tasks');
 
 		for (const task of unsyncedTasks) {
-			if (!task.synced) {
-				const docRef = await addDoc(tasksCollection, task);
-				task.synced = true;
-				task.id = docRef.id;
-				await db.put('tasks', task);
+			try {
+				if (!task.synced) {
+					const docRef = await addDoc(tasksCollection, {
+						...task,
+						userId: user.uid
+					});
+					task.synced = true;
+					task.id = docRef.id;
+					await db.put('tasks', task);
+				}
+			} catch (error) {
 			}
 		}
+
 		tasks.value = await db.getAll('tasks');
 	};
 

@@ -60,7 +60,7 @@
 				</div>
 				<div class="archive__text" v-if="!habitStore.archiveTasks.length">
 					<div class="archiv__folder">
-						<img class="folder__icon" src="../assets/images/parchment.svg" alt="">
+						<img class="folder__icon" src="../assets/images/icon-archive.svg" alt="">
 					</div>
 					<div class="archiv__empty-text">{{ $t('archieve.empty') }}</div>
 				</div>
