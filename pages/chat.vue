@@ -5,24 +5,26 @@
 	import {useHabitStore} from '../stores/habitStore.js'
 	import {useAuthStore} from '../stores/authStore.js'
 	import {getSystemPrompt} from '../src/ai/systemPromt.js'
-	import {errorMessages} from '../src/ai/messageBot.js'
-	import {eventMessages} from '../src/ai/messageBot.js'
-	import {timeBasedGreetings } from '../src/ai/messageBot.js'
+	import {errorMessages, blockedWords, unsupportedMessages, supportedLangs, blockedMessages} from '../src/ai/messageBot.js'
+	import {timeBasedGreetings} from '../src/ai/messageBot.js'
 	import Backicon from '../assets/images/undo.svg'
+	import {toggleThemeByCommand} from '../src/utils/themeToggle.js'
+	import {useColorMode} from '#imports'
 
+	const colorMode = useColorMode()
 	const habitStore = useHabitStore()
 	const authStore = useAuthStore()
 	const {locale} = useI18n()
-	const userLang = ref('en')
+	const userLang = ref(locale.value.split('-')[0] || 'en')
 	const messages = ref([])
 	const userInput = ref('')
 	const isLoading = ref(false)
 	const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY
+	const showDisclaimer = ref(true)
 
 	const getTodayInfo = () => {
 		const today = new Date()
 		today.setHours(0, 0, 0, 0)
-
 		const doneToday = habitStore.tasks.filter(task =>
 			task.checkedDates?.some(dateStr => {
 				const d = new Date(dateStr)
@@ -50,23 +52,71 @@
 		return {doneToday, missedToday}
 	}
 
+	const containsBlockedWord = (text) => {
+		const lowered = text.toLowerCase()
+		const cleanedText = lowered.replace(/[^\p{L}\p{N}\s]/gu, '')
+		const words = cleanedText.split(/\s+/)
+		const currentWords = blockedWords[userLang.value] || blockedWords['en']
+		return currentWords.some(blocked => words.includes(blocked))
+	}
+
 	const sendMessage = async () => {
+		const lang = userLang.value
+		const inputHasNonLatin = /[^\u0000-\u007f]/.test(userInput.value)
+		if (lang === 'en' && inputHasNonLatin) {
+			messages.value.push({
+				role: 'assistant',
+				text: "❗ I noticed you're using another language. Please switch your app language so I can understand you better!"
+			})
+			userInput.value = ''
+			return
+		}
+		if (!supportedLangs.includes(lang)) {
+			const fallback = unsupportedMessages[lang] || unsupportedMessages['en']
+			messages.value.push({
+				role: 'assistant',
+				text: fallback
+			})
+			userInput.value = ''
+			return
+		}
 		if (!authStore.isBotEnabled) return;
+		if (containsBlockedWord(userInput.value)) {
+			messages.value.push({
+				role: 'assistant',
+				text: blockedMessages[userLang.value] || blockedMessages['en']
+			});
+			userInput.value = '';
+			return;
+		}
 		if (!userInput.value.trim() || isLoading.value) return;
 
 		const userText = userInput.value.trim();
-		messages.value.push({role: 'user', text: userText});
+		const themeResponse = toggleThemeByCommand(userText, userLang.value, colorMode);
+		if (themeResponse) {
+			messages.value.push({
+					role: 'user',
+					text: userText
+				});
+			messages.value.push({
+					role: 'assistant',
+					text: themeResponse
+				});
+			userInput.value = '';
+			return;
+		}
+		messages.value.push({
+				role: 'user',
+				text: userText
+			});
+
 		userInput.value = '';
 		isLoading.value = true;
+
 		const thinkingIndex = messages.value.push({role: 'assistant', text: '...'}) - 1;
-
-		const { doneToday: completedToday, missedToday } = getTodayInfo();
-		const progressMissTasks = habitStore.tasks
-		.filter(task => task.progressMiss > 0)
-		.map(task => `${task.goal} (${task.progressMiss}%)`);
-
+		const {doneToday: completedToday, missedToday} = getTodayInfo();
+		const progressMissTasks = habitStore.tasks.filter(task => task.progressMiss > 0).map(task => `${task.goal} (${task.progressMiss}%)`);
 		const systemPrompt = getSystemPrompt(habitStore, completedToday, missedToday, progressMissTasks, userLang.value);
-
 		try {
 			const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
 				method: 'POST',
@@ -75,27 +125,45 @@
 					Authorization: `Bearer ${GROQ_API_KEY}`
 				},
 				body: JSON.stringify({
-					model: 'llama3-8b-8192',
+					model: 'llama3-70b-8192',
 					messages: [
-						{role: 'system', content: systemPrompt},
-						...messages.value.filter((_, i) => i !== thinkingIndex).map(m => ({role: m.role, content: m.text})),
-						{role: 'user', content: userText}
+						{
+							role: 'system',
+							content: systemPrompt
+						},
+						...messages.value.filter((_, i) => i !== thinkingIndex).map(m => ({
+							role: m.role,
+							content: m.text
+						})),
+						{
+							role: 'user',
+							content: userText
+						}
 					]
 				})
 			});
 
 			const data = await res.json();
 			messages.value.splice(thinkingIndex, 1);
-
 			if (data.choices?.[0]?.message?.content) {
-				messages.value.push({ role: 'assistant', text: data.choices[0].message.content });
+				messages.value.push({
+					role: 'assistant',
+					text: data.choices[0].message.content
+				});
 			} else {
-				messages.value.push({ role: 'assistant', text: errorMessages[userLang.value] || errorMessages['en'] });
+				messages.value.push({
+					role: 'assistant',
+					text: errorMessages[userLang.value] || errorMessages['en']
+				});
 			}
 		} catch (e) {
 			console.error(e);
 			messages.value.splice(thinkingIndex, 1);
-			messages.value.push({ role: 'assistant', text: errorMessages[userLang.value] || errorMessages['en'] });
+			messages.value.push(
+				{
+					role: 'assistant',
+					text: errorMessages[userLang.value] || errorMessages['en']
+				});
 		} finally {
 			isLoading.value = false;
 		}
@@ -109,18 +177,23 @@
 		messages.value = [{role: 'assistant', text: randomGreeting}]
 	})
 
+	onMounted(() => {
+		setTimeout(() => {
+			showDisclaimer.value = false
+		}, 8000)
+	})
+
 	watch(locale, (newLocale) => {
 		userLang.value = newLocale.split('-')[0]
 		const greetings = timeBasedGreetings[userLang.value]?.day || timeBasedGreetings['en'].day
-		messages.value = [{ role: 'assistant', text: greetings[Math.floor(Math.random() * greetings.length)] }]
+		messages.value = [{role: 'assistant', text: greetings[Math.floor(Math.random() * greetings.length)]}]
 	})
 
 </script>
 
-
 <template>
 	<div class="chat-container">
-		<HeaderWithback :icon="Backicon" :title="$t('chat.title')"/>
+		<HeaderWithback :icon="Backicon"/>
 		<div class="messages">
 			<div
 				v-for="(msg, index) in messages"
@@ -131,7 +204,6 @@
 				<span>{{ msg.text }}</span>
 			</div>
 		</div>
-
 		<div class="input-area">
 			<input
 				v-model="userInput"
@@ -141,6 +213,11 @@
 			/>
 			<button @click="sendMessage">{{ $t('chat.btn')}}</button>
 		</div>
+		<transition name="fade">
+			<p v-if="showDisclaimer" class="disclaimer">
+				⚠ {{$t('disclemer.value')}}
+			</p>
+		</transition>
 	</div>
 </template>
 
@@ -237,6 +314,30 @@
 			opacity: 1;
 			transform: translateY(0);
 		}
+	}
+
+	.disclaimer {
+		font-size: 10px;
+		opacity: 0.8;
+		text-align: center;
+		padding: 6px;
+		margin-top: 10px;
+		background-color: #fff3cd;
+		color: #856404;
+		font-family: "Nunito", sans-serif;
+		border: 1px solid #ffeeba;
+		border-radius: 10px;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+	}
+
+	.fade-enter-active,
+	.fade-leave-active {
+		transition: opacity 0.6s ease;
+	}
+
+	.fade-enter-from,
+	.fade-leave-to {
+		opacity: 0;
 	}
 
 </style>

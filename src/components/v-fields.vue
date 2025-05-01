@@ -8,6 +8,7 @@
 			:autocomplete="field.autocomplete || 'off'"
 			:readonly="field.readonly"
 			:required="field.required"
+			:maxlength="field.maxlength"
 
 		/>
 		<div v-if="field.type === 'password'" class="toggle-icon" @click="togglePassword">
@@ -20,7 +21,6 @@
 	import {defineProps, ref, watch} from 'vue';
 	import hideIcon from '/assets/images/hideicon.png';
 	import showIcon from '/assets/images/showicon.png';
-
 	const props = defineProps({
 		field: {
 			type: Object,

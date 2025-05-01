@@ -5,14 +5,14 @@
 	import Light from '../assets/images/sun-2.svg';
 	import Dark from '../assets/images/moon.svg';
 	import HeaderWithBack from '../src/components/headerWithBack.vue';
-	import Arrowicon from '../assets/images/arrowSvg.svg';
+	import Arrowicon from '../assets/images/back.svg';
 	import {useRouter} from "vue-router";
 	import {useHabitStore} from "../stores/habitStore.js";
 	import {useAuthStore} from "../stores/authStore.js";
 	import {useTaskStore} from '../stores/OfflineTaskStore.js';
 	import {useI18n} from 'vue-i18n';
 	import {useValidationStore} from '../stores/validationStore.js';
-
+	import { toggleTheme, activeAnim, isToggle } from '../src/utils/themeToggle.js'
 	const taskStore = useTaskStore();
 	const validationStore = useValidationStore();
 	const {t} = useI18n();
@@ -23,22 +23,22 @@
 	const isOverlayVisible = ref(false)
 	const passwordInput = ref('');
 	const deleteError = ref('');
-	const activeAnim = ref(false);
+	// const activeAnim = ref(false);
 	const colorMode = useColorMode();
 	const localBotToggle = ref(false);
 	const activeBotAnim = ref(false)
 	const isAudioEnabled = computed(() => habitStore.isAudioEnabled);
 	const isAnimationEnabled = computed(() => habitStore.isAnimationEnabled);
-	const isToggle = ref(colorMode.preference === 'dark');
+	// const isToggle = ref(colorMode.preference === 'dark');
 
-	const clickToggle = () => {
-		activeAnim.value = true;
-		setTimeout(() => {
-			activeAnim.value = false;
-		}, 200);
-		colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark';
-		isToggle.value = colorMode.preference === 'dark';
-	};
+	// const clickToggle = () => {
+	// 	activeAnim.value = true;
+	// 	setTimeout(() => {
+	// 		activeAnim.value = false;
+	// 	}, 200);
+	// 	colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark';
+	// 	isToggle.value = colorMode.preference === 'dark';
+	// };
 
 
 	const clickToggleBot = async () => {
@@ -70,7 +70,7 @@
 		} else if (index === 5) {
 			habitStore.toggleAnimation();
 		} else if (index === 6) {
-			clickToggle();
+			toggleTheme();
 		} else if (index === 7) {
 			clickPremiumButton();
 		} else {
@@ -154,9 +154,9 @@
 					<span v-if="deleteError" class="error-message">{{ deleteError }}</span>
 				</div>
 				<div class="btns-wrapper">
-					<button @click="deleteAllDatas" class="btn_del-data --del-data">{{ $t('delAllDatas.acceptBtn') }}
+					<button @click="deleteAllDatas" class="btn_del-data del-data">{{ $t('delAllDatas.acceptBtn') }}
 					</button>
-					<button @click="confirmDeleteDatas = false" class="btn_del-data --not-del">{{
+					<button @click="confirmDeleteDatas = false" class="btn_del-data not-del">{{
 						$t('delAllDatas.rejectBtn') }}
 					</button>
 				</div>
@@ -274,7 +274,6 @@
 		font-size: 14px;
 		height: 20px;
 		font-family: "Acme", serif;
-		font-weight: 600;
 		margin-bottom: 15px;
 	}
 
@@ -294,7 +293,7 @@
 	.confirm__title {
 		color: white;
 		font-family: "Acme", serif;
-		font-size: 20px;
+		font-size: 24px;
 	}
 
 	.overlay {
@@ -328,19 +327,37 @@
 	}
 
 	.btn_del-data {
-		margin-left: 25px;
 		border: none;
 		background: none;
-		color: #24ba1d;
+		color: white;
 		padding: 10px;
 		font-weight: bold;
 		font-size: 18px;
+		width: 50%;
+		background: #1ab41a;
+		border-radius: 25px;
+		margin: 10px;
+		font-family: "Nunito", sans-serif;
+	}
+
+	.btn_del-data.del-data {
+		border: none;
+		background: none;
+		color: white;
+		padding: 10px;
+		font-weight: bold;
+		font-size: 18px;
+		width: 50%;
+		background: #e84e4e;
+		border-radius: 25px;
+		margin: 10px;
+		font-family: "Nunito", sans-serif;
 	}
 
 	.btns-wrapper {
 		display: flex;
 		justify-content: end;
-		margin-right: 10px;
+
 	}
 
 	.color__mode-icon {
@@ -375,7 +392,6 @@
 		padding: 10px 0 13px 0;
 		width: 100%;
 		font-size: 18px;
-		font-weight: 600;
 		letter-spacing: 1px;
 		font-family: "Nunito", serif;
 		text-align: start;

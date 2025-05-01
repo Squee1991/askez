@@ -9,7 +9,7 @@
 			</div>
 		</Transition>
 		<div v-if="authStore.isBotEnabled" @click="goToBot" class="chat__icon">
-			<img class="icon-bot" src="../assets/images/chat-bot.svg" alt="">
+			<img class="icon-bot" src="../assets/images/pandaAssistant.png" alt="">
 		</div>
 		<Transition name="fade">
 			<div class="habbit__page">
@@ -52,12 +52,21 @@
 							<div class="add__goals">
 								<Transition :name="transitionName" mode="out-in">
 									<div v-if="activeButton === 'achiv'" class="achiv">
-										<Achievment />
+										<Achievment/>
 									</div>
 									<div v-else-if="activeButton === 'stats'" class="stats">
-										<Statistic />
+										<Statistic/>
 									</div>
 									<div v-else class="task__goal-content">
+										<div class="calendar-wrapper">
+											<v-calendar
+												view="weekly"
+												v-model="selectedDate"
+												:attributes="dotAttributes"
+												:select-attribute="null"
+												@dayclick="onDayClick"
+											/>
+										</div>
 										<div
 											class="task__goal-list"
 											v-for="task in tasks"
@@ -68,16 +77,33 @@
 												<div class="taks__progress__date-wrapper">
 													<div class="task__datum-wrapper">
 														<div class="task__goal-wrapper">
-															<div class="task__goal-item goals goal__name">{{ task.goal }}</div>
+															<div :style="{ color: task.color }" class="task__goal-item goals goal__name">{{ task.goal
+																}}
+															</div>
 														</div>
 														<div class="task__date-wrapper">
 															<div class="task__start__date tasks__date">
-																<div class="task__goal-item goal__type">{{ formatDate(task.dateRange.start) }}</div>
+																<div class="task__goal-item goal__type">{{
+																	formatDate(task.dateRange.start) }}
+																</div>
 															</div>
-															<img class="arrow__datum" src="../assets/images/arrayDatum.svg" alt="">
+															<img class="arrow__datum" src="../assets/images/arrows.svg"
+															     alt="">
 															<div class="task__end__date tasks__date">
-																<div class="task__goal-item goal__type">{{ formatDate(task.dateRange.end) }}</div>
+																<div class="task__goal-item goal__type">{{
+																	formatDate(task.dateRange.end) }}
+																</div>
 															</div>
+														</div>
+														<div class="task__checked-status">
+															<span
+																class="checked-status-value"
+																:class="{'status-green': getTaskStatus(task, selectedDate).isDone,
+																'status-red': getTaskStatus(task, selectedDate).isLate,
+																'status-orange': getTaskStatus(task, selectedDate).isNot}"
+															>{{ getTaskStatus(task, selectedDate).isDone ? $t('dayMarked.done') :
+																getTaskStatus(task, selectedDate).isLate ? $t('dayMarked.passed') : $t('dayMarked.notDone') }}
+															</span>
 														</div>
 													</div>
 												</div>
@@ -130,13 +156,13 @@
 	import ProgressCircle from "../src/components/progressBar";
 	import SuccesModal from "../src/components/succesModal.vue";
 	import HabbitGoal from "../src/components/newHabitGoal.vue";
-	import CustomCheckbox from "../src/components/customCheckbox.vue";
 	import Footer from '../src/components/footer.vue'
 	import {useLocalePath} from '#i18n';
 	import {useRouter, useRoute} from 'vue-router'
 	import {getAuth} from "firebase/auth";
-	import { App } from '@capacitor/app';
-	import { timeBasedGreetings, getTimeOfDay } from '../src/ai/messageBot.js'
+	import {App} from '@capacitor/app';
+	import {timeBasedGreetings, getTimeOfDay} from '../src/ai/messageBot.js'
+
 	const route = useRoute();
 	const isTasksLoaded = ref(false)
 	const taskStore = useTaskStore();
@@ -157,17 +183,34 @@
 	const isReady = ref(false);
 	const user = auth.currentUser
 	const isNotTask = computed(() => habitStore.tasks.length === 0);
+	const selectedDate = ref(new Date());
 	const tasks = computed(() => {
 		const habitTasks = habitStore.tasks;
 		const offlineTasks = taskStore.tasks;
-		const filteredOffline = offlineTasks.filter(offlineTask => {
+
+		const allTasks = [...habitTasks, ...offlineTasks.filter(offlineTask => {
 			return !habitTasks.some(onlineTask =>
 				onlineTask.goal === offlineTask.goal &&
 				JSON.stringify(onlineTask.dateRange) === JSON.stringify(offlineTask.dateRange)
 			);
-		});
+		})];
 
-		return [...habitTasks, ...filteredOffline];
+		const selected = new Date(selectedDate.value);
+		selected.setHours(0, 0, 0, 0);
+
+		return allTasks.filter(task => {
+			let start = task.dateRange.start;
+			let end = task.dateRange.end;
+			if (typeof start.toDate === 'function') start = start.toDate();
+			if (typeof end.toDate === 'function') end = end.toDate();
+
+			start = new Date(start);
+			end = new Date(end);
+			start.setHours(0, 0, 0, 0);
+			end.setHours(0, 0, 0, 0);
+
+			return selected >= start && selected <= end;
+		});
 	});
 
 	function getLocalizedGreeting(currentLocale) {
@@ -177,6 +220,42 @@
 		return greetings[Math.floor(Math.random() * greetings.length)]
 	}
 
+	const dotAttributes = ref([
+		{
+			key: 'selected-dot',
+			dot: true,
+			dates: [selectedDate.value],
+		},
+	])
+
+	const onDayClick = ({ date }) => {
+		selectedDate.value = date
+		dotAttributes.value = [
+			{
+				key: 'selected-dot',
+				dot: true,
+				dates: [date],
+			},
+		]
+	}
+
+	const getTaskStatus = (task, date) => {
+		const toLocalDateString = (d) => {
+			const dateNow = new Date(d);
+			dateNow.setHours(0, 0, 0, 0);
+			return dateNow.toLocaleDateString('sv-SE');
+		};
+		const selectedStr = toLocalDateString(date);
+		const todayStr = toLocalDateString(new Date());
+		const normalize = (list) => Array.isArray(list) ? list.map(toLocalDateString) : [];
+		const checked = normalize(task.checkedDates);
+		const missed = normalize(task.missedDates);
+		const isDone = checked.includes(selectedStr) || missed.includes(selectedStr);
+		const isLate = selectedStr < todayStr && !isDone;
+		const isNot = selectedStr >= todayStr && !isDone;
+		return { isDone, isLate, isNot};
+	};
+
 	const toPremium = () => {
 		router.push('premium')
 	}
@@ -184,11 +263,7 @@
 	const goToBot = () => {
 		router.push('/chat')
 	}
-	// const toggleHabitGoalHandler = () => {
-	// 	isButtonActive.value = true
-	// 	console.log('btn in footer');
-	// 	emit('toggleHabit');
-	// };
+
 	const handleAddTask = (task) => {
 		addTask(task);
 		isSuccessModalVisible.value = true;
@@ -253,8 +328,6 @@
 
 	const setActive = (buttonName) => {
 		if (buttonName === activeButton.value) return;
-
-		// определить направление
 		const order = ['achiv', 'tasks', 'stats'];
 		const fromIndex = order.indexOf(activeButton.value);
 		const toIndex = order.indexOf(buttonName);
@@ -272,13 +345,11 @@
 		}, 220)
 	});
 
-
 	onMounted(() => {
 		if (!window.__greetingReset) {
 			sessionStorage.removeItem('greeted')
 			window.__greetingReset = true
 		}
-
 		if (
 			authStore.isBotEnabled &&
 			sessionStorage.getItem('greeted') !== 'true' &&
@@ -290,16 +361,14 @@
 			setTimeout(() => {
 				showAIGreeting.value = false
 			}, 2000)
-
 			sessionStorage.setItem('greeted', 'true')
 		}
 	})
 
-
 	onMounted(() => {
 		if (route.query.open === 'true') {
 			isHabitGoalVisible.value = true;
-			router.replace({ path: route.path });
+			router.replace({path: route.path});
 		}
 	});
 
@@ -313,12 +382,73 @@
 			el.style.visibility = '';
 		}
 	});
-
-
-
 </script>
 
 <style>
+	.calendar-wrapper .vc-focus {
+		background-color: transparent !important;
+		box-shadow: none !important;
+		outline: none !important;
+	}
+
+	.vc-arrow.vc-next.vc-focus {
+		border-radius: 50%;
+		width: 30px;
+		height: 30px;
+		background: none;
+	}
+
+	.vc-dot {
+		background-color: #00b7ff !important;
+		width: 12px;
+		height: 2px;
+		display: flex;
+		justify-content: center;
+	}
+
+	.vc-arrow.vc-prev.vc-focus {
+		border-radius: 50%;
+		width: 30px;
+		height: 30px;
+		background: none;
+		color: white;
+	}
+
+	.task__checked-status {
+
+		font-family: "Nunito", sans-serif;
+		font-size: 14px;
+		color: var(--text-color);
+		display: flex;
+	}
+
+	.checked-status-label {
+		font-weight: bold;
+	}
+
+	.checked-status-value {
+		font-size: 13px;
+		padding: 1px 10px;
+		background: #4caf50;
+		border-radius: 10px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-family: "Nunito", sans-serif;
+		color: white;
+	}
+
+	.status-green {
+		background-color: #4caf50;
+	}
+
+	.status-orange {
+		background-color: #fb8c00;;
+	}
+
+	.status-red {
+		background-color: #f44336;
+	}
 
 	.slide-left-enter-active,
 	.slide-left-leave-active,
@@ -333,6 +463,7 @@
 		transform: translateX(100%);
 		opacity: 0;
 	}
+
 	.slide-left-leave-to {
 		transform: translateX(-100%);
 		opacity: 0;
@@ -342,6 +473,7 @@
 		transform: translateX(-100%);
 		opacity: 0;
 	}
+
 	.slide-right-leave-to {
 		transform: translateX(100%);
 	}
@@ -379,7 +511,7 @@
 	}
 
 	.icon-bot {
-		width: 50px;
+		width: 60px;
 	}
 
 	.fade-enter-active,
@@ -421,7 +553,7 @@
 	}
 
 	.goal__btn-icon {
-		width:35px;
+		width: 35px;
 		height: 35px;
 	}
 
@@ -480,7 +612,7 @@
 		justify-content: space-between;
 		align-items: center;
 		background-color: var(--slider-bg);
-		padding: 5px;
+		padding: 4px;
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 		transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease;
 		touch-action: manipulation;
@@ -544,7 +676,7 @@
 		touch-action: manipulation;
 	}
 
-	.task__come-btn:active{
+	.task__come-btn:active {
 		transform: scale(0.97);
 		box-shadow: 0 2px 6px rgba(99, 120, 225, 0.3);
 	}
@@ -565,14 +697,16 @@
 		flex-direction: column;
 		justify-content: space-around;
 		align-items: start;
+		padding-left: 3px;
 	}
 
 	.task__date-wrapper {
-		font-family: "Acme", serif;
+		font-family: "Nunito", sans-serif;
 		letter-spacing: 1px;
 		display: flex;
 		text-align: center;
 		font-size: 14px;
+		margin-bottom: 3px;
 	}
 
 	.not__task-inner {
@@ -620,19 +754,21 @@
 	}
 
 	.goal__type {
-		font-size: 13px;
+		font-size: 12px;
 		font-weight: 300;
 		color: var(--goals-date-color);
+		font-family: "Nunito", sans-serif;
 	}
 
 	.arrow__datum {
 		margin: 0 5px;
 		width: 10px;
+		transform: rotate(90deg);
 	}
 
 	.goals {
 		margin-bottom: 5px;
-		font-size: 17px;
+		font-size: 14px;
 		font-weight: 600;
 		font-family: "Nunito", sans-serif;
 		color: var(--text-color);
@@ -641,10 +777,11 @@
 
 
 	.task__goal-list {
+		margin-top: 15px;
 		background-color: var(--menu--btn-bg);
 		margin-bottom: 12px;
 		border-radius: 25px;
-		padding: 14px 16px;
+		padding: 8px 16px;
 		border-bottom: 4px solid transparent;
 		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 		transition: all 0.2s ease-in-out;

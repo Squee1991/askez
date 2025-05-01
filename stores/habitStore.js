@@ -194,6 +194,70 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		}
 	};
 
+	const cleanTaskDataAfterDateRangeChange = (task) => {
+		const start = new Date(task.dateRange.start);
+		const end = new Date(task.dateRange.end);
+
+		if (isNaN(start) || isNaN(end)) return;
+
+		const isInRange = (dateStr) => {
+			const date = new Date(dateStr);
+			return !isNaN(date) && date >= start && date <= end;
+		};
+
+		task.checkedDates = (task.checkedDates || []).filter(isInRange);
+		task.missedDates = (task.missedDates || []).filter(isInRange);
+
+		const totalDays = Math.max(1, (end - start) / (1000 * 60 * 60 * 24) + 1);
+		const step = +(100 / totalDays).toFixed(2);
+		if (isNaN(step)) return;
+
+		const newHistory = [
+			...task.checkedDates.map(() => ({ color: '#4FC55C', percent: step })),
+			...task.missedDates.map(() => ({ color: '#FF5C00', percent: step })),
+		];
+
+		task.history = newHistory;
+		task.progress = +(task.checkedDates.length * step).toFixed(2);
+		task.progressMiss = +(task.missedDates.length * step).toFixed(2);
+	};
+
+
+	const updateTaskAfterEdit = (task, newGoal, newColor, newRange) => {
+		const start = new Date(newRange.start);
+		const end = new Date(newRange.end);
+
+		if (isNaN(start) || isNaN(end)) return;
+
+		const totalDays = Math.max(1, (end - start) / (1000 * 60 * 60 * 24) + 1);
+		const step = +(100 / totalDays).toFixed(2);
+
+		if (isNaN(step)) return;
+
+		const isInRange = (dateStr) => {
+			const date = new Date(dateStr);
+			return !isNaN(date) && date >= start && date <= end;
+		};
+
+		task.goal = newGoal;
+		task.color = newColor;
+		task.dateRange = newRange;
+		task.checkedDates = (task.checkedDates || []).filter(isInRange);
+		task.missedDates = (task.missedDates || []).filter(isInRange);
+
+		task.history = [
+			...task.checkedDates.map(() => ({ percent: step, color: '#4FC55C' })),
+			...task.missedDates.map(() => ({ percent: step, color: '#FF5C00' })),
+		];
+
+		task.progress = +(step * task.checkedDates.length).toFixed(2);
+		task.progressMiss = +(step * task.missedDates.length).toFixed(2);
+
+		updateTask(task);
+	};
+
+
+
 	const updateProgress = async (task) => {
 		const startDate = task.dateRange.start && task.dateRange.start.toDate ? task.dateRange.start.toDate() : new Date(task.dateRange.start);
 		const endDate = task.dateRange.end && task.dateRange.end.toDate ? task.dateRange.end.toDate() : new Date(task.dateRange.end);
@@ -352,6 +416,8 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		setAudio,
 		setAnimation,
 		toggleAudio,
-		toggleAnimation
+		toggleAnimation,
+		updateTaskAfterEdit,
+		cleanTaskDataAfterDateRangeChange
 	};
 });

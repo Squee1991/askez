@@ -6,6 +6,9 @@
 	"settings": {
 		"title": "Ustawienia"
 	},
+	"disclemer": {
+		"value": "Ten wirtualny asystent nie udziela porad medycznych, prawnych ani psychologicznych."
+	},
 	"color": {
 		"value": "Wybierz kolor"
 	},
@@ -14,6 +17,11 @@
 		"notDone": "Nie ukończyłeś celu pomyślnie",
 		"marked": "Dziś sukces",
 		"missed": "Dziś niepowodzenie"
+	},
+	"dayMarked": {
+		"done": "Zakończone",
+		"notDone": "Zrób to",
+		"passed": "Minęło"
 	},
 	"buyPremium": {
 		"buy": "Miesięcznie",
@@ -28,6 +36,11 @@
 		"Mod",
 		"Czat"
 	],
+	"buttons": {
+		"edit": "Edytuj",
+		"delete": "Usuń",
+		"close": "Zamknij"
+	},
 	"stepHint": {
 		"skip": "Pomiń",
 		"further": "Dalej",
@@ -48,7 +61,6 @@
 		"Rozwój pandy",
 		"Dostęp do osiągnięć",
 		"Wsparcie dla twórców",
-		"Możliwość zmiany danych",
 		"Nieograniczona liczba celów",
 		"Dostęp do wirtualnego asystenta",
 		"Dostęp do nadchodzących funkcji (wkrótce)"
@@ -59,11 +71,15 @@
 	"googlePlay": {
 		"pay": "Subskrypcja odnawia się automatycznie przez Google Play, jeśli nie zostanie anulowana ręcznie. Jeśli anulujesz subskrypcję przed końcem bieżącego okresu rozliczeniowego, nie otrzymasz zwrotu za ten okres, ale dostęp do Premium pozostanie aktywny do końca opłaconego czasu.Anulowanie zacznie obowiązywać po zakończeniu bieżącego okresu."
 	},
-
 	"chat": {
 		"title": "Wstecz",
 		"btn": "Wyślij",
 		"placeholder": "Napisz swoją wiadomość"
+	},
+	"noConnetction": {
+		"off": "Brak połączenia z internetem",
+		"on": "Połączenie przywrócone",
+		"btn": "Spróbuj ponownie"
 	},
 	"menu": {
 		"title": "Menu"
@@ -74,11 +90,6 @@
 		"subtext": "Subskrybując plan Premium, uzyskasz pełny dostęp do wszystkich funkcji aplikacji.",
 		"leveling": "Aby uzyskać dostęp do ulepszania pandib, przejdź na plan Premium.",
 		"btnPremium": "Uzyskaj Premium"
-	},
-	"noConnetction": {
-		"off": "Brak połączenia z internetem",
-		"on": "Połączenie przywrócone",
-		"btn": "Spróbuj ponownie"
 	},
 	"meniu": [
 		"Konto",
@@ -164,7 +175,7 @@
 	},
 	"navTop": {
 		"achiv": "Osiągnięcia",
-		"askez": "Wszystkie ascezy",
+		"askez": "Wszystkie cele",
 		"stats": "Statystyki"
 	},
 	"statslable": {
@@ -221,6 +232,8 @@
 	"createTask": {
 		"title": "Utwórz nowy cel",
 		"btn": "Utwórz nowy",
+		"edit_title": "Edytuj cel",
+		"edit_btn": "Edytuj",
 		"task": "Twój cel",
 		"datum": "Wybierz zakres dat"
 	},
@@ -250,12 +263,30 @@
 		"notChecked": "Dni niewykonane"
 	},
 	"bublingWindows": {
-		"fieldEmpty": "Wpisz nazwę ascezy"
+		"fieldEmpty": "Wpisz nazwę ascezy",
+		"error": "Nazwa zadania zawiera niedozwolone słowa."
 	},
 	"footerBtnText": {
 		"menu": "Menu",
 		"archieve": "Archiwum",
 		"panda": "Panda",
 		"tasks": "Zadania"
+	},
+	"about": {
+		"title": "Asceza",
+		"subtitle": "Droga duchowego rozwoju",
+		"intro": "Askez to unikalna aplikacja stworzona, aby wspierać Cię na ścieżce ascezy i duchowego wzrostu. Pomagamy wzmacniać ducha poprzez praktyki samodyscypliny i ograniczeń.",
+		"section1_title": "Czym jest asceza?",
+		"section1_text": "Asceza to praktyka rezygnacji z przyjemności doczesnych dla duchowych celów. To droga samodyscypliny, która pomaga rozwijać wewnętrzną siłę i klarowność.",
+		"section2_title": "Funkcje aplikacji",
+		"feature_track": "Śledź codzienne praktyki ascezy",
+		"feature_challenges": "Ustalaj i monitoruj osobiste wyzwania",
+		"feature_guidance": "Otrzymuj wskazówki i inspirację",
+		"feature_community": "Rozmawiaj z ludźmi o podobnych wartościach",
+		"feature_discipline": "Zachowuj zdyscyplinowany tryb życia",
+		"section3_title": "Nasza misja",
+		"section3_text": "Naszą misją jest pomóc Ci osiągnąć duchową siłę poprzez ascezę, oferując narzędzia i wsparcie na tej drodze.",
+		"version": "Wersja 1.0.0"
 	}
+
 }

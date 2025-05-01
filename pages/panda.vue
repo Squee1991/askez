@@ -235,7 +235,6 @@
 	import {useHabitStore} from '../stores/habitStore.js'
 	import {useAuthStore} from '../stores/authStore.js'
 	import PremiumWindow from '../src/components/premiumWindow.vue'
-
 	const store = useHabitStore()
 	const authStore = useAuthStore()
 	const isOpen = ref(false);
@@ -267,7 +266,6 @@
 			isOverlayVisible.value = true;
 			return;
 		}
-
 		if (authStore.isGateOpened) {
 			isButtonVisible.value = false;
 			isOpen.value = true;
@@ -281,11 +279,10 @@
 					isOpen.value = true;
 				}, 100);
 
-				await authStore.markGateAsOpened();
+				// await authStore.markGateAsOpened();
 			}, 2000);
 		}
 	});
-
 
 	definePageMeta({
 		layout: 'footerlayout'
@@ -384,7 +381,6 @@
 	}
 
 	.hero__icon-wrapper {
-		margin-top: 20px;
 		width: 65%;
 		position: relative;
 		display: flex;
@@ -395,7 +391,7 @@
 		position: absolute;
 		bottom: -90px;
 		left: 32px;
-		width: 100%;
+		width: 95%;
 		transform: skewX(-30deg) scaleY(0.4) translate(12px, 15px);
 		opacity: 0.3;
 		filter: brightness(0) blur(2.5px);
@@ -403,9 +399,8 @@
 		pointer-events: none;
 	}
 
-
 	.hero__icon {
-		width: 100%;
+		width: 85%;
 		position: relative;
 		z-index: 1;
 	}
@@ -472,8 +467,6 @@
 		display: flex;
 		overflow: hidden;
 		justify-content: center;
-		/*background: radial-gradient(circle at center, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.05) 40%, transparent 70%),*/
-		/*linear-gradient(160deg, #1e1e2f, #2c2c3f);*/
 		background: var(--background-color);
 	}
 
@@ -593,6 +586,5 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-
 	}
 </style>

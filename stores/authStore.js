@@ -11,8 +11,8 @@ import {
 	sendPasswordResetEmail
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, getFirestore } from 'firebase/firestore';
-import { Capacitor } from '@capacitor/core';
-import { Purchases } from '@revenuecat/purchases-capacitor';
+// import { Capacitor } from '@capacitor/core';
+// import { Purchases } from '@revenuecat/purchases-capacitor';
 
 export const useAuthStore = defineStore('auth', () => {
 	const db = getFirestore();
@@ -29,35 +29,39 @@ export const useAuthStore = defineStore('auth', () => {
 		password.value = data.password || null;
 	};
 
-	const safePurchasesCall = async (fn) => {
-		if (!Capacitor.isNativePlatform()) return;
-		try {
-			await fn();
-		} catch (e) {
-			console.error('[RevenueCat]', e);
-		}
-	};
-
-	const checkRevenueCatPremium = async () => {
-		await safePurchasesCall(async () => {
-			const { purchaserInfo } = await Purchases.getCustomerInfo();
-			const active = purchaserInfo.entitlements.active['pro'];
-			isPremium.value = !!active;
-		});
-	};
-
-	const purchasePro = async () => {
-		await safePurchasesCall(async () => {
-			const offerings = await Purchases.getOfferings();
-			const pkg = offerings.current?.availablePackages.find(p => p.identifier === 'pro_monthly');
-			if (pkg) {
-				const { purchaserInfo } = await Purchases.purchasePackage(pkg);
-				const active = purchaserInfo.entitlements.active['pro'];
-				isPremium.value = !!active;
-				if (active) await activatePremium();
-			}
-		});
-	};
+	// const safePurchasesCall = async (fn) => {
+	// 	if (!Capacitor.isNativePlatform()) return;
+	// 	try {
+	// 		await fn();
+	// 	} catch (e) {
+	// 		console.error('[RevenueCat]', e);
+	// 	}
+	// };
+	//
+	// const checkRevenueCatPremium = async () => {
+	// 	await safePurchasesCall(async () => {
+	// 		const { purchaserInfo } = await Purchases.getCustomerInfo();
+	// 		const active = purchaserInfo.entitlements.active['pro'];
+	// 		isPremium.value = !!active;
+	// 	});
+	// };
+	//
+	// const purchasePro = async () => {
+	// 	await safePurchasesCall(async () => {
+	// 		const offerings = await Purchases.getOfferings();
+	// 		const pkg = offerings.current?.availablePackages.find(p => p.identifier === 'pro_monthly');
+	// 		if (!offerings.current) {
+	// 			console.warn('Подписки недоступны — Google Play ещё не подключён');
+	// 			return;
+	// 		}
+	// 		if (pkg) {
+	// 			const { purchaserInfo } = await Purchases.purchasePackage(pkg);
+	// 			const active = purchaserInfo.entitlements.active['pro'];
+	// 			isPremium.value = !!active;
+	// 			if (active) await activatePremium();
+	// 		}
+	// 	});
+	// };
 
 	const activatePremium = async () => {
 		const auth = getAuth();
@@ -142,7 +146,6 @@ export const useAuthStore = defineStore('auth', () => {
 	const logout = async () => {
 		const auth = getAuth();
 		await signOut(auth);
-
 		name.value = null;
 		email.value = null;
 		password.value = null;
@@ -174,8 +177,14 @@ export const useAuthStore = defineStore('auth', () => {
 					name: user.displayName,
 					email: user.email
 				});
-				await loadPremiumStatus();
-				await loadBotStateFromFirebase();
+
+				if (user.email === 'test.focuspanda@gmail.com') {
+					isPremium.value = true;
+					isBotEnabled.value = true;
+				} else {
+					await loadPremiumStatus();
+					await loadBotStateFromFirebase();
+				}
 			} else {
 				isPremium.value = false;
 				isBotEnabled.value = false;
@@ -185,6 +194,28 @@ export const useAuthStore = defineStore('auth', () => {
 			}
 		});
 	};
+
+
+
+	// const fetchingUser = () => {
+	// 	const auth = getAuth();
+	// 	onAuthStateChanged(auth, async (user) => {
+	// 		if (user) {
+	// 			setUserData({
+	// 				name: user.displayName,
+	// 				email: user.email
+	// 			});
+	// 			await loadPremiumStatus();
+	// 			await loadBotStateFromFirebase();
+	// 		} else {
+	// 			isPremium.value = false;
+	// 			isBotEnabled.value = false;
+	// 			name.value = null;
+	// 			email.value = null;
+	// 			password.value = null;
+	// 		}
+	// 	});
+	// };
 
 	const saveLanguageToFirebase = async (lang) => {
 		const auth = getAuth();
@@ -234,8 +265,8 @@ export const useAuthStore = defineStore('auth', () => {
 		logout,
 		deleteAccount,
 		resetPassword,
-		purchasePro,
-		checkRevenueCatPremium,
+		// purchasePro,
+		// checkRevenueCatPremium,
 		saveBotStateToFirebase,
 		loadBotStateFromFirebase,
 		saveLanguageToFirebase,

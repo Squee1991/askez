@@ -37,16 +37,15 @@
 								/>
 								<span class="account__text">{{ t(`meniu.${index - 1}`) }}</span>
 							</NuxtLink>
-
 						</div>
 					</div>
-					<div class="askeza__v">Askeza v1.0</div>
+					<div class="askeza__v">FocusPanda v1.0</div>
 					<div>
 						<button class="premium_btn" @click="toPremium">
 							<span class="premium__icon">
 								<img class="premium__img" src="../assets/images/premium.png" alt="">
 							</span>
-							<span class="account__text"> Get premium</span>
+							<span class="account__text">Get premium</span>
 						</button>
 					</div>
 				</div>
@@ -60,14 +59,12 @@
 	import Footer from '../src/components/footer.vue'
 	import {useI18n} from 'vue-i18n';
 	import LogoutIcon from '../assets/images/logout.svg'
-	import Arrowicon from '../assets/images/arrowBack.svg'
 	import {onMounted, onUnmounted, ref} from "vue";
 	import {getAuth, signOut} from "firebase/auth";
 	import {useRouter, useRoute} from 'vue-router'
 	const {t} = useI18n();
 	const router = useRouter()
 	const premium = ref(false)
-
 
 	const toPremium = () => {
 		router.push('premium')
@@ -103,19 +100,9 @@
 		document.removeEventListener("click", handleClickOutside);
 	});
 
-	const languages = [
-		{ display: 'Русский', code: 'RU' },
-		{ display: 'Польский', code: 'PL' },
-		{ display: 'Белорусский', code: 'BY' },
-		// Можно добавить другие языки по необходимости:
-		{ display: 'English', code: 'EN' },
-		{ display: 'Deutsch', code: 'DE' },
-		{ display: 'Español', code: 'ES' }
-	];
-
 	const accountLabels = ['Акаўнт', 'Аккаунт', 'Account', 'Konto', 'Cuenta', 'Compte', 'Акаунт', 'Hesto', '账户', 'الحساب'];
 
-	const aboutLabels = ['Пра праграму', 'О программе', 'About App', 'Über die App', 'Sobre la app', "À propos de l'application", 'Про застосунок', 'Yassë Apacë', '关于应用', 'حول التطبيق', 'O aplikacji'];
+	const aboutLabels = ['Пра праграму', 'О приложении', 'About App', 'Über die App', 'Sobre la app', "À propos de l'application", 'Про застосунок', 'Yassë Apacë', '关于应用', 'حول التطبيق', 'O aplikacji'];
 
 	const languageLabels = ['Мова', 'Язык', 'Languages', 'Sprache', 'Idioma', 'Langue', 'Мова', 'Lambë', '语言', 'اللغات', 'Język'];
 
@@ -245,13 +232,16 @@
 	}
 
 	.logout__btn {
-		background: none;
+		background: #8c3de3;
+		width: 50%;
+		margin: 5px;
+		border-radius: 25px;
 		border: none;
-		color: #24ba1d;
+		color: white;
 		padding: 10px 20px;
-		font-weight: bold;
-		font-size: 19px;
-		font-family: "Acme", serif;
+		font-weight: 600;
+		font-size: 17px;
+		font-family: "Nunito", sans-serif;
 	}
 
 	.overlay {
@@ -264,9 +254,12 @@
 	}
 
 	.log__out-text {
+		margin: 0 auto;
+		max-width: 180px;
 		padding: 5px 0;
 		color: grey;
 		text-align: center;
+		font-family: "Nunito", sans-serif;
 	}
 
 	.logout {
@@ -314,7 +307,7 @@
 
 	.account__text {
 		color: var(--text-color);
-		font-size: 18px;
+		font-size: 16px;
 		font-weight: 600;
 		font-family: "Nunito", sans-serif;
 		letter-spacing: 1px;

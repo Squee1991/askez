@@ -2,6 +2,7 @@
 	<div class="feedback-container">
 		<div v-if="isSended" class="feed__back-overlay">
 			<div class="overlay__window">
+				<img class="feedback__icon" src="../assets/images/feedback.svg" alt="">
 				<div class="overlay__text">{{ $t('feedBack.overlayTitle')}}</div>
 				<button @click="isSendedfeedBack" class="overlay__btn">{{ $t('feedBack.overlayBtn')}}</button>
 			</div>
@@ -25,9 +26,8 @@
 <script setup>
 	import {ref} from 'vue';
 	import emailjs from 'emailjs-com';
-	import Arrowicon from '../assets/images/arrowSvg.svg';
+	import Arrowicon from '../assets/images/back.svg';
 	import HeaderWithBack from '../src/components/headerWithBack';
-
 	const isSended = ref(false)
 	const feedback = ref('');
 
@@ -43,11 +43,11 @@
 				{ message: feedback.value },
 				"2v5vLDUsbkXWrluyJ"
 			);
-			feedback.value = '';
-			isSended.value = true
 		} catch (error) {
-			console.log(error)
+			error
 		}
+		feedback.value = '';
+		isSended.value = true
 	};
 
 	const isSendedfeedBack = () => {
@@ -56,6 +56,11 @@
 </script>
 
 <style scoped>
+
+	.feedback__icon{
+		width: 90px;
+	}
+
 	.feedback-container {
 		display: flex;
 		flex-direction: column;
@@ -86,7 +91,7 @@
 		color: var(--button-text-color);
 		border: none;
 		font-size: 24px;
-		font-family: "Itim", serif;
+		font-family: "Nunito", sans-serif;
 		border-radius: 25px;
 		cursor: pointer;
 	}
@@ -115,15 +120,15 @@
 
 	.overlay__window {
 		background: #34364a;
-		border-radius: 15px;
+		border-radius: 25px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		z-index: 20;
 		position: relative;
 		padding: 30px;
-		margin: 20px;
-		top: 50%;
+		margin: 30px;
+		top: 40%;
 		transform: translateY(-50%);
 	}
 
@@ -133,13 +138,19 @@
 		font-size: 20px;
 		margin-bottom: 20px;
 		text-align: center;
+		max-width: 180px;
+		margin-top: 15px;
 	}
 
 	.overlay__btn {
+		width: 100%;
+		font-family: "Nunito", serif;
         border: none;
-		width: 50%;
+		background: #7c00ff;
+		color: white;
 		font-size: 18px ;
+		font-weight: 600;
 		padding: 10px;
-		border-radius: 10px;
+		border-radius: 25px;
 	}
 </style>

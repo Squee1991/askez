@@ -6,6 +6,9 @@
 	"settings": {
 		"title": "Configuración"
 	},
+	"disclemer": {
+		"value": "Este asistente virtual no ofrece asesoramiento médico, legal ni psicológico."
+	},
 	"color": {
 		"value": "Elige un color"
 	},
@@ -14,6 +17,11 @@
 		"notDone": "No has completado el objetivo con éxito",
 		"marked": "Éxito hoy",
 		"missed": "Fallo hoy"
+	},
+	"dayMarked": {
+		"done": "Completado",
+		"notDone": "Hazlo",
+		"passed": "Expirado"
 	},
 	"buyPremium": {
 		"buy": "Mensual",
@@ -28,6 +36,11 @@
 		"Mod",
 		"Chat"
 	],
+	"buttons": {
+		"edit": "Editar",
+		"delete": "Eliminar",
+		"close": "Cerrar"
+	},
 	"stepHint": {
 		"skip": "Omitir",
 		"further": "Siguiente",
@@ -48,7 +61,6 @@
 		"Mejora del panda",
 		"Acceso a logros",
 		"Apoyo a los desarrolladores",
-		"Cambio de datos permitido",
 		"Objetivos ilimitados",
 		"Acceso al asistente virtual",
 		"Acceso a funciones próximas (muy pronto)"
@@ -71,7 +83,7 @@
 	"noConnetction": {
 		"off": "¡Sin conexión a Internet",
 		"on": "¡Conexión restablecida",
-		"btn": "Повторить"
+		"btn": "Reintentar"
 	},
 	"premiumWindow": {
 		"bot": "Para usar el asistente virtual, necesitas pasarte al plan Premium.",
@@ -220,6 +232,8 @@
 	},
 	"createTask": {
 		"title": "Crear un nuevo objetivo",
+		"edit_title": "Editar objetivo",
+		"edit_btn": "Editar",
 		"btn": "Crear nuevo",
 		"task": "Tu objetivo",
 		"datum": "Selecciona un período de fechas"
@@ -250,12 +264,29 @@
 		"notChecked": "Objetivo no completado"
 	},
 	"bublingWindows": {
-		"fieldEmpty": "Ingrese el nombre de la ascesis"
+		"fieldEmpty": "Ingrese el nombre de la ascesis",
+		"error": "El nombre de la tarea contiene palabras prohibidas."
 	},
 	"footerBtnText": {
 		"menu": "Menú",
 		"archieve": "Archivo",
 		"panda": "Panda",
 		"tasks": "Tareas"
+	},
+	"about": {
+		"title": "Askez",
+		"subtitle": "El camino hacia el crecimiento espiritual",
+		"intro": "Askez es una aplicación única diseñada para apoyar tu camino en la ascesis y el crecimiento espiritual. Te ayudamos a fortalecer tu espíritu a través de la autodisciplina y la moderación.",
+		"section1_title": "¿Qué es la ascesis?",
+		"section1_text": "La ascesis es la práctica de abstenerse de placeres mundanos para alcanzar objetivos espirituales. Es un camino de autodisciplina que cultiva la fortaleza interior y la claridad espiritual.",
+		"section2_title": "Funciones de la aplicación",
+		"feature_track": "Sigue tus prácticas ascéticas diarias",
+		"feature_challenges": "Establece y controla retos personales",
+		"feature_guidance": "Recibe orientación e inspiración",
+		"feature_community": "Conéctate con personas afines",
+		"feature_discipline": "Mantén un estilo de vida disciplinado",
+		"section3_title": "Nuestra misión",
+		"section3_text": "Nuestra misión es ayudarte a fortalecer tu espíritu mediante la ascesis, ofreciéndote herramientas y apoyo en tu camino espiritual.",
+		"version": "Versión 1.0.0"
 	}
 }

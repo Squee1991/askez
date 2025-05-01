@@ -39,6 +39,7 @@
 		authStore.fetchingUser()
 	});
 
+
 	onMounted(() => {
 		CapacitorApp.addListener('backButton', handleBackButton).then((listener) => {
 			removeListener = listener.remove

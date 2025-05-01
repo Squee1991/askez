@@ -10,6 +10,7 @@
 		<div v-if="logOutAccept" class="overlay"></div>
 		<div v-if="logOutAccept" class="account__changed">
 			<div class="account__changed--title">{{ $t('account.changedName')}}</div>
+			<img class="change__data-icon" src="../assets/images/change.svg" alt="">
 			<button class="account__change-btn" @click="closeOverlay">{{ $t('success.button')}}</button>
 		</div>
 		<div class="account__content">
@@ -22,6 +23,7 @@
 					<VFields
 						:field="field"
 						v-model="field.value"
+
 					/>
 				</div>
 			</div>
@@ -36,7 +38,7 @@
 <script setup>
 	import {useTaskStore} from '../stores/OfflineTaskStore.js'
 	import PremiumWindow from '../src/components/premiumWindow.vue'
-	import Arrowicon from '../assets/images/arrowSvg.svg'
+	import Arrowicon from '../assets/images/back.svg'
 	import HeaderWithback from '../src/components/headerWithBack.vue'
 	import EditIcon from '../assets/images/editIcon.svg'
 	import EditDeleteMenu from '../src/components/EditDeleteMenu.vue'
@@ -60,6 +62,7 @@
 				placeholder: "",
 				value: "",
 				error: false,
+				maxlength: 15,
 			},
 			{
 				id: 2,
@@ -85,10 +88,6 @@
 	});
 
 	const changeData = async () => {
-		if (!authStore.isPremium) {
-			isPremiumOverlayVisible.value = true;
-			return;
-		}
 		const nameField = data.value.fields.find(field => field.name === "name");
 		if (nameField && nameField.value !== authStore.name) {
 			await authStore.UpdateNameDisplayName(nameField.value);
@@ -115,6 +114,11 @@
 
 <style scoped>
 
+	.change__data-icon {
+		width: 70px;
+		margin-top: 10px;
+	}
+
 	.premium__window {
 		position: absolute;
 		width: 100%;
@@ -133,8 +137,8 @@
 		flex-direction: column;
 		align-items: center;
 		background: #34364a;
-		padding: 20px;
-		border-radius: 15px;
+		padding: 25px;
+		border-radius: 25px;
 		position: absolute;
 		left: 50%;
 		transform: translate(-50%, -50%);
@@ -158,13 +162,17 @@
 	}
 
 	.account__change-btn {
+		margin-top: 40px;
 		border: none;
-		background: none;
+		border-radius: 25px;
+		width: 100%;
+		background: #7c00ff;
 		font-size: 20px;
-		color: #24ba1d;
+		color: white;
 		text-align: center;
-		font-weight: bold;
+		font-weight: 600;
 		padding: 10px;
+		font-family: "Nunito", sans-serif;
 	}
 
 	.account__content {
@@ -191,7 +199,7 @@
 		width: 100%;
 		border: none;
 		padding: 15px;
-		border-radius: 10px;
+		border-radius: 25px;
 		font-size: 20px;
 		background-color: var(--button-bg);
 		color: var(--button-text-color);

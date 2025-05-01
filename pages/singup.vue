@@ -98,7 +98,8 @@
 				placeholder: "Enter your full name",
 				value: "",
 				error: false,
-				required: true
+				required: true,
+				maxlength: 15,
 			},
 			{
 				id: 2,

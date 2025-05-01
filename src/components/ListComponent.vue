@@ -1,7 +1,6 @@
 <template>
 	<div>
-		<div
-			v-for="item in locales"
+		<div v-for="item in locales"
 			:key="item.code || item.id || item.text"
 			class="menu__btn-wrapper"
 		>
@@ -31,7 +30,6 @@
 	const props = defineProps({
 		icon: {
 			type: null,
-
 		},
 		data: {
 			type: [Array, Object , String],
@@ -53,9 +51,7 @@
 			localValue.value = props.modelValue
 		}, {immediate: true}
 	)
-
 </script>
-
 <style scoped >
 	.selected__icon {
 		width: 30px;

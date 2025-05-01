@@ -6,11 +6,9 @@
 			<button class="notification__close" @click.stop="closeNotification">×</button>
 		</div>
 		<div>
-			<div :class="{'not__allowed': notAllowed.show}" class="not__allowed-data">
-				{{ notAllowed.message }}
-			</div>
+			<div :class="{'not__allowed': notAllowed.show}" class="not__allowed-data">{{ notAllowed.message }}</div>
 		</div>
-		<div v-if="isOpen" class="overlay__confirm">
+		<div v-if="isOpen" class="overlay__confirm" @click.self="cancelDelete">
 			<div class="confirm__window">
 				<div class="confirm__content-wrapper">
 					<img class="out__icon" src="../assets/images/garbage.svg" alt="">
@@ -32,7 +30,28 @@
 				</NuxtLink>
 				<span class="task__goal-name">{{ selectedTask.goal }}</span>
 				<div class="edit__menu-wrapper">
-					<EditDeleteMenu :icon="editIcon" @click="editMenu"/>
+					<img :src="editIcon" class="edit__icon" @click="toggleEditMenu" />
+					<div v-if="showEditOptions" class="modal__edit-menu" @click.self="toggleEditMenu">
+						<div class="modal__content">
+							<div class="modal__option edit" @click="openEditTask">
+								<img class="edit__icons" src="../assets/images/writing.svg" alt="">
+								<span class="edit__text">{{ t('buttons.edit') }}</span>
+							</div>
+							<div class="modal__option del" @click="openDeleteConfirm">
+								<img class="edit__icons" src="../assets/images/delete.svg" alt="">
+								<span class="edit__text">{{ t('buttons.delete') }}</span>
+							</div>
+							<div class="modal__close close" @click="toggleEditMenu">
+								<img class="edit__icons" src="../assets/images/closeIcon.svg" alt="">
+								<span class="edit__text">{{ t('buttons.close') }}</span>
+							</div>
+						</div>
+					</div>
+					<HabitGoal
+						v-if="isEditing"
+						:taskToEdit="selectedTask"
+						@close="isEditing = false"
+					/>
 				</div>
 			</div>
 			<div class="range__date-wrapper">
@@ -45,7 +64,8 @@
 					<div class="range__date__data end">{{ formatDate(selectedTask.dateRange.end) }}</div>
 				</div>
 			</div>
-			<div class="progres__wrapper-inner" :style="selectedTask.color ? { borderTop: `4px solid ${selectedTask.color}` } : {}">
+			<div class="progres__wrapper-inner"
+			     :style="selectedTask.color ? { borderTop: `4px solid ${selectedTask.color}` } : {}">
 				<div class="task__about">
 					<div class="tas__name-wrapper">
 						<span class="task__goal-name">{{$t('taskDetails.title')}}: </span>
@@ -127,13 +147,10 @@
 			</div>
 		</div>
 	</div>
-	<StepHint
-		:steps="hintSteps"
-		:show="showHints"
-		@close="showHints = false"
-	/>
+	<StepHint :steps="hintSteps"
+	          :show="showHints"
+	          @close="showHints = false"/>
 </template>
-
 <script setup>
 	import StepHint from '../src/components/StepHint.vue'
 	import {ref, computed, onMounted, watch} from "vue";
@@ -141,7 +158,8 @@
 	import {useHabitStore} from "../stores/habitStore.js";
 	import ProgressBar from "../src/components/progressBar.vue";
 	import EditDeleteMenu from "../src/components/EditDeleteMenu.vue";
-	import EditIcon from '../assets/images/icon-trash.svg';
+	import HabitGoal from "../src/components/newHabitGoal.vue";
+	import EditIcon from '../assets/images/more.svg';
 	import {useI18n} from 'vue-i18n';
 	import Lottie from 'lottie-web';
 	import CongratsAmination from '../assets/animations/GratsAnimation.json'
@@ -152,15 +170,16 @@
 	import InProgressIcon from "../assets/images/clock.svg";
 	const {locale, t} = useI18n();
 	let showHints = ref(true);
+	const isEditing = ref(false)
 	const hintSteps = [
-		{ selector: '.task__icon-back', text: 'stepHint.screen' },
-		{ selector: '.task__goal-name', text: 'stepHint.goal' },
-		{ selector: '.range__date-wrapper', text: 'stepHint.date' },
-		{ selector: '.vc-container', text: 'stepHint.calendar' },
-		{ selector: '.task__details-btns', text: 'stepHint.mark' },
-		{ selector: '.progress__container-details', text: 'stepHint.progress' }
+		{selector: '.task__icon-back', text: 'stepHint.screen'},
+		{selector: '.task__goal-name', text: 'stepHint.goal'},
+		{selector: '.range__date-wrapper', text: 'stepHint.date'},
+		{selector: '.vc-container', text: 'stepHint.calendar'},
+		{selector: '.task__details-btns', text: 'stepHint.mark'},
+		{selector: '.progress__container-details', text: 'stepHint.progress'}
 	];
-
+	const showEditOptions = ref(false);
 	const animationBlock = ref(null);
 	const editIcon = ref(EditIcon);
 	const editState = ref(false);
@@ -198,12 +217,9 @@
 		const total = totalTaskDays.value;
 		const checked = selectedTask.value.checkedDates?.length || 0;
 		const missed = selectedTask.value.missedDates?.length || 0;
-
 		const remaining = total - checked - missed;
-
 		return remaining >= 0 ? remaining : 0;
 	});
-
 
 	const notAllowed = ref({show: false, message: ''})
 	const showNotAllowed = (key) => {
@@ -220,6 +236,20 @@
 		const audio = new Audio('/sounds/cry.wav')
 		audio.play()
 	}
+
+	const toggleEditMenu = () => {
+		showEditOptions.value = !showEditOptions.value;
+	};
+
+	const openEditTask = () => {
+		isEditing.value = true;
+		showEditOptions.value = false;
+	};
+
+	const openDeleteConfirm = () => {
+		isOpen.value = true;
+		showEditOptions.value = false;
+	};
 
 	const selectedTask = computed(() => {
 		const id = router.query.id;
@@ -269,18 +299,16 @@
 			notification.value.show = false;
 		}, 2000);
 	};
-	// Функция для закрытия уведомления
+
 	const closeNotification = () => {
 		notification.value.show = false;
 	};
 
 	const misscCheckClick = (btn) => {
 		if (!selectedTask.value) return;
-
 		const selDateStr = selectedDate.value;
 		const taskStartStr = convertToDate(selectedTask.value.dateRange.start).toLocaleDateString('en-CA');
 		const taskEndStr = convertToDate(selectedTask.value.dateRange.end).toLocaleDateString('en-CA');
-
 		if (btn === "done") {
 			if (!selectedTask.value.checkedDates) selectedTask.value.checkedDates = [];
 			selectedTask.value.checkedDates.push(selDateStr);
@@ -290,16 +318,12 @@
 			selectedTask.value.missedDates.push(selDateStr);
 			missedDates.value = [...selectedTask.value.missedDates];
 		}
-
 		const totalDays = Math.max(1, (new Date(taskEndStr) - new Date(taskStartStr)) / (1000 * 60 * 60 * 24) + 1);
-		const step = (100 / totalDays).toFixed(2);
-
+		const step = +(100 / Math.max(1, totalDays)).toFixed(2);
 		if (!selectedTask.value.history) selectedTask.value.history = [];
-
 		const currentProgress = selectedTask.value.progress || 0;
 		const currentProgressMiss = selectedTask.value.progressMiss || 0;
 		const remainingProgress = 100 - currentProgress - currentProgressMiss;
-
 		if (remainingProgress > 0) {
 			selectedTask.value.history.push({
 				color: btn === 'done' ? "#4FC55C" : "#FF5C00",
@@ -317,12 +341,8 @@
 			const message = hasMisses ? t('congrats.notDone') : t('congrats.done');
 			const type = hasMisses ? 'notDone' : 'marked';
 			showNotification(message, type);
-
 			if (!hasMisses && btn === "done") {
-				// проигрываем звук отдельно, если включён
 				applausAudio();
-
-				// запускаем анимацию, если включена
 				if (!habitStore.isAnimationEnabled) return;
 				setTimeout(() => {
 					if (animationBlock.value) {
@@ -356,7 +376,6 @@
 
 	const onDateSelect = (day) => {
 		if (!day || !day.id || !selectedTask.value) return;
-
 		const selDate = new Date(day.id);
 		selDate.setHours(0, 0, 0, 0);
 		const formatted = formatDateLocal(selDate);
@@ -364,7 +383,6 @@
 		taskStart.setHours(0, 0, 0, 0);
 		const taskEnd = new Date(convertToDate(selectedTask.value.dateRange.end));
 		taskEnd.setHours(0, 0, 0, 0);
-
 		if (selDate < taskStart || selDate > taskEnd) {
 			showNotAllowed('outside')
 			return;
@@ -376,7 +394,6 @@
 		}
 		isDateSelected.value = true;
 		selectedDate.value = formatDateLocal(selDate);
-		console.log("Выбрана", selectedDate.value);
 	};
 
 	const disabledDates = computed(() => {
@@ -402,8 +419,22 @@
 	onMounted(() => {
 		loadTask();
 		if (selectedTask.value) {
-			checkedCount.value = selectedTask.value.checkedDates?.length || 0;
-			missedCount.value = selectedTask.value.missedDates?.length || 0;
+			const start = convertToDate(selectedTask.value.dateRange.start);
+			const end = convertToDate(selectedTask.value.dateRange.end);
+			const totalDays = Math.max(1, (end - start) / (1000 * 60 * 60 * 24) + 1);
+			const step = +(100 / totalDays).toFixed(2);
+			selectedTask.value.history = selectedTask.value.checkedDates.map(() => ({
+				color: '#4FC55C',
+				percent: step,
+			})).concat(
+				selectedTask.value.missedDates.map(() => ({
+					color: '#FF5C00',
+					percent: step,
+				}))
+			);
+			habitStore.updateTask(selectedTask.value);
+			habitStore.updateProgress(selectedTask.value);
+			habitStore.saveTasks();
 		}
 	});
 
@@ -422,7 +453,6 @@
 		];
 	});
 
-
 	const isDateMarked = computed(() => {
 		const date = selectedDate.value;
 		if (!date) return true;
@@ -431,13 +461,11 @@
 			showNotAllowed('onlyToday')
 			return true;
 		}
-
 		return checkedDates.value.includes(date) || missedDates.value.includes(date);
 	});
 
 	const clearTask = async (taskId) => {
 		if (!taskId) return;
-
 		if (habitStore.tasks.find(t => t.id === taskId)) {
 			habitStore.removeTask(taskId);
 		} else {
@@ -455,13 +483,8 @@
 		editState.value = false;
 	};
 
-	const editMenu = () => {
-		isOpen.value = true;
-	};
-
 	onMounted(() => {
 		const user = getAuth().currentUser;
-
 		if (user && user.uid) {
 			const hintKey = `hints_shown_${user.uid}`;
 			if (localStorage.getItem(hintKey) !== 'true') {
@@ -479,6 +502,7 @@
 			}
 		}
 	});
+
 	const formatDate = (date) => {
 		const d = convertToDate(date);
 		return d.toLocaleDateString("en-US", {
@@ -496,10 +520,22 @@
 
 </script>
 <style>
+
+	.edit__icons {
+		width: 40px;
+		padding: 10px;
+	}
+
+	.edit__text{
+		display: flex;
+		align-items: center;
+		font-family: "Nunito", sans-serif;
+		font-weight: 400;
+	}
+
 	.phrase__text {
 		display: flex;
 		padding: 11px;
-
 	}
 
 	.days__task-count {
@@ -520,7 +556,7 @@
 		color: var(--text-color);
 	}
 
-	.calendar__icon{
+	.calendar__icon {
 		position: absolute;
 		right: 10px;
 		width: 125px;
@@ -534,6 +570,7 @@
 	.progress__container-details {
 		display: flex;
 		justify-content: space-between;
+		margin-bottom: 10px;
 	}
 
 	.phrase {
@@ -558,13 +595,12 @@
 		justify-content: center;
 	}
 
-	.circle__inner{
+	.circle__inner {
 		padding-right: 10px;
 	}
 
 	.progress__circle {
 		width: 100%;
-
 	}
 
 	.task__progress-icon {
@@ -676,7 +712,6 @@
 		width: 100%;
 		border: none;
 		background-color: var(--menu--btn-bg);
-		padding: 10px;
 		border-radius: 20px;
 	}
 
@@ -743,15 +778,13 @@
 		border-radius: 15px;
 	}
 
-
 	.task__details-btns {
-		margin: 10px 0 10px 0 ;
+		margin: 10px 0 10px 0;
 		display: flex;
 		justify-content: space-between;
 		background-color: var(--menu--btn-bg);
 		padding: 10px;
 		border-radius: 20px;
-
 	}
 
 	.range__date-text {
@@ -788,6 +821,8 @@
 
 	.edit__menu-wrapper {
 		position: relative;
+		display: flex;
+		align-items: center;
 	}
 
 	.task__details-btn {
@@ -829,7 +864,7 @@
 		color: var(--text-color);
 		padding: 0 15px 0 0;
 		text-align: center;
-        width: 39px;
+		width: 39px;
 	}
 
 	.task__icon-back {
@@ -850,12 +885,11 @@
 		background: linear-gradient(to right, #ff5c00, #ff7f2a);
 		color: white;
 		font-family: "Nunito", system-ui, -apple-system, sans-serif;
-		box-shadow: 0 4px 10px rgba(255, 92, 0, 0.3);
 		transition: all 0.2s ease-in-out;
 		touch-action: manipulation;
 	}
 
-	.update__task-btn:active{
+	.update__task-btn:active {
 		transform: scale(0.99);
 		box-shadow: 0 2px 6px rgba(255, 92, 0, 0.2);
 	}
@@ -898,7 +932,7 @@
 	.not__allowed-data {
 		height: 0;
 		overflow: hidden;
-		position: absolute;
+		position: fixed;
 		width: 100%;
 		left: 0;
 		top: 0;
@@ -958,7 +992,6 @@
 		font-family: "Nunito", sans-serif;
 	}
 
-
 	.confirm__btn {
 		display: flex;
 		justify-content: center;
@@ -992,7 +1025,7 @@
 	}
 
 	.notification.active {
-		height: 80px;
+		height: 60px;
 		padding: 20px;
 	}
 
@@ -1041,5 +1074,98 @@
 		text-align: center;
 		font-size: 14px;
 		opacity: 0.8;
+	}
+
+	.custom__edit-menu {
+		position: absolute;
+		top: 40px;
+		right: 0;
+		background-color: var(--menu--btn-bg);
+		border-radius: 10px;
+		box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+		z-index: 20;
+		display: flex;
+		flex-direction: column;
+		padding: 5px;
+	}
+
+	.edit__menu-item {
+		padding: 8px 12px;
+		cursor: pointer;
+		font-family: "Nunito", sans-serif;
+		font-size: 14px;
+		color: var(--text-color);
+	}
+
+	.edit__menu-item:hover {
+		background-color: rgba(255,255,255,0.1);
+	}
+
+	.modal__edit-menu {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background-color: rgba(0, 0, 0, 0.6);
+
+		z-index: 1000;
+	}
+
+	.modal__content {
+		background-color: #2d1d63;
+		border-radius: 30px;
+		padding: 25px;
+		width: 80%;
+		position: absolute;
+		top: 45%;
+		left: 50%;
+		transform: translate(-50% , -50%);
+		max-width: 300px;
+		text-align: center;
+		box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+		display: flex;
+		flex-direction: column;
+	}
+
+	.modal__option {
+		display: flex;
+		color: white;
+		font-size: 16px;
+		padding: 5px 10px;
+		margin: 5px 0;
+		background-color: #4FC55C;
+		border-radius: 25px;
+		cursor: pointer;
+		font-weight: bold;
+		transition: background 0.2s;
+		font-family: "Nunito", sans-serif;
+	}
+
+	.modal__option.del {
+		color: white;
+		font-size: 16px;
+		padding: 5px 10px;
+		margin: 5px 0;
+		background-color: #EF4444;
+		border-radius: 25px;
+		cursor: pointer;
+		font-weight: bold;
+		transition: background 0.2s;
+		font-family: "Nunito", sans-serif;
+	}
+
+	.modal__close {
+		display: flex;
+		align-items: center;
+		color: white;
+		font-size: 16px;
+		padding: 5px 10px;
+		margin-top: 5px;
+		border-radius: 25px;
+		cursor: pointer;
+		background: #d29437;
+		font-weight: bold;
+		font-family: "Nunito", sans-serif;
 	}
 </style>

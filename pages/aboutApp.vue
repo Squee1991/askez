@@ -1,51 +1,54 @@
 <template>
 	<div class="about__wrapper">
 		<HeaderWithBack
-				title="back to menu"
-				:icon="Arrow"/>
+			:icon="Arrow" />
 		<div class="about__content">
 			<div class="about__info">
 				<div class="about__header">
-					<h1 class="about__title">Askez</h1>
-					<p class="about__subtitle">Путь к духовному совершенству</p>
+					<h1 class="about__title">{{ $t('about.title') }}</h1>
+					<p class="about__subtitle">{{ $t('about.subtitle') }}</p>
 				</div>
-
 				<div class="about__description">
 					<div class="about__intro-card">
-						<p class="about__intro">Askez - это уникальное приложение, созданное для поддержки вашего пути в аскетизме и духовном развитии. Мы помогаем вам укреплять дух через практики воздержания и самодисциплины.</p>
+						<p class="about__intro">
+							{{ $t('about.intro') }}
+						</p>
 					</div>
 
 					<div class="about__sections-container">
 						<div class="about__section">
 							<div class="about__section-icon">🧘</div>
-							<h2 class="about__section-title">Что такое аскетизм?</h2>
-							<p>Аскетизм - это практика воздержания от мирских удовольствий для достижения духовных целей. Это путь самодисциплины, который помогает укрепить дух и развить внутреннюю силу.</p>
+							<h2 class="about__section-title">{{ $t('about.section1_title') }}</h2>
+							<p>
+								{{ $t('about.section1_text') }}
+							</p>
 						</div>
 
 						<div class="about__section">
 							<div class="about__section-icon">⚡</div>
-							<h2 class="about__section-title">Возможности приложения</h2>
+							<h2 class="about__section-title">{{ $t('about.section2_title') }}</h2>
 							<ul class="about__features">
-								<li>Отслеживание ежедневных аскетических практик</li>
-								<li>Установка и мониторинг личных испытаний</li>
-								<li>Получение руководства и вдохновения</li>
-								<li>Общение с единомышленниками</li>
-								<li>Поддержание дисциплинированного образа жизни</li>
+								<li>{{ $t('about.feature_track') }}</li>
+								<li>{{ $t('about.feature_challenges') }}</li>
+								<li>{{ $t('about.feature_guidance') }}</li>
+								<li>{{ $t('about.feature_community') }}</li>
+								<li>{{ $t('about.feature_discipline') }}</li>
 							</ul>
 						</div>
 
 						<div class="about__section">
 							<div class="about__section-icon">🌟</div>
-							<h2 class="about__section-title">Наша миссия</h2>
-							<p>Мы стремимся помочь вам развить силу духа через практики аскетизма, предоставляя инструменты и поддержку на вашем пути к духовному совершенству.</p>
+							<h2 class="about__section-title">{{ $t('about.section3_title') }}</h2>
+							<p>
+								{{ $t('about.section3_text') }}
+							</p>
 						</div>
 					</div>
 				</div>
 
 				<div class="about__footer">
 					<div class="about__version">
-						<p>Версия 1.0.0</p>
-						<p class="about__copyright">© 2024 Askez. Все права защищены.</p>
+						<p>{{ $t('about.version') }}</p>
 					</div>
 				</div>
 			</div>
@@ -53,10 +56,11 @@
 	</div>
 </template>
 
+
 <script setup>
 import HeaderWithBack from '../src/components/headerWithBack.vue';
-import Arrow from '../assets/images/arrowBack.svg'
-import AboutPanda from '../assets/images/aboutAPP.png'
+import Arrow from '../assets/images/back.svg'
+
 </script>
 
 <style scoped>
@@ -90,6 +94,10 @@ import AboutPanda from '../assets/images/aboutAPP.png'
 }
 
 .about__header {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	margin-bottom: 3rem;
 	position: relative;
 	padding-bottom: 2rem;
@@ -108,7 +116,7 @@ import AboutPanda from '../assets/images/aboutAPP.png'
 
 .about__title {
 	font-size: 3rem;
-	color: #ffffff;
+	color: var(--text-color);
 	font-family: "Acme", serif;
 	margin-bottom: 0.5rem;
 	text-shadow: 0 0 15px rgba(0, 188, 212, 0.6);
@@ -138,7 +146,7 @@ import AboutPanda from '../assets/images/aboutAPP.png'
 
 .about__subtitle {
 	font-size: 1.3rem;
-	color: #ffffff;
+	color: var(--text-color);
 	opacity: 0.95;
 	margin-bottom: 0.5rem;
 	font-style: italic;
@@ -182,7 +190,7 @@ import AboutPanda from '../assets/images/aboutAPP.png'
 	line-height: 1.7;
 	font-weight: 400;
 	letter-spacing: 0.2px;
-	color: #ffffff;
+	color: var(--text-color);
 	position: relative;
 	z-index: 1;
 }
@@ -252,7 +260,7 @@ import AboutPanda from '../assets/images/aboutAPP.png'
 
 .about__section-title {
 	font-size: 1.4rem;
-	color: #ffffff;
+	color: var(--text-color);
 	margin-bottom: 1.2rem;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 	padding-bottom: 0.8rem;
@@ -267,7 +275,7 @@ import AboutPanda from '../assets/images/aboutAPP.png'
 	line-height: 1.7;
 	font-weight: 400;
 	letter-spacing: 0.2px;
-	color: #ffffff;
+	color: var(--text-color);
 	margin-bottom: 1rem;
 	flex-grow: 1;
 }
@@ -288,7 +296,7 @@ import AboutPanda from '../assets/images/aboutAPP.png'
 	line-height: 1.6;
 	font-weight: 400;
 	letter-spacing: 0.2px;
-	color: #ffffff;
+	color: var(--text-color);
 }
 
 .about__features li:hover {
@@ -331,7 +339,7 @@ import AboutPanda from '../assets/images/aboutAPP.png'
 	position: relative;
 	font-weight: 400;
 	letter-spacing: 0.2px;
-	color: #ffffff;
+	color: var(--text-color);;
 }
 
 .about__copyright {

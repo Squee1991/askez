@@ -6,6 +6,9 @@
 	"settings": {
 		"title": "Settings"
 	},
+	"disclemer": {
+		"value": "This virtual assistant does not provide medical, legal, or psychological advice."
+	},
 	"color": {
 		"value": "Choose a color"
 	},
@@ -14,6 +17,11 @@
 		"notDone": "You did not successfully complete the goal",
 		"marked": "Successful today",
 		"missed": "Unsuccessful today"
+	},
+	"dayMarked": {
+		"done": "Completed",
+		"notDone": "Do that",
+		"passed": "Expired"
 	},
 	"buyPremium": {
 		"buy": "Monthly",
@@ -28,6 +36,11 @@
 		"Mod",
 		"Chat"
 	],
+	"buttons": {
+		"edit": "Edit",
+		"delete": "Delete",
+		"close": "Close"
+	},
 	"stepHint": {
 		"skip": "Skip",
 		"further": "Further",
@@ -47,7 +60,6 @@
 		"Support the developers",
 		"Access to achievements",
 		"Panda leveling",
-		"Ability to change data",
 		"Unlimited number of goals",
 		"Access to virtual assistant",
 		"Access to upcoming features (coming soon)"
@@ -70,7 +82,7 @@
 	"noConnetction": {
 		"off": "No internet connection",
 		"on": "Connection restored",
-		"btn": "Повторить"
+		"btn": "Try again"
 	},
 	"premiumWindow": {
 		"bot": "To use the virtual assistant, you need to upgrade to the Premium plan.",
@@ -111,8 +123,8 @@
 	},
 	"archieve": {
 		"empty": "Archive is empty",
-		"name": "Your askezas",
-		"achieveTitle": "Ascezas archive",
+		"name": "Your Goals",
+		"achieveTitle": "Goals archive",
 		"totalDays": "Total days",
 		"notchecked": "Days left",
 		"checkedDays": "Checked",
@@ -163,7 +175,7 @@
 	},
 	"navTop": {
 		"achiv": "Achievements",
-		"askez": "All askeza",
+		"askez": "All goals",
 		"stats": "Statistics"
 	},
 	"statslable": {
@@ -219,6 +231,8 @@
 	},
 	"createTask": {
 		"title": "Create new Goal",
+		"edit_title": "Edit goal",
+		"edit_btn": "edit goal",
 		"btn": "Create new",
 		"task": "Your goal",
 		"datum": "Select a date range"
@@ -249,12 +263,29 @@
 		"notChecked": "Days missed"
 	},
 	"bublingWindows": {
-		"fieldEmpty": "Enter the name of the Askesis"
+		"fieldEmpty": "Enter the name of the Askesis",
+		"error": "The task name contains prohibited words."
 	},
 	"footerBtnText": {
 		"menu": "Menu",
 		"archieve": "Archieve",
 		"panda": "Panda",
 		"tasks": "Tasks"
+	},
+	"about": {
+		"title": "FocusPanda",
+		"subtitle": "The Path to Spiritual Growth",
+		"intro": "Askez is a unique app designed to support your journey in asceticism and spiritual growth. We help you strengthen your spirit through practices of self-restraint and discipline.",
+		"section1_title": "What is Asceticism?",
+		"section1_text": "Asceticism is the practice of abstaining from worldly pleasures to pursue spiritual goals. It is a path of self-discipline that helps cultivate inner strength and spiritual clarity.",
+		"section2_title": "App Features",
+		"feature_track": "Track daily ascetic practices",
+		"feature_challenges": "Set and monitor personal challenges",
+		"feature_guidance": "Receive guidance and inspiration",
+		"feature_community": "Connect with like-minded individuals",
+		"feature_discipline": "Maintain a disciplined lifestyle",
+		"section3_title": "Our Mission",
+		"section3_text": "Our mission is to help you build spiritual strength through ascetic practices, offering tools and support along your path to spiritual excellence.",
+		"version": "Version 1.0.0"
 	}
 }
