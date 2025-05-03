@@ -75,10 +75,22 @@ export default defineNuxtConfig({
                 file: 'pl-PL.json'
             },
             {
+                code: 'hi-IN',
+                iso: 'hi-IN',
+                name: 'हिन्दी',
+                file: 'hi-IN.json'
+            },
+            {
                 code: 'es-ES',
                 iso: 'es-ES',
                 name: 'Español',
                 file: 'es-ES.json',
+            },
+            {
+                code: 'pt-BR',
+                iso: 'pt-BR',
+                name: 'Português',
+                file: 'pt-BR.json',
             },
             {
                 code: 'fr-FR',

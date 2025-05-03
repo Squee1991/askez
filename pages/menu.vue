@@ -100,15 +100,15 @@
 		document.removeEventListener("click", handleClickOutside);
 	});
 
-	const accountLabels = ['Акаўнт', 'Аккаунт', 'Account', 'Konto', 'Cuenta', 'Compte', 'Акаунт', 'Hesto', '账户', 'الحساب'];
+	const accountLabels = ['Акаўнт', "खाता", "Conta" , 'Аккаунт', 'Account', 'Konto', 'Cuenta', 'Compte', 'Акаунт', 'Hesto', '账户', 'الحساب'];
 
-	const aboutLabels = ['Пра праграму', 'О приложении', 'About App', 'Über die App', 'Sobre la app', "À propos de l'application", 'Про застосунок', 'Yassë Apacë', '关于应用', 'حول التطبيق', 'O aplikacji'];
+	const aboutLabels = ['Пра праграму', "ऐप के बारे में", "Sobre o aplicativo", 'О приложении', 'About App', 'Über die App', 'Sobre la app', "À propos de l'application", 'Про застосунок', 'Yassë Apacë', '关于应用', 'حول التطبيق', 'O aplikacji'];
 
-	const languageLabels = ['Мова', 'Язык', 'Languages', 'Sprache', 'Idioma', 'Langue', 'Мова', 'Lambë', '语言', 'اللغات', 'Język'];
+	const languageLabels = ['Мова', 'Язык', "भाषा", 'Languages', 'Sprache', 'Idioma', 'Langue', 'Мова', 'Lambë', '语言', 'اللغات', 'Język'];
 
-	const feedback = ['Обратная связь', 'Зваротная сувязь', 'Feedback', 'Comentarios', 'Commentaires', 'Зворотний зв\'язок', 'Anna atsa', '反馈', 'التعليقات', 'Opinie'];
+	const feedback = ['Обратная связь', "प्रतिक्रिया", 'Зваротная сувязь', 'Feedback', 'Comentarios', 'Commentaires', 'Зворотний зв\'язок', 'Anna atsa', '反馈', 'التعليقات', 'Opinie'];
 
-	const settingsLabels = ['Налады', 'Настройки', 'Settings', 'Einstellungen', 'Configuración', 'Paramètres', 'Налаштування', 'Ondo', '设置', 'الإعدادات', 'Ustawienia'];
+	const settingsLabels = ['Налады', "सेटिंग्स", 'Настройки', "Configurações", 'Settings', 'Einstellungen', 'Configuración', 'Paramètres', 'Налаштування', 'Ondo', '设置', 'الإعدادات', 'Ustawienia'];
 
 
 	const logOutAccept = ref(false)

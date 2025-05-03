@@ -23,22 +23,12 @@
 	const isOverlayVisible = ref(false)
 	const passwordInput = ref('');
 	const deleteError = ref('');
-	// const activeAnim = ref(false);
 	const colorMode = useColorMode();
 	const localBotToggle = ref(false);
 	const activeBotAnim = ref(false)
 	const isAudioEnabled = computed(() => habitStore.isAudioEnabled);
 	const isAnimationEnabled = computed(() => habitStore.isAnimationEnabled);
-	// const isToggle = ref(colorMode.preference === 'dark');
 
-	// const clickToggle = () => {
-	// 	activeAnim.value = true;
-	// 	setTimeout(() => {
-	// 		activeAnim.value = false;
-	// 	}, 200);
-	// 	colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark';
-	// 	isToggle.value = colorMode.preference === 'dark';
-	// };
 
 
 	const clickToggleBot = async () => {
