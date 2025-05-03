@@ -61,10 +61,12 @@
 										<div class="calendar-wrapper">
 											<v-calendar
 												view="weekly"
+												:locale="locale"
 												v-model="selectedDate"
 												:attributes="dotAttributes"
 												:select-attribute="null"
 												@dayclick="onDayClick"
+
 											/>
 										</div>
 										<div
@@ -133,9 +135,10 @@
 							</div>
 							<Transition name="fade">
 								<div class="not__task-inner"
-								     v-if="isTasksLoaded  && isNotTask && activeButton === 'tasks'">
+									v-if="isTasksLoaded && tasks.length === 0 && activeButton === 'tasks'"
+								>
 									<img class="no__task-icon" src="../assets/images/Memepanda.png" alt="">
-									<span class="no__task-text"> {{ $t('homePage.no_active_goals') }}</span>
+									<span class="no__task-text">{{ $t('homePage.no_active_goals') }}</span>
 								</div>
 							</Transition>
 						</div>

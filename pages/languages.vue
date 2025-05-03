@@ -86,6 +86,10 @@
 		border-radius: 25px;
 	}
 
+	.language__content{
+
+	}
+
 	.no-space {
 		display: flex;
 		justify-content: space-between;

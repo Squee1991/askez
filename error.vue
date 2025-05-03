@@ -2,38 +2,31 @@
 	<div class="error">
 		<img class="error__img" src="/images/pandaErrors.png" alt="Error"/>
 		<div class="text">{{ $t('noConnetction.off') }}</div>
-		<button class="reconnect" @click="tryReconnect" :disabled="isTrying" type="button">
-			{{ $t('noConnetction.btn') }}
-		</button>
+<!--		<button class="reconnect" @click="tryReconnect" :disabled="isTrying" type="button">-->
+<!--			{{ $t('noConnetction.btn') }}-->
+<!--		</button>-->
 	</div>
 </template>
 
 <script setup>
-	import { ref } from 'vue'
+	import { ref , onMounted } from 'vue'
 	import { useRouter } from 'vue-router'
 
 	const router = useRouter()
-	const isTrying = ref(false)
-	const tryReconnect = async () => {
-		if (isTrying.value) return
-		isTrying.value = true
-		try {
-			await fetch('https://www.gstatic.com/generate_204', {
-				method: 'GET',
-				cache: 'no-cache',
-				mode: 'no-cors',
-			})
-			window.addEventListener('online', () => {
-				router.replace('/')
-			})
-			location.reload()
-		} catch (e) {
-			console.error(e)
-		} finally {
-			isTrying.value = false
-		}
-		router.push('/')
-	}
+	// const isTrying = ref(false)
+	onMounted(() => {
+		window.addEventListener('online', () => {
+			router.replace('/')
+		})
+		fetch('https://www.gstatic.com/generate_204', {
+			method: 'GET',
+			cache: 'no-cache',
+			mode: 'no-cors',
+		})
+		.then(() => router.replace('/'))
+		.catch(() => {
+		})
+	})
 </script>
 
 <style scoped>

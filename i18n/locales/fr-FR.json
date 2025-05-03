@@ -18,6 +18,11 @@
 		"marked": "Réussi aujourd’hui",
 		"missed": "Échoué aujourd’hui"
 	},
+	"dayMarked": {
+		"done": "Terminé",
+		"notDone": "Fais-le",
+		"passed": "Expiré"
+	},
 	"buyPremium": {
 		"buy": "Mensuel",
 		"plus": "Avantages"

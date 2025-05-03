@@ -29,14 +29,13 @@
 	const showPremiumModal = ref(true)
 	const authStore = useAuthStore()
 	const buyPremium = async () => {
-		// await authStore.purchasePro()
-		await authStore.activatePremium();
+		await authStore.purchasePro()
+		if (authStore.isPremium) {
 			showPremiumModal.value = false
 			router.push('/welcomePage')
-		// if (authStore.isPremium) {
-		// 	showPremiumModal.value = false
-		// 	router.push('/welcomePage')
-		// }
+		} else {
+			alert('Покупка не удалась или подписка не активна')
+		}
 	}
 	const ads = [
 		"无广告", "Без рекламы","Без рэкламы", "Без реклами", "Brak reklam", "Sans publicité", "Sin anuncios",
@@ -57,11 +56,7 @@
 		"Apoyo a los desarrolladores", "Support the developers", "Unterstützung der Entwickler",
 		"Падтрымка распрацоўшчыкаў", "دعم المطورين"
 	]
-	// const datas = [
-	// 	"可修改数据","Возможность смены данных","Магчымасць змяніць дадзеныя", "Можливість змінити дані", "Możliwość zmiany danych",
-	// 	"Possibilité de modifier les données", "Cambio de datos permitido", "Ability to change data",
-	// 	"Möglichkeit zur Datenänderung", "Магчымасць змяніць дадзеныя", "إمكانية تعديل البيانات"
-	// ]
+
 	const limit = [
 		"目标数量无限","Неограниченное количество целей","Неабмежаваная колькасць мэтаў", "Необмежена кількість цілей", "Nieograniczona liczba celów",
 		"Nombre illimité d’objectifs", "Objetivos ilimitados", "Unlimited number of goals",

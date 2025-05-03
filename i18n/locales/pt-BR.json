@@ -1,0 +1,291 @@
+{
+	"languages": {
+		"mode": "sem-espaço",
+		"title": "Idioma"
+	},
+	"settings": {
+		"title": "Configurações"
+	},
+	"disclemer": {
+		"value": "Este assistente virtual não fornece aconselhamento médico, jurídico ou psicológico."
+	},
+	"color": {
+		"value": "Escolha a cor"
+	},
+	"congrats": {
+		"done": "Você completou com sucesso a askeza ",
+		"notDone": "Você não completou com sucesso a askeza ",
+		"marked": "Hoje com sucesso",
+		"missed": "Hoje sem sucesso"
+	},
+	"dayMarked": {
+		"done": "Concluído",
+		"notDone": "Faça isso",
+		"passed": "Expirado"
+	},
+	"setting": [
+		"Excluir conta",
+		"Política de privacidade",
+		"Atribuição",
+		"Som solene",
+		"Animação",
+		"Modo",
+		"Chat"
+	],
+	"buttons": {
+		"edit": "Editar",
+		"delete": "Excluir",
+		"close": "Fechar"
+	},
+	"stepHint": {
+		"skip": "Pular",
+		"further": "Avançar",
+		"done": "Concluído",
+		"screen": "Toque para voltar à tela principal",
+		"goal": "Este é o nome do seu objetivo",
+		"date": "Aqui são exibidas as datas de início e fim",
+		"calendar": "Selecione a data atual no calendário",
+		"mark": "Marque a conclusão da tarefa para a data selecionada",
+		"progress": "O progresso da tarefa é exibido aqui"
+	},
+	"attr": {
+		"value": "Atribuição"
+	},
+	"buyPremium": {
+		"buy": "Mensalmente",
+		"plus": "Vantagens"
+	},
+	"premiumValues": [
+		"Sem anúncios",
+		"Melhoria do panda",
+		"Acesso a conquistas",
+		"Apoio aos desenvolvedores",
+		"Número ilimitado de objetivos",
+		"Acesso ao assistente virtual",
+		"Acesso a recursos futuros (em breve)"
+	],
+	"privacy": {
+		"page": "Política de privacidade"
+	},
+	"googlePlay": {
+		"pay": "A assinatura é renovada automaticamente via Google Play, a menos que você a cancele manualmente. Se você cancelar a assinatura antes do final do período atual, os fundos para esse período não serão reembolsados, mas o acesso ao Premium permanecerá ativo até o final do tempo pago. O cancelamento entrará em vigor após o término do período atual."
+	},
+	"chat": {
+		"title": "Voltar",
+		"btn": "enviar",
+		"placeholder": "escreva sua mensagem"
+	},
+	"menu": {
+		"title": "Menu"
+	},
+	"premiumWindow": {
+		"bot": "Para poder usar o assistente virtual, você precisa mudar para o plano Premium.",
+		"taskText": "Infelizmente, você atingiu o limite de hábitos no plano gratuito. Para poder adicionar um número ilimitado de hábitos, você precisa mudar para o plano Premium.",
+		"subtext": "Ao assinar o Premium, você terá acesso total a todas as funções do aplicativo.",
+		"leveling": "Para ter acesso à melhoria do panda, você precisa mudar para o plano Premium.",
+		"btnPremium": "Obter Premium"
+	},
+	"noConnetction": {
+		"off": "Sem conexão com a internet",
+		"on": "Conexão restaurada",
+		"btn": "Repetir"
+	},
+	"meniu": [
+		"Conta",
+		"Sobre o aplicativo",
+		"Idioma",
+		"Feedback",
+		"Configurações"
+	],
+	"rank": {
+		"rank": "Classificação",
+		"newbie": "Padawan do Bambu",
+		"pupil": "Discípulo do Panda Zen",
+		"master": "Mestre da Askeza",
+		"legenda": "Senhor do Bambu",
+		"immortal": "Lenda do Zen Kung-Fu"
+	},
+	"account": {
+		"accoutTitle": "Conta",
+		"accountBtn": "Atualizar",
+		"changedName": "Nome alterado"
+	},
+	"singInUP": {
+		"reset": "Enviar",
+		"singIn": "Já tem uma conta? Entrar",
+		"singUp": "Não tem uma conta? Registrar-se",
+		"singInBtn": "Entrar",
+		"singUpBtn": "Registrar-se",
+		"forgotPassword": "Esqueceu a senha?",
+		"backToSing": "Voltar ao registro",
+		"confirm": "Um e-mail foi enviado para o seu endereço eletrônico"
+	},
+	"archieve": {
+		"empty": "Arquivo vazio",
+		"achieveTitle": "Arquivo de askezas",
+		"name": "Suas askezas",
+		"totalDays": "Total de dias",
+		"notchecked": "Dias restantes",
+		"checkedDays": "Marcado",
+		"notChecked": "Não marcado"
+	},
+	"achieveTitle": {
+		"title": "Suas conquistas",
+		"subtitle": "Total de conquistas obtidas",
+		"achiveDone": "Concluídas"
+	},
+	"accState": {
+		"greetings": "Bem-vindo",
+		"stateBtn": "Vamos lá!",
+		"load": "Carregando"
+	},
+	"checkedBtns": {
+		"done": "Feito",
+		"missed": "Perdido"
+	},
+	"notAllowed": {
+		"done": "Data já marcada",
+		"outside": "Não é possível marcar uma data fora do intervalo",
+		"onlyToday": "Só é possível marcar a data atual"
+	},
+	"achieve": {
+		"1": "Concluir a primeira askeza",
+		"2": "Concluir a askeza 10 vezes",
+		"3": "Concluir a askeza 20 vezes",
+		"4": "Concluir a askeza 50 vezes",
+		"5": "Concluir a askeza 70 vezes",
+		"6": "Concluir a askeza 100 vezes",
+		"7": "Concluir a askeza 120 vezes",
+		"8": "Concluir a askeza 150 vezes",
+		"9": "Concluir a askeza 200 vezes"
+	},
+	"feedBack": {
+		"title": "Feedback",
+		"placeholder": "Deixe um comentário ou sugestão",
+		"button": "Enviar",
+		"overlayBtn": "OK",
+		"overlayTitle": "Obrigado pelo feedback"
+	},
+	"startPage": {
+		"value": "Começar"
+	},
+	"description": {
+		"value": "Próximo passo"
+	},
+	"navTop": {
+		"achiv": "Conquistas",
+		"askez": "Todas as askezas",
+		"stats": "Estatísticas"
+	},
+	"statslable": {
+		"total": "Total de objetivos",
+		"doneTotal": "Total concluído",
+		"InProgressTotal": "Em andamento",
+		"notCompleted": "Não concluído",
+		"active": "Tarefas ativas",
+		"archieve": "Tarefas arquivadas"
+	},
+	"hasNotAskez": {
+		"value": "Nenhuma askeza criada"
+	},
+	"infoLabels": {
+		"name": "Nome",
+		"status": "Status"
+	},
+	"delAllDatas": {
+		"title": "Excluir todos os dados?",
+		"subTitle": "Você realmente deseja excluir todos os dados?",
+		"acceptBtn": "Sim",
+		"rejectBtn": "Não"
+	},
+	"register": {
+		"btnValue": "registrar-se",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "digite seu nome"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "digite seu e-mail"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "digite sua senha"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "confirme sua senha"
+			}
+		]
+	},
+	"logOut": {
+		"out": "Sair?",
+		"reject": "Você realmente deseja sair?"
+	},
+	"homePage": {
+		"greetings": "Olá",
+		"btn": "Abrir",
+		"no_active_goals": "Nenhum objetivo ativo"
+	},
+	"createTask": {
+		"title": "Criar novo objetivo",
+		"edit_title": "Editar objetivo",
+		"edit_btn": "Editar",
+		"btn": "Criar novo",
+		"task": "Seu objetivo",
+		"datum": "Escolha o período de datas"
+	},
+	"success": {
+		"title": "Concluído!!",
+		"article": "Vamos fazer o possível para alcançar seu objetivo",
+		"button": "OK"
+	},
+	"taskDetails": {
+		"startDate": "Data de início",
+		"endDate": "Data de término",
+		"title": "Título",
+		"status": "Status",
+		"order": "Ordem",
+		"activity": "Fazer todos os dias"
+	},
+	"delConfirm": {
+		"title": "Excluir askeza?",
+		"accept": "Sim",
+		"reject": "Não"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Excluir"
+	},
+	"CheckedProgress": {
+		"checked": "Dias concluídos",
+		"notChecked": "Dias não concluídos"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Digite o nome da Askeza",
+		"error": "O nome da tarefa contém palavras não permitidas."
+	},
+	"footerBtnText": {
+		"menu": "Menu",
+		"archieve": "Arquivo",
+		"panda": "Panda",
+		"tasks": "Tarefas"
+	},
+	"about": {
+		"title": "Meta",
+		"subtitle": "O caminho do crescimento espiritual",
+		"intro": "Tarefas é um aplicativo único criado para apoiá-lo no caminho do crescimento pessoal e espiritual. Ajudamos a fortalecer o espírito por meio de práticas de autodisciplina e foco.",
+		"section1_title": "O que é uma meta?",
+		"section1_text": "Uma meta é uma prática de autocontrole e renúncia aos prazeres mundanos em prol de objetivos espirituais. É um caminho de disciplina que ajuda a desenvolver força interior e clareza.",
+		"section2_title": "Funcionalidades do aplicativo",
+		"feature_track": "Acompanhe práticas diárias",
+		"feature_challenges": "Defina e acompanhe desafios pessoais",
+		"feature_guidance": "Receba orientações e inspiração",
+		"feature_community": "Conecte-se com uma comunidade de propósito",
+		"feature_discipline": "Mantenha um estilo de vida disciplinado",
+		"section3_title": "Nossa missão",
+		"section3_text": "Nossa missão é ajudá-lo a alcançar crescimento interior por meio de metas conscientes, oferecendo ferramentas e apoio nessa jornada.",
+		"version": "Versão 1.0.0"
+	}
+}
+
