@@ -9,7 +9,7 @@
 <script setup>
 	import {useRouter} from 'vue-router';
 	import {defineProps} from 'vue';
-
+    const paths = ['/archive' , '/menu' , '/chat' , '/archive' , '/achievment']
 	const router = useRouter();
 	const props = defineProps({
 		icon: {
@@ -22,7 +22,7 @@
 	});
 
 	const goBack = () => {
-		if (router.currentRoute.value.path === '/archive' || router.currentRoute.value.path === '/menu' || router.currentRoute.value.path === '/chat') {
+		if (paths.includes(router.currentRoute.value.path)) {
 			router.push('/welcomePage');
 		} else {
 			router.push('/menu');

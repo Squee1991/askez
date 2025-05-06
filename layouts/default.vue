@@ -1,5 +1,5 @@
 <template>
-	<div class="layout">
+	<div class="layout safe-area-top">
 		<div class="container">
 			<slot></slot>
 		</div>
@@ -63,6 +63,10 @@
 		width: 100%;
 		margin: 0 auto;
 		height: 100vh;
+	}
+
+	.safe-area-top {
+		padding-top: env(safe-area-inset-top, 24px);
 	}
 
 

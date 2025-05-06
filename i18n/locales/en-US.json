@@ -20,7 +20,7 @@
 	},
 	"dayMarked": {
 		"done": "Completed",
-		"notDone": "Do that",
+		"notDone": "Not completed",
 		"passed": "Expired"
 	},
 	"buyPremium": {
@@ -99,13 +99,13 @@
 		"Settings"
 	],
 	"rank": {
-		"rank": "Rank",
-		"newbie": "Bamboo Apprentice",
-		"pupil": "Zen Panda Disciple",
-		"master": "Master of Asceticism",
-		"legenda": "Lord of the Bamboo Path",
-		"immortal": "Legend of Zen Kung Fu"
-	},
+		"rank": "Level",
+		"newbie": "Beginner",
+		"pupil": "Growing Achiever",
+		"master": "Goal Crusher",
+		"legenda": "Focus Pro",
+		"immortal": "Habit Legend"
+	}	,
 	"account": {
 		"accoutTitle": "Account",
 		"accountBtn": "Update",
@@ -122,13 +122,13 @@
 		"confirm": "An email has been sent to your email address"
 	},
 	"archieve": {
-		"empty": "Archive is empty",
+		"empty": "Your archive is empty",
 		"name": "Your Goals",
-		"achieveTitle": "Goals archive",
+		"achieveTitle": "Archived Goals",
 		"totalDays": "Total days",
-		"notchecked": "Days left",
-		"checkedDays": "Checked",
-		"notChecked": "Not checked"
+		"notchecked": "Remaining",
+		"checkedDays": "Completed",
+		"notChecked": "Missed"
 	},
 	"achieveTitle": {
 		"title": "Your achievements",
@@ -141,8 +141,8 @@
 		"load": "Loading"
 	},
 	"checkedBtns": {
-		"done": "Done",
-		"missed": "Missed"
+		"done": "Mark as Done",
+		"missed": "Mark as Missed"
 	},
 	"notAllowed": {
 		"done": "Date already marked",
@@ -187,7 +187,7 @@
 		"archieve": "Archieve tasks"
 	},
 	"hasNotAskez": {
-		"value": "No created askezas"
+		"value": "No created goals"
 	},
 	"infoLabels": {
 		"name": "Name",
@@ -259,8 +259,8 @@
 		"delTask": "Delete"
 	},
 	"CheckedProgress": {
-		"checked": "Days checked",
-		"notChecked": "Days missed"
+		"checked": "Marked days",
+		"notChecked": "Unmarked days"
 	},
 	"bublingWindows": {
 		"fieldEmpty": "Enter the name of the Askesis",
@@ -268,24 +268,24 @@
 	},
 	"footerBtnText": {
 		"menu": "Menu",
-		"archieve": "Archieve",
+		"archieve": "Archive",
 		"panda": "Panda",
 		"tasks": "Tasks"
 	},
 	"about": {
 		"title": "FocusPanda",
-		"subtitle": "The Path to Spiritual Growth",
-		"intro": "Askez is a unique app designed to support your journey in asceticism and spiritual growth. We help you strengthen your spirit through practices of self-restraint and discipline.",
-		"section1_title": "What is Asceticism?",
-		"section1_text": "Asceticism is the practice of abstaining from worldly pleasures to pursue spiritual goals. It is a path of self-discipline that helps cultivate inner strength and spiritual clarity.",
+		"subtitle": "Your Self-Discipline Partner",
+		"intro": "FocusPanda is a unique app designed to help you build strong habits and improve focus through daily challenges and personal discipline.",
+		"section1_title": "What is Focus Training?",
+		"section1_text": "Focus training is the practice of strengthening your ability to stay on track and achieve personal goals through daily actions.",
 		"section2_title": "App Features",
-		"feature_track": "Track daily ascetic practices",
-		"feature_challenges": "Set and monitor personal challenges",
-		"feature_guidance": "Receive guidance and inspiration",
-		"feature_community": "Connect with like-minded individuals",
-		"feature_discipline": "Maintain a disciplined lifestyle",
+		"feature_track": "Track daily progress",
+		"feature_challenges": "Set and manage personal challenges",
+		"feature_guidance": "Get tips and motivation",
+		"feature_community": "Join a community of achievers",
+		"feature_discipline": "Stay consistent every day",
 		"section3_title": "Our Mission",
-		"section3_text": "Our mission is to help you build spiritual strength through ascetic practices, offering tools and support along your path to spiritual excellence.",
+		"section3_text": "We aim to help you build strong focus and personal discipline by providing tools that support your daily progress.",
 		"version": "Version 1.0.0"
 	}
 }

@@ -260,8 +260,8 @@
 		"delTask": "Löschen"
 	},
 	"CheckedProgress": {
-		"checked": "Tage erledigt",
-		"notChecked": "Tage nicht erledigt"
+		"checked": "Tage markiert",
+		"notChecked": "Tage nicht markiert"
 	},
 	"bublingWindows": {
 		"fieldEmpty": "Geben Sie den Namen der Ziele",

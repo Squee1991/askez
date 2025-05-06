@@ -75,9 +75,9 @@
 	import SuccesModal from '/src/components/succesModal.vue'
 	import {useHabitStore} from '../../stores/habitStore.js'
 	import {useAuthStore} from '../../stores/authStore.js'
-	import { blockedWords, supportedLangs } from '/src/ai/messageBot.js'
+	// import { blockedWords, supportedLangs } from '/src/ai/messageBot.js'
 	import { useI18n } from 'vue-i18n'
-	const userLang = computed(() => locale.value.split('-')[0])
+	// const userLang = computed(() => locale.value.split('-')[0])
 	import {useRouter} from 'vue-router'
 	const inputErrorType = ref(null)
 	const authStore = useAuthStore()
@@ -98,15 +98,15 @@
 		taskToEdit: Object
 	})
 
-	const containsBlockedWord = (text) => {
-		const lowered = text.toLowerCase()
-		const cleaned = lowered.replace(/[^\p{L}\p{N}\s]/gu, '')
-		const words = cleaned.split(/\s+/)
-
-		return Object.values(blockedWords).some(list =>
-			list.some(word => words.includes(word))
-		)
-	}
+	// const containsBlockedWord = (text) => {
+	// 	const lowered = text.toLowerCase()
+	// 	const cleaned = lowered.replace(/[^\p{L}\p{N}\s]/gu, '')
+	// 	const words = cleaned.split(/\s+/)
+	//
+	// 	return Object.values(blockedWords).some(list =>
+	// 		list.some(word => words.includes(word))
+	// 	)
+	// }
 
 	const colors = [
 		'#845EC2',
@@ -198,14 +198,14 @@
 			return;
 		}
 
-		if (containsBlockedWord(inputValueGoal.value)) {
-			IsEmpty.value = true;
-			inputValueGoal.value = '';
-			setTimeout(() => {
-				IsEmpty.value = false;
-			}, 1500);
-			return;
-		}
+		// if (containsBlockedWord(inputValueGoal.value)) {
+		// 	IsEmpty.value = true;
+		// 	inputValueGoal.value = '';
+		// 	setTimeout(() => {
+		// 		IsEmpty.value = false;
+		// 	}, 1500);
+		// 	return;
+		// }
 
 		if (isEditMode.value && props.taskToEdit?.id) {
 			const original = props.taskToEdit;
@@ -225,7 +225,6 @@
 			return;
 		}
 
-		// новая задача
 		const isDateRangeValid = localDateRange.value?.start && localDateRange.value?.end;
 		if (!isDateRangeValid) {
 			IsEmpty.value = true;
@@ -385,6 +384,7 @@
 		background-color: var(--menu--btn-bg);
 		padding: 10px 10px 0 10px;
 		border-radius: 20px;
+		margin-top: 5px;
 	}
 
 	.vc-header .vc-title {
@@ -459,6 +459,7 @@
 	}
 
 	.close__wrapper {
+		padding-top: 15px;
 		margin-bottom: 20px;
 		display: flex;
 		justify-content: space-between;
@@ -485,7 +486,6 @@
 		font-size: 14px;
 		font-family: "Nunito", serif;
 		font-weight: 700;
-		padding-bottom: 5px;
 		color: var(--title-c);
 	}
 

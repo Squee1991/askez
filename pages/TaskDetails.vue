@@ -113,7 +113,8 @@
 					:disabled-dates="disabledDates"
 					v-model="selectedDate"
 					@dayclick="onDateSelect"
-					:attributes="[...checkedDatesAttributes, ...activeDateAttributes]"
+					:attributes="[...checkedDatesAttributes, ...skippedDatesAttributes, ...activeDateAttributes]"
+
 				/>
 			</div>
 			<div class="task__details-btns">
@@ -303,6 +304,36 @@
 	const closeNotification = () => {
 		notification.value.show = false;
 	};
+
+	const skippedDatesAttributes = computed(() => {
+		if (!selectedTask.value) return [];
+
+		const start = convertToDate(selectedTask.value.dateRange.start);
+		const end = new Date();
+		end.setHours(0, 0, 0, 0);
+
+		const allDates = [];
+		for (
+			let d = new Date(start);
+			d <= end;
+			d.setDate(d.getDate() + 1)
+		) {
+			const dateStr = formatDateLocal(new Date(d));
+			if (
+				!checkedDates.value.includes(dateStr) &&
+				!missedDates.value.includes(dateStr)
+			) {
+				allDates.push(new Date(dateStr + 'T00:00:00'));
+			}
+		}
+
+		return allDates.map(date => ({
+			key: `skipped-${date.toISOString()}`,
+			dates: [date],
+			highlight: { contentClass: 'vc-highlight-blue' }
+		}));
+	});
+
 
 	const misscCheckClick = (btn) => {
 		if (!selectedTask.value) return;
@@ -547,7 +578,7 @@
 
 	.days__task-text {
 		font-family: "Nunito", sans-serif;
-		font-size: 15px;
+		font-size: 13px;
 		font-weight: 600;
 		display: flex;
 		align-items: center;
@@ -589,6 +620,7 @@
 	.count {
 		background: var(--menu--btn-bg);
 		border-radius: 20px;
+		width: 50%;
 		display: flex;
 		flex: 1;
 		flex-direction: column;
@@ -688,6 +720,11 @@
 		color: white !important;
 	}
 
+	.vc-highlight-blue {
+		background-color: #0099FF !important;
+		color: white !important;
+	}
+
 	.vc-highlight-light-bg {
 		background: white;
 	}
@@ -755,12 +792,12 @@
 
 	.checked__text {
 		font-weight: 600;
-		font-size: 14px;
+		font-size: 13px;
 		font-family: "Nunito", serif;
 		line-height: 21.82px;
 		color: var(--text-color);
 		text-align: start;
-		margin-right: 10px;
+		margin-right: 1px;
 		min-width: 140px;
 	}
 
@@ -877,9 +914,9 @@
 
 	.update__task-btn {
 		width: 100%;
-		padding: 13px 22px;
+		padding: 13px 5px;
 		border: none;
-		font-size: 18px;
+		font-size: 16px;
 		font-weight: 600;
 		border-radius: 25px;
 		background: linear-gradient(to right, #ff5c00, #ff7f2a);

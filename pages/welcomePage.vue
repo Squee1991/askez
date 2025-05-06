@@ -79,7 +79,8 @@
 												<div class="taks__progress__date-wrapper">
 													<div class="task__datum-wrapper">
 														<div class="task__goal-wrapper">
-															<div :style="{ color: task.color }" class="task__goal-item goals goal__name">{{ task.goal
+															<div :style="{ color: task.color }"
+															     class="task__goal-item goals goal__name">{{ task.goal
 																}}
 															</div>
 														</div>
@@ -135,7 +136,7 @@
 							</div>
 							<Transition name="fade">
 								<div class="not__task-inner"
-									v-if="isTasksLoaded && tasks.length === 0 && activeButton === 'tasks'"
+								     v-if="isTasksLoaded && tasks.length === 0 && activeButton === 'tasks'"
 								>
 									<img class="no__task-icon" src="../assets/images/Memepanda.png" alt="">
 									<span class="no__task-text">{{ $t('homePage.no_active_goals') }}</span>
@@ -231,7 +232,7 @@
 		},
 	])
 
-	const onDayClick = ({ date }) => {
+	const onDayClick = ({date}) => {
 		selectedDate.value = date
 		dotAttributes.value = [
 			{
@@ -256,7 +257,7 @@
 		const isDone = checked.includes(selectedStr) || missed.includes(selectedStr);
 		const isLate = selectedStr < todayStr && !isDone;
 		const isNot = selectedStr >= todayStr && !isDone;
-		return { isDone, isLate, isNot};
+		return {isDone, isLate, isNot};
 	};
 
 	const toPremium = () => {
@@ -844,6 +845,6 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 20px 20px 8px 20px;
+		padding: 25px 20px 8px 20px;
 	}
 </style>
