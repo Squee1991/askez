@@ -1,21 +1,15 @@
 <template>
-    <div v-if="show && currentStep" class="step-hint-overlay">
-        <div class="step-hint-backdrop" @click="skipHint"></div>
-        <div
-            v-if="highlightStyle"
-            class="step-hint-highlight"
-            :style="highlightStyle"
-        />
-        <div
-            v-if="tooltipStyle"
-            class="step-hint-tooltip"
-            :style="tooltipStyle"
-        >
-            <div class="step-hint-text">{{ $t(currentStep.text) }}</div>
-            <div class="step-hint-actions">
-                <button @click="skipHint" class="hint-btn skip">{{ $t('stepHint.skip')}}</button>
-                <button @click="nextStep" class="hint-btn next">
-                    {{ isLastStep ? $t('stepHint.done') : $t('stepHint.further') }} →
+    <div v-if="show && currentStepData" class="step-hint-overlay">
+        <div class="step-hint-box" :style="hintBoxStyle">
+            <p class="step-hint-text">{{ $t(currentStepData.text) }}</p>
+            <p v-if="currentStepData.description" class="step-hint-description">
+                {{ $t(currentStepData.description) }}
+            </p>
+            <div class="step-hint-controls">
+                <button @click="prevStep" :disabled="currentStep === 0">← {{ $t('common.prev') }}</button>
+                <button class="skip-btn" @click="finish">{{ $t('common.skip') }}</button>
+                <button @click="nextStep">
+                    {{ isLastStep ? $t('common.finish') : $t('common.next') }} →
                 </button>
             </div>
         </div>
@@ -23,136 +17,210 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted, nextTick } from 'vue';
+import { ref, computed, nextTick, watchEffect, onBeforeUnmount } from 'vue'
 
 const props = defineProps({
     steps: Array,
     show: Boolean
-});
-const emit = defineEmits(['close']);
+})
+const emit = defineEmits(['finish'])
 
-const stepIndex = ref(0);
-const currentStep = computed(() => props.steps[stepIndex.value] || null);
-const isLastStep = computed(() => stepIndex.value === props.steps.length - 1);
+const currentStep = ref(0)
+const hintBoxStyle = ref({})
+const currentStepData = computed(() => props.steps?.[currentStep.value] || null)
+const isLastStep = computed(() => currentStep.value === props.steps.length - 1)
 
-const tooltipStyle = ref(null);
-const highlightStyle = ref(null);
+let highlightedElement = null
 
-const updatePosition = () => {
-    const selector = currentStep.value?.selector;
-    const target = document.querySelector(selector);
-    if (!target) return;
-    const rect = target.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const tooltipHeight = 80;
-    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    const showAbove = rect.bottom + tooltipHeight + 10 > viewportHeight;
-    tooltipStyle.value = {
-        top: `${showAbove ? rect.top - tooltipHeight - 10 : rect.bottom + 10}px`,
-        left: `${Math.max(rect.left, 10)}px`,
-        maxWidth: '260px',
-        position: 'absolute'
-    };
+function nextStep() {
+    if (isLastStep.value) finish()
+    else currentStep.value++
+}
 
-    highlightStyle.value = {
-        top: `${rect.top - 6}px`,
-        left: `${rect.left - 6}px`,
-        width: `${rect.width + 12}px`,
-        height: `${rect.height + 12}px`
-    };
-};
+function prevStep() {
+    if (currentStep.value > 0) currentStep.value--
+}
 
-const nextStep = () => {
-    if (isLastStep.value) {
-        emit('close');
-    } else {
-        stepIndex.value++;
-        nextTick(updatePosition);
+function finish() {
+    removeHighlight()
+    emit('finish')
+}
+
+function removeHighlight() {
+    if (highlightedElement) {
+        highlightedElement.classList.remove('step-hint-highlight')
+        highlightedElement = null
     }
-};
+}
 
-const skipHint = () => {
-    emit('close');
-};
+function highlightAndPosition() {
+    try {
+        const selector = currentStepData.value?.selector
+        if (!selector) return
 
-watch(() => props.show, (val) => {
-    if (val) {
-        stepIndex.value = 0;
-        nextTick(updatePosition);
+        const el = document.querySelector(selector)
+        if (!el) {
+            console.warn(`[StepHint] ❌ Element not found for selector: ${selector}`)
+            return
+        }
+
+        console.log(`[StepHint] ✅ Element found: ${selector}`, el)
+
+        removeHighlight()
+        el.classList.add('step-hint-highlight')
+
+        const computed = getComputedStyle(el)
+        if (!['relative', 'absolute', 'fixed'].includes(computed.position)) {
+            el.style.position = 'relative'
+        }
+
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        highlightedElement = el
+
+        updateHintBoxPosition(el)
+    } catch (err) {
+        console.error('[StepHint] 🚨 highlightAndPosition error:', err)
     }
-});
+}
 
-onMounted(() => {
-    if (props.show) nextTick(updatePosition);
-});
+function updateHintBoxPosition(el) {
+    try {
+        if (!el) return
+
+        nextTick(() => {
+            const rect = el.getBoundingClientRect?.()
+            if (!rect) return
+
+            const boxWidth = 320
+            const screenWidth = window.innerWidth
+            const screenHeight = window.innerHeight
+
+            let top = rect.bottom + 10
+            let left = rect.left
+
+            if (left + boxWidth > screenWidth) left = screenWidth - boxWidth - 16
+            if (top + 200 > screenHeight) top = rect.top - 210
+
+            hintBoxStyle.value = {
+                top: `${Math.max(top, 16)}px`,
+                left: `${Math.max(left, 16)}px`
+            }
+        })
+    } catch (err) {
+        console.error('[StepHint] 🚨 updateHintBoxPosition error:', err)
+    }
+}
+
+watchEffect(() => {
+    if (props.show && currentStepData.value?.selector) {
+        nextTick(() => highlightAndPosition())
+    }
+})
+
+defineExpose({ retryHighlight: highlightAndPosition })
+onBeforeUnmount(removeHighlight)
 </script>
-<style scoped>
+
+<style>
 .step-hint-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 9999;
-    pointer-events: none;
-}
-
-.step-hint-backdrop {
-    position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 9999;
 }
 
-.step-hint-tooltip {
+.step-hint-box {
+    position: absolute;
     background: white;
-    color: #333;
-    padding: 14px 16px;
+    padding: 16px;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    z-index: 10001;
-    font-family: "Nunito", sans-serif;
-    pointer-events: auto;
-    animation: fadeInScale 0.3s ease;}
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    max-width: 320px;
+    width: max-content;
+    z-index: 10000;
+}
 
 .step-hint-text {
-    font-size: 15px;
-    line-height: 1.5;
-    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 8px;
 }
 
-.step-hint-actions {
+.step-hint-description {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #555;
+}
+
+.step-hint-controls {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    gap: 8px;
 }
 
-.hint-btn {
-    padding: 6px 12px;
-    font-size: 13px;
-    font-family: "Nunito", sans-serif;
+.step-hint-controls button {
+    background-color: #3b82f6;
+    color: white;
     border: none;
+    padding: 6px 12px;
     border-radius: 6px;
     cursor: pointer;
+    font-size: 14px;
 }
 
-.hint-btn.skip {
-    background: transparent;
-    color: #999;
+.step-hint-controls button:disabled {
+    background-color: #a5b4fc;
+    cursor: not-allowed;
 }
 
-.hint-btn.next {
-    background: #4FC55C;
-    color: white;
+.skip-btn {
+    background-color: transparent;
+    color: #888;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.skip-btn:hover {
+    background: #eee;
 }
 
 .step-hint-highlight {
+    position: relative !important;
+    z-index: 10001 !important;
+    animation: hintShake 0.4s ease-in-out;
+}
+
+.step-hint-highlight::after {
+    content: "";
     position: absolute;
-    border: 3px solid #4FC55C;
-    border-radius: 10px;
-    box-sizing: border-box;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border: 3px solid #22c55e;
+    border-radius: 12px;
     pointer-events: none;
-    transition: all 0.3s ease;
-    z-index: 10000;
+    box-shadow: 0 0 15px 4px rgba(34, 197, 94, 0.5);
+    animation: hintPulse 1.5s ease-in-out infinite;
+    z-index: 9999;
+    box-sizing: content-box;
+}
+
+@keyframes hintPulse {
+    0% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.04);
+    }
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
 }
 </style>

@@ -29,14 +29,21 @@
 	const showPremiumModal = ref(true)
 	const authStore = useAuthStore()
 	const buyPremium = async () => {
-		await authStore.purchasePro()
-		if (authStore.isPremium) {
-			showPremiumModal.value = false
-			router.push('/welcomePage')
-		} else {
-			alert('Покупка не удалась или подписка не активна')
+		try {
+			const result = await authStore.purchasePro();
+			if (result.success) {
+				showPremiumModal.value = false;
+				router.push('/welcomePage');
+			} else {
+				alert(result.message || 'Покупка не удалась или подписка не активна');
+			}
+		} catch (e) {
+			console.error('Ошибка при покупке подписки:', e);
+			alert('Что-то пошло не так во время покупки.');
 		}
-	}
+	};
+
+
 	const ads = [
 		"无广告", "Без рекламы","Без рэкламы", "Без реклами", "Brak reklam", "Sans publicité", "Sin anuncios",
 		"No advertising", "Keine Werbung", "Без рэкламы", "بدون إعلانات"

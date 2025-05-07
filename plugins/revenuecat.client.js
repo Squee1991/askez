@@ -1,15 +1,20 @@
 import { Capacitor } from '@capacitor/core'
 import { Purchases } from '@revenuecat/purchases-capacitor'
-import { getAuth } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import {defineNuxtPlugin} from "nuxt/app";
 
-export default defineNuxtPlugin(async () => {
-	if (process.client && Capacitor.isNativePlatform()) {
-		const auth = getAuth()
-		const user = auth.currentUser
-
-		await Purchases.configure({
-			apiKey: 'your_public_revenuecat_android_key',
-			appUserID: user?.uid || null,
-		})
-	}
+export default defineNuxtPlugin(() => {
+	if (!Capacitor.isNativePlatform()) return
+	const auth = getAuth()
+	onAuthStateChanged(auth, async (user) => {
+		try {
+			await Purchases.configure({
+				apiKey: 'goog_BkCdjeLzZiqDbsdGktigOVPrvuL',
+				appUserID: user ? user.uid : null,
+			})
+			console.log('[RevenueCat] SDK настроен ✅')
+		} catch (err) {
+			console.error('[RevenueCat] Ошибка настройки:', err)
+		}
+	})
 })

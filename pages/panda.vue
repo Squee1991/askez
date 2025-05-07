@@ -231,7 +231,7 @@
 	</div>
 </template>
 <script setup>
-	import {ref, computed, onMounted} from 'vue'
+	import {ref, computed, onMounted , watch } from 'vue'
 	import {useHabitStore} from '../stores/habitStore.js'
 	import {useAuthStore} from '../stores/authStore.js'
 	import PremiumWindow from '../src/components/premiumWindow.vue'
@@ -266,7 +266,7 @@
 			isOverlayVisible.value = true;
 			return;
 		}
-		if (authStore.isGateOpened) {
+		if (authStore.isPremium && authStore.isGateOpened) {
 			isButtonVisible.value = false;
 			isOpen.value = true;
 		} else {
@@ -283,6 +283,14 @@
 			}, 2000);
 		}
 	});
+
+	watch(() => authStore.isPremium, (newVal) => {
+		if (!newVal) {
+			isOverlayVisible.value = true
+			isButtonVisible.value = true
+			isOpen.value = false
+		}
+	})
 
 	definePageMeta({
 		layout: 'footerlayout'
