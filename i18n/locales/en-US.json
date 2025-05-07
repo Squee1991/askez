@@ -1,309 +1,291 @@
 {
-  "languages": {
-    "mode": "no-space",
-    "title": "Language"
-  },
-  "settings": {
-    "title": "Settings"
-  },
-  "disclemer": {
-    "value": "This virtual assistant does not provide medical, legal, or psychological advice."
-  },
-  "color": {
-    "value": "Choose a color"
-  },
-  "congrats": {
-    "done": "You successfully completed the goal",
-    "notDone": "You did not successfully complete the goal",
-    "marked": "Successful today",
-    "missed": "Unsuccessful today"
-  },
-  "dayMarked": {
-    "done": "Completed",
-    "notDone": "Do that",
-    "passed": "Expired"
-  },
-  "buyPremium": {
-    "buy": "Monthly",
-    "plus": "Benefits"
-  },
-  "setting": [
-    "Delete account",
-    "Privacy policy",
-    "Attribution",
-    "Celebration sound",
-    "Animation",
-    "Mod",
-    "Chat"
-  ],
-  "buttons": {
-    "edit": "Edit",
-    "delete": "Delete",
-    "close": "Close"
-  },
-  "stepHint": {
-    "skip": "Skip",
-    "back": "Back",
-    "further": "Further",
-    "done": "Ready",
-    "screen": "Press to go back to the main screen",
-    "goal": "Name of your goal",
-    "date": "The start and end dates are displayed here.",
-    "calendar": "Select the current date in the calendar",
-    "mark": "Mark the task as completed on the selected date",
-    "progress": "Task progress is displayed here",
-    "selector": "Select section",
-    "selectorDesc": "Switch between achievements, ascetic tasks, and statistics.",
-    "calendarDesc": "Click on a day to mark your progress.",
-    "taskList": "Goal list",
-    "taskListDesc": "Here you can see all your current goals.",
-    "detailsButton": "Task details",
-    "detailsButtonDesc": "Click to view more information about the task.",
-    "premium": "Premium access",
-    "premiumDesc": "Tap here to learn more about the Premium features.",
-    "remaining": "Number of days left until task ends.",
-    "notes": "Notes you added to this task.",
-    "plus": "create goal"
-  },
-  "common": {
-    "prev": "Back",
-    "next": "Next",
-    "finish": "Finish",
-    "skip": "Skip"
-  },
-  "attr": {
-    "value": "Attribution"
-  },
-  "premiumValues": [
-    "No advertising",
-    "Support the developers",
-    "Access to achievements",
-    "Panda leveling",
-    "Unlimited number of goals",
-    "Access to virtual assistant",
-    "Access to upcoming features (coming soon)"
-  ],
-  "privacy": {
-    "page": "Privacy Policy"
-  },
-  "googlePlay": {
-    "pay": "The subscription is automatically renewed via Google Play unless you cancel it manually. If you cancel the subscription before the end of the current billing period, you will not receive a refund for this period, but Premium access will remain active until the end of the paid time. The cancellation will take effect after the current period ends."
-  },
-  "chat": {
-    "title": "Back",
-    "btn": "Send",
-    "placeholder": "Type your message"
-  },
-  "menu": {
-    "title": "Menu"
-  },
-  "noConnetction": {
-    "off": "No internet connection",
-    "on": "Connection restored",
-    "btn": "Try again"
-  },
-  "premiumWindow": {
-    "bot": "To use the virtual assistant, you need to upgrade to the Premium plan.",
-    "taskText": "Unfortunately, you've reached the habit limit on the free plan. To add unlimited habits, please upgrade to Premium.",
-    "subtext": "By subscribing to Premium, you'll get full access to all app features.",
-    "leveling": "To unlock pandib leveling, you need to upgrade to the Premium plan.",
-    "btnPremium": "Get Premium"
-  },
-  "meniu": [
-    "Account",
-    "About App",
-    "Languages",
-    "Feedback",
-    "Settings"
-  ],
-  "rank": {
-    "rank": "Rank",
-    "newbie": "Bamboo Apprentice",
-    "pupil": "Zen Panda Disciple",
-    "master": "Master of Asceticism",
-    "legenda": "Lord of the Bamboo Path",
-    "immortal": "Legend of Zen Kung Fu"
-  },
-  "account": {
-    "accoutTitle": "Account",
-    "accountBtn": "Update",
-    "changedName": "Name changed"
-  },
-  "singInUP": {
-    "reset": "Send",
-    "singIn": "Already have an account? Sign in",
-    "singUp": "Don't have an account? Sign up",
-    "singInBtn": "Sign in",
-    "singUpBtn": "Sign up",
-    "forgotPassword": "Forgot password?",
-    "backToSing": "Back to registration",
-    "confirm": "An email has been sent to your email address"
-  },
-  "archieve": {
-    "empty": "Archive is empty",
-    "name": "Your Goals",
-    "achieveTitle": "Goals archive",
-    "totalDays": "Total days",
-    "notchecked": "Days left",
-    "checkedDays": "Checked",
-    "notChecked": "Not checked"
-  },
-  "achieveTitle": {
-    "title": "Your achievements",
-    "subtitle": "Total achievements received",
-    "achiveDone": "Completed"
-  },
-  "accState": {
-    "greetings": "Welcome",
-    "stateBtn": "Let's go!",
-    "load": "Loading"
-  },
-  "checkedBtns": {
-    "done": "Done",
-    "missed": "Missed"
-  },
-  "notAllowed": {
-    "done": "Date already marked",
-    "outside": "Cannot mark a date outside the range",
-    "onlyToday": "You can only mark today's date"
-  },
-  "achieve": {
-    "1": "Complete the first goal",
-    "2": "Complete 10 goals",
-    "3": "Complete 20 goals",
-    "4": "Complete 50 goals",
-    "5": "Complete 70 goals",
-    "6": "Complete 100 goals",
-    "7": "Complete 120 goals",
-    "8": "Complete 150 goals",
-    "9": "Complete 200 goals"
-  },
-  "feedBack": {
-    "title": "Feedback",
-    "placeholder": "Leave a review or suggestion",
-    "button": "Send",
-    "overlayBtn": "OK",
-    "overlayTitle": "Thank you for your feedback"
-  },
-  "startPage": {
-    "value": "Get started-8"
-  },
-  "description": {
-    "value": "Next step"
-  },
-  "navTop": {
-    "achiv": "Achievements",
-    "askez": "All goals",
-    "stats": "Statistics"
-  },
-  "statslable": {
-    "total": "Total goals",
-    "doneTotal": "Total completed",
-    "InProgressTotal": "In progress",
-    "notCompleted": "Not completed",
-    "active": "Active tasks",
-    "archieve": "Archieve tasks"
-  },
-  "hasNotAskez": {
-    "value": "No created askezas"
-  },
-  "infoLabels": {
-    "name": "Name",
-    "status": "Status"
-  },
-  "delAllDatas": {
-    "title": "Delete all data?",
-    "subTitle": "Are you sure you want to delete all data?",
-    "acceptBtn": "Yes",
-    "rejectBtn": "No"
-  },
-  "register": {
-    "btnValue": "register",
-    "placeholderFields": [
-      {
-        "id": 1,
-        "placeholderName": "enter your name"
-      },
-      {
-        "id": 2,
-        "placeholderEmail": "enter your email"
-      },
-      {
-        "id": 3,
-        "placeholderPassword": "enter your password"
-      },
-      {
-        "id": 4,
-        "placeholderConfPassword": "confirm your password"
-      }
-    ]
-  },
-  "logOut": {
-    "out": "Logout?",
-    "reject": "Do you want to Logout?"
-  },
-  "homePage": {
-    "greetings": "Hello",
-    "btn": "Open",
-    "no_active_goals": "No active goals"
-  },
-  "createTask": {
-    "title": "Create new Goal",
-    "edit_title": "Edit goal",
-    "edit_btn": "edit goal",
-    "btn": "Create new",
-    "task": "Your goal",
-    "datum": "Select a date range"
-  },
-  "success": {
-    "title": "Done!!",
-    "article": "Let's do the best to achieve your goal",
-    "button": "OK"
-  },
-  "taskDetails": {
-    "startDate": "Start Date",
-    "endDate": "End Date",
-    "title": "Name",
-    "status": "Status",
-    "order": "Order",
-    "activity": "Do every day"
-  },
-  "delConfirm": {
-    "title": "Delete goal?",
-    "accept": "Yes",
-    "reject": "No"
-  },
-  "EditDeleteMenu": {
-    "delTask": "Delete"
-  },
-  "CheckedProgress": {
-    "checked": "Days checked",
-    "notChecked": "Days missed"
-  },
-  "bublingWindows": {
-    "fieldEmpty": "Enter the name of the Askesis",
-    "error": "The task name contains prohibited words."
-  },
-  "footerBtnText": {
-    "menu": "Menu",
-    "archieve": "Archieve",
-    "panda": "Panda",
-    "tasks": "Tasks"
-  },
-  "about": {
-    "title": "FocusPanda",
-    "subtitle": "The Path to Spiritual Growth",
-    "intro": "Askez is a unique app designed to support your journey in asceticism and spiritual growth. We help you strengthen your spirit through practices of self-restraint and discipline.",
-    "section1_title": "What is Asceticism?",
-    "section1_text": "Asceticism is the practice of abstaining from worldly pleasures to pursue spiritual goals. It is a path of self-discipline that helps cultivate inner strength and spiritual clarity.",
-    "section2_title": "App Features",
-    "feature_track": "Track daily ascetic practices",
-    "feature_challenges": "Set and monitor personal challenges",
-    "feature_guidance": "Receive guidance and inspiration",
-    "feature_community": "Connect with like-minded individuals",
-    "feature_discipline": "Maintain a disciplined lifestyle",
-    "section3_title": "Our Mission",
-    "section3_text": "Our mission is to help you build spiritual strength through ascetic practices, offering tools and support along your path to spiritual excellence.",
-    "version": "Version 1.0.0"
-  }
+	"languages": {
+		"mode": "no-space",
+		"title": "Language"
+	},
+	"settings": {
+		"title": "Settings"
+	},
+	"disclemer": {
+		"value": "This virtual assistant does not provide medical, legal, or psychological advice."
+	},
+	"color": {
+		"value": "Choose a color"
+	},
+	"congrats": {
+		"done": "You successfully completed the goal",
+		"notDone": "You did not successfully complete the goal",
+		"marked": "Successful today",
+		"missed": "Unsuccessful today"
+	},
+	"dayMarked": {
+		"done": "Completed",
+		"notDone": "Not completed",
+		"passed": "Expired"
+	},
+	"buyPremium": {
+		"buy": "Monthly",
+		"plus": "Benefits"
+	},
+	"setting": [
+		"Delete account",
+		"Privacy policy",
+		"Attribution",
+		"Celebration sound",
+		"Animation",
+		"Mod",
+		"Chat"
+	],
+	"buttons": {
+		"edit": "Edit",
+		"delete": "Delete",
+		"close": "Close"
+	},
+	"stepHint": {
+		"skip": "Skip",
+		"further": "Further",
+		"done": "Ready",
+		"screen": "Press to go back to the main screen",
+		"goal": "Name of your goal",
+		"date": "The start and end dates are displayed here.",
+		"calendar": "Select the current date in the calendar",
+		"mark": "Mark the task as completed on the selected date",
+		"progress": "Task progress is displayed here"
+	},
+	"attr": {
+		"value": "Attribution"
+	},
+	"premiumValues": [
+		"No advertising",
+		"Support the developers",
+		"Access to achievements",
+		"Panda leveling",
+		"Unlimited number of goals",
+		"Access to virtual assistant",
+		"Access to upcoming features (coming soon)"
+	],
+	"privacy": {
+		"page": "Privacy Policy"
+	},
+	"googlePlay": {
+		"pay": "The subscription is automatically renewed via Google Play unless you cancel it manually. If you cancel the subscription before the end of the current billing period, you will not receive a refund for this period, but Premium access will remain active until the end of the paid time. The cancellation will take effect after the current period ends."
+	},
+
+	"chat": {
+		"title": "Back",
+		"btn": "Send",
+		"placeholder": "Type your message"
+	},
+	"menu": {
+		"title": "Menu"
+	},
+	"noConnetction": {
+		"off": "No internet connection",
+		"on": "Connection restored",
+		"btn": "Try again"
+	},
+	"premiumWindow": {
+		"bot": "To use the virtual assistant, you need to upgrade to the Premium plan.",
+		"taskText": "Unfortunately, you've reached the habit limit on the free plan. To add unlimited habits, please upgrade to Premium.",
+		"subtext": "By subscribing to Premium, you'll get full access to all app features.",
+		"leveling": "To unlock pandib leveling, you need to upgrade to the Premium plan.",
+		"btnPremium": "Get Premium"
+	},
+	"meniu": [
+		"Account",
+		"About App",
+		"Languages",
+		"Feedback",
+		"Settings"
+	],
+	"rank": {
+		"rank": "Level",
+		"newbie": "Beginner",
+		"pupil": "Growing Achiever",
+		"master": "Goal Crusher",
+		"legenda": "Focus Pro",
+		"immortal": "Habit Legend"
+	}	,
+	"account": {
+		"accoutTitle": "Account",
+		"accountBtn": "Update",
+		"changedName": "Name changed"
+	},
+	"singInUP": {
+		"reset": "Send",
+		"singIn": "Already have an account? Sign in",
+		"singUp": "Don't have an account? Sign up",
+		"singInBtn": "Sign in",
+		"singUpBtn": "Sign up",
+		"forgotPassword": "Forgot password?",
+		"backToSing": "Back to registration",
+		"confirm": "An email has been sent to your email address"
+	},
+	"archieve": {
+		"empty": "Your archive is empty",
+		"name": "Your Goals",
+		"achieveTitle": "Archived Goals",
+		"totalDays": "Total days",
+		"notchecked": "Remaining",
+		"checkedDays": "Completed",
+		"notChecked": "Missed"
+	},
+	"achieveTitle": {
+		"title": "Your achievements",
+		"subtitle": "Total achievements received",
+		"achiveDone": "Completed"
+	},
+	"accState": {
+		"greetings": "Welcome",
+		"stateBtn": "Let's go!",
+		"load": "Loading"
+	},
+	"checkedBtns": {
+		"done": "Mark as Done",
+		"missed": "Mark as Missed"
+	},
+	"notAllowed": {
+		"done": "Date already marked",
+		"outside": "Cannot mark a date outside the range",
+		"onlyToday": "You can only mark today's date"
+	},
+	"achieve": {
+		"1": "Complete the first goal",
+		"2": "Complete 10 goals",
+		"3": "Complete 20 goals",
+		"4": "Complete 50 goals",
+		"5": "Complete 70 goals",
+		"6": "Complete 100 goals",
+		"7": "Complete 120 goals",
+		"8": "Complete 150 goals",
+		"9": "Complete 200 goals"
+	},
+	"feedBack": {
+		"title": "Feedback",
+		"placeholder": "Leave a review or suggestion",
+		"button": "Send",
+		"overlayBtn": "OK",
+		"overlayTitle": "Thank you for your feedback"
+	},
+	"startPage": {
+		"value": "Get started"
+	},
+	"description": {
+		"value": "Next step"
+	},
+	"navTop": {
+		"achiv": "Achievements",
+		"askez": "All goals",
+		"stats": "Statistics"
+	},
+	"statslable": {
+		"total": "Total goals",
+		"doneTotal": "Total completed",
+		"InProgressTotal": "In progress",
+		"notCompleted": "Not completed",
+		"active": "Active tasks",
+		"archieve": "Archieve tasks"
+	},
+	"hasNotAskez": {
+		"value": "No created goals"
+	},
+	"infoLabels": {
+		"name": "Name",
+		"status": "Status"
+	},
+	"delAllDatas": {
+		"title": "Delete all data?",
+		"subTitle": "Are you sure you want to delete all data?",
+		"acceptBtn": "Yes",
+		"rejectBtn": "No"
+	},
+	"register": {
+		"btnValue": "register",
+		"placeholderFields": [
+			{
+				"id": 1,
+				"placeholderName": "enter your name"
+			},
+			{
+				"id": 2,
+				"placeholderEmail": "enter your email"
+			},
+			{
+				"id": 3,
+				"placeholderPassword": "enter your password"
+			},
+			{
+				"id": 4,
+				"placeholderConfPassword": "confirm your password"
+			}
+		]
+	},
+	"logOut": {
+		"out": "Logout?",
+		"reject": "Do you want to Logout?"
+	},
+	"homePage": {
+		"greetings": "Hello",
+		"btn": "Open",
+		"no_active_goals": "No active goals"
+	},
+	"createTask": {
+		"title": "Create new Goal",
+		"edit_title": "Edit goal",
+		"edit_btn": "edit goal",
+		"btn": "Create new",
+		"task": "Your goal",
+		"datum": "Select a date range"
+	},
+	"success": {
+		"title": "Done!!",
+		"article": "Let's do the best to achieve your goal",
+		"button": "OK"
+	},
+	"taskDetails": {
+		"startDate": "Start Date",
+		"endDate": "End Date",
+		"title": "Name",
+		"status": "Status",
+		"order": "Order",
+		"activity": "Do every day"
+	},
+	"delConfirm": {
+		"title": "Delete goal?",
+		"accept": "Yes",
+		"reject": "No"
+	},
+	"EditDeleteMenu": {
+		"delTask": "Delete"
+	},
+	"CheckedProgress": {
+		"checked": "Marked days",
+		"notChecked": "Unmarked days"
+	},
+	"bublingWindows": {
+		"fieldEmpty": "Enter the name of the Askesis",
+		"error": "The task name contains prohibited words."
+	},
+	"footerBtnText": {
+		"menu": "Menu",
+		"archieve": "Archive",
+		"panda": "Panda",
+		"tasks": "Tasks"
+	},
+	"about": {
+		"title": "FocusPanda",
+		"subtitle": "Your Self-Discipline Partner",
+		"intro": "FocusPanda is a unique app designed to help you build strong habits and improve focus through daily challenges and personal discipline.",
+		"section1_title": "What is Focus Training?",
+		"section1_text": "Focus training is the practice of strengthening your ability to stay on track and achieve personal goals through daily actions.",
+		"section2_title": "App Features",
+		"feature_track": "Track daily progress",
+		"feature_challenges": "Set and manage personal challenges",
+		"feature_guidance": "Get tips and motivation",
+		"feature_community": "Join a community of achievers",
+		"feature_discipline": "Stay consistent every day",
+		"section3_title": "Our Mission",
+		"section3_text": "We aim to help you build strong focus and personal discipline by providing tools that support your daily progress.",
+		"version": "Version 1.0.0"
+	}
 }

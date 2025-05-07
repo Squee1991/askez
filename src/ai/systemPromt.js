@@ -103,6 +103,8 @@ If the user does not mention a task name, always assume they mean the currently 
 - "How many days marked?"
 → Use checkedDates and missedDates of the active task.
 
+⚠️ There may also be unmarked days — these are days within the task's date range that the user has neither marked as done nor missed. Treat these unmarked days as skipped.
+
 📊 Stats:
 - "What’s my progress?"
 - "How close am I to finishing?"
@@ -220,22 +222,62 @@ ${achievementDetails}
 
 📘 Task details:
 ${habitStore.tasks.map(task => {
-		const range = task.range || [];
-		const done = task.doneDays || [];
-		const missed = task.missedDays || [];
-		const total = range.length;
-		const doneCount = done.length;
-		const missedCount = missed.length;
-		const pending = total - doneCount - missedCount;
-		const percent = total > 0 ? Math.round((doneCount / total) * 100) : 0;
-		return `- ${task.name}:
-  Dates: ${range[0] || 'N/A'} → ${range[range.length - 1] || 'N/A'}
+		const start = task.dateRange?.start ? new Date(task.dateRange.start) : null;
+		const end = task.dateRange?.end ? new Date(task.dateRange.end) : null;
+		const total = (start && end && !isNaN(start) && !isNaN(end))
+			? Math.max(1, Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1)
+			: 0;
+		const done = task.checkedDates?.length || 0;
+		const missed = task.missedDates?.length || 0;
+		const skipped = task.skippedDates?.length || 0;
+		const remaining = Math.max(0, total - done - missed);
+		const progress = task.progress || 0;
+		const todayDate = new Date();
+		todayDate.setHours(0, 0, 0, 0);
+
+		let unmarked = 0;
+		if (start && end) {
+			const todayDate = new Date();
+			todayDate.setHours(0, 0, 0, 0);
+
+			const current = new Date(start);
+			current.setHours(0, 0, 0, 0);
+
+			while (current <= todayDate && current <= end) {
+				const dateStr = current.toISOString().split('T')[0];
+				const isChecked = (task.checkedDates || []).includes(dateStr);
+				const isMissed = (task.missedDates || []).includes(dateStr);
+				if (!isChecked && !isMissed) unmarked++;
+				current.setDate(current.getDate() + 1);
+			}
+		}
+		const progressMiss = task.progressMiss || 0;
+		const percent = progress + progressMiss;
+		const name = task.goal || 'Unnamed task';
+		return `- ${name}:
+  Dates: ${formatDate(task.dateRange?.start)} → ${formatDate(task.dateRange?.end)}
   Total days: ${total}
-  Done: ${doneCount}
-  Missed: ${missedCount}
-  Remaining: ${pending}
+  Done: ${done}
+  Missed: ${missed}
+  Unmarked: ${unmarked}
+  Skipped (no marks): ${skipped}
+  Remaining: ${remaining}
+  Progress: ${progress}%
+  Missed progress: ${progressMiss}%
   Completion: ${percent}%`;
 	}).join('\n\n')}
+	
+
+
+Use this data to answer the user's questions.
+
+Rules:
+- A task is incomplete if (progress + progressMiss) < 100
+- A task is perfectly completed if progress = 100 and progressMiss = 0
+- A task is completed with mistakes if (progress + progressMiss) >= 100 but progressMiss > 0
+
+Speak in a friendly and helpful tone. Always show task count, progress, and percentages if relevant.
+\`;
 
 📊 User stats:
 - Level: ${habitStore.pandaLevel}
@@ -271,11 +313,9 @@ ${(habitStore.selectedTask || habitStore.tasks[0]) ? (() => {
 		done = task.checkedDates?.length || 0;
 		missed = task.missedDates?.length || 0;
 
-// А вот теперь — считаем оставшиеся дни по диапазону
 		const today = new Date();
-		today.setHours(0, 0, 0, 0); // Очищаем время
+		today.setHours(0, 0, 0, 0);
 
-// Функция чтобы сделать дату без времени
 		const clearTime = (date) => new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
 		let remaining = 0;
@@ -306,7 +346,8 @@ ${(habitStore.selectedTask || habitStore.tasks[0]) ? (() => {
 - Remaining: ${remaining}
 - Progress: ${progress}%
 - Missed progress: ${progressMiss}%
-`})() : ''}
+`
+	})() : ''}
 
 ${habitStore.selectedTask
 		? `🟢 Current task: ${habitStore.selectedTask.goal}`

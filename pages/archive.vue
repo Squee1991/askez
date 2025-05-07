@@ -3,6 +3,7 @@
 	import HeaderWichback from '../src/components/headerWithBack.vue'
 	import {useHabitStore} from '../stores/habitStore.js'
 	import Arrow from '../assets/images/ArrowTask.svg'
+	import ArrowBack from '../assets/images/back.svg'
 	import { useTaskStore } from '../stores/OfflineTaskStore.js'
 	const taskStore = useTaskStore()
 	const habitStore = useHabitStore()
@@ -51,7 +52,7 @@
 <template>
 	<div>
 		<div class="archive__wrapper">
-			<HeaderWichback :title="$t('archieve.achieveTitle')"/>
+			<HeaderWichback :icon="ArrowBack" :title="$t('archieve.achieveTitle')"/>
 			<div class="archive__body">
 				<div class="archive__banner">
 					<div class="archive__header">

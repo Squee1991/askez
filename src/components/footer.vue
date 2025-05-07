@@ -144,11 +144,12 @@
 		border-radius: 50%;
 		color: #bfbfbf;
 		transition: .3s;
+		width: 60px;
 	}
 
 	.footer__nav-btn-text {
 		margin-top: 5px;
-		font-size: 12px;
+		font-size: 11px;
 		font-family: "Acme", serif;
 	}
 
