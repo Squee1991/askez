@@ -7,9 +7,9 @@
             </p>
             <div class="step-hint-controls">
                 <button @click="prevStep" :disabled="currentStep === 0">← {{ $t('common.prev') }}</button>
-                <button class="skip-btn" @click="finish">{{ $t('common.skip') }}</button>
+                <button class="skip-btn" @click="finish">{{ $t('stepHint.skip') }}</button>
                 <button @click="nextStep">
-                    {{ isLastStep ? $t('common.finish') : $t('common.next') }} →
+                    {{ isLastStep ? $t('stepHint.done') : $t('stepHint.further') }} →
                 </button>
             </div>
         </div>

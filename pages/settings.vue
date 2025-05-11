@@ -29,8 +29,6 @@
 	const isAudioEnabled = computed(() => habitStore.isAudioEnabled);
 	const isAnimationEnabled = computed(() => habitStore.isAnimationEnabled);
 
-
-
 	const clickToggleBot = async () => {
 		if (!authStore.isPremium) return;
 		activeBotAnim.value = true;
@@ -111,7 +109,16 @@
 		const savedMode = localStorage.getItem('nuxt-color-mode') || 'light';
 		colorMode.preference = savedMode;
 		isToggle.value = savedMode === 'light';
-		localBotToggle.value = authStore.isBotEnabled;
+
+		// ✅ Синхронизация состояния бота с премиумом
+		if (!authStore.isPremium) {
+			localBotToggle.value = false;
+			authStore.isBotEnabled = false;
+			authStore.saveBotStateToFirebase(false); // ⬅️ важно
+		} else {
+			localBotToggle.value = authStore.isBotEnabled;
+		}
+
 		const audioSetting = localStorage.getItem('audioEnabled');
 		isAudioEnabled.value = audioSetting ? JSON.parse(audioSetting) : true;
 	});

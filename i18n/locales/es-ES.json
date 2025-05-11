@@ -228,7 +228,8 @@
 	"homePage": {
 		"greetings": "Hola",
 		"btn": "Abrir",
-		"no_active_goals": "No hay objetivos activos"
+		"no_active_goals": "No hay metas creadas",
+		"no_choiced_goals": "No hay metas seleccionadas"
 	},
 	"createTask": {
 		"title": "Crear un nuevo objetivo",
@@ -270,6 +271,7 @@
 	"footerBtnText": {
 		"menu": "Menú",
 		"archieve": "Archivo",
+		"journey": "Viaje",
 		"panda": "Panda",
 		"tasks": "Tareas"
 	},
@@ -288,5 +290,52 @@
 		"section3_title": "Nuestra misión",
 		"section3_text": "Nuestra misión es ayudarte a fortalecer tu espíritu mediante la ascesis, ofreciéndote herramientas y apoyo en tu camino espiritual.",
 		"version": "Versión 1.0.0"
+	},
+	"Task": {
+		"books": "Leer libros",
+		"water": "Beber 2 litros de agua",
+		"meditate": "Meditar",
+		"wake_7am": "Despertarse a las 7 AM",
+		"evening_run": "Correr por la noche",
+		"no_sugar": "Sin azúcar",
+		"sleep": "Dormir antes de las 22:00",
+		"alcohol": "No consumir alcohol",
+		"media": "Sin redes sociales"
+	},
+	"taskDescription": {
+		"books_description": "Adquiere el hábito de leer todos los días para mejorar tu inteligencia, concentración y armonía interior.",
+		"water_description": "Mantén una buena hidratación y mejora tu salud bebiendo 2 litros de agua diariamente.",
+		"meditate_description": "La meditación diaria reduce el estrés, mejora la atención y fortalece la paz interior.",
+		"wake_7am_description": "Despertarse temprano te da más energía, productividad y tiempo para ti.",
+		"evening_run_description": "Correr por la noche reduce el estrés, mejora el sueño y fortalece el corazón.",
+		"media_description": "Renunciar a las redes sociales mejora la atención, aumenta la productividad, libera tiempo y reduce el estrés.",
+		"no_sugar_description": "Evitar el azúcar ayuda a perder peso, mejora la piel y estabiliza la energía.",
+		"alcohol_description": "Evitar el alcohol mejora la salud, la claridad mental, el sueño y la fuerza de voluntad.",
+		"sleep_description": "Dormir antes de las 22:00 ayuda a recuperarse, mejora el sistema inmunológico y la concentración."
+	},
+	"DescriptionBtn": {
+		"btn": "Comenzar el camino",
+		"list": "Lista de objetivos",
+		"active": "Objetivos activos",
+		"banner": "Elige un objetivo y síguelo durante 21 días",
+		"way": "Tu camino"
+	},
+	"completed": {
+		"done": "Completado",
+		"notDone": "No completado",
+		"day": "DÍA"
+	},
+	"journeyDelete": {
+		"title": "¿Eliminar de los activos?",
+		"text": "tu progreso se perderá"
+	},
+	"isPremium": {
+		"value": "Premium"
 	}
+
+
+
+
+
+
 }

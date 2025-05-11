@@ -26,7 +26,6 @@
     "@popperjs/core": "^2.11.8",
     "@revenuecat/purchases-capacitor": "^10.2.3",
     "@vueuse/nuxt": "^13.0.0",
-    "cordova-plugin-firebasex": "^18.0.7",
     "dotenv": "^16.4.7",
     "emailjs": "^4.0.3",
     "emailjs-com": "^3.2.0",

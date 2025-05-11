@@ -226,9 +226,10 @@
 		"reject": "你确定要退出吗？"
 	},
 	"homePage": {
-		"greetings": "欢迎",
+		"greetings": "你好",
 		"btn": "打开",
-		"no_active_goals": "没有活跃的目标"
+		"no_active_goals": "尚未创建目标",
+		"no_choiced_goals": "尚未选择目标"
 	},
 	"createTask": {
 		"title": "创建新目标",
@@ -268,6 +269,7 @@
 	"footerBtnText": {
 		"menu": "菜单",
 		"archieve": "档案",
+		"journey": "旅程",
 		"panda": "熊猫",
 		"tasks": "任务"
 	},
@@ -286,5 +288,52 @@
 		"section3_title": "我们的使命",
 		"section3_text": "我们的使命是通过苦修帮助你建立精神力量，提供你成长旅程中的工具与支持。",
 		"version": "版本 1.0.0"
+	},
+	"Task": {
+		"books": "阅读书籍",
+		"water": "每天喝2升水",
+		"meditate": "冥想",
+		"wake_7am": "早上7点起床",
+		"evening_run": "晚上跑步",
+		"no_sugar": "不吃糖",
+		"sleep": "晚上10点前睡觉",
+		"alcohol": "不喝酒",
+		"media": "不使用社交媒体"
+	},
+	"taskDescription": {
+		"books_description": "养成每天阅读的习惯，提升智力、专注力和内在平衡。",
+		"water_description": "每天喝2升水，有助于保持水分和改善身体健康。",
+		"meditate_description": "每天冥想有助于减压、提升注意力和增强内心的平静。",
+		"wake_7am_description": "早起能让你的一天更高效，更有能量，还有时间照顾自己。",
+		"media_description": "拒绝社交媒体可以提高注意力、提升效率、节省时间并减少压力。",
+		"evening_run_description": "晚上跑步有助于缓解压力，改善睡眠并强健心肺功能。",
+		"no_sugar_description": "不吃糖有助于减肥、改善皮肤和保持能量稳定。",
+		"alcohol_description": "不喝酒能改善健康、提升专注力、改善睡眠并增强意志力。",
+		"sleep_description": "晚上10点前睡觉有助于恢复体力、增强免疫力并提高专注力。"
+	},
+	"DescriptionBtn": {
+		"btn": "开始旅程",
+		"list": "目标列表",
+		"active": "进行中的目标",
+		"banner": "选择一个目标并坚持21天",
+		"way": "你的旅程"
+
+	},
+	"completed": {
+		"done": "已完成",
+		"notDone": "未完成",
+		"day": "天"
+	},
+	"journeyDelete": {
+		"title": "从激活中删除？",
+		"text": "你的进度将会丢失"
+	},
+	"isPremium": {
+		"value": "高级版"
 	}
+
+
+
+
+
 }

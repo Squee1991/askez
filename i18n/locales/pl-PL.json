@@ -227,7 +227,8 @@
 	"homePage": {
 		"greetings": "Cześć",
 		"btn": "Otwórz",
-		"no_active_goals": "Brak aktywnych celów"
+		"no_active_goals": "Brak utworzonych celów",
+		"no_choiced_goals": "Brak wybranych celów"
 	},
 	"createTask": {
 		"title": "Utwórz nowy cel",
@@ -269,6 +270,7 @@
 	"footerBtnText": {
 		"menu": "Menu",
 		"archieve": "Archiwum",
+		"journey": "Podróż",
 		"panda": "Panda",
 		"tasks": "Zadania"
 	},
@@ -287,6 +289,49 @@
 		"section3_title": "Nasza misja",
 		"section3_text": "Naszą misją jest pomóc Ci osiągnąć duchową siłę poprzez ascezę, oferując narzędzia i wsparcie na tej drodze.",
 		"version": "Wersja 1.0.0"
+	},
+	"Task": {
+		"books": "Czytaj książki",
+		"water": "Pij 2 litry wody",
+		"meditate": "Medytuj",
+		"wake_7am": "Wstawaj o 7:00",
+		"evening_run": "Wieczorny bieg",
+		"no_sugar": "Bez cukru",
+		"sleep": "Śpij przed 22:00",
+		"alcohol": "Nie pij alkoholu",
+		"media": "Bez mediów społecznościowych"
+	},
+	"taskDescription": {
+		"books_description": "Wypracuj nawyk codziennego czytania, aby rozwijać inteligencję, koncentrację i wewnętrzną harmonię.",
+		"water_description": "Utrzymuj nawodnienie i dbaj o zdrowie, pijąc 2 litry wody dziennie.",
+		"meditate_description": "Codzienna medytacja zmniejsza stres, poprawia koncentrację i wzmacnia spokój wewnętrzny.",
+		"wake_7am_description": "Wstawanie wcześnie daje więcej energii, produktywności i czasu dla siebie.",
+		"media_description": "Rezygnacja z mediów społecznościowych poprawia koncentrację, zwiększa produktywność, uwalnia czas i redukuje stres.",
+		"evening_run_description": "Bieganie wieczorem redukuje stres, poprawia sen i wzmacnia serce.",
+		"no_sugar_description": "Unikanie cukru wspomaga odchudzanie, poprawia wygląd skóry i stabilizuje poziom energii.",
+		"alcohol_description": "Rezygnacja z alkoholu poprawia zdrowie, jasność umysłu, sen i siłę woli.",
+		"sleep_description": "Regularny sen przed 22:00 wspomaga regenerację, odporność i koncentrację."
+	},
+	"DescriptionBtn": {
+		"btn": "Rozpocznij drogę",
+		"list": "Lista celów",
+		"active": "Aktywne cele",
+		"banner": "Wybierz cel i realizuj go przez 21 dni",
+		"way": "Twoja droga"
+	},
+	"completed": {
+		"done": "Wykonane",
+		"notDone": "Niewykonane",
+		"day": "DZIEŃ"
+	},
+	"journeyDelete": {
+		"title": "Usunąć z aktywnych?",
+		"text": "twój postęp zostanie utracony"
+	},
+	"isPremium": {
+		"value": "Premium"
 	}
+
+
 
 }

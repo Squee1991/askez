@@ -9,7 +9,7 @@
 <script setup>
 	import {useRouter} from 'vue-router';
 	import {defineProps} from 'vue';
-    const paths = ['/archive' , '/menu' , '/chat' , '/archive' , '/achievment']
+    const paths = ['/archive' , '/menu' , '/chat' , '/archive'  , '/journey']
 	const router = useRouter();
 	const props = defineProps({
 		icon: {

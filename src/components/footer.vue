@@ -14,8 +14,17 @@
 					<button class="footer__nav-btn"
 					        :class="{ 'active-effect': activeIcon === 1 , 'active-color' : activeColor === 1 }"
 					        @click="handleClick(1)">
-						<svg height="30" viewBox="0 0 32 32" width="30" xmlns="http://www.w3.org/2000/svg"><g id="_22_archive" data-name="22 archive" fill="currentColor"><path d="m28 8h-10.58l-2.32-2.39a2 2 0 0 0 -1.43-.61h-5.67a2 2 0 0 0 -2 2v2h-2a2 2 0 0 0 -2 2v17a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-2h2a2 2 0 0 0 2-2v-14a2 2 0 0 0 -2-2zm-24 20v-17h5.66l2.34 2.39a2 2 0 0 0 1.43.61h10.57v11 3zm24-4h-2v-10a2 2 0 0 0 -2-2h-10.58l-2.32-2.39a2 2 0 0 0 -1.44-.61h-1.66v-2h5.67l2.33 2.39a2 2 0 0 0 1.43.61h10.57zm-16 1a1 1 0 0 1 -1 1h-4a1 1 0 0 1 0-2h4a1 1 0 0 1 1 1z"/></g></svg>
-						<span class="footer__nav-btn-text">{{ $t('footerBtnText.archieve')}}</span>
+						<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="30"
+								 height="30" x="0" y="0" viewBox="0 0 100 100"
+								 style="enable-background:new 0 0 512 512" xml:space="preserve"
+								 class=""><g><g fill="#176ecc">
+    <path d="M30.825 18.725v72.92L2.5
+    81.284V8.356zM63.641 8.822v72.242L35.671
+    91.3V18.725zM97.5 18.725v72.92L69.519 81.407V8.488z"
+					fill="currentColor" opacity="1" data-original="#176ecc" class="">
+
+    </path></g></g></svg>
+						<span class="footer__nav-btn-text">{{ $t('footerBtnText.journey')}}</span>
 					</button>
 				</div>
 				<div class="profile__icon-wrapper">
@@ -65,7 +74,7 @@
 			if (index === 0) {
 				router.push("/menu");
 			} else if (index === 1) {
-				router.push("/archive");
+				router.push("/journey");
 			} else if (index === 2) {
 				router.push("/panda");
 			} else {
@@ -79,7 +88,7 @@
 		const routePath = router.currentRoute.value.path;
 		if (routePath === '/menu') {
 			activeColor.value = 0;
-		} else if (routePath === '/archive') {
+		} else if (routePath === '/journey') {
 			activeColor.value = 1;
 		} else if (routePath === '/panda') {
 			activeColor.value = 2;
@@ -144,7 +153,9 @@
 		border-radius: 50%;
 		color: #bfbfbf;
 		transition: .3s;
-		width: 60px;
+		width: 73px;
+		display: flex;
+		justify-content: center;
 	}
 
 	.footer__nav-btn-text {
@@ -188,7 +199,7 @@
 		left: 0;
 		width: 100%;
 		background-color: var(--footer-bg);
-		padding: 5px 15px;
+		padding: 5px 6px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;

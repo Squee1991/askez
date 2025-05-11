@@ -227,8 +227,9 @@
 	},
 	"homePage": {
 		"greetings": "Hallo",
-		"btn": "öffnen",
-		"no_active_goals": "Keine aktiven Ziele"
+		"btn": "Öffnen",
+		"no_active_goals": "Keine erstellten Ziele",
+		"no_choiced_goals": "Keine ausgewählten Ziele"
 	},
 	"createTask": {
 		"title": "Neues Ziel erstellen",
@@ -270,6 +271,7 @@
 	"footerBtnText": {
 		"menu": "Menü",
 		"archieve": "Archiv",
+		"journey": "Reise",
 		"panda": "Panda",
 		"tasks": "Aufgaben"
 	},
@@ -288,5 +290,50 @@
 		"section3_title": "Unsere Mission",
 		"section3_text": "Unsere Mission ist es, dich durch asketische Praktiken spirituell zu stärken, mit passenden Werkzeugen und Unterstützung.",
 		"version": "Version 1.0.0"
+	},
+	"Task": {
+		"books": "Bücher lesen",
+		"water": "2 Liter Wasser trinken",
+		"meditate": "Meditieren",
+		"wake_7am": "Um 7 Uhr aufwachen",
+		"evening_run": "Abends joggen",
+		"no_sugar": "Keinen Zucker konsumieren",
+		"sleep": "Vor 22 Uhr schlafen gehen",
+		"alcohol": "Keinen Alkohol trinken",
+		"media": "Keine sozialen Medien"
+	},
+	"taskDescription": {
+		"books_description": "Gewöhne dir an, täglich zu lesen, um deinen Intellekt, deine Konzentration und innere Harmonie zu fördern.",
+		"water_description": "Halte deinen Flüssigkeitshaushalt im Gleichgewicht und verbessere dein Wohlbefinden, indem du täglich 2 Liter Wasser trinkst.",
+		"meditate_description": "Tägliche Meditation hilft, Stress abzubauen, die Konzentration zu verbessern und innere Ruhe zu finden.",
+		"wake_7am_description": "Ein früher Start in den Tag bringt mehr Energie, Struktur und Zeit für dich selbst.",
+		"media_description": "Der Verzicht auf soziale Medien verbessert die Konzentration, steigert die Produktivität, spart Zeit und reduziert Stress.",
+		"evening_run_description": "Abendliches Joggen reduziert Stress, verbessert den Schlaf und stärkt das Herz-Kreislauf-System.",
+		"no_sugar_description": "Der Verzicht auf Zucker unterstützt Gewichtsabnahme, schönere Haut und einen stabileren Energiehaushalt.",
+		"alcohol_description": "Kein Alkohol verbessert die Gesundheit, klärt den Geist, fördert besseren Schlaf und stärkt die Willenskraft.",
+		"sleep_description": "Regelmäßiger Schlaf vor 22 Uhr unterstützt die Erholung, stärkt das Immunsystem und fördert die Konzentration."
+	},
+	"DescriptionBtn": {
+		"btn": "Reise starten",
+		"list": "Zieleliste",
+		"active": "Aktive Ziele",
+		"banner": "Wähle ein Ziel und verfolge es 21 Tage lang",
+		"way": "Dein Weg"
+	},
+	"completed": {
+		"done": "Erledigt",
+		"notDone": "Nicht erledigt",
+		"day": "TAG"
+	},
+	"journeyDelete": {
+		"title": "Aus den aktiven entfernen?",
+		"text": "Ihr Fortschritt geht verloren"
+	},
+	"isPremium": {
+		"value": "Premium"
 	}
+
+
+
+
 }

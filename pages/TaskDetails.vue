@@ -148,9 +148,11 @@
 			</div>
 		</div>
 	</div>
-	<StepHint :steps="hintSteps"
-	          :show="showHints"
-	          @close="showHints = false"/>
+<!--	<StepHint-->
+<!--			:steps="hintSteps"-->
+<!--	          :show="showHints"-->
+<!--	          @close="showHints = false"-->
+<!--	/>-->
 </template>
 <script setup>
 	import StepHint from '../src/components/StepHint.vue'

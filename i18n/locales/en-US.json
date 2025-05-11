@@ -187,7 +187,8 @@
 		"archieve": "Archieve tasks"
 	},
 	"hasNotAskez": {
-		"value": "No created goals"
+		"value": "No created goals",
+		"goals": "No selected goals"
 	},
 	"infoLabels": {
 		"name": "Name",
@@ -227,7 +228,8 @@
 	"homePage": {
 		"greetings": "Hello",
 		"btn": "Open",
-		"no_active_goals": "No active goals"
+		"no_active_goals": "No created goals",
+		"no_choiced_goals": "No selected goals"
 	},
 	"createTask": {
 		"title": "Create new Goal",
@@ -268,7 +270,8 @@
 	},
 	"footerBtnText": {
 		"menu": "Menu",
-		"archieve": "Archive",
+		"archieve": "Archieve",
+		"journey": "Reise",
 		"panda": "Panda",
 		"tasks": "Tasks"
 	},
@@ -287,5 +290,48 @@
 		"section3_title": "Our Mission",
 		"section3_text": "We aim to help you build strong focus and personal discipline by providing tools that support your daily progress.",
 		"version": "Version 1.0.0"
+	},
+	"Task": {
+		"books": "Read books",
+		"water": "Drink 2 liters of water",
+		"meditate": "Meditate",
+		"wake_7am": "Wake up at 7 AM",
+		"evening_run": "Go for an evening run",
+		"no_sugar": "Avoid sugar",
+		"sleep": "Go to bed by 10 PM",
+		"alcohol": "Avoid alcohol",
+		"media": "No social media"
+	},
+	"taskDescription": {
+		"books_description": "Build a daily reading habit to boost your intelligence, focus, and inner balance.",
+		"water_description": "Stay hydrated and support your health and well-being by drinking 2 liters of water every day.",
+		"meditate_description": "Daily meditation helps lower stress, sharpen your focus, and strengthen your inner peace.",
+		"wake_7am_description": "Waking up early sets a productive tone, gives you more energy, and time for yourself.",
+		"media_description": "Refusing social media improves focus, boosts productivity, frees time, and reduces stress.",
+		"evening_run_description": "An evening run helps you unwind, sleep better, and strengthen your heart and lungs.",
+		"no_sugar_description": "Cutting out sugar helps with weight loss, better skin, and stable energy levels.",
+		"alcohol_description": "Avoiding alcohol improves your liver health, mental clarity, sleep, and self-discipline.",
+		"sleep_description": "Going to bed by 10 PM helps your body recover, strengthens immunity, and improves focus."
+	},
+	"DescriptionBtn": {
+		"btn": "Start journey",
+		"list": "List of goals",
+		"active": "Active goals",
+		"banner": "Choose a goal and follow it for 21 days",
+		"way": "Your journey"
+	},
+	"completed": {
+		"done": "Completed",
+		"notDone": "Not completed",
+		"day": "DAY"
+	},
+	"journeyDelete": {
+		"title": "Remove from active?",
+		"text": "Your progress will be lost"
+	},
+	"isPremium": {
+		"value": "Premium"
 	}
+
+
 }

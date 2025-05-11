@@ -38,50 +38,68 @@ export const useAuthStore = defineStore('auth', () => {
         }
     };
 
-    const restorePurchases = async () => {
-        if (!Capacitor.isNativePlatform()) {
-            alert('[Mock] Восстановление покупок выполнено (браузер)');
-            await activatePremium();
-            return;
-        }
-
-        await safePurchasesCall(async () => {
-            const {customerInfo} = await Purchases.restorePurchases();
-            const active = customerInfo.entitlements.active['Premium'];
-
-            isPremium.value = !!active;
-            if (active) {
-                await activatePremium();
-                alert('[RevenueCat] Подписка восстановлена!');
-            } else {
-                alert('[RevenueCat] Подписка не найдена при восстановлении');
-            }
-        });
-    };
-
+    // const restorePurchases = async () => {
+    //     if (!Capacitor.isNativePlatform()) {
+    //         alert('[Mock] Восстановление покупок выполнено (браузер)');
+    //         await activatePremium();
+    //         return;
+    //     }
+    //
+    //     await safePurchasesCall(async () => {
+    //         const {customerInfo} = await Purchases.restorePurchases();
+    //         const active = customerInfo.entitlements.active['Premium'];
+    //
+    //         isPremium.value = !!active;
+    //         if (active) {
+    //             await activatePremium();
+    //             alert('[RevenueCat] Подписка восстановлена!');
+    //         } else {
+    //             alert('[RevenueCat] Подписка не найдена при восстановлении');
+    //         }
+    //     });
+    // };
 
     const checkRevenueCatPremium = async () => {
         if (!Capacitor.isNativePlatform()) {
             isPremium.value = true;
-            alert('[Mock] Подписка активна (браузер)');
-            return;
+            return true;
         }
+
+        let active = false;
 
         await safePurchasesCall(async () => {
             const {customerInfo} = await Purchases.getCustomerInfo();
-            const active = customerInfo.entitlements.active['Premium'];
-            isPremium.value = !!active;
-            alert(`[RevenueCat] Статус подписки: ${active ? 'Активна' : 'Неактивна'}`);
+            active = !!customerInfo.entitlements.active['Premium'];
+            isPremium.value = active;
+
+            const auth = getAuth();
+            const user = auth.currentUser;
+            if (user) {
+                const userDocRef = doc(db, "users", user.uid);
+
+                await setDoc(userDocRef, {
+                    isPremium: active,
+                    isBotEnabled: active ? isBotEnabled.value : false
+                }, { merge: true });
+
+                if (!active && isBotEnabled.value) {
+                    isBotEnabled.value = false;
+                }
+            }
         });
+
+        return active;
     };
-
-
+    const startPremiumStatusPolling = () => {
+        setInterval(() => {
+            checkRevenueCatPremium();
+        }, 5 * 60 * 1000);
+    };
     const purchasePro = async () => {
         if (!Capacitor.isNativePlatform()) {
             await activatePremium();
             return { success: true, message: '[Mock] Подписка активирована (браузер)' };
         }
-
         try {
             const offerings = await Purchases.getOfferings();
             if (!offerings.current || offerings.current.availablePackages.length === 0) {
@@ -121,7 +139,6 @@ export const useAuthStore = defineStore('auth', () => {
         }
     };
 
-
     const activatePremium = async () => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -142,18 +159,17 @@ export const useAuthStore = defineStore('auth', () => {
         isGateOpened.value = true;
     };
 
-    const loadPremiumStatus = async () => {
-        const auth = getAuth();
-        const user = auth.currentUser;
-        if (!user || !navigator.onLine) return;
-
-        const userDocRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(userDocRef);
-        if (docSnap.exists()) {
-            isPremium.value = docSnap.data().isPremium ?? false;
-        }
-    };
-
+    // const loadPremiumStatus = async () => {
+    //     const auth = getAuth();
+    //     const user = auth.currentUser;
+    //     if (!user || !navigator.onLine) return;
+    //
+    //     const userDocRef = doc(db, "users", user.uid);
+    //     const docSnap = await getDoc(userDocRef);
+    //     if (docSnap.exists()) {
+    //         isPremium.value = docSnap.data().isPremium ?? false;
+    //     }
+    // };
     const loadBotStateFromFirebase = async () => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -164,10 +180,9 @@ export const useAuthStore = defineStore('auth', () => {
         if (docSnap.exists()) {
             const data = docSnap.data();
             isBotEnabled.value = data.isBotEnabled ?? true;
-            isPremium.value = data.isPremium ?? false;
+            // isPremium.value = data.isPremium ?? false;
         }
     };
-
     const saveBotStateToFirebase = async (enabled) => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -177,7 +192,6 @@ export const useAuthStore = defineStore('auth', () => {
         await setDoc(userDocRef, {isBotEnabled: enabled}, {merge: true});
         isBotEnabled.value = enabled;
     };
-
     const registerUser = async (userData) => {
         const auth = getAuth();
         const userCredential = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
@@ -194,16 +208,14 @@ export const useAuthStore = defineStore('auth', () => {
             isPremium: false,
             isBotEnabled: false
         });
-    };
-
+    }
     const loginUser = async ({ email, password }) => {
         const auth = getAuth();
         await signInWithEmailAndPassword(auth, email, password);
         await loadBotStateFromFirebase();
-        await restorePurchases();
+        await checkRevenueCatPremium();
         await fetchingUser();
     };
-
     const logout = async () => {
         const auth = getAuth();
         await signOut(auth);
@@ -213,12 +225,10 @@ export const useAuthStore = defineStore('auth', () => {
         isPremium.value = false;
         isBotEnabled.value = false;
     };
-
     const resetPassword = async (email) => {
         const auth = getAuth();
         await sendPasswordResetEmail(auth, email);
     };
-
     const deleteAccount = async () => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -229,7 +239,6 @@ export const useAuthStore = defineStore('auth', () => {
         email.value = null;
         password.value = null;
     };
-
     const fetchingUser = () => {
         return new Promise((resolve) => {
             const auth = getAuth();
@@ -239,10 +248,9 @@ export const useAuthStore = defineStore('auth', () => {
                         name: user.displayName,
                         email: user.email
                     });
-                    await loadPremiumStatus();
                     await loadBotStateFromFirebase();
                     await Purchases.logIn(user.uid);
-                    await restorePurchases();
+                    await checkRevenueCatPremium();
                 } else {
                     isPremium.value = false;
                     isBotEnabled.value = false;
@@ -254,8 +262,6 @@ export const useAuthStore = defineStore('auth', () => {
             });
         });
     };
-
-
     const saveLanguageToFirebase = async (lang) => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -264,7 +270,6 @@ export const useAuthStore = defineStore('auth', () => {
         const userDocRef = doc(db, "users", user.uid);
         await setDoc(userDocRef, {language: lang}, {merge: true});
     };
-
     const loadLanguageFromFirebase = async () => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -277,7 +282,6 @@ export const useAuthStore = defineStore('auth', () => {
         }
         return null;
     };
-
     const UpdateNameDisplayName = async (newName) => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -288,6 +292,7 @@ export const useAuthStore = defineStore('auth', () => {
     };
 
     fetchingUser();
+    startPremiumStatusPolling();
 
     return {
         name,
@@ -298,7 +303,7 @@ export const useAuthStore = defineStore('auth', () => {
         isGateOpened,
         setUserData,
         activatePremium,
-        loadPremiumStatus,
+        // loadPremiumStatus,
         registerUser,
         loginUser,
         logout,
@@ -313,6 +318,6 @@ export const useAuthStore = defineStore('auth', () => {
         UpdateNameDisplayName,
         fetchingUser,
         markGateAsOpened,
-        restorePurchases,
+        // restorePurchases,
     };
 });

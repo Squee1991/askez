@@ -41,7 +41,7 @@
 					</div>
 					<div class="askeza__v">FocusPanda v1.0</div>
 					<div>
-						<button class="premium_btn" @click="toPremium">
+						<button v-if="!authStore.isPremium" class="premium_btn" @click="toPremium">
 							<span class="premium__icon">
 								<img class="premium__img" src="../assets/images/premium.png" alt="">
 							</span>
@@ -58,6 +58,7 @@
 	import HeaderwithBack from '../src/components/headerWithBack.vue';
 	import Footer from '../src/components/footer.vue'
 	import {useI18n} from 'vue-i18n';
+	import {useAuthStore} from "../stores/authStore.js"
 	import LogoutIcon from '../assets/images/logout.svg'
 	import {onMounted, onUnmounted, ref} from "vue";
 	import {getAuth, signOut} from "firebase/auth";
@@ -65,6 +66,7 @@
 	const {t} = useI18n();
 	const router = useRouter()
 	const premium = ref(false)
+	const authStore = useAuthStore()
 
 	const toPremium = () => {
 		router.push('premium')

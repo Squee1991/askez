@@ -186,7 +186,7 @@
 		"archieve": "Tâches archivées"
 	},
 	"hasNotAskez": {
-		"value": "Aucune Askeza créée"
+		"value": "Aucune Tâches créée"
 	},
 	"infoLabels": {
 		"name": "Nom",
@@ -226,7 +226,8 @@
 	"homePage": {
 		"greetings": "Salut",
 		"btn": "Ouvrir",
-		"no_active_goals": "Aucun objectif actif"
+		"no_active_goals": "Aucun objectif créé",
+		"no_choiced_goals": "Aucun objectif sélectionné"
 	},
 	"createTask": {
 		"title": "Créer un nouvel objectif",
@@ -268,6 +269,7 @@
 	"footerBtnText": {
 		"menu": "Menu",
 		"archieve": "Archive",
+		"journey": "Voyage",
 		"panda": "Panda",
 		"tasks": "Tâches"
 	},
@@ -286,5 +288,51 @@
 		"section3_title": "Notre mission",
 		"section3_text": "Notre mission est de vous aider à grandir spirituellement par l’ascèse, en vous fournissant les outils et le soutien nécessaires.",
 		"version": "Version 1.0.0"
+	},
+	"Task": {
+		"books": "Lire des livres",
+		"water": "Boire 2 litres d'eau",
+		"meditate": "Méditer",
+		"wake_7am": "Se réveiller à 7h",
+		"evening_run": "Courir le soir",
+		"no_sugar": "Éviter le sucre",
+		"sleep": "Dormir avant 22h",
+		"alcohol": "Ne pas consommer d’alcool",
+		"media": "Pas de réseaux sociaux"
+	},
+	"taskDescription": {
+		"books_description": "Adopte l’habitude de lire chaque jour pour développer ton intelligence, ta concentration et ta paix intérieure.",
+		"water_description": "Maintiens une bonne hydratation et améliore ta santé en buvant 2 litres d’eau par jour.",
+		"meditate_description": "La méditation quotidienne réduit le stress, améliore l’attention et renforce l’équilibre intérieur.",
+		"wake_7am_description": "Te réveiller tôt rend ta journée plus productive, te donne plus d’énergie et du temps pour toi.",
+		"media_description": "Renoncer aux réseaux sociaux améliore la concentration, augmente la productivité, libère du temps et réduit le stress.",
+		"evening_run_description": "Courir le soir aide à relâcher le stress, améliore le sommeil et renforce le système cardiovasculaire.",
+		"no_sugar_description": "Éviter le sucre aide à perdre du poids, améliore l’état de la peau et stabilise l’énergie.",
+		"alcohol_description": "Éviter l’alcool améliore la santé, clarifie l’esprit, favorise le sommeil et renforce la volonté.",
+		"sleep_description": "Dormir régulièrement avant 22h favorise la récupération, renforce l’immunité et améliore la concentration."
+	},
+	"DescriptionBtn": {
+		"btn": "Commencer le parcours",
+		"list": "Liste des objectifs",
+		"active": "Objectifs actifs",
+		"banner": "Choisis un objectif et suis-le pendant 21 jours",
+		"way": "Ton parcours"
+	},
+	"completed": {
+		"done": "Terminé",
+		"notDone": "Non terminé",
+		"day": "JOUR"
+	},
+	"journeyDelete": {
+		"title": "Supprimer des actifs ?",
+		"text": "vos progrès seront perdus"
+	},
+	"isPremium": {
+		"value": "Premium"
 	}
+
+
+
+
+
 }

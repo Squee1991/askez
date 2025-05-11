@@ -226,7 +226,8 @@
 	"homePage": {
 		"greetings": "Olá",
 		"btn": "Abrir",
-		"no_active_goals": "Nenhum objetivo ativo"
+		"no_active_goals": "Nenhuma meta criada",
+		"no_choiced_goals": "Nenhuma meta selecionada"
 	},
 	"createTask": {
 		"title": "Criar novo objetivo",
@@ -268,6 +269,7 @@
 	"footerBtnText": {
 		"menu": "Menu",
 		"archieve": "Arquivo",
+		"journey": "Jornada",
 		"panda": "Panda",
 		"tasks": "Tarefas"
 	},
@@ -286,6 +288,52 @@
 		"section3_title": "Nossa missão",
 		"section3_text": "Nossa missão é ajudá-lo a alcançar crescimento interior por meio de metas conscientes, oferecendo ferramentas e apoio nessa jornada.",
 		"version": "Versão 1.0.0"
+	},
+	"Task": {
+		"books": "Ler livros",
+		"water": "Beber 2 litros de água",
+		"meditate": "Meditar",
+		"wake_7am": "Acordar às 7h",
+		"evening_run": "Correr à noite",
+		"no_sugar": "Sem açúcar",
+		"sleep": "Dormir até às 22h",
+		"alcohol": "Evitar álcool",
+		"media": "Sem redes sociais"
+	},
+	"taskDescription": {
+		"books_description": "Crie o hábito de ler diariamente para desenvolver inteligência, foco e equilíbrio interior.",
+		"water_description": "Mantenha-se hidratado e melhore sua saúde bebendo 2 litros de água por dia.",
+		"meditate_description": "A meditação diária ajuda a reduzir o estresse, melhorar o foco e fortalecer a paz interior.",
+		"wake_7am_description": "Acordar cedo traz mais produtividade, energia e tempo para você.",
+		"media_description": "Recusar as redes sociais melhora o foco, aumenta a produtividade, libera tempo e reduz o estresse.",
+		"evening_run_description": "Correr à noite reduz o estresse, melhora o sono e fortalece o sistema cardiovascular.",
+		"no_sugar_description": "Evitar açúcar ajuda na perda de peso, melhora a pele e estabiliza os níveis de energia.",
+		"alcohol_description": "Evitar o álcool melhora a saúde, clareza mental, sono e força de vontade.",
+		"sleep_description": "Dormir até às 22h ajuda na recuperação, fortalece o sistema imunológico e melhora a concentração."
+	},
+	"DescriptionBtn": {
+		"btn": "Iniciar jornada",
+		"list": "Lista de objetivos",
+		"active": "Objetivos ativos",
+		"banner": "Escolha um objetivo e siga por 21 dias",
+		"way": "Sua jornada"
+	},
+	"completed": {
+		"done": "Concluído",
+		"notDone": "Não concluído",
+		"day": "DIA"
+	},
+	"journeyDelete": {
+		"title": "Remover dos ativos?",
+		"text": "seu progresso será perdido"
+	},
+	"isPremium": {
+		"value": "Premium"
 	}
+
+
+
+
+
 }
 

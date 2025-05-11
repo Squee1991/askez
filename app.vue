@@ -37,10 +37,26 @@ const handleBackButton = () => {
         router.back()
     }
 }
-
 onMounted(async () => {
-    await authStore.fetchingUser()
-    await authStore.checkRevenueCatPremium();
+    if (Capacitor.isNativePlatform()) {
+        await Purchases.configure({
+            apiKey: 'goog_BkCdjeLzZiqDbsdGktigOVPrvuL'
+        });
+    }
+
+    await authStore.fetchingUser(); // логин RevenueCat
+    const isPremium = await authStore.checkRevenueCatPremium();
+
+    if (!isPremium) {
+        authStore.isBotEnabled = false;
+        await authStore.saveBotStateToFirebase(false);
+    }
+
+    authStore.startPremiumStatusPolling();
+
+    disableDevtools();
+    preventDebugAccess();
+    blockConsole();
 });
 
 
@@ -50,23 +66,17 @@ onMounted(() => {
     })
 })
 
+onMounted(async () => {
+    // 🔁 Проверка премиума при старте
+    if (!authStore.isPremium) {
+        authStore.isBotEnabled = false
+        await authStore.saveBotStateToFirebase(false)
+    }
+})
+
 onBeforeUnmount(() => {
     if (removeListener) removeListener()
 })
-
-onMounted(() => {
-    disableDevtools()
-    preventDebugAccess()
-    blockConsole()
-})
-
-onMounted(async () => {
-    if (Capacitor.isNativePlatform()) {
-        await Purchases.configure({
-            apiKey: 'goog_BkCdjeLzZiqDbsdGktigOVPrvuL' // замени на свой из RevenueCat
-        });
-    }
-});
 
 watch(() => authStore.isPremium, (newVal) => {
     console.log('[RevenueCat] Подписка изменилась:', newVal ? 'Активна' : 'Неактивна')
