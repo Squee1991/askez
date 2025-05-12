@@ -1,19 +1,21 @@
 <template>
     <NuxtLayout>
         <NuxtPage/>
+        <PremiumExpired v-if="showPremiumToast" @close="showPremiumToast = false" />
     </NuxtLayout>
 </template>
 
 <script setup>
 import './assets/styles/global.css'
 import {disableDevtools, preventDebugAccess, blockConsole} from './src/utils/protect.js'
+import PremiumExpired from './src/components/PremiumExpiredToast.vue'
 import {useAuthStore} from './stores/authStore.js'
 import {onMounted, onBeforeUnmount, watch} from 'vue'
 import {useRouter} from 'vue-router'
 import {App as CapacitorApp} from '@capacitor/app'
 import {Purchases} from '@revenuecat/purchases-capacitor';
 import {Capacitor} from '@capacitor/core';
-
+const showPremiumToast = ref(false)
 const router = useRouter()
 const authStore = useAuthStore();
 if (process.client) {
@@ -44,7 +46,7 @@ onMounted(async () => {
         });
     }
 
-    await authStore.fetchingUser(); // логин RevenueCat
+    await authStore.fetchingUser();
     const isPremium = await authStore.checkRevenueCatPremium();
 
     if (!isPremium) {
@@ -81,7 +83,7 @@ onBeforeUnmount(() => {
 watch(() => authStore.isPremium, (newVal) => {
     console.log('[RevenueCat] Подписка изменилась:', newVal ? 'Активна' : 'Неактивна')
     if (!newVal) {
-        alert('Подписка закончилась. Некоторые функции будут отключены.')
+        showPremiumToast.value = true
     }
 })
 

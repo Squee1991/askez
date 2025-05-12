@@ -1,24 +1,17 @@
 <template>
 	<div class="toast">
 		<div class="toast__wrapper">
-			<div class="toast__inner" v-if="!visible">
-				<img class="toast__icon" src="../assets/images/rejected.svg" alt="">
+			<div class="toast__inner">
+				<img class="toast__icon" src="../../assets/images/rejected.svg" alt="">
 				<p class="toast__text">Подписка закончилась. Некоторые функции будут отключены.</p>
-				<button @click="visible = false" class="toast-btn">Ок</button>
+				<button @click="emit('close')" class="toast-btn">Ок</button>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
-	import {ref, watch} from 'vue'
-
-	const authStore = useAuthStore()
-	const visible = ref(false)
-
-	watch(() => authStore.premiumExpired, (val) => {
-		visible.value = val
-	})
+	const emit = defineEmits(['close'])
 </script>
 
 <style scoped>
