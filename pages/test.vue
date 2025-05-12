@@ -4,7 +4,7 @@
 			<div class="toast__inner" v-if="!visible">
 				<img class="toast__icon" src="../assets/images/rejected.svg" alt="">
 				<p class="toast__text">Подписка закончилась. Некоторые функции будут отключены.</p>
-				<button @click="visible = false" class="toast-btn">Понятно</button>
+				<button @click="visible = false" class="toast-btn">Ок</button>
 			</div>
 		</div>
 	</div>
@@ -12,7 +12,6 @@
 
 <script setup>
 	import {ref, watch} from 'vue'
-	import {useAuthStore} from '@/stores/authStore'
 
 	const authStore = useAuthStore()
 	const visible = ref(false)

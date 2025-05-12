@@ -1,13 +1,17 @@
 <template>
-	<div class="toast" v-if="visible">
-		<p>Подписка закончилась. Некоторые функции будут отключены.</p>
-		<button class="close-btn" @click="visible = false">ОК</button>
+	<div class="toast">
+		<div class="toast__wrapper">
+			<div class="toast__inner" v-if="!visible">
+				<img class="toast__icon" src="../assets/images/rejected.svg" alt="">
+				<p class="toast__text">Подписка закончилась. Некоторые функции будут отключены.</p>
+				<button @click="visible = false" class="toast-btn">Ок</button>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script setup>
 	import {ref, watch} from 'vue'
-	import {useAuthStore} from 'stores/authStore.js'
 
 	const authStore = useAuthStore()
 	const visible = ref(false)
@@ -18,43 +22,54 @@
 </script>
 
 <style scoped>
-	.toast {
+
+	.toast__icon {
+		width: 200px;
+	}
+
+	.toast__wrapper {
 		position: fixed;
-		bottom: 20px;
-		left: 50%;
-		transform: translateX(-50%);
-		background: #ff4d4f;
-		color: white;
-		padding: 1rem 1.5rem;
-		border-radius: 12px;
-		box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-		font-size: 16px;
-		z-index: 9999;
+		left: 0;
+		right: 0;
+		width: 100%;
+		height: 100vh;
+		background: var(--background-color);
+		padding: 25px;
 		display: flex;
+		justify-content: center;
 		align-items: center;
-		gap: 1rem;
-		animation: slide-up 0.4s ease-out;
 	}
 
-	.close-btn {
-		background: white;
-		color: #ff4d4f;
+	.toast__inner{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.toast__text {
+		padding: 30px;
+		text-align: center;
+		font-size: 18px;
+		font-family: "Nunito", sans-serif;
+		font-weight: 600;
+		color: var(--text-color);
+
+	}
+
+	.toast-btn {
+		width: 100%;
+		font-size: 18px;
+		background: #a855f7;
+		color: white;
 		border: none;
-		border-radius: 6px;
-		padding: 0.3rem 0.7rem;
-		font-weight: bold;
+		font-family: "Nunito", sans-serif;
+
+		padding: 15px;
+		border-radius: 25px;
+		font-weight: 600;
 		cursor: pointer;
+		transition: background 0.2s;
 	}
 
-
-	@keyframes slide-up {
-		from {
-			transform: translateX(-50%) translateY(30px);
-			opacity: 0;
-		}
-		to {
-			transform: translateX(-50%) translateY(0);
-			opacity: 1;
-		}
-	}
 </style>
