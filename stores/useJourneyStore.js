@@ -63,6 +63,7 @@ export const useJourneyStore = defineStore('journeyStore', () => {
         selectedPreviewGoal.value = {...goal}
     }
     const handleGoalCreate = async (goalData) => {
+        const now = new Date().toISOString().slice(0, 10)
         goals.value.push({
             id: Date.now(),
             i18nKey: goalData.i18nKey,
@@ -72,7 +73,8 @@ export const useJourneyStore = defineStore('journeyStore', () => {
             icon: goalData.icon || '',
             image: goalData.image || '',
             progress: 0,
-            entries: []
+            entries: [],
+            startDate: now
         })
         selectedPreviewGoal.value = null
         isViewingActiveGoals.value = true
@@ -82,7 +84,7 @@ export const useJourneyStore = defineStore('journeyStore', () => {
     const deleteGoal = async (goalId) => {
         goals.value = goals.value.filter(goal => goal.id !== goalId)
 
-        // Если ты удаляешь текущую выбранную цель — обнуляем выбор
+
         if (selectedPreviewGoal.value?.id === goalId) {
             selectedPreviewGoal.value = null
         }
@@ -109,6 +111,7 @@ export const useJourneyStore = defineStore('journeyStore', () => {
         if (docSnap.exists()) {
             const data = docSnap.data()
             goals.value = data.journeyGoals || []
+
         }
     }
 

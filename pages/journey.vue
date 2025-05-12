@@ -64,12 +64,13 @@
 
                                     <div v-if="goal.id === selectedGoalId" class="goal-progress-container">
                                         <div class="goal-progress-text">
-                                            {{ goal.progress }} {{ goal.unit }} / {{ goal.target }} {{ goal.unit }}
+                                            {{ goal.entries?.length || 0 }} / {{ goal.target }}
                                         </div>
 
                                         <div class="progress-bar-bg">
-                                            <div class="progress-bar-fill"
-                                                 :style="{ width: Math.min((goal.progress / goal.target) * 100, 100) + '%' }"
+                                            <div
+                                                class="progress-bar-fill"
+                                                :style="{ width: Math.min((goal.entries?.length || 0) / goal.target * 100, 100) + '%' }"
                                             />
                                         </div>
                                     </div>
@@ -103,9 +104,10 @@ import HeaderWithBack from '../src/components/headerWithBack.vue'
 import GoalPreview from '../src/components/goalPReview.vue'
 import ArrowBack from '../assets/images/back.svg'
 import {useJourneyStore} from '../stores/useJourneyStore.js'
+import { format } from 'date-fns'
 import books from '../assets/images/books.png'
 import sleep from '../assets/images/sleep.png'
-
+const todayString = format(new Date(), 'yyyy-MM-dd')
 const goalToDeleteId = ref(null)
 const isShow = ref(false)
 const journeyStore = useJourneyStore()

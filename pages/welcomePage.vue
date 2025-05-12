@@ -457,54 +457,54 @@ onMounted(() => {
     color: white;
 }
 
-.animation__wrapper {
-    position: relative;
-    background: transparent;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.08); /* слабый белый / нейтральный */
-    border-radius: 28px;
-    padding: 2px; /* внутренняя зона для анимации */
-    width: max-content;
-}
+/*.animation__wrapper {*/
+/*    position: relative;*/
+/*    background: transparent;*/
+/*    overflow: hidden;*/
+/*    border: 1px solid rgba(255, 255, 255, 0.08); !* слабый белый / нейтральный *!*/
+/*    border-radius: 28px;*/
+/*    padding: 2px; !* внутренняя зона для анимации *!*/
+/*    width: max-content;*/
+/*}*/
 
-.animation {
-    position: absolute;
-    inset: 0;
-    border-radius: 25px;
-    background: conic-gradient(
-        from 0deg,
-        #efe70a,
-        #f1eb05,
-        #faee06,
-        #caf509
-    );
-    background-size: 200% 200%;
-    animation: rotateBorder 6s linear infinite;
-    z-index: 0;
-    filter: blur(10px); /* 💡 делает мягкое неоновое свечение */
-    opacity: 0.9;
-    pointer-events: none;
-    height: 80px;
-}
+/*.animation {*/
+/*    position: absolute;*/
+/*    inset: 0;*/
+/*    border-radius: 25px;*/
+/*    background: conic-gradient(*/
+/*        from 0deg,*/
+/*        #efe70a,*/
+/*        #f1eb05,*/
+/*        #faee06,*/
+/*        #caf509*/
+/*    );*/
+/*    background-size: 200% 200%;*/
+/*    animation: rotateBorder 6s linear infinite;*/
+/*    z-index: 0;*/
+/*    filter: blur(10px);*/
+/*    opacity: 0.9;*/
+/*    pointer-events: none;*/
+/*    height: 80px;*/
+/*}*/
 
 
-.button__add-goal {
-    position: relative;
-    border-radius: 30px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+/*.button__add-goal {*/
+/*    position: relative;*/
+/*    border-radius: 30px;*/
+/*    overflow: hidden;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*}*/
 
 .premium__text {
     position: relative;
     z-index: 1;
-    padding: 7px 24px;
+    text-transform: uppercase;
     font-weight: bold;
     font-family: 'Nunito', sans-serif;
-    color: white;
-    background-color: gold;
+    color: #f1cf1b;
+    font-size: 20px;
     border-radius: 25px;
     text-align: center;
 }

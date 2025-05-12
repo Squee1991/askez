@@ -22,6 +22,12 @@ export const useAuthStore = defineStore('auth', () => {
     const isPremium = ref(false);
     const isBotEnabled = ref(false);
     const isGateOpened = ref(false);
+    const premiumExpired = ref(false)
+
+
+    const trigerPremiumExpired = () => {
+        premiumExpired.value = true
+    }
 
     const setUserData = (data) => {
         name.value = data.name || null;
@@ -95,6 +101,7 @@ export const useAuthStore = defineStore('auth', () => {
             checkRevenueCatPremium();
         }, 5 * 60 * 1000);
     };
+
     const purchasePro = async () => {
         if (!Capacitor.isNativePlatform()) {
             await activatePremium();
@@ -301,6 +308,7 @@ export const useAuthStore = defineStore('auth', () => {
         isPremium,
         isBotEnabled,
         isGateOpened,
+        premiumExpired,
         setUserData,
         activatePremium,
         // loadPremiumStatus,
@@ -318,6 +326,7 @@ export const useAuthStore = defineStore('auth', () => {
         UpdateNameDisplayName,
         fetchingUser,
         markGateAsOpened,
+        trigerPremiumExpired,
         // restorePurchases,
     };
 });

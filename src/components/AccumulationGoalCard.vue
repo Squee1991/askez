@@ -10,56 +10,64 @@
 <!--        <div class="progress-bar-bg">-->
 <!--            <div class="progress-bar-fill" :style="{ width: progressPercent + '%' }"/>-->
 <!--        </div>-->
-        <JourneyGrid :entries="goal.entries" @select="handleSelect" />
+        <JourneyGrid :entries="goal.entries" :startDate="goal.startDate" @select="handleSelect" />
 
     </div>
 </template>
 
 <script setup>
-import {computed, ref} from 'vue'
-import JourneyGrid from '../components/journeyGrid.vue'
+    import { computed } from 'vue'
+    import JourneyGrid from '../components/journeyGrid.vue'
+    import { addDays, format, isToday, parseISO } from 'date-fns'
 
-const props = defineProps({
-    goal: Object
-})
+    const props = defineProps({
+        goal: Object
+    })
 
-const emit = defineEmits(['update'])
-const inputValue = ref('')
-const selectedDay = ref(null)
-const showModal = ref(false)
+    const emit = defineEmits(['update'])
 
-const progressPercent = computed(() =>
-    Math.min((props.goal.progress / props.goal.target) * 100, 100)
-)
-const handleSelect = ({ day, checked }) => {
-    const entries = props.goal.entries || []
+    const todayString = format(new Date(), 'yyyy-MM-dd')
 
-    if (checked) {
-        if (!entries.find(e => e.day === day)) {
-            entries.push({
-                day,
-                value: 1,
-                note: '',
-                date: new Date().toLocaleDateString()
-            })
+    const progressPercent = computed(() => {
+        const todayEntry = props.goal.entries?.find(
+            (e) => e.date === todayString
+        )
+        const progressToday = todayEntry ? 1 : 0
+        return Math.min((progressToday / props.goal.target) * 100, 100)
+    })
+
+    const handleSelect = ({ day, checked }) => {
+        const entries = props.goal.entries || []
+        const baseDate = parseISO(props.goal.startDate)
+        const selectedDate = addDays(baseDate, day - 1)
+        const formattedDate = format(selectedDate, 'yyyy-MM-dd')
+
+
+        if (formattedDate !== todayString) return
+
+        if (checked) {
+            if (!entries.some((e) => e.date === formattedDate)) {
+                entries.push({
+                    value: 1,
+                    note: '',
+                    date: formattedDate
+                })
+            }
+        } else {
+            const index = entries.findIndex((e) => e.date === formattedDate)
+            if (index !== -1) entries.splice(index, 1)
         }
-    } else {
-        const index = entries.findIndex(e => e.day === day)
-        if (index !== -1) {
-            entries.splice(index, 1)
+
+        const updatedGoal = {
+            ...props.goal,
+            entries: [...entries],
+            progress: entries.length
         }
+
+        emit('update', updatedGoal)
     }
-
-    const updatedGoal = {
-        ...props.goal,
-        entries: [...entries],
-        progress: entries.reduce((sum, e) => sum + (e.value || 0), 0)
-    }
-
-    emit('update', updatedGoal)
-}
-
 </script>
+
 
 <style scoped>
 .accumulation-goal {
