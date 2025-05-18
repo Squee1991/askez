@@ -86,7 +86,7 @@ export const useAuthStore = defineStore('auth', () => {
                 await setDoc(userDocRef, {
                     isPremium: active,
                     isBotEnabled: active ? isBotEnabled.value : false
-                }, { merge: true });
+                }, {merge: true});
 
                 if (!active && isBotEnabled.value) {
                     isBotEnabled.value = false;
@@ -105,7 +105,7 @@ export const useAuthStore = defineStore('auth', () => {
     const purchasePro = async () => {
         if (!Capacitor.isNativePlatform()) {
             await activatePremium();
-            return { success: true, message: '[Mock] Подписка активирована (браузер)' };
+            return {success: true, message: '[Mock] Подписка активирована (браузер)'};
         }
         try {
             const offerings = await Purchases.getOfferings();
@@ -216,7 +216,7 @@ export const useAuthStore = defineStore('auth', () => {
             isBotEnabled: false
         });
     }
-    const loginUser = async ({ email, password }) => {
+    const loginUser = async ({email, password}) => {
         const auth = getAuth();
         await signInWithEmailAndPassword(auth, email, password);
         await loadBotStateFromFirebase();
@@ -255,8 +255,8 @@ export const useAuthStore = defineStore('auth', () => {
                         name: user.displayName,
                         email: user.email
                     });
-                    await loadBotStateFromFirebase();
                     await Purchases.logIn(user.uid);
+                    await loadBotStateFromFirebase();
                     await checkRevenueCatPremium();
                 } else {
                     isPremium.value = false;

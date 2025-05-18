@@ -127,12 +127,15 @@
     "totalDays": "Всего дней",
     "notchecked": "Осталось дней",
     "checkedDays": "Отмечено",
-    "notChecked": "Не отмечено"
+    "notChecked": "Не отмечено",
+    "achiveDone": "Завершённые",
+    "achiveInProgress": "В процессе"
   },
   "achieveTitle": {
     "title": "Ваши достижения",
     "subtitle": "Всего получено достижений",
-    "achiveDone": "Завершенные"
+    "achiveDone": "Завершенные",
+    "achiveInProgress": "В процессе"
   },
   "accState": {
     "greetings": "Добро пожаловать",

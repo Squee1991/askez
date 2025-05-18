@@ -128,7 +128,8 @@
 		"totalDays": "Total days",
 		"notchecked": "Remaining",
 		"checkedDays": "Completed",
-		"notChecked": "Missed"
+		"notChecked": "Missed",
+		"achiveInProgress":"In process"
 	},
 	"achieveTitle": {
 		"title": "Your achievements",
