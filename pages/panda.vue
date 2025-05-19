@@ -261,28 +261,34 @@
 	})
 
 	onMounted(async () => {
-		await store.updateAllProgress();
-		if (!authStore.isPremium) {
-			isOverlayVisible.value = true;
-			return;
-		}
-		if (authStore.isPremium && authStore.isGateOpened) {
-			isButtonVisible.value = false;
-			isOpen.value = true;
-		} else {
-			setTimeout(() => {
-				clicked.value = true;
-			}, 100);
-			setTimeout(async () => {
-				isButtonVisible.value = false;
-				setTimeout(() => {
-					isOpen.value = true;
-				}, 100);
+		await store.updateAllProgress()
 
-				// await authStore.markGateAsOpened();
-			}, 2000);
+		if (!authStore.isPremium) {
+			isOverlayVisible.value = true
+			return
 		}
-	});
+
+		if (authStore.isGateOpened) {
+			// Ворота уже открывались ранее
+			isButtonVisible.value = false
+			isOpen.value = true
+		} else {
+			// Показываем анимацию один раз
+			setTimeout(() => {
+				clicked.value = true
+			}, 100)
+
+			setTimeout(async () => {
+				isButtonVisible.value = false
+				setTimeout(() => {
+					isOpen.value = true
+				}, 100)
+
+				// Сохраняем, что ворота открылись
+				await authStore.markGateAsOpened()
+			}, 2000)
+		}
+	})
 
 	watch(() => authStore.isPremium, (newVal) => {
 		if (!newVal) {

@@ -86,7 +86,7 @@ export const useAuthStore = defineStore('auth', () => {
                 await setDoc(userDocRef, {
                     isPremium: active,
                     isBotEnabled: active ? isBotEnabled.value : false
-                }, { merge: true });
+                }, {merge: true});
 
                 if (!active && isBotEnabled.value) {
                     isBotEnabled.value = false;
@@ -105,7 +105,7 @@ export const useAuthStore = defineStore('auth', () => {
     const purchasePro = async () => {
         if (!Capacitor.isNativePlatform()) {
             await activatePremium();
-            return { success: true, message: '[Mock] Подписка активирована (браузер)' };
+            return {success: true, message: '[Mock] Подписка активирована (браузер)'};
         }
         try {
             const offerings = await Purchases.getOfferings();
@@ -177,6 +177,19 @@ export const useAuthStore = defineStore('auth', () => {
     //         isPremium.value = docSnap.data().isPremium ?? false;
     //     }
     // };
+    const loadGateStatus = async () => {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const userDocRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(userDocRef);
+
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            isGateOpened.value = !!data.premiumGateOpened;
+        }
+    };
     const loadBotStateFromFirebase = async () => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -216,7 +229,7 @@ export const useAuthStore = defineStore('auth', () => {
             isBotEnabled: false
         });
     }
-    const loginUser = async ({ email, password }) => {
+    const loginUser = async ({email, password}) => {
         const auth = getAuth();
         await signInWithEmailAndPassword(auth, email, password);
         await loadBotStateFromFirebase();
@@ -246,50 +259,29 @@ export const useAuthStore = defineStore('auth', () => {
         email.value = null;
         password.value = null;
     };
-    // const fetchingUser = () => {
-    //     return new Promise((resolve) => {
-    //         const auth = getAuth();
-    //         onAuthStateChanged(auth, async (user) => {
-    //             if (user) {
-    //                 setUserData({
-    //                     name: user.displayName,
-    //                     email: user.email
-    //                 });
-    //                 await loadBotStateFromFirebase();
-    //                 await Purchases.logIn(user.uid);
-    //                 await checkRevenueCatPremium();
-    //             } else {
-    //                 isPremium.value = false;
-    //                 isBotEnabled.value = false;
-    //                 name.value = null;
-    //                 email.value = null;
-    //                 password.value = null;
-    //             }
-    //             resolve();
-    //         });
-    //     });
-    // };
-
-    const fetchingUser = async () => {
-        const auth = getAuth();
-        const user = auth.currentUser;
-
-        if (user) {
-            setUserData({
-                name: user.displayName,
-                email: user.email
+    const fetchingUser = () => {
+        return new Promise((resolve) => {
+            const auth = getAuth();
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    await loadGateStatus();
+                    setUserData({
+                        name: user.displayName,
+                        email: user.email
+                    });
+                    await loadBotStateFromFirebase();
+                    await checkRevenueCatPremium();
+                    await Purchases.logIn(user.uid);
+                } else {
+                    isPremium.value = false;
+                    isBotEnabled.value = false;
+                    name.value = null;
+                    email.value = null;
+                    password.value = null;
+                }
+                resolve();
             });
-
-            await Purchases.logIn(user.uid);
-            await loadBotStateFromFirebase();
-            await checkRevenueCatPremium();
-        } else {
-            isPremium.value = false;
-            isBotEnabled.value = false;
-            name.value = null;
-            email.value = null;
-            password.value = null;
-        }
+        });
     };
     const saveLanguageToFirebase = async (lang) => {
         const auth = getAuth();

@@ -128,12 +128,14 @@
 		"totalDays": "Total days",
 		"notchecked": "Remaining",
 		"checkedDays": "Completed",
-		"notChecked": "Missed"
+		"notChecked": "Missed",
+		"achiveInProgress":"In process"
 	},
 	"achieveTitle": {
 		"title": "Your achievements",
 		"subtitle": "Total achievements received",
-		"achiveDone": "Completed"
+		"achiveDone": "Completed",
+
 	},
 	"accState": {
 		"greetings": "Welcome",
