@@ -40,7 +40,7 @@ export const useAuthStore = defineStore('auth', () => {
         try {
             await fn();
         } catch (e) {
-            console.error('[RevenueCat]', e);
+            // console.error('[RevenueCat]', e);
         }
     };
 
@@ -105,12 +105,12 @@ export const useAuthStore = defineStore('auth', () => {
     const purchasePro = async () => {
         if (!Capacitor.isNativePlatform()) {
             await activatePremium();
-            return {success: true, message: '[Mock] Подписка активирована (браузер)'};
+            // return {success: true, message: '[Mock] Подписка активирована (браузер)'};
         }
         try {
             const offerings = await Purchases.getOfferings();
             if (!offerings.current || offerings.current.availablePackages.length === 0) {
-                const msg = 'Нет активных предложений';
+                // const msg = 'Нет активных предложений';
                 alert(JSON.stringify({error: msg, offerings}, null, 2));
                 return {success: false, message: msg};
             }
@@ -119,7 +119,7 @@ export const useAuthStore = defineStore('auth', () => {
                 offerings.current.availablePackages.find(p => p.packageType === Purchases.PackageType.MONTHLY);
 
             if (!pkg) {
-                const msg = 'Тариф не найден ($rc_monthly)';
+                // const msg = 'Тариф не найден ($rc_monthly)';
                 alert(JSON.stringify({
                     error: msg,
                     availablePackages: offerings.current.availablePackages.map(p => p.identifier)
@@ -130,19 +130,20 @@ export const useAuthStore = defineStore('auth', () => {
             const active = customerInfo.entitlements.active['Premium'];
             if (active) {
                 await activatePremium();
-                alert(JSON.stringify({success: true, message: 'Подписка активирована!'}, null, 2));
+                // alert(JSON.stringify({success: true, message: 'Подписка активирована!'}, null, 2));
                 return {success: true};
             } else {
-                const msg = 'Подписка не активна (entitlement Premium не найден)';
-                alert(JSON.stringify({error: msg, entitlements: customerInfo.entitlements}, null, 2));
-                return {success: false, message: msg};
+                console.log('error')
+                // const msg = 'Подписка не активна (entitlement Premium не найден)';
+                // alert(JSON.stringify({error: msg, entitlements: customerInfo.entitlements}, null, 2));
+                // return {success: false, message: msg};
             }
         } catch (e) {
-            alert('[RevenueCat] Ошибка:\n' + JSON.stringify({
-                exception: e,
-                message: e.message || 'Неизвестная ошибка'
-            }, null, 2));
-            return {success: false, message: e.message || 'Неизвестная ошибка'};
+            // alert('[RevenueCat] Ошибка:\n' + JSON.stringify({
+            //     exception: e,
+            //     message: e.message || 'Неизвестная ошибка'
+            // }, null, 2));
+            // return {success: false, message: e.message || 'Неизвестная ошибка'};
         }
     };
 

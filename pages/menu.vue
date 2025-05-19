@@ -49,7 +49,7 @@
 						</button>
 					</div>
 				</div>
-<!--				<Footer/>-->
+				<Footer/>
 			</div>
 		</div>
 	</Transition>
@@ -151,9 +151,9 @@
 		middleware: ['auth'],
 	})
 
-	definePageMeta({
-		layout: 'footerlayout'
-	})
+	// definePageMeta({
+	// 	layout: 'footerlayout'
+	// })
 
 </script>
 

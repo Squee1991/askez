@@ -6,24 +6,22 @@
 			<div class="about__info">
 				<div class="about__header">
 					<h1 class="about__title">{{ $t('about.title') }}</h1>
-					<p class="about__subtitle">{{ $t('about.subtitle') }}</p>
+<!--					<p class="about__subtitle">{{ $t('about.subtitle') }}</p>-->
 				</div>
 				<div class="about__description">
-					<div class="about__intro-card">
-						<p class="about__intro">
-							{{ $t('about.intro') }}
-						</p>
-					</div>
-
+<!--					<div class="about__intro-card">-->
+<!--						<p class="about__intro">-->
+<!--							{{ $t('about.intro') }}-->
+<!--						</p>-->
+<!--					</div>-->
 					<div class="about__sections-container">
-						<div class="about__section">
-							<div class="about__section-icon">🧘</div>
-							<h2 class="about__section-title">{{ $t('about.section1_title') }}</h2>
-							<p>
-								{{ $t('about.section1_text') }}
-							</p>
-						</div>
-
+<!--						<div class="about__section">-->
+<!--							<div class="about__section-icon">🧘</div>-->
+<!--							<h2 class="about__section-title">{{ $t('about.section1_title') }}</h2>-->
+<!--							<p>-->
+<!--								{{ $t('about.section1_text') }}-->
+<!--							</p>-->
+<!--						</div>-->
 						<div class="about__section">
 							<div class="about__section-icon">⚡</div>
 							<h2 class="about__section-title">{{ $t('about.section2_title') }}</h2>
@@ -35,14 +33,13 @@
 								<li>{{ $t('about.feature_discipline') }}</li>
 							</ul>
 						</div>
-
-						<div class="about__section">
-							<div class="about__section-icon">🌟</div>
-							<h2 class="about__section-title">{{ $t('about.section3_title') }}</h2>
-							<p>
-								{{ $t('about.section3_text') }}
-							</p>
-						</div>
+<!--						<div class="about__section">-->
+<!--							<div class="about__section-icon">🌟</div>-->
+<!--							<h2 class="about__section-title">{{ $t('about.section3_title') }}</h2>-->
+<!--							<p>-->
+<!--								{{ $t('about.section3_text') }}-->
+<!--							</p>-->
+<!--						</div>-->
 					</div>
 				</div>
 

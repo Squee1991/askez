@@ -333,7 +333,7 @@
 		width: 50%;
 		background: #1ab41a;
 		border-radius: 25px;
-		margin: 10px;
+		margin: 5px;
 		font-family: "Nunito", sans-serif;
 	}
 

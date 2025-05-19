@@ -2,7 +2,6 @@
     <div class="achieve__inner">
         <div class="achieve__text">
             <div class="achieve__title-block">
-                <div class="achieve__title">{{ $t('achieveTitle.title') }}</div>
                 <div class="achieve__subtitle">{{ $t('achieveTitle.subtitle') }}</div>
             </div>
             <div class="ring-wrapper" :style="{ '--progress': progressValue }">
@@ -10,9 +9,8 @@
                 <div class="ring-text">{{ activeAchievementCount }} / {{ totalAchievements }}</div>
             </div>
         </div>
-
-
         <div class="achieve__list-wrapper">
+            <div class="achieve__title">{{ $t('achieveTitle.title') }}</div>
             <div class="achieve__list">
                 <div
                         v-for="item in achievementData"
@@ -87,7 +85,7 @@ const achievementData = computed(() =>
     border-radius: 20px;
     font-family: 'Nunito', serif;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 20px;
 }
 
 .achieve__title-block {
@@ -97,12 +95,15 @@ const achievementData = computed(() =>
 .achieve__title {
     color: var(--text-color);
     font-size: 24px;
+    font-family: "Nunito", sans-serif;
+    padding: 20px;
 }
 
 .achieve__subtitle {
-    margin-top: 10px;
     font-weight: 100;
-    font-size: 16px;
+    color: var(--text-color);
+    font-family: "Nunito", sans-serif;
+    font-size: 20px;
 }
 
 .ring-wrapper {
@@ -163,7 +164,6 @@ const achievementData = computed(() =>
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    animation: fadeInUp 0.6s ease both;
 }
 
 .badge {
@@ -187,14 +187,5 @@ const achievementData = computed(() =>
     font-weight: 400;
 }
 
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+
 </style>

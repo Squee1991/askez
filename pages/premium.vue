@@ -9,7 +9,7 @@
                     <span class="premium__list-text">{{ t(`premiumValues.${index - 1}`) }}</span>
                 </div>
             </div>
-            <button class="premium-button" @click="buyPremium">{{ $t('buyPremium.buy') }} 1.99$</button>
+            <button class="premium-button" @click="buyPremium">{{ $t('buyPremium.buy') }} 0.99$</button>
             <span class="play__info">{{ $t('googlePlay.pay') }}</span>
             <div class="premium-policy-link">
                 <NuxtLink class="policy__btn" to="policyPrivacy">{{ $t('privacy.page') }}</NuxtLink>
@@ -39,12 +39,12 @@ const buyPremium = async () => {
             showPremiumModal.value = false;
             router.push('/welcomePage');
         } else {
-            alert(result.message || 'Покупка не удалась или подписка не активна');
+            // alert(result.message || 'Покупка не удалась или подписка не активна');
         }
 
     } catch (e) {
-        console.error('Ошибка при покупке подписки:', e);
-        alert('Что-то пошло не так во время покупки.');
+        // console.error('Ошибка при покупке подписки:', e);
+        // alert('Что-то пошло не так во время покупки.');
     }
 };
 
