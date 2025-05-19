@@ -177,6 +177,19 @@ export const useAuthStore = defineStore('auth', () => {
     //         isPremium.value = docSnap.data().isPremium ?? false;
     //     }
     // };
+    const loadGateStatus = async () => {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const userDocRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(userDocRef);
+
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            isGateOpened.value = !!data.premiumGateOpened;
+        }
+    };
     const loadBotStateFromFirebase = async () => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -251,13 +264,14 @@ export const useAuthStore = defineStore('auth', () => {
             const auth = getAuth();
             onAuthStateChanged(auth, async (user) => {
                 if (user) {
+                    await loadGateStatus();
                     setUserData({
                         name: user.displayName,
                         email: user.email
                     });
-                    await Purchases.logIn(user.uid);
                     await loadBotStateFromFirebase();
                     await checkRevenueCatPremium();
+                    await Purchases.logIn(user.uid);
                 } else {
                     isPremium.value = false;
                     isBotEnabled.value = false;

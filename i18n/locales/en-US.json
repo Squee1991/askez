@@ -134,7 +134,8 @@
 	"achieveTitle": {
 		"title": "Your achievements",
 		"subtitle": "Total achievements received",
-		"achiveDone": "Completed"
+		"achiveDone": "Completed",
+
 	},
 	"accState": {
 		"greetings": "Welcome",
