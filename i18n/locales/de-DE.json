@@ -143,7 +143,7 @@
 	},
 	"checkedBtns": {
 		"done": "Erledigt",
-		"missed": "Verpasst"
+		"missed": "Nicht erledigt"
 	},
 	"notAllowed": {
 		"done": "Datum wurde bereits markiert",
@@ -185,7 +185,7 @@
 		"InProgressTotal": "In Bearbeitung",
 		"notCompleted": "Nicht erledigt",
 		"active": "Aktive Aufgaben",
-		"archieve": "Archivierte Aufgaben"
+		"archieve": "Reise aufgaben"
 	},
 	"hasNotAskez": {
 		"value": "Keine erstellten Askezas"
@@ -261,8 +261,8 @@
 		"delTask": "Löschen"
 	},
 	"CheckedProgress": {
-		"checked": "Tage markiert",
-		"notChecked": "Tage nicht markiert"
+		"checked": "Tage erledigt",
+		"notChecked": "Tage nicht erledigt"
 	},
 	"bublingWindows": {
 		"fieldEmpty": "Geben Sie den Namen der Ziele",

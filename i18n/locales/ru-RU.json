@@ -141,7 +141,7 @@
   },
   "checkedBtns": {
     "done": "Сделано",
-    "missed": "Пропустил"
+    "missed": "Не сделано"
   },
   "notAllowed": {
     "done": "Дата уже отмечена",

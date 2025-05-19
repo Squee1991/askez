@@ -61,8 +61,8 @@ const availableTotal = computed(() => goals.value.length)
 const availableStarted = computed(() =>
     goals.value.filter(g => g.progress > 0 && g.progress < g.target).length
 )
-const availableNotStarted = computed(() =>
-    goals.value.filter(g => g.progress === 0).length
+const availableCompleted = computed(() =>
+    goals.value.filter(g => g.progress >= g.target).length
 )
 const availableCompletion = computed(() => {
     const total = goals.value.length
@@ -87,10 +87,10 @@ const availableCompletion = computed(() => {
                             <div class="total__task">
                                 {{ $t('statslable.doneTotal') }}: <span class="askez__counter">{{ filteredDone }}</span>
                             </div>
-                            <div class="total__task">
-                                {{ $t('statslable.notCompleted') }}: <span
-                                    class="askez__counter">{{ filteredNotCompleted }}</span>
-                            </div>
+<!--                            <div class="total__task">-->
+<!--                                {{ $t('statslable.notCompleted') }}: <span-->
+<!--                                    class="askez__counter">{{ filteredNotCompleted }}</span>-->
+<!--                            </div>-->
                             <div class="total__task">
                                 {{ $t('statslable.InProgressTotal') }}: <span
                                     class="askez__counter">{{ filteredInProgress }}</span>
@@ -108,14 +108,15 @@ const availableCompletion = computed(() => {
                                 }}</span>
                             </div>
                             <div class="total__task">
+                                {{ $t('statslable.doneTotal') }}: <span class="askez__counter">{{ availableCompleted }}</span>
+                            </div>
+                            <div class="total__task">
                                 {{ $t('statslable.InProgressTotal') }}: <span class="askez__counter">{{
                                 availableStarted
                                 }}</span>
                             </div>
-<!--                            <div class="total__task">-->
-<!--                                {{ $t('statslable.notStartedGoals') }}: <span-->
-<!--                                    class="askez__counter">{{ availableNotStarted }}</span>-->
-<!--                            </div>-->
+
+
                         </div>
                         <div class="not__active-askez" v-else>
                             {{ $t('journey.empty') }}

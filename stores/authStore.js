@@ -246,28 +246,50 @@ export const useAuthStore = defineStore('auth', () => {
         email.value = null;
         password.value = null;
     };
-    const fetchingUser = () => {
-        return new Promise((resolve) => {
-            const auth = getAuth();
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    setUserData({
-                        name: user.displayName,
-                        email: user.email
-                    });
-                    await loadBotStateFromFirebase();
-                    await Purchases.logIn(user.uid);
-                    await checkRevenueCatPremium();
-                } else {
-                    isPremium.value = false;
-                    isBotEnabled.value = false;
-                    name.value = null;
-                    email.value = null;
-                    password.value = null;
-                }
-                resolve();
+    // const fetchingUser = () => {
+    //     return new Promise((resolve) => {
+    //         const auth = getAuth();
+    //         onAuthStateChanged(auth, async (user) => {
+    //             if (user) {
+    //                 setUserData({
+    //                     name: user.displayName,
+    //                     email: user.email
+    //                 });
+    //                 await loadBotStateFromFirebase();
+    //                 await Purchases.logIn(user.uid);
+    //                 await checkRevenueCatPremium();
+    //             } else {
+    //                 isPremium.value = false;
+    //                 isBotEnabled.value = false;
+    //                 name.value = null;
+    //                 email.value = null;
+    //                 password.value = null;
+    //             }
+    //             resolve();
+    //         });
+    //     });
+    // };
+
+    const fetchingUser = async () => {
+        const auth = getAuth();
+        const user = auth.currentUser;
+
+        if (user) {
+            setUserData({
+                name: user.displayName,
+                email: user.email
             });
-        });
+
+            await Purchases.logIn(user.uid);
+            await loadBotStateFromFirebase();
+            await checkRevenueCatPremium();
+        } else {
+            isPremium.value = false;
+            isBotEnabled.value = false;
+            name.value = null;
+            email.value = null;
+            password.value = null;
+        }
     };
     const saveLanguageToFirebase = async (lang) => {
         const auth = getAuth();

@@ -142,7 +142,7 @@
 	},
 	"checkedBtns": {
 		"done": "Mark as Done",
-		"missed": "Mark as Missed"
+		"missed": "Mark as not done"
 	},
 	"notAllowed": {
 		"done": "Date already marked",
@@ -184,7 +184,7 @@
 		"InProgressTotal": "In progress",
 		"notCompleted": "Not completed",
 		"active": "Active tasks",
-		"archieve": "Archieve tasks"
+		"archieve": "Journey"
 	},
 	"hasNotAskez": {
 		"value": "No created goals",
@@ -261,8 +261,8 @@
 		"delTask": "Delete"
 	},
 	"CheckedProgress": {
-		"checked": "Marked days",
-		"notChecked": "Unmarked days"
+		"checked": "Marked as done",
+		"notChecked": "Marked as not done"
 	},
 	"bublingWindows": {
 		"fieldEmpty": "Enter the name of the Askesis",
@@ -271,7 +271,7 @@
 	"footerBtnText": {
 		"menu": "Menu",
 		"archieve": "Archieve",
-		"journey": "Reise",
+		"journey": "Journey",
 		"panda": "Panda",
 		"tasks": "Tasks"
 	},

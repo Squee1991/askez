@@ -33,13 +33,13 @@ export const useJourneyStore = defineStore('journeyStore', () => {
     const readyGoals = ref([
         {i18nKey: 'books', icon: 'read_books', image: 'books', target: 21},
         {i18nKey: 'water', icon: 'drink_water', image: 'water', target: 21},
-        {i18nKey: 'meditate', icon: 'meditation', target: 21},
-        {i18nKey: 'wake_7am', icon: 'wake_up', target: 21},
-        {i18nKey: 'evening_run', icon: 'run', target: 21},
-        {i18nKey: 'no_sugar', icon: 'no_sugar', target: 21},
+        {i18nKey: 'meditate', icon: 'meditation', image: 'meditate', target: 21},
+        {i18nKey: 'wake_7am', icon: 'wake_up',  image: 'wake_7am', target: 21},
+        {i18nKey: 'evening_run', icon: 'run', image: 'evening_run', target: 21},
+        {i18nKey: 'no_sugar', icon: 'no_sugar', image: 'no_sugar', target: 21},
         {i18nKey: 'sleep', icon: 'sleep_time', image: 'sleep', target: 21},
-        {i18nKey: 'alcohol', icon: 'no_alcohol', target: 21},
-        {i18nKey: 'media', icon: 'social_media', target: 21}
+        {i18nKey: 'alcohol', icon: 'no_alcohol', image: 'alcohol', target: 21},
+        {i18nKey: 'media', icon: 'social_media', image: 'media', target: 21}
     ])
 
     const selectedPreviewGoal = ref(null)

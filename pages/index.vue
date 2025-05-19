@@ -1,30 +1,21 @@
 <template>
 	<div class="start__page">
 		<div class="form__logo">
-			<img class="form__logo-icon" src="../assets/images/logo.png" alt="Logo"/>
+			<img class="form__logo-icon" src="../assets/images/logo.png" alt="Logo" />
 		</div>
-		<Transition name="fade">
-			<div v-if="isLoading" class="loading-screen">
-				<Transition name="fade">
-					<div v-if="loading" class="loading">{{ $t('accState.load') }}</div>
-				</Transition>
-				<div class="loader"></div>
+		<div class="wrapper">
+			<div class="container-lottie">
+				<div ref="animationContainer"></div>
 			</div>
-		</Transition>
-		<Transition name="fade">
-			<div v-if="!isLoading" class="wrapper">
-				<div class="container-lottie">
-					<div ref="animationContainer"></div>
+			<Transition name="fade">
+				<div v-if="showButton" class="nuxt__links">
+					<button @click="toRegistration" class="btn">{{ $t("startPage.value") }}</button>
 				</div>
-				<Transition name="fade">
-					<div v-if="showButton" class="nuxt__links">
-						<button @click="toRegistration" class="btn"> {{ $t("startPage.value")}}</button>
-					</div>
-				</Transition>
-			</div>
-		</Transition>
+			</Transition>
+		</div>
 	</div>
 </template>
+
 <script setup>
 	import Lottie from 'lottie-web'
 	import {ref, onMounted, nextTick} from 'vue'
@@ -33,7 +24,6 @@
 	const router = useRouter()
 	const animation = ref(false)
 	const loading = ref(false)
-	const isLoading = ref(true);
 	const animationContainer = ref(null)
 	const config = useRuntimeConfig()
 	const apiBase = config.public.apiBase;
@@ -42,26 +32,22 @@
 		router.push('singup')
 	}
 
-	onMounted(() => {
+	onMounted(async () => {
+		loading.value = true;
 		setTimeout(() => {
-			loading.value = true
-		}, 300)
-		setTimeout(async () => {
-			isLoading.value = false
-			await nextTick()
-			if (animationContainer.value) {
-				Lottie.loadAnimation({
-					container: animationContainer.value,
-					loop: true,
-					autoplay: true,
-					animationData: Panda
-				})
-			}
-			setTimeout(() => {
-				showButton.value = true
-			}, 500)
-		}, 2000)
-	})
+			loading.value = false;
+			showButton.value = true;
+		}, 1000);
+		await nextTick();
+		if (animationContainer.value) {
+			Lottie.loadAnimation({
+				container: animationContainer.value,
+				loop: true,
+				autoplay: true,
+				animationData: Panda
+			});
+		}
+	});
 
 	definePageMeta({
 		middleware: ['auth'],
@@ -202,9 +188,9 @@
 		color: #FFFFFF;
 		border-radius: 30px;
 		width: 100%;
-		font-size: 17px;
-		font-weight: 500;
-		font-family: -apple-system, BlinkMacSystemFont, "Nunito", sans-serif;
+		font-size: 18px;
+		font-weight: 600;
+		font-family: "Nunito", sans-serif;
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 		transition: all 0.2s ease;
 	}

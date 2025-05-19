@@ -309,7 +309,6 @@
 
 	const skippedDatesAttributes = computed(() => {
 		if (!selectedTask.value) return [];
-
 		const start = convertToDate(selectedTask.value.dateRange.start);
 		const end = new Date();
 		end.setHours(0, 0, 0, 0);
@@ -413,20 +412,25 @@
 		selDate.setHours(0, 0, 0, 0);
 		const formatted = formatDateLocal(selDate);
 		const taskStart = new Date(convertToDate(selectedTask.value.dateRange.start));
-		taskStart.setHours(0, 0, 0, 0);
 		const taskEnd = new Date(convertToDate(selectedTask.value.dateRange.end));
+		const today = new Date();
+		today.setHours(0, 0, 0, 0);
+		taskStart.setHours(0, 0, 0, 0);
 		taskEnd.setHours(0, 0, 0, 0);
 		if (selDate < taskStart || selDate > taskEnd) {
 			showNotAllowed('outside')
 			return;
 		}
-
+		if (selDate > today) {
+			showNotAllowed('onlyToday')
+			return;
+		}
 		if (checkedDates.value.includes(formatted) || missedDates.value.includes(formatted)) {
 			showNotAllowed('done');
 			return;
 		}
+		selectedDate.value = formatted;
 		isDateSelected.value = true;
-		selectedDate.value = formatDateLocal(selDate);
 	};
 
 	const disabledDates = computed(() => {
@@ -489,11 +493,11 @@
 	const isDateMarked = computed(() => {
 		const date = selectedDate.value;
 		if (!date) return true;
-		const today = getLocalDate();
-		if (date !== today) {
-			showNotAllowed('onlyToday')
-			return true;
-		}
+		// const today = getLocalDate();
+		// if (date !== today) {
+		// 	showNotAllowed('onlyToday')
+		// 	return true;
+		// }
 		return checkedDates.value.includes(date) || missedDates.value.includes(date);
 	});
 
