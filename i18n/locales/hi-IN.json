@@ -140,8 +140,8 @@
 		"load": "लोड हो रहा है"
 	},
 	"checkedBtns": {
-		"done": "किया गया",
-		"missed": "छूट गया"
+		"done": "पूरा चिह्नित करें",
+		"missed": "अपूर्ण चिह्नित करें"
 	},
 	"notAllowed": {
 		"done": "तारीख पहले ही चिह्नित है",
@@ -174,16 +174,16 @@
 	},
 	"navTop": {
 		"achiv": "उपलब्धियाँ",
-		"askez": "सभी अस्केज़ा",
+		"askez": "सभी लक्ष्य",
 		"stats": "आँकड़े"
 	},
 	"statslable": {
 		"total": "कुल लक्ष्य",
-		"doneTotal": "कुल पूर्ण",
+		"doneTotal": "पूरा",
 		"InProgressTotal": "प्रगति में",
-		"notCompleted": "अपूर्ण",
+		"notCompleted": "अधूरा",
 		"active": "सक्रिय कार्य",
-		"archieve": "संग्रहीत कार्य"
+		"journey": "सक्रिय लक्ष्य"
 	},
 	"hasNotAskez": {
 		"value": "कोई अस्केज़ा नहीं बनाई गई"
@@ -259,8 +259,8 @@
 		"delTask": "हटाएं"
 	},
 	"CheckedProgress": {
-		"checked": "पूरा किए गए दिन",
-		"notChecked": "अपूर्ण दिन"
+		"checked": "दिन पूरे",
+		"notChecked": "दिन अधूरे"
 	},
 	"bublingWindows": {
 		"fieldEmpty": "अस्केज़ा का नाम दर्ज करें",

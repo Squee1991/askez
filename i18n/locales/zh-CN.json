@@ -142,8 +142,8 @@
 		"load": "加载中"
 	},
 	"checkedBtns": {
-		"done": "完成",
-		"missed": "错过"
+		"done": "标记为已完成",
+		"missed": "标记为未完成"
 	},
 	"notAllowed": {
 		"done": "日期已标记",
@@ -176,16 +176,16 @@
 	},
 	"navTop": {
 		"achiv": "成就",
-		"askez": "所有修行",
+		"askez": "全部目标",
 		"stats": "统计"
 	},
 	"statslable": {
 		"total": "总目标",
-		"doneTotal": "已完成总数",
+		"doneTotal": "已完成",
 		"InProgressTotal": "进行中",
 		"notCompleted": "未完成",
-		"active": "活动任务",
-		"archieve": "归档任务"
+		"active": "活跃任务",
+		"journey": "活跃目标"
 	},
 	"hasNotAskez": {
 		"value": "尚未创建修行"
@@ -259,8 +259,8 @@
 		"delTask": "删除"
 	},
 	"CheckedProgress": {
-		"checked": "已完成",
-		"notChecked": "未完成"
+		"checked": "完成的天数",
+		"notChecked": "未完成的天数"
 	},
 	"bublingWindows": {
 		"fieldEmpty": "输入修行的名称",

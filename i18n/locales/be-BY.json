@@ -142,8 +142,8 @@
 		"load": "Загрузка"
 	},
 	"checkedBtns": {
-		"done": "Зроблена",
-		"missed": "Прапусціў"
+		"done": "Выконана",
+		"missed": "Не выканана"
 	},
 	"notAllowed": {
 		"done": "Дата ўжо адзначана",
@@ -175,17 +175,17 @@
 		"value": "Наступны крок"
 	},
 	"navTop": {
-		"achiv": "Дасціжэнні",
-		"askez": "Усе аскезы",
+		"achiv": "Дасягненні",
+		"askez": "Усе мэты",
 		"stats": "Статыстыка"
 	},
 	"statslable": {
-		"total": "Усяго аскезаў",
-		"doneTotal": "Усяго выканана",
+		"total": "Усяго мэтаў",
+		"doneTotal": "Выконана",
 		"InProgressTotal": "У працэсе",
 		"notCompleted": "Не выканана",
-		"active": "Актыўныя аскезы",
-		"archieve": "Архіўныя аскезы"
+		"active": "Актыўныя задачы",
+		"journey": "Актыўныя мэты"
 	},
 	"hasNotAskez": {
 		"value": "Няма актыуных аскез"
@@ -261,8 +261,8 @@
 		"delTask": "Выдаліць"
 	},
 	"CheckedProgress": {
-		"checked": " Выканана",
-		"notChecked": "Не выканана"
+		"checked": "Дзён выканана",
+		"notChecked": "Дзён не выканана"
 	},
 	"bublingWindows": {
 		"fieldEmpty": "Увядзіце назву Аскезы",

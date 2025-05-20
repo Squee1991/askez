@@ -179,11 +179,11 @@
 	},
 	"statslable": {
 		"total": "Objectifs totaux",
-		"doneTotal": "Total accompli",
+		"doneTotal": "Terminés",
 		"InProgressTotal": "En cours",
-		"notCompleted": "Non accompli",
+		"notCompleted": "Non faits",
 		"active": "Tâches actives",
-		"archieve": "Tâches archivées"
+		"journey": "Objectifs actifs"
 	},
 	"hasNotAskez": {
 		"value": "Aucune Tâches créée"
@@ -259,8 +259,8 @@
 		"delTask": "Supprimer"
 	},
 	"CheckedProgress": {
-		"checked": "Objectif atteint",
-		"notChecked": "Objectif non atteint"
+		"checked": "Jours faits",
+		"notChecked": "Jours non faits"
 	},
 	"bublingWindows": {
 		"fieldEmpty": "Entrez le nom de l'ascèse",

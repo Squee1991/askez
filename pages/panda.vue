@@ -310,7 +310,7 @@
 		width: 250px;
 		height: 90px;
 		border-radius: 50%;
-		background: #f9d3e3;
+		background: #e9ddc7; /* древесный */
 		z-index: 0;
 		display: flex;
 		justify-content: center;
@@ -321,8 +321,8 @@
 		width: 200px;
 		height: 60px;
 		border-radius: 50%;
-		background: #b5d6c3;
-		opacity: 0.6;
+		background: #a8b190; /* зелёный татами */
+		opacity: 0.5;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -332,7 +332,7 @@
 		width: 150px;
 		height: 30px;
 		border-radius: 50%;
-		background: #f2c572;
+		background: #d8d3cd; /* рисовая бумага / светло-серый */
 	}
 
 
@@ -376,7 +376,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		margin-bottom: 30px;
+		margin-bottom: 20px;
 	}
 
 	.rank__value {
@@ -403,7 +403,7 @@
 
 	.hero__icon-shadow {
 		position: absolute;
-		bottom: -90px;
+		bottom: -86px;
 		left: 32px;
 		width: 95%;
 		transform: skewX(-30deg) scaleY(0.4) translate(12px, 15px);
@@ -438,12 +438,12 @@
 	.progressbar {
 		position: relative;
 		width: 200px;
-		height: 40px;
+		height: 35px;
 		background: #e0e0e0;
 		border-radius: 10px;
 		overflow: hidden;
 		box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-		margin-bottom: 30px;
+		margin-bottom: 15px;
 	}
 
 	.fill {

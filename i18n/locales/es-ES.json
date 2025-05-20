@@ -176,16 +176,16 @@
 	},
 	"navTop": {
 		"achiv": "Logros",
-		"askez": "Todas las ascesis",
+		"askez": "Todas las metas",
 		"stats": "Estadísticas"
 	},
 	"statslable": {
-		"total": "Objetivos totales",
-		"doneTotal": "Total completado",
+		"total": "Metas totales",
+		"doneTotal": "Completadas",
 		"InProgressTotal": "En progreso",
-		"notCompleted": "No completado",
+		"notCompleted": "No hechas",
 		"active": "Tareas activas",
-		"archieve": "Tareas archivadas"
+		"journey": "Metas activas"
 	},
 	"hasNotAskez": {
 		"value": "No hay askezas creadas"
@@ -261,8 +261,8 @@
 		"delTask": "Eliminar"
 	},
 	"CheckedProgress": {
-		"checked": "Objetivo completado",
-		"notChecked": "Objetivo no completado"
+		"checked": "Días hechos",
+		"notChecked": "Días no hechos"
 	},
 	"bublingWindows": {
 		"fieldEmpty": "Ingrese el nombre de la ascesis",

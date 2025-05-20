@@ -178,8 +178,8 @@
 	}
 
 	.journey-day__date {
-		width: 65px;
-		height: 65px;
+		/*width: 65px;*/
+		/*height: 65px;*/
 		display: flex;
 		flex-direction: column;
 		align-items: center;

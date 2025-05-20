@@ -179,12 +179,12 @@
 		"stats": "Statystyki"
 	},
 	"statslable": {
-		"total": "Łączna liczba celów",
-		"doneTotal": "Wykonano ogółem",
+		"total": "Wszystkie cele",
+		"doneTotal": "Wykonane",
 		"InProgressTotal": "W trakcie",
-		"notCompleted": "Nie wykonano",
+		"notCompleted": "Niewykonane",
 		"active": "Aktywne zadania",
-		"archieve": "Zarchiwizowane"
+		"journey": "Aktywne cele"
 	},
 	"hasNotAskez": {
 		"value": "Brak utworzonych ascez"

@@ -174,16 +174,16 @@
 	},
 	"navTop": {
 		"achiv": "Conquistas",
-		"askez": "Todas as askezas",
+		"askez": "Todas as metas",
 		"stats": "Estatísticas"
 	},
 	"statslable": {
-		"total": "Total de objetivos",
-		"doneTotal": "Total concluído",
+		"total": "Metas totais",
+		"doneTotal": "Concluídas",
 		"InProgressTotal": "Em andamento",
-		"notCompleted": "Não concluído",
+		"notCompleted": "Não feitas",
 		"active": "Tarefas ativas",
-		"archieve": "Tarefas arquivadas"
+		"journey": "Metas ativas"
 	},
 	"hasNotAskez": {
 		"value": "Nenhuma askeza criada"
@@ -259,8 +259,8 @@
 		"delTask": "Excluir"
 	},
 	"CheckedProgress": {
-		"checked": "Dias concluídos",
-		"notChecked": "Dias não concluídos"
+		"checked": "Dias feitos",
+		"notChecked": "Dias não feitos"
 	},
 	"bublingWindows": {
 		"fieldEmpty": "Digite o nome da Askeza",

@@ -176,16 +176,16 @@
 	},
 	"navTop": {
 		"achiv": "Досягнення",
-		"askez": "Всі аскези",
+		"askez": "Усі цілі",
 		"stats": "Статистика"
 	},
 	"statslable": {
 		"total": "Усього цілей",
-		"doneTotal": "Всього виконано",
+		"doneTotal": "Виконано",
 		"InProgressTotal": "У процесі",
 		"notCompleted": "Не виконано",
 		"active": "Активні завдання",
-		"archieve": "Архівні завдання"
+		"journey": "Активні цілі"
 	},
 	"hasNotAskez": {
 		"value": "Немає створених цілей",
@@ -262,8 +262,8 @@
 		"delTask": "Видалити"
 	},
 	"CheckedProgress": {
-		"checked": " Виконано",
-		"notChecked": "Не виконано"
+		"checked": "Днів виконано",
+		"notChecked": "Днів не виконано"
 	},
 	"bublingWindows": {
 		"fieldEmpty": "Введіть назву Аскези",

@@ -143,8 +143,8 @@
 		"load": "جار التحميل"
 	},
 	"checkedBtns": {
-		"done": "تم",
-		"missed": "فات"
+		"done": "وضع كمنجز",
+		"missed": "وضع كغير منجز"
 	},
 	"notAllowed": {
 		"done": "تم تحديد التاريخ بالفعل",
@@ -178,16 +178,16 @@
 	},
 	"navTop": {
 		"achiv": "الإنجازات",
-		"askez": "كل الأسكازات",
+		"askez": "جميع الأهداف",
 		"stats": "الإحصائيات"
 	},
 	"statslable": {
 		"total": "إجمالي الأهداف",
-		"doneTotal": "إجمالي المنجز",
+		"doneTotal": "منجزة",
 		"InProgressTotal": "قيد التنفيذ",
-		"notCompleted": "لم يكتمل",
-		"active": "المهام النشطة",
-		"archieve": "المهام المؤرشفة"
+		"notCompleted": "غير منجزة",
+		"active": "مهام نشطة",
+		"journey": "أهداف نشطة"
 	},
 	"hasNotAskez": {
 		"value": "لا توجد أسكازات مُنشأة"
@@ -263,8 +263,8 @@
 		"delTask": "حذف"
 	},
 	"CheckedProgress": {
-		"checked": "الأيام التي تم التحقق منها",
-		"notChecked": "الأيام الفائتة"
+		"checked": "أيام منجزة",
+		"notChecked": "أيام غير منجزة"
 	},
 	"bublingWindows": {
 		"fieldEmpty": "أدخل اسم الزهد",

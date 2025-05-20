@@ -143,8 +143,8 @@
     "load": "Загрузка"
   },
   "checkedBtns": {
-    "done": "Сделано",
-    "missed": "Не сделано"
+    "done": "Выполнено",
+    "missed": "Не выполнено"
   },
   "notAllowed": {
     "done": "Дата уже отмечена",
@@ -186,7 +186,7 @@
     "InProgressTotal": "В процессе",
     "notCompleted": "Не выполнено",
     "active": "Активные задачи",
-    "archieve": "Мои цели"
+    "journey": "Активные цели"
   },
   "hasNotAskez": {
     "value": "Нет активных аскез"
@@ -263,8 +263,8 @@
     "delTask": "Delete"
   },
   "CheckedProgress": {
-    "checked": "Выполнено дней",
-    "notChecked": "Не выполнено дней"
+    "checked": "Дней выполнено",
+    "notChecked": "Дней не выполнено"
   },
   "bublingWindows": {
     "fieldEmpty": "Введите название Аскезы",

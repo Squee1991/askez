@@ -446,8 +446,8 @@ onMounted(() => {
 }
 
 .checked-status-value {
-    font-size: 13px;
-    padding: 1px 10px;
+    font-size: 10px;
+    padding: 2px 10px;
     background: #4caf50;
     border-radius: 10px;
     display: flex;
@@ -669,9 +669,9 @@ svg {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 15px;
+    font-size: 14px;
     color: #94ea97;
-    font-family: "Acme", serif;
+    font-family: "Nunito", sans-serif;
     border: none;
 }
 
@@ -750,8 +750,8 @@ svg {
     background: linear-gradient(to right, #6378e1, #8199f4);
     border-radius: 15px;
     color: white;
-    font-size: 17px;
-    font-family: "Acme", system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    font-family: "Nunito", sans-serif;
     box-shadow: 0 4px 12px rgba(99, 120, 225, 0.4);
     transition: all 0.2s ease-in-out;
     touch-action: manipulation;

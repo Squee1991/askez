@@ -1,7 +1,7 @@
 <template>
     <NuxtLayout>
         <NuxtPage/>
-        <PremiumExpired v-if="showPremiumToast" @close="showPremiumToast = false" />
+<!--        <PremiumExpired v-if="showPremiumToast" @close="showPremiumToast = false" />-->
     </NuxtLayout>
 </template>
 

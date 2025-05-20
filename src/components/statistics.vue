@@ -141,7 +141,7 @@ const availableCompletion = computed(() => {
                           @click="isActiveButton = 'active'">{{ $t('statslable.active') }}</span>
                     <span class="select"
                           :class="{ 'select__active': isActiveButton === 'archive' }"
-                          @click="isActiveButton = 'archive'">{{ $t('statslable.archieve') }}</span>
+                          @click="isActiveButton = 'archive'">{{ $t('statslable.journey') }}</span>
                 </div>
             </div>
         </div>

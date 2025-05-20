@@ -180,12 +180,12 @@
 		"stats": "Statistik"
 	},
 	"statslable": {
-		"total": "Gesamtziele",
-		"doneTotal": "Insgesamt erledigt",
-		"InProgressTotal": "In Bearbeitung",
+		"total": "Ziele gesamt",
+		"doneTotal": "Erledigt",
+		"InProgressTotal": "In Arbeit",
 		"notCompleted": "Nicht erledigt",
 		"active": "Aktive Aufgaben",
-		"archieve": "Reise aufgaben"
+		"journey": "Aktive Ziele"
 	},
 	"hasNotAskez": {
 		"value": "Keine erstellten Askezas"
