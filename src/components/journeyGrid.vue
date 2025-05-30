@@ -123,12 +123,12 @@
 	}
 
 	.journey-toggle__arrow {
-		transform: scale(-1);
+		transform: scale(1);
 		transition: .6s;
 	}
 
 	.scale {
-		transform: scale(1);
+		transform: scale(-1);
 		transition: .6s;
 	}
 

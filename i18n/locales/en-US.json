@@ -185,7 +185,7 @@
 		"InProgressTotal": "In progress",
 		"notCompleted": "Not completed",
 		"active": "Active tasks",
-		"archieve": "Journey"
+		"journey": "Journey"
 	},
 	"hasNotAskez": {
 		"value": "No created goals",

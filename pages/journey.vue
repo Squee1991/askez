@@ -207,6 +207,7 @@
 		updateGoal
 	} = journeyStore
 
+
 	watch(isDelete, (newVal) => {
 		if (newVal) {
 			document.body.style.overflow = 'hidden';
@@ -214,7 +215,6 @@
 			document.body.style.overflow = '';
 		}
 	});
-
 
 </script>
 
@@ -399,9 +399,13 @@
 	}
 
 	.tracker-wrapper {
-		max-width: 700px;
 		margin: 0 auto;
-		padding: 15px 20px;
+		padding: 15px 18px;
+	}
+
+	.goal-switcher-bar {
+		margin: 0;
+		padding: 0;
 	}
 
 	.goal-tabs {
@@ -468,6 +472,7 @@
 		align-items: center;
 		flex-wrap: wrap;
 		gap: 10px;
+
 	}
 
 	.clear-button {
@@ -488,7 +493,7 @@
 		scroll-snap-type: x mandatory;
 		display: flex;
 		scrollbar-width: none;
-		width: 100%;
+		/*width: 100%;*/
 	}
 
 	.goal-switcher-scroll {
@@ -498,7 +503,8 @@
 	}
 
 	.goal-slide {
-		min-width: 100%;
+		flex: 0 0 92%;
+		max-width: 100%;
 		scroll-snap-align: start;
 		padding: 16px 16px;
 		border: none;

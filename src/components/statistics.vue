@@ -6,7 +6,7 @@ import CheckedIcon from '../../assets/images/checkIcon.svg'
 import CheckedNotFull from '../../assets/images/cross.svg'
 import InProgressIcon from '../../assets/images/in-progress.svg'
 
-const isActiveButton = ref('active')
+const isActiveButton = ref(localStorage.getItem('isActiveStatsTab') || 'active')
 
 const habitStore = useHabitStore()
 const journeyStore = useJourneyStore()
@@ -44,6 +44,11 @@ const currenticon = (task) => {
     if (task.progress === 100) return CheckedIcon
     if (task.progress + task.progressMiss === 100) return CheckedNotFull
     return InProgressIcon
+}
+
+function setTab(tab) {
+    isActiveButton.value = tab
+    localStorage.setItem('isActiveStatsTab', tab)
 }
 
 const completionColor = computed(() => {
@@ -138,10 +143,10 @@ const availableCompletion = computed(() => {
                          :style="{ transform: isActiveButton === 'active' ? 'translateX(0%)' : 'translateX(100%)' }"/>
                     <span class="select"
                           :class="{ 'select__active': isActiveButton === 'active' }"
-                          @click="isActiveButton = 'active'">{{ $t('statslable.active') }}</span>
+                          @click="setTab('active')">{{ $t('statslable.active') }}</span>
                     <span class="select"
                           :class="{ 'select__active': isActiveButton === 'archive' }"
-                          @click="isActiveButton = 'archive'">{{ $t('statslable.journey') }}</span>
+                          @click="setTab('archive')">{{ $t('statslable.journey') }}</span>
                 </div>
             </div>
         </div>

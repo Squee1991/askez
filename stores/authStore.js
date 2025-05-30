@@ -130,10 +130,11 @@ export const useAuthStore = defineStore('auth', () => {
             const active = customerInfo.entitlements.active['Premium'];
             if (active) {
                 await activatePremium();
+
                 // alert(JSON.stringify({success: true, message: 'Подписка активирована!'}, null, 2));
-                return {success: true};
-            } else {
-                console.log('error')
+                // return {success: true};
+            // } else {
+                // console.log('error')
                 // const msg = 'Подписка не активна (entitlement Premium не найден)';
                 // alert(JSON.stringify({error: msg, entitlements: customerInfo.entitlements}, null, 2));
                 // return {success: false, message: msg};

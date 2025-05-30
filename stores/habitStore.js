@@ -23,8 +23,8 @@ export const useHabitStore = defineStore("askezaStore", () => {
 		goalCompleted: false,
 		achievementUnlocked: false
 	});
-	const achievementThresholds = ref([1, 10, 20, 50, 70, 100, 120, 150, 200]);
-	const archiveTasks = ref([]);
+	const achievementThresholds = ref([1, 5, 15, 30, 50, 70, 100, 120, 150]);
+	const archiveTasks = ref([]);1
 	const skipUpdateAll = ref(false);
 	const auth = getAuth();
 	const db = getFirestore();

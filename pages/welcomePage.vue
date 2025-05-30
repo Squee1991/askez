@@ -195,7 +195,8 @@ const isHabitGoalVisible = ref(false);
 const isSuccessModalVisible = ref(false);
 const showAIGreeting = ref(false)
 const greetingMessage = ref(null)
-const activeButton = ref('tasks');
+const defaultTab = localStorage.getItem('activeTab') || 'tasks'
+const activeButton = ref(defaultTab)
 const transitionName = ref('slide-left')
 let prevButton = 'tasks'
 const auth = getAuth()
@@ -354,6 +355,7 @@ const setActive = (buttonName) => {
 
     prevButton = activeButton.value;
     activeButton.value = buttonName;
+    localStorage.setItem('activeTab', buttonName); // <--- добавь эту строку
 };
 
 onMounted(async () => {
