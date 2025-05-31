@@ -41,6 +41,9 @@
 		"delete": "Delete",
 		"close": "Close"
 	},
+	"journey": {
+		"empty": "No active journey"
+	},
 	"stepHint": {
 		"skip": "Skip",
 		"further": "Further",

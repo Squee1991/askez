@@ -50,40 +50,40 @@ const buyPremium = async () => {
 
 const ads = [
     "无广告", "Без рекламы", "Без рэкламы", "Без реклами", "Brak reklam", "Sans publicité", "Sin anuncios",
-    "No advertising", "Keine Werbung", "Без рэкламы", "بدون إعلانات"
+    "No advertising", "Keine Werbung", "", "بدون إعلانات" , "कोई विज्ञापन नहीं" ,  "Sem anúncios"
 ]
 const level = [
     "熊猫成长", "Прокачка панды", "Паляпшэнне пандзі", "Покращення панди", "Rozwój pandy", "Amélioration du panda",
-    "Mejora del panda", "Panda leveling", "Panda-Entwicklung", "Panda-Entwicklung", "Паляпшэнне пандзі",
-    "تطوير الباندا"
+    "Mejora del panda", "Panda leveling", "Panda-Entwicklung", "Panda-Entwicklung",
+    "تطوير الباندا" , "पांडा सुधार" , "Melhoria do panda"
 ]
 const achievs = [
     "获取成就", "Доступ к достижениям", "Доступ да дасягненняў", "Доступ до досягнень", "Dostęp do osiągnięć", "Accès aux succès",
-    "Acceso a logros", "Access to achievements", "Zugang zu Erfolgen", "Доступ да дасягненняў",
-    "الوصول إلى الإنجازات"
+    "Acceso a logros", "Access to achievements", "Zugang zu Erfolgen",
+    "الوصول إلى الإنجازات" , "उपलब्धियों तक पहुंच" , "Acesso a conquistas"
 ]
 const support = [
     "支持开发者", "Поддержка разработчиков", "Падтрымка распрацоўшчыкаў", "Підтримка розробників", "Wsparcie dla twórców", "Soutien aux développeurs",
     "Apoyo a los desarrolladores", "Support the developers", "Unterstützung der Entwickler",
-    "Падтрымка распрацоўшчыкаў", "دعم المطورين"
+    "Падтрымка распрацоўшчыкаў", "دعم المطورين" , "डेवलपर्स का समर्थन" , "Apoio aos desenvolvedores"
 ]
 
 const limit = [
     "目标数量无限", "Неограниченное количество целей", "Неабмежаваная колькасць мэтаў", "Необмежена кількість цілей", "Nieograniczona liczba celów",
     "Nombre illimité d’objectifs", "Objetivos ilimitados", "Unlimited number of goals",
-    "Unbegrenzte Anzahl an Zielen", "Неабмежаваная колькасць мэтаў", "عدد غير محدود من الأهداف"
+    "Unbegrenzte Anzahl an Zielen", "عدد غير محدود من الأهداف" , "असीमित लक्ष्यों की संख्या" , "Número ilimitado de objetivos",
 ]
 const chatBot = [
     "虚拟助手访问权限", "Доступ к виртуальному помощнику", "Доступ да віртуальнага памочніка", "Доступ до віртуального помічника", "Dostęp do wirtualnego asystenta",
     "Accès à l’assistant virtuel", "Acceso al asistente virtual", "Access to virtual assistant",
-    "Zugang zum virtuellen Assistenten", "Доступ да віртуальнага памочніка", "الوصول إلى المساعد الافتراضي"
+    "Zugang zum virtuellen Assistenten", "الوصول إلى المساعد الافتراضي" ,"वर्चुअल सहायक तक पहुंच" , "Acesso ao assistente virtual"
 ]
 const future = [
     "即将推出的功能访问权限", "Доступ к предстоящим функциям(скоро)", "Доступ да будучых функцый (хутка)", "Доступ до майбутніх функцій (незабаром)",
     "Dostęp do nadchodzących funkcji (wkrótce)", "Accès aux fonctionnalités à venir (bientôt disponible)",
     "Acceso a funciones próximas (muy pronto)", "Access to upcoming features (coming soon)",
-    "Zugriff auf kommende Funktionen (bald verfügbar)", "Доступ да будучых функцый (хутка)",
-    "الوصول إلى الميزات القادمة (قريبًا)"
+    "Zugriff auf kommende Funktionen (bald verfügbar)",
+    "الوصول إلى الميزات القادمة (قريبًا)" , "भविष्य की सुविधाओं तक पहुंच (जल्द ही)" , "Acesso a recursos futuros (em breve)"
 ]
 
 
@@ -216,7 +216,7 @@ const getPremiumIcon = (text) => {
     color: white;
     padding: 12px 28px;
     border: none;
-    border-radius: 10px;
+    border-radius: 30px;
     font-size: 18px;
     font-family: "Nunito", sans-serif;
     cursor: pointer;

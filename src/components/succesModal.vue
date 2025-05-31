@@ -60,14 +60,14 @@
 	}
 
 	.success__btn {
-		width: 50%;
+		width: 70%;
 		margin-top: 10px;
 		padding: 10px 40px;
 		background: linear-gradient(to right, #6378e1, #8199f4);
 		color: white;
 		font-size: 20px;
 		border: none;
-		border-radius: 15px;
+		border-radius: 30px;
 		cursor: pointer;
 		font-weight: bold;
 		font-family: "Nunito", serif;
