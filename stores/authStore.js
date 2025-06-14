@@ -8,7 +8,7 @@ import {
     signOut,
     deleteUser,
     onAuthStateChanged,
-    sendPasswordResetEmail
+    sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup,
 } from 'firebase/auth';
 import {doc, setDoc, getDoc, getFirestore} from 'firebase/firestore';
 import {Capacitor} from '@capacitor/core';
@@ -19,15 +19,21 @@ export const useAuthStore = defineStore('auth', () => {
     const name = ref(null);
     const email = ref(null);
     const password = ref(null);
+    const confidence = ref(6);
+    const isPacerEnabled = ref(false)
     const isPremium = ref(false);
     const isBotEnabled = ref(false);
     const isGateOpened = ref(false);
-    const premiumExpired = ref(false)
-
+    const premiumExpired = ref(false);
 
     const trigerPremiumExpired = () => {
-        premiumExpired.value = true
-    }
+        premiumExpired.value = true;
+    };
+
+    const togglePacer = async () => {
+        const newVal = !isPacerEnabled.value;
+        await savePacerToFirebase(newVal);
+    };
 
     const setUserData = (data) => {
         name.value = data.name || null;
@@ -35,35 +41,59 @@ export const useAuthStore = defineStore('auth', () => {
         password.value = data.password || null;
     };
 
+    const saveConfidenceToFirebase = async () => {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (!user) return;
+        const userDocRef = doc(db, "users", user.uid);
+        await setDoc(userDocRef, { confidence: confidence.value }, { merge: true });
+    };
+
+    const spendConfidence = async (amount) => {
+        if (confidence.value >= amount) {
+            confidence.value -= amount;
+            await saveConfidenceToFirebase();
+        }
+    };
+
     const safePurchasesCall = async (fn) => {
         if (!Capacitor.isNativePlatform()) return;
         try {
             await fn();
         } catch (e) {
-            // console.error('[RevenueCat]', e);
+
         }
     };
 
-    // const restorePurchases = async () => {
-    //     if (!Capacitor.isNativePlatform()) {
-    //         alert('[Mock] Восстановление покупок выполнено (браузер)');
-    //         await activatePremium();
-    //         return;
-    //     }
-    //
-    //     await safePurchasesCall(async () => {
-    //         const {customerInfo} = await Purchases.restorePurchases();
-    //         const active = customerInfo.entitlements.active['Premium'];
-    //
-    //         isPremium.value = !!active;
-    //         if (active) {
-    //             await activatePremium();
-    //             alert('[RevenueCat] Подписка восстановлена!');
-    //         } else {
-    //             alert('[RevenueCat] Подписка не найдена при восстановлении');
-    //         }
-    //     });
-    // };
+    const loginWithGoogle = async () => {
+        const auth = getAuth();
+        const provider = new GoogleAuthProvider();
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            const userDocRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(userDocRef);
+
+            if (!docSnap.exists()) {
+                await setDoc(userDocRef, {
+                    isPremium: false,
+                    isBotEnabled: false,
+                    isPacerEnabled: false
+                });
+            }
+            setUserData({
+                name: user.displayName,
+                email: user.email
+            });
+            await loadBotStateFromFirebase();
+            await checkRevenueCatPremium();
+            await initPacerState();
+            await loadConfidenceFromFirebase();
+            await Purchases.logIn(user.uid);
+
+        } catch (error) {
+        }
+    };
 
     const checkRevenueCatPremium = async () => {
         if (!Capacitor.isNativePlatform()) {
@@ -101,7 +131,6 @@ export const useAuthStore = defineStore('auth', () => {
             checkRevenueCatPremium();
         }, 5 * 60 * 1000);
     };
-
     const purchasePro = async () => {
         if (!Capacitor.isNativePlatform()) {
             await activatePremium();
@@ -147,7 +176,6 @@ export const useAuthStore = defineStore('auth', () => {
             // return {success: false, message: e.message || 'Неизвестная ошибка'};
         }
     };
-
     const activatePremium = async () => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -157,7 +185,6 @@ export const useAuthStore = defineStore('auth', () => {
         await setDoc(userDocRef, {isPremium: true}, {merge: true});
         isPremium.value = true;
     };
-
     const markGateAsOpened = async () => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -179,6 +206,21 @@ export const useAuthStore = defineStore('auth', () => {
     //         isPremium.value = docSnap.data().isPremium ?? false;
     //     }
     // };
+
+    const loadConfidenceFromFirebase = async () => {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const userDocRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(userDocRef);
+
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            confidence.value = data.confidence !== undefined ? data.confidence : confidence.value;
+        }
+    };
+
     const loadGateStatus = async () => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -214,6 +256,41 @@ export const useAuthStore = defineStore('auth', () => {
         await setDoc(userDocRef, {isBotEnabled: enabled}, {merge: true});
         isBotEnabled.value = enabled;
     };
+
+    const savePacerToFirebase = async (enabled) => {
+        if (enabled === undefined) return
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (!user) return;
+        const userDocRef = doc(db, "users", user.uid);
+        await setDoc(userDocRef, {isPacerEnabled: enabled}, {merge: true});
+        isPacerEnabled.value = enabled;
+        localStorage.setItem('pacerEnabled', JSON.stringify(enabled));
+    };
+
+    const loadPacerStatus = async () => {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (!user) return;
+        const userDocRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(userDocRef);
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            isPacerEnabled.value = data.isPacerEnabled ?? false;
+            localStorage.setItem('pacerEnabled', JSON.stringify(isPacerEnabled.value));
+        }
+    };
+
+    const initPacerState = async () => {
+        const pacerSetting = localStorage.getItem('pacerEnabled');
+        if (pacerSetting !== null) {
+            isPacerEnabled.value = JSON.parse(pacerSetting);
+        } else {
+            await loadPacerStatus();
+        }
+    };
+
+
     const registerUser = async (userData) => {
         const auth = getAuth();
         const userCredential = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
@@ -228,7 +305,8 @@ export const useAuthStore = defineStore('auth', () => {
         const userDocRef = doc(db, "users", userCredential.user.uid);
         await setDoc(userDocRef, {
             isPremium: false,
-            isBotEnabled: false
+            isBotEnabled: false,
+            isPacerEnabled: false
         });
     }
     const loginUser = async ({email, password}) => {
@@ -246,6 +324,7 @@ export const useAuthStore = defineStore('auth', () => {
         password.value = null;
         isPremium.value = false;
         isBotEnabled.value = false;
+        isPacerEnabled.value = false
     };
     const resetPassword = async (email) => {
         const auth = getAuth();
@@ -273,10 +352,13 @@ export const useAuthStore = defineStore('auth', () => {
                     });
                     await loadBotStateFromFirebase();
                     await checkRevenueCatPremium();
+                    await initPacerState();
+                    await loadConfidenceFromFirebase();
                     await Purchases.logIn(user.uid);
                 } else {
                     isPremium.value = false;
                     isBotEnabled.value = false;
+                    isPacerEnabled.value = false
                     name.value = null;
                     email.value = null;
                     password.value = null;
@@ -285,6 +367,7 @@ export const useAuthStore = defineStore('auth', () => {
             });
         });
     };
+
     const saveLanguageToFirebase = async (lang) => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -325,6 +408,8 @@ export const useAuthStore = defineStore('auth', () => {
         isBotEnabled,
         isGateOpened,
         premiumExpired,
+        confidence,
+        isPacerEnabled,
         setUserData,
         activatePremium,
         // loadPremiumStatus,
@@ -343,6 +428,12 @@ export const useAuthStore = defineStore('auth', () => {
         fetchingUser,
         markGateAsOpened,
         trigerPremiumExpired,
-        // restorePurchases,
+        togglePacer,
+        savePacerToFirebase,
+        loadPacerStatus,
+        initPacerState,
+        spendConfidence,
+        loadConfidenceFromFirebase,
+        loginWithGoogle
     };
 });

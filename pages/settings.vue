@@ -12,7 +12,8 @@
 	import {useTaskStore} from '../stores/OfflineTaskStore.js';
 	import {useI18n} from 'vue-i18n';
 	import {useValidationStore} from '../stores/validationStore.js';
-	import { toggleTheme, activeAnim, isToggle } from '../src/utils/themeToggle.js'
+	import {toggleTheme, activeAnim, isToggle} from '../src/utils/themeToggle.js'
+
 	const taskStore = useTaskStore();
 	const validationStore = useValidationStore();
 	const {t} = useI18n();
@@ -26,6 +27,7 @@
 	const colorMode = useColorMode();
 	const localBotToggle = ref(false);
 	const activeBotAnim = ref(false)
+	const pacerToggle = computed(() => authStore.isPacerEnabled)
 	const isAudioEnabled = computed(() => habitStore.isAudioEnabled);
 	const isAnimationEnabled = computed(() => habitStore.isAnimationEnabled);
 
@@ -61,6 +63,8 @@
 			toggleTheme();
 		} else if (index === 7) {
 			clickPremiumButton();
+		} else if (index === 8) {
+			authStore.togglePacer();
 		} else {
 			SettingsChange(t(`setting.${index - 1}`));
 		}
@@ -105,20 +109,19 @@
 		}
 	};
 
+
 	onMounted(() => {
 		const savedMode = localStorage.getItem('nuxt-color-mode') || 'light';
 		colorMode.preference = savedMode;
 		isToggle.value = savedMode === 'light';
-
-		// ✅ Синхронизация состояния бота с премиумом
+		// Синхронизация состояния бота с премиумом
 		if (!authStore.isPremium) {
 			localBotToggle.value = false;
 			authStore.isBotEnabled = false;
-			authStore.saveBotStateToFirebase(false); // ⬅️ важно
+			authStore.saveBotStateToFirebase(false);
 		} else {
 			localBotToggle.value = authStore.isBotEnabled;
 		}
-
 		const audioSetting = localStorage.getItem('audioEnabled');
 		isAudioEnabled.value = audioSetting ? JSON.parse(audioSetting) : true;
 	});
@@ -161,7 +164,7 @@
 		</div>
 		<HeaderWithBack :icon="Arrowicon" :title="$t('settings.title')"/>
 		<div class="settings__btns">
-			<div class="menu__btn-wrapper" v-for="index in 7" :key="index">
+			<div class="menu__btn-wrapper" v-for="index in 8" :key="index">
 				<button
 					class="account__settings-btn"
 					:class="{ 'disabled-premium': index === 7 && !authStore.isPremium }"
@@ -169,29 +172,40 @@
 				>
 					<span class="accoun__text">{{ $t('setting.' + (index - 1)) }}</span>
 					<span v-if="index === 4" class="toggle-bar" :class="{ 'toggle-active': !isAudioEnabled }">
-							<span class="toggle-thumb"
-							      :style="{ left: isAudioEnabled ? '38px' : '2px', backgroundColor: isAudioEnabled ? 'orange' : 'grey' }"/>
-						</span>
+						 <span class="toggle-thumb"
+						       :style="{ left: isAudioEnabled ? '38px' : '2px', backgroundColor: isAudioEnabled ? 'orange' : 'grey' }">
+						 </span>
+					</span>
 					<span v-if="index === 5" class="toggle-bar" :class="{ 'toggle-active': !isAnimationEnabled }">
-							<span class="toggle-thumb"
-							      :style="{ left: isAnimationEnabled ? '38px' : '2px', backgroundColor: isAnimationEnabled ? 'orange' : 'grey' }"/>
+						<span class="toggle-thumb"
+						      :style="{ left: isAnimationEnabled ? '38px' : '2px', backgroundColor: isAnimationEnabled ? 'orange' : 'grey' }">
 						</span>
+					</span>
 					<span v-if="index === 6" class="toggle-bar" :class="{ 'toggle-active': isToggle }">
-							<img :src="Dark" alt="Dark" class="toggle-icon left"/>
-							<span class="toggle-thumb"
-							      :style="{ left: isToggle ? '38px' : '2px', backgroundColor: isToggle ? 'orange' : 'grey' }"/>
-							<img :src="Light" alt="Light" class="toggle-icon right"/>
+						<img :src="Dark" alt="Dark" class="toggle-icon left"/>
+						<span class="toggle-thumb"
+						      :style="{ left: isToggle ? '38px' : '2px', backgroundColor: isToggle ? 'orange' : 'grey' }">
 						</span>
+						<img :src="Light" alt="Light" class="toggle-icon right"/>
+					</span>
 					<span v-if="index === 7" class="toggle-bar" :class="{ 'toggle-active': localBotToggle }">
-							<span class="toggle-thumb"
-							      :style="{ left: localBotToggle ? '38px' : '2px', backgroundColor: localBotToggle ? 'orange' : 'grey' }"/>
+						<span class="toggle-thumb"
+						      :style="{ left: localBotToggle ? '38px' : '2px', backgroundColor: localBotToggle ? 'orange' : 'grey' }">
 						</span>
+					</span>
+					<span v-if="index === 8" class="toggle-bar" :class="{'toggle-active': pacerToggle}">
+						<span class="toggle-thumb"
+						      :style="{ left: pacerToggle ? '38px' : '2px', backgroundColor: pacerToggle ? 'orange' : 'grey' }">
+						 </span>
+					</span>
 				</button>
 			</div>
 		</div>
 	</div>
 </template>
+
 <style scoped>
+
 	.premium__window {
 		position: absolute;
 		width: 100%;
@@ -289,7 +303,7 @@
 
 	.confirm__title {
 		color: white;
-		font-family: "Acme", serif;
+		font-family: "Nunito", sans-serif;
 		font-size: 24px;
 	}
 

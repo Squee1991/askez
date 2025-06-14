@@ -34,7 +34,8 @@
 		"Celebration sound",
 		"Animation",
 		"Mod",
-		"Chat"
+		"Chat",
+		"Use Pacer"
 	],
 	"buttons": {
 		"edit": "Edit",

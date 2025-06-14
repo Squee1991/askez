@@ -69,7 +69,7 @@ onMounted(() => {
 })
 
 onMounted(async () => {
-    // 🔁 Проверка премиума при старте
+    authStore.savePacerToFirebase()
     if (!authStore.isPremium) {
         authStore.isBotEnabled = false
         await authStore.saveBotStateToFirebase(false)

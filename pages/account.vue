@@ -23,7 +23,6 @@
 					<VFields
 						:field="field"
 						v-model="field.value"
-
 					/>
 				</div>
 			</div>
@@ -47,7 +46,7 @@
 	import {useHabitStore} from '../stores/habitStore.js';
 	import {useAuthStore} from '../stores/authStore.js';
 	import {useRouter} from 'vue-router'
-	const isPremiumOverlayVisible = ref(false)
+	let isPremiumOverlayVisible = ref(false)
 	const logOutAccept = ref(false)
 	const habitStore = useHabitStore();
 	const authStore = useAuthStore();
@@ -75,7 +74,6 @@
 				readonly: true
 			},
 		],
-
 	});
 
 	const closeOverlay = () => {
@@ -113,6 +111,10 @@
 </script>
 
 <style scoped>
+
+	.pacer__disabled {
+		color: var(--text-color);
+	}
 
 	.change__data-icon {
 		width: 70px;

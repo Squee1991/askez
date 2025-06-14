@@ -355,7 +355,7 @@ const setActive = (buttonName) => {
 
     prevButton = activeButton.value;
     activeButton.value = buttonName;
-    localStorage.setItem('activeTab', buttonName); // <--- добавь эту строку
+    localStorage.setItem('activeTab', buttonName);
 };
 
 onMounted(async () => {

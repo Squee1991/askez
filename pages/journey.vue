@@ -183,6 +183,7 @@
 				updateActiveGoalOnScroll()
 			}
 		})
+		selectedPreviewGoal.value = null
 	})
 
 	onBeforeUnmount(() => {

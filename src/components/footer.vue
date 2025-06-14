@@ -199,7 +199,7 @@
 		left: 0;
 		width: 100%;
 		background-color: var(--footer-bg);
-		padding: 5px 6px calc(6px + env(safe-area-inset-bottom, 0px)) 6px;
+		/*padding-bottom: env(safe-area-inset-bottom);*/
 		display: flex;
 		justify-content: space-between;
 		align-items: center;

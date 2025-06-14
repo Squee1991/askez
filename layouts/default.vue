@@ -62,7 +62,9 @@
 	.container {
 		width: 100%;
 		margin: 0 auto;
-		min-height: 100vh;
+		min-height: calc(100vh - 70px);
+		padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+		box-sizing: border-box;
 	}
 
 	.safe-area-top {

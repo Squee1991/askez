@@ -57,7 +57,6 @@ function highlightAndPosition() {
     try {
         const selector = currentStepData.value?.selector
         if (!selector) return
-
         const el = document.querySelector(selector)
         if (!el) {
             console.warn(`[StepHint] ❌ Element not found for selector: ${selector}`)
@@ -86,7 +85,6 @@ function highlightAndPosition() {
 function updateHintBoxPosition(el) {
     try {
         if (!el) return
-
         nextTick(() => {
             const rect = el.getBoundingClientRect?.()
             if (!rect) return
@@ -119,6 +117,7 @@ watchEffect(() => {
 
 defineExpose({ retryHighlight: highlightAndPosition })
 onBeforeUnmount(removeHighlight)
+
 </script>
 
 <style>

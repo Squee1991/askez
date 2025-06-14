@@ -30,7 +30,7 @@
 				</NuxtLink>
 				<span class="task__goal-name">{{ selectedTask.goal }}</span>
 				<div class="edit__menu-wrapper">
-					<img :src="editIcon" class="edit__icon" @click="toggleEditMenu" />
+					<img :src="editIcon" class="edit__icon" @click="toggleEditMenu"/>
 					<div v-if="showEditOptions" class="modal__edit-menu" @click.self="toggleEditMenu">
 						<div class="modal__content">
 							<div class="modal__option edit" @click="openEditTask">
@@ -148,11 +148,11 @@
 			</div>
 		</div>
 	</div>
-<!--	<StepHint-->
-<!--			:steps="hintSteps"-->
-<!--	          :show="showHints"-->
-<!--	          @close="showHints = false"-->
-<!--	/>-->
+	<StepHint
+		:steps="hintSteps"
+		:show="showHints"
+		@finish="showHints = false"
+	/>
 </template>
 <script setup>
 	import StepHint from '../src/components/StepHint.vue'
@@ -171,6 +171,7 @@
 	import CheckedIcon from "../assets/images/check-mark.svg";
 	import CheckedNotFull from "../assets/images/letter-x.svg";
 	import InProgressIcon from "../assets/images/clock.svg";
+
 	const {locale, t} = useI18n();
 	let showHints = ref(true);
 	const isEditing = ref(false)
@@ -182,6 +183,11 @@
 		{selector: '.task__details-btns', text: 'stepHint.mark'},
 		{selector: '.progress__container-details', text: 'stepHint.progress'}
 	];
+
+	onMounted(() => {
+		showHints.value = true;
+	});
+
 	const showEditOptions = ref(false);
 	const animationBlock = ref(null);
 	const editIcon = ref(EditIcon);
@@ -331,7 +337,7 @@
 		return allDates.map(date => ({
 			key: `skipped-${date.toISOString()}`,
 			dates: [date],
-			highlight: { contentClass: 'vc-highlight-blue' }
+			highlight: {contentClass: 'vc-highlight-blue'}
 		}));
 	});
 
@@ -563,7 +569,7 @@
 		padding: 10px;
 	}
 
-	.edit__text{
+	.edit__text {
 		display: flex;
 		align-items: center;
 		font-family: "Nunito", sans-serif;
@@ -691,7 +697,7 @@
 
 	.progres__wrapper-inner {
 		margin: 10px 0;
-		border-top: 5px solid var(--task-border-color);
+		border-top: 15px solid var(--task-border-color);
 		background-color: var(--menu--btn-bg);
 		display: flex;
 		border-radius: 30px;
@@ -1125,7 +1131,7 @@
 		right: 0;
 		background-color: var(--menu--btn-bg);
 		border-radius: 10px;
-		box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 		z-index: 20;
 		display: flex;
 		flex-direction: column;
@@ -1141,7 +1147,7 @@
 	}
 
 	.edit__menu-item:hover {
-		background-color: rgba(255,255,255,0.1);
+		background-color: rgba(255, 255, 255, 0.1);
 	}
 
 	.modal__edit-menu {
@@ -1163,10 +1169,10 @@
 		position: absolute;
 		top: 45%;
 		left: 50%;
-		transform: translate(-50% , -50%);
+		transform: translate(-50%, -50%);
 		max-width: 300px;
 		text-align: center;
-		box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 		display: flex;
 		flex-direction: column;
 	}
